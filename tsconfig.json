@@ -1,0 +1,18 @@
+{
+	"include": ["./src"],
+	"compilerOptions": {
+		"outDir": "dist",
+		"strict": true,
+		"moduleResolution": "node",
+		"alwaysStrict": true,
+		"esModuleInterop": true,
+		"lib": ["esnext", "esnext.array", "esnext.asynciterable", "esnext.intl", "esnext.symbol", "dom"],
+		"module": "commonjs",
+		"target": "es2019",
+		"sourceMap": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"pretty": true,
+		"resolveJsonModule": true
+	}
+}

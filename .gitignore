@@ -1,0 +1,6 @@
+# secrets
+.env
+
+# build flow
+dist/
+node_modules/

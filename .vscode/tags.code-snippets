@@ -1,0 +1,50 @@
+{
+	"tag": {
+		"prefix": [
+			"tag",
+			"t"
+		],
+		"description": "A new tag",
+		"body": [
+			"[$1]",
+			"keywords = [\"$1\", \"$2\"]",
+			"content = \"\"\"",
+			"$3",
+			"\"\"\"",
+			"",
+			""
+		]
+	},
+	"bullet": {
+		"prefix": [
+			"bullet",
+			"b"
+		],
+		"description": "Just a bullet point •",
+		"body": "•"
+	},
+	"arrow": {
+		"prefix": [
+			"arrow",
+			"a"
+		],
+		"description": "Just an arrow ➞",
+		"body": "➞"
+	},
+	"link": {
+		"prefix": [
+			"link",
+			"l"
+		],
+		"description": "Markdown link",
+		"body": "[$1](<$2>)"
+	},
+	"learnmore": {
+		"prefix": [
+			"more",
+			"external"
+		],
+		"description": "Markdown link for extended resources",
+		"body": "[learn more](<$2>)"
+	}
+}

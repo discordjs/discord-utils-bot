@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  application:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - '49666:49666'
