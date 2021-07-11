@@ -23,4 +23,4 @@ jobs:
         run: npm run build
 
       - name: Validate Tags
-        run: npm run validateTags
+        run: npm run validate-tags
