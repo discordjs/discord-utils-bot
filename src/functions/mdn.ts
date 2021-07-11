@@ -8,6 +8,7 @@ import { API_BASE_MDN, EMOJI_MDN } from '../util/constants';
 const cache = new Map<string, any>();
 
 export async function mdnSearch(res: Response, query: string, target?: string): Promise<Response> {
+	query = query.trim();
 	try {
 		const qString = `${API_BASE_MDN}/api/v1/search?${encode({ q: query })}`;
 		let hit = cache.get(qString);

@@ -14,6 +14,7 @@ export async function djsGuide(
 	results = DEFAULT_GUIDE_RESULT_AMOUNT,
 	target?: string,
 ): Promise<Response> {
+	search = search.trim();
 	const query = {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		'X-Algolia-Application-Id': ALGOLIA_APP,

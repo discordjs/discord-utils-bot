@@ -37,6 +37,7 @@ function resolveResultString(results: DocElement[]): string {
 }
 
 export async function djsDocs(res: Response, source: string, query: string, target?: string): Promise<Response> {
+	query = query.trim();
 	const doc = await Doc.fetch(source, { force: true });
 	const element = doc.get(...query.split(/\.|#/));
 	const icon = source === 'master' ? EMOJI_DJS_DEV : EMOJI_DJS;
