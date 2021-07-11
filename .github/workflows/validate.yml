@@ -1,4 +1,4 @@
-name: Build, Lint, Validate tags
+name: Validate
 on: [push, pull_request]
 jobs:
   eslint:
