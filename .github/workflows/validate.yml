@@ -1,8 +1,8 @@
 name: Validate
 on: [push, pull_request]
 jobs:
-  eslint:
-    name: ESLint
+  validate:
+    name: validate
     runs-on: macos-latest
     steps:
       - name: Checkout repository
