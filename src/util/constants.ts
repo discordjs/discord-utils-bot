@@ -15,5 +15,6 @@ export const API_BASE_DISCORD = 'https://discord.com/api/v8/applications' as con
 export const CLOSEST_MATCH_AMOUNT = 5;
 export const DEFAULT_GUIDE_RESULT_AMOUNT = 3;
 export const MAX_MESSAGE_LENGTH = 4096;
-export const REMOTE_TAG_URL = '' as const;
+export const REMOTE_TAG_URL =
+	'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags/tags.toml' as const;
 export const DEFAULT_DOCS_BRANCH = 'stable' as const;
