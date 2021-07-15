@@ -71,7 +71,7 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 }
 
 export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
-	query = query.toLowerCase();
+	query = query.trim().toLowerCase();
 	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
 	if (tag) {
 		prepareResponse(

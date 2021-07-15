@@ -1,8 +1,8 @@
-name: Build, Lint, Validate tags
+name: Validate
 on: [push, pull_request]
 jobs:
-  eslint:
-    name: ESLint
+  validate:
+    name: validate
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -23,4 +23,4 @@ jobs:
         run: npm run build
 
       - name: Validate Tags
-        run: npm run validateTags
+        run: npm run validate-tags

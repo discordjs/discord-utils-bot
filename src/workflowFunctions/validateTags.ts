@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { Tag } from '../functions/tag';
-import kleur from 'kleur';
+import { red } from 'kleur';
 
 type ConflictType = 'uniqueKeywords' | 'headerInKeywords' | 'emptyKeyword';
 
@@ -82,19 +82,14 @@ function validateTags() {
 		if (uniqueConflicts.length) {
 			parts.push(
 				`Tag validation error: Keywords have to be unique:\n${uniqueConflicts
-					.map(
-						(c, i) =>
-							`${kleur.yellow(`${i}.`)} [${c.firstName}]${kleur.yellow('⚡')}[${
-								c.secondName
-							}]: keywords: ${c.conflictKeyWords.join(', ')}`,
-					)
+					.map((c, i) => red(`${i}. [${c.firstName}] <> [${c.secondName}]: keywords: ${c.conflictKeyWords.join(', ')}`))
 					.join('\n')}`,
 			);
 		}
 		if (headerConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag header must be part of keywords:\n${headerConflicts
-					.map((c, i) => `${kleur.yellow(`${i}.`)} [${c.firstName}]${kleur.yellow('⚡')}`)
+					.map((c, i) => red(`${i}. [${c.firstName}]`))
 					.join('\n')}`,
 			);
 		}
@@ -102,12 +97,15 @@ function validateTags() {
 		if (emptyConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag keywords and body can not be empty:\n${emptyConflicts
-					.map((c, i) => `${kleur.yellow(`${i}.`)} [${c.firstName}]${kleur.yellow('⚡')}`)
+					.map((c, i) => red(`${i}. [${c.firstName}]`))
 					.join('\n')}`,
 			);
 		}
-		throw Error(parts.join('\n\n'));
+		// eslint-disable-next-line no-console
+		console.error(parts.join('\n\n'));
+		process.exit(1);
 	}
+	process.exit(0);
 }
 
 validateTags();

@@ -65,6 +65,7 @@ function findResult(data: any, query: string) {
 }
 
 export async function nodeSearch(res: Response, query: string, target?: string): Promise<Response> {
+	query = query.trim();
 	try {
 		if (!data) {
 			data = await fetch(`${API_DOCS_NODE}/all.json`).then((r) => r.json());
