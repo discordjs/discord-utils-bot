@@ -1,3 +1,20 @@
+[botception]
+keywords = ["botception"]
+content = """
+It's good practice to make your bots ignore other bots, including itself. This can be done through a single line of code:
+```js
+if (<message>.author.bot) return;
+```
+<message> being whatever you defined message as.
+"""
+
+[bot-about-me]
+keywords = ["bot-about-me", "bam"]
+content = """
+To add text to the `About Me` section of your bot's profile, head [here](<https://discord.com/developers/applications>), click on your bot's application, and fill in the `Description`. The description supports full markdown as well (bold, underline, etc.).
+https://imgur.com/zqsWi2d.jpg
+"""
+
 [api-docs]
 keywords = ["api-docs", "apidocs"]
 content = """
@@ -645,10 +662,10 @@ const client = new Client({
 """
 
 [discord-buttons]
-keywords = ["discord-buttons", "shitty-buttons", "shitty buttons", "discord buttons", "discordbuttons"]
+keywords = ["discord-buttons", "discord buttons", "discordbuttons"]
 content = """
 **We do not provide any help with third party libraries like discord-buttons.**
-• Discord.js supports buttons natively: [coming soon](<https://discordjs.guide/>)
+• Discord.js supports buttons natively: [WIP guide](<https://v13-prep.discordjs.guide/interactions/buttons.html>)
 """
 # TODO: insert guide link after button guide is merged
 
