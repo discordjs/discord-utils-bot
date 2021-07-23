@@ -3,7 +3,9 @@ keywords = ["botception"]
 content = """
 It's good practice to make your bots ignore other bots, including itself. This can be done through a single line of code:
 ```js
-if (<message>.author.bot) return;``` <message> being whatever you defined message as.
+if (<message>.author.bot) return;
+```
+<message> being whatever you defined message as.
 """
 
 [bot-about-me]
