@@ -660,10 +660,10 @@ const client = new Client({
 """
 
 [discord-buttons]
-keywords = ["discord-buttons", "shitty-buttons", "shitty buttons", "discord buttons", "discordbuttons"]
+keywords = ["discord-buttons", "discord buttons", "discordbuttons"]
 content = """
 **We do not provide any help with third party libraries like discord-buttons.**
-• Discord.js supports buttons natively: [coming soon](<https://discordjs.guide/>)
+• Discord.js supports buttons natively: [WIP guide](<https://v13-prep.discordjs.guide/interactions/buttons.html>)
 """
 # TODO: insert guide link after button guide is merged
 
