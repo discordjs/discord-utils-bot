@@ -634,7 +634,7 @@ Checking for things to not be equal in JavaScript:
 """
 
 [member-user]
-keywords = ["member-user", "member user", "usermember", "user member"]
+keywords = ["member-user", "member user", "usermember", "user member", "user-member"]
 content = """
 Despite sounding similar there is a distinct differenc between users and members in Discord:
 • [User](<https://discord.js.org/#/docs/main/stable/class/User>): global discord user data (global avatar, username, tag, id) 
