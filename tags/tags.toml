@@ -46,17 +46,8 @@ content = """
 [selectmenu-limits]
 keywords = ["selectmenu-limits", "sm-limits", "select-menu-limits"]
 content = """
-```css
-Selectmenu character limits:
-Custom Id         : 100
-Placeholder       : 100
-Option Label      : 25
-Option Value      : 100
-Option Description: 50
-```
-• options per select menu: 25
-• min and max values default to 1
-• [source](<https://discord.com/developers/docs/interactions/message-components#select-menus>)
+Limits for select menus:
+• [Discord Developer Documentation](<https://discord.com/developers/docs/interactions/message-components#select-menus>)
 """
 
 [filesystem]
@@ -92,8 +83,8 @@ content = """
 [hierarchy]
 keywords = ["hierarchy", "roleorder"]
 content = """
-• Bots can not moderate (kick/ban/nickname/...) a target with a higher or equally high highest role or the guild owner.
-• Bots can not modify (edit/add/remove) roles that are higher or equally high compared to the bots highest role.
+• Bots cannot moderate (kick/ban/nickname/...) a target with a higher or equally high highest role or the guild owner.
+• Bots cannot modify (edit/add/remove) roles that are higher or equally high compared to the bots highest role.
 • The `ADMINISTRATOR` permission does not skip these checks.
 """
 
@@ -149,8 +140,8 @@ To make your code more readable (and easier for us to help you with) consider us
 • Script and Editor integrations: [prettier](<https://prettier.io/docs/en/editors.html>)
 """
 
-[dogs]
-keywords = ["dogs", "djsdocs", "thedocs", "documentation"]
+[docs]
+keywords = ["docs", "djsdocs", "thedocs", "documentation"]
 content = """
 Discord.js documentation:
 • stable release: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
@@ -198,7 +189,7 @@ keywords = ["logit", "log it", "debuglogs", "debug log", "console.log", "console
 content = """
 If you aren't getting any errors, try to place `console.log` checkpoints throughout your code to find out where execution stops.
 • Once you do, log relevant values and if-conditions
-• A more sophisticated debuggin method are breakpoints and runtime inspections: [learn more](<https://code.visualstudio.com/docs/nodejs/nodejs-debugging>)
+• More sophisticated debugging methods are breakpoints and runtime inspections: [learn more](<https://code.visualstudio.com/docs/nodejs/nodejs-debugging>)
 """
 
 [rpc-bot]
@@ -374,7 +365,7 @@ Your bot is trying to send a DM to a user, but failed to do so:
 • The user has DMs disabled or the bot blocked
 • The user no longer shares a guild with the bot (make sure to send informational DMs before banning/kicking)
 • The bot is trying to DM itself or another bot
-Note: You can not check if you can send a DM beforehand but have to handle the [rejection case](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch>)
+Note: You cannot check if you can send a DM beforehand but have to handle the [rejection case](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch>)
 """
 
 [path]
@@ -387,12 +378,13 @@ content = """
 """
 
 [database]
-keywords = ["database", "databases", "postgres", "maria", "mysql", "sql", "nosql", "mongo"]
+keywords = ["database", "databases", "postgres", "maria", "mysql", "sql", "nosql", "mongo", "db"]
 content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
 • PostgreSQL: [learn more](<https://www.postgresql.org>) | [tutorial](<http://www.postgresqltutorial.com>)
-• MySQL: [learn more](<https://www.mysql.com>) 
-• MonoDB: [learn more](<https://www.mongodb.com>) | [tutorials](<https://docs.mongodb.com/manual/tutorial>)
+• MariaDB: [learn more](<https://mariadb.org/>)
+• MongoDB: [learn more](<https://www.mongodb.com>) | [tutorials](<https://docs.mongodb.com/manual/tutorial>)
+• SQLite: [learn more](<https://www.sqlite.org/index.html>)
 """
 
 [wait]
@@ -433,18 +425,8 @@ Elevated permissions are required to execute this action. You need to activate 2
 [embed-limits]
 keywords = ["embed-limits", "embedlimits", "embed limits"]
 content = """
-```css
-Embed character limits:
-title       : 256
-author name : 256
-description : 4096
-field title : 256
-field value : 1024
-footer      : 2048
-```
-• fields: 25, embeds per message: 10
-• characters in all embeds of a message: 6000
-• [source](<https://discord.com/developers/docs/resources/channel#embed-limits>)
+Limits for embed structures:
+• [Discord Developer Documentation](<https://discord.com/developers/docs/resources/channel#embed-limits>)
 """
 
 [matching-parameters]
@@ -578,16 +560,7 @@ How we generate our documentation:
 keywords = ["slash-limits", "slash limits", "/limits", "slash command limits"]
 content = """
 Slash command limits:
-```css
-top-level global commands      : 100
-guild-level commands per guild : 100
-subcommand groups              : 25
-subcommands within a group     : 25
-options per command            : 25
-choice per option              : 25
-```
-• characters for combined name, description and value properties: 4000 
-• application command creates per day per guild: 200 
+• [Discord Developer Documentaiton](<https://discord.com/developers/docs/interactions/slash-commands>) 
 """
 
 [equals]
@@ -680,7 +653,7 @@ Don't use the find method to query a [Collection](<https://discord.js.org/#/docs
 """
 
 [no-work]
-keywords = ["no-work", "doesn't work", "no work", "not working", "no context", "3w"]
+keywords = ["no-work", "doesn't work", "no work", "not working", "no context", "3w", "dnw"]
 content = """
 To help you we need more information:
 • What are you trying to do?
@@ -716,15 +689,6 @@ content = """
 To install run: `npm install discord.js`
 • Documentation: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
 • Guide: [learn more](<https://discordjs.guide>)
-"""
-
-[await-foreach]
-keywords = ["await-foreach", "await in foreach"]
-content = """
-`await` works with `forEach` and similar iteration methods!
-• `await` might appear to not be working properly because the iteration is applied to each element concurrently
-• The call to `forEach` ends before the Promise created by the loop can resolve
-• If you depend on data transformations from your loop you should not use `forEach`, or at least use [Promise.all](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all>) to make sure you await all your promises before you continue.
 """
 
 [token-anatomy]
@@ -829,4 +793,13 @@ content = """
 `Invalid interaction application command`
 • After updating a global command Discord prevents you from receiving stale data until the update rolled out
 • Refresh your command list to receive the updated command and try again
+"""
+
+[v13-changes]
+keywords = ["v13-changes", "v13 changes", "changes", "v13", "13"]
+content = """
+Version 13 is still in development, the branch moves quickly.
+• install preview: `npm i discord.js@dev`
+• [Preview update guide](<https://deploy-preview-680--discordjs-guide.netlify.app/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
+*\\🚧 This is still a draft and may not be up to date at all times*
 """
