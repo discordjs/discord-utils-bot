@@ -384,7 +384,7 @@ Persisting data through restarts requires a database. Check out the resources be
 • PostgreSQL: [learn more](<https://www.postgresql.org>) | [tutorial](<http://www.postgresqltutorial.com>)
 • MariaDB: [learn more](<https://mariadb.org/>)
 • MongoDB: [learn more](<https://www.mongodb.com>) | [tutorials](<https://docs.mongodb.com/manual/tutorial>)
-• SQLite: [learn more](<https://www.sqlite.org/index.html>)
+• SQLite: [learn more](<https://www.sqlite.org/index.html>) | [tutorial](<https://www.sqlitetutorial.net/>)
 """
 
 [wait]
