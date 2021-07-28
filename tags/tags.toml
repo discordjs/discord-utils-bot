@@ -807,7 +807,7 @@ Version 13 is still in development, the branch moves quickly.
 [filter]
 keywords = ["filter"]
 content = """
-In v13 the Collector filter has moved into the options object:
+The filter for collectors has moved into the options:
 ```diff
 - const collector = message.createReactionCollector(filter, { ...options });
 + const collector = message.createReactionCollector({ filter, ...options });
