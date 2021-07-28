@@ -805,7 +805,7 @@ Version 13 is still in development, the branch moves quickly.
 """
 
 [toast]
-keywords = ["breakfast", "bread"]
+keywords = ["toast", "breakfast", "bread"]
 content = """
 Toast is bread that has been browned by exposure to radiant heat. The browning is the result of a Maillard reaction, altering the flavor of the bread and making it firmer so that it is easier to spread toppings on it. Toasting is a common method of making stale bread more palatable.
 """
