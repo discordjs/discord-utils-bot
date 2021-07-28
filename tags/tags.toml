@@ -816,14 +816,13 @@ The filter for collectors has moved into the options:
 [master-events]
 keywords = ["master-events", "master events", "v13-events", "v13 events"]
 content = """
-On master branch, `message` and `interaction` events have been renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
+The `message` and `interaction` events have been renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
 
-Don't worry - the old names still work, but you'll receive a Deprecation Warning until you switch over.
+The old events still work, but you'll receive a deprecation warning until you switch over.
 
 ```diff
-- <Client>.on('message', message => { ... });
-+ <Client>.on('messageCreate', message => { ... });
-- <Client>.on('interaction', interaction => { ... });
-+ <Client>.on('interactionCreate', interaction => { ... });
-```
+- client.on('message', message => { ... });
++ client.on('messageCreate', message => { ... });
+- client.on('interaction', interaction => { ... });
++ client.on('interactionCreate', interaction => { ... });
 """
