@@ -804,13 +804,6 @@ Version 13 is still in development, the branch moves quickly.
 *\\🚧 This is still a draft and may not be up to date at all times*
 """
 
-[v12-changes]
-keywords = ["v12-changes", "v12 changes", "v12"]
-content = """
-For a list of changes to consider from v11 to v12 please refer to <https://discordjs.guide/additional-info/changes-in-v12.html?v=12>. 
-Use CTRL + F to search for the v11 method or property you want to get information for how it's changed in v12.
-"""
-
 [filter]
 keywords = ["filter"]
 content = """
