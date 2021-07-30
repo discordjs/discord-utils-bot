@@ -813,8 +813,8 @@ The filter for collectors has moved into the options:
 + const collector = message.createReactionCollector({ filter, ...options });
 """
 
-[master-events]
-keywords = ["master-events", "master events", "v13-events", "v13 events"]
+[event-deprecation]
+keywords = ["event-deprecation", "event deprecation", "messageCreate", "interactionCreate"]
 content = """
 The `message` and `interaction` events have been renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
 
