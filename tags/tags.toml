@@ -560,7 +560,7 @@ How we generate our documentation:
 keywords = ["slash-limits", "slash limits", "/limits", "slash command limits"]
 content = """
 Slash command limits:
-• [Discord Developer Documentaiton](<https://discord.com/developers/docs/interactions/slash-commands>) 
+• [Discord Developer Documentation](<https://discord.com/developers/docs/interactions/slash-commands>) 
 """
 
 [equals]
