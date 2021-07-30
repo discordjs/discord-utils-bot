@@ -804,8 +804,8 @@ Version 13 is still in development, the branch moves quickly.
 *\\🚧 This is still a draft and may not be up to date at all times*
 """
 
-[master-events]
-keywords = ["master-events", "master events", "v13-events", "v13 events"]
+[event-deprecation]
+keywords = ["event-deprecation", "event deprecation", "master-events", "master events", "v13-events", "v13 events"]
 content = """
 The `message` and `interaction` events have been renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
 
