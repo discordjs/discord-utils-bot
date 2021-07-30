@@ -803,3 +803,13 @@ Version 13 is still in development, the branch moves quickly.
 • [Preview update guide](<https://deploy-preview-680--discordjs-guide.netlify.app/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
 *\\🚧 This is still a draft and may not be up to date at all times*
 """
+
+[filter]
+keywords = ["filter"]
+content = """
+The filter for collectors has moved into the options:
+```diff
+- const collector = message.createReactionCollector(filter, { ...options });
++ const collector = message.createReactionCollector({ filter, ...options });
+```
+"""
