@@ -813,3 +813,16 @@ The filter for collectors has moved into the options:
 + const collector = message.createReactionCollector({ filter, ...options });
 ```
 """
+
+[event-deprecation]
+keywords = ["event-deprecation", "event deprecation", "messageCreate", "interactionCreate"]
+content = """
+On master branch, `message` and `interaction` events have been renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
+Don't worry - the old names still work, but you'll receive a Deprecation Warning until you switch over.
+```diff
+- <Client>.on('message', message => { ... });
++ <Client>.on('messageCreate', message => { ... });
+- <Client>.on('interaction', interaction => { ... });
++ <Client>.on('interactionCreate', interaction => { ... });
+```
+"""
