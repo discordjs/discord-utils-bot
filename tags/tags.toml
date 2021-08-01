@@ -754,7 +754,7 @@ The timeout option has been removed from the [Message#delete](<https://discord.j
 ```diff
 - message.delete(5000)
 - message.delete({ timeout: 5000 })
-+ message.client.setTimeout(() => { message.delete() }, 5000)
++ setTimeout(() => { message.delete() }, 5000)
 ```
 """
 
