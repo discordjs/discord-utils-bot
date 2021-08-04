@@ -827,3 +827,9 @@ The old events still work, but you'll receive a deprecation warning until you sw
 + client.on('interactionCreate', interaction => { ... });
 ```
 """
+
+[message-formatting]
+keywords = ["message-formatting", "formats", "timestamp", "date format", "timestamp styles"]
+content = """
+Message formatting (e.g. timestamps, mentions, and emojis): [learn more](<https://discord.com/developers/docs/reference#message-formatting>)
+"""
