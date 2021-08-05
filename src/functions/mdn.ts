@@ -32,7 +32,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 			.replace(linkReplaceRegex, `[$1](${API_BASE_MDN}<$2>)`)
 			.replace(boldCodeBlockRegex, '**`$1`**');
 
-		const parts = [`${EMOJI_MDN} \ __[**${hit.title as string}**](<${url}>)__`, intro];
+		const parts = [`${EMOJI_MDN} \ __**[${hit.title as string}](<${url}>)**__`, intro];
 
 		prepareResponse(
 			res,
