@@ -286,7 +286,7 @@ content = """
 [notation]
 keywords = ["notation", "<>", "understanding notation", "notation guide"]
 content = """
-Explaining `<Class>` and `Class#method` notiation: [learn more](<https://discordjs.guide/additional-info/notation.html>)
+Explaining `<Class>` and `Class#method` notation: [learn more](<https://discordjs.guide/additional-info/notation.html>)
 """
 
 [collection]
@@ -501,7 +501,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 """
 
 [version]
-keywords = ["version", "discord.js verison", "provide version", "find version"]
+keywords = ["version", "discord.js version", "provide version", "find version"]
 content = """
 Determining your discord.js version:
 • `npm list discord.js`
@@ -600,7 +600,7 @@ keywords = ["inequality", "!==", "!="]
 content = """
 Checking for things to not be equal in JavaScript:
 ```diff
-- if (!yourVariable === yourOtherVariable) // !yourVariable is coereced to a boolean value
+- if (!yourVariable === yourOtherVariable) // !yourVariable is coerced to a boolean value
 + if (yourVariable !== yourOtherVariable) // checks that one is not equal to the other
 ```
 • Comparison operators in JavaScript: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Comparison>)
@@ -609,7 +609,7 @@ Checking for things to not be equal in JavaScript:
 [member-user]
 keywords = ["member-user", "member user", "usermember", "user member", "user-member"]
 content = """
-Despite sounding similar there is a distinct differenc between users and members in Discord:
+Despite sounding similar there is a distinct difference between users and members in Discord:
 • [User](<https://discord.js.org/#/docs/main/stable/class/User>): global discord user data (global avatar, username, tag, id) 
 • [GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
 • Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/main/stable/class/GuildMember?scrollTo=user>)
@@ -680,7 +680,7 @@ client
     .on("warn", console.log)
 ```
 • Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
-• If the output is too long to post conside using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
+• If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
 """
 
 [install]
@@ -773,7 +773,7 @@ content = """
 [api-spam]
 keywords = ["api-spam", "api spam", "api abuse", "rainbow roles", "rainbowroles", "spam"]
 content = """
-Ratelimits are dynamically assigne by the API based on current load and may change at any point.
+Ratelimits are dynamically assigned by the API based on current load and may change at any point.
 • The scale from okay to api spam is sliding and heavily depends on the action you are taking
 • Rainbow roles, clock and counter channels or DMing advertisement to all members are examples of things that are not okay
 """
