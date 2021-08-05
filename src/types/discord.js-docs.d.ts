@@ -13,6 +13,7 @@ declare module 'discord.js-docs' {
 
 interface DocElement {
 	formattedDescription: string | null;
+	formattedName: string;
 	description: string | null;
 	link: string | null;
 	url: string | null;

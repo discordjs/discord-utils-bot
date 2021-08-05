@@ -1,7 +1,9 @@
 import { Response } from 'polka';
 import Doc from 'discord.js-docs';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
-import { EMOJI_DJS, EMOJI_DJS_DEV, PREFIX_FAIL } from '../util/constants';
+import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
+import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV, PREFIX_FAIL } from '../util/constants';
+
+import { formatEmoji, truncate } from '../util';
 
 function escapeMDLinks(s = ''): string {
 	return s.replace(/\[(.+?)\]\((.+?)\)/g, '[$1](<$2>)');
@@ -12,7 +14,7 @@ function formatInheritance(prefix: string, inherits: DocElement[], doc: Doc): st
 	return ` (${prefix} ${res.map((element) => escapeMDLinks(doc.formatType(element))).join(' and ')})`;
 }
 
-function resolveElementString(element: DocElement, doc: Doc): string {
+export function resolveElementString(element: DocElement, doc: Doc): string {
 	const parts = [];
 	if (element.docType === 'event') parts.push('**(event)** ');
 	if (element.static) parts.push('**(static)** ');
@@ -28,33 +30,65 @@ function resolveElementString(element: DocElement, doc: Doc): string {
 	return `${parts.join('')}\n${description}`;
 }
 
-function resolveResultString(results: DocElement[]): string {
-	const res = [
-		`${PREFIX_FAIL} No match. Here are some search results:`,
-		...results.map((res) => `• **${escapeMDLinks(res.link ?? '')}**`),
-	];
-	return res.join('\n');
+function buildSelectOption(result: DocElement, emojiId: string) {
+	return {
+		label: result.formattedName,
+		value: result.formattedName,
+		description: truncate(result.formattedDescription ?? result.description ?? 'No description found', 47),
+		emoji: {
+			id: emojiId,
+		},
+	};
 }
 
-export async function djsDocs(res: Response, source: string, query: string, target?: string): Promise<Response> {
-	query = query.trim();
-	const doc = await Doc.fetch(source, { force: true });
+export function fetchDocResult(source: string, doc: Doc, query: string, user?: string, target?: string): string | null {
 	const element = doc.get(...query.split(/\.|#/));
-	const icon = source === 'master' ? EMOJI_DJS_DEV : EMOJI_DJS;
+	if (!element) return null;
+	const icon = formatEmoji(source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
+	const messageParts = [];
+	if (user || target) {
+		messageParts.push('*Documentation suggestion');
+	}
+	if (target) {
+		messageParts.push(` for <@${target}>`);
+	}
+	if (user) {
+		messageParts.push(` selected by <@${user}>`);
+	}
+	if (user || target) {
+		messageParts.push('*\n');
+	}
+	messageParts.push(`${icon} ${resolveElementString(element, doc)}`);
 
-	if (element) {
-		prepareResponse(
-			res,
-			`${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}${icon} ${resolveElementString(element, doc)}`,
-			false,
-			target ? [target] : [],
-		);
+	return messageParts.join('');
+}
+
+export function djsDocs(
+	res: Response,
+	doc: Doc,
+	source: string,
+	query: string,
+	user?: string,
+	target?: string,
+): Response {
+	query = query.trim();
+
+	const singleResult = fetchDocResult(source, doc, query, user, target);
+	if (singleResult) {
+		prepareResponse(res, singleResult, false, target ? [target] : [], [], 4);
 		return res;
 	}
 
 	const results = doc.search(query);
 	if (results?.length) {
-		prepareResponse(res, resolveResultString(results), true);
+		prepareSelectMenu(
+			res,
+			`${PREFIX_FAIL} No match. Here are some search results:`,
+			results.map((r) => buildSelectOption(r, source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS)),
+			4,
+			`docsearch|${target ?? ''}|${source}`,
+			true,
+		);
 		return res;
 	}
 

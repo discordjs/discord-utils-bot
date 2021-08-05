@@ -3,7 +3,8 @@ import fetch from 'node-fetch';
 import { logger } from '../util/logger';
 import TurndownService from 'turndown';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
-import { API_BASE_NODE, API_DOCS_NODE, EMOJI_NODE } from '../util/constants';
+import { API_BASE_NODE, API_DOCS_NODE, EMOJI_ID_NODE } from '../util/constants';
+import { formatEmoji } from '../util';
 
 const td = new TurndownService({ codeBlockStyle: 'fenced' });
 
@@ -86,7 +87,7 @@ export async function nodeSearch(res: Response, query: string, target?: string):
 		}`;
 		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
 		const fullURL = `${moduleURL}.html${anchor}`;
-		const parts = [`${EMOJI_NODE} \ __[**${result.textRaw as string}**](<${fullURL}>)__`];
+		const parts = [`${formatEmoji(EMOJI_ID_NODE)} \ __[**${result.textRaw as string}**](<${fullURL}>)__`];
 
 		const intro = td.turndown(result.desc ?? '').split('\n\n')[0];
 		const linkReplaceRegex = /\[(.+?)\]\((.+?)\)/g;

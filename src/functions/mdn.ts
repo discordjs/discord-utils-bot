@@ -3,7 +3,8 @@ import { Response } from 'polka';
 import { logger } from '../util/logger';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
 import { encode } from 'querystring';
-import { API_BASE_MDN, EMOJI_MDN } from '../util/constants';
+import { API_BASE_MDN, EMOJI_ID_MDN } from '../util/constants';
+import { formatEmoji } from '../util';
 
 const cache = new Map<string, any>();
 
@@ -32,7 +33,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 			.replace(linkReplaceRegex, `[$1](${API_BASE_MDN}<$2>)`)
 			.replace(boldCodeBlockRegex, '**`$1`**');
 
-		const parts = [`${EMOJI_MDN} \ __[**${hit.title as string}**](<${url}>)__`, intro];
+		const parts = [`${formatEmoji(EMOJI_ID_MDN)} \ __[**${hit.title as string}**](<${url}>)__`, intro];
 
 		prepareResponse(
 			res,

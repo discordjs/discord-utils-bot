@@ -5,8 +5,9 @@ import * as qs from 'querystring';
 import { Response } from 'polka';
 import fetch from 'node-fetch';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
-import { API_BASE_ALGOLIA, DEFAULT_GUIDE_RESULT_AMOUNT, EMOJI_GUIDE } from '../util/constants';
+import { API_BASE_ALGOLIA, DEFAULT_GUIDE_RESULT_AMOUNT, EMOJI_ID_GUIDE } from '../util/constants';
 import { decode } from 'html-entities';
+import { formatEmoji } from '../util';
 
 export async function djsGuide(
 	response: Response,
@@ -44,9 +45,9 @@ export async function djsGuide(
 
 	prepareResponse(
 		response,
-		`${
-			target ? `*Guide suggestion for <@${target}>:*\n` : ''
-		}${EMOJI_GUIDE} **discordjs.guide results:**\n${result.join('\n')}`,
+		`${target ? `*Guide suggestion for <@${target}>:*\n` : ''}${formatEmoji(
+			EMOJI_ID_GUIDE,
+		)} **discordjs.guide results:**\n${result.join('\n')}`,
 		false,
 		target ? [target] : [],
 	);
