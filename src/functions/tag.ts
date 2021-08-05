@@ -1,8 +1,14 @@
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
 import { Response } from 'polka';
 import Collection from '@discordjs/collection';
 import { distance } from 'fastest-levenshtein';
-import { CLOSEST_MATCH_AMOUNT, MAX_MESSAGE_LENGTH, PREFIX_SUCCESS, REMOTE_TAG_URL } from '../util/constants';
+import {
+	CLOSEST_MATCH_AMOUNT,
+	EMOJI_ID_DJS,
+	MAX_MESSAGE_LENGTH,
+	PREFIX_SUCCESS,
+	REMOTE_TAG_URL,
+} from '../util/constants';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
@@ -20,8 +26,14 @@ export interface TagSimilarityEntry {
 	lev: number;
 }
 
-function mapper(entry: TagSimilarityEntry): string {
-	return entry.name === entry.word ? `\`${entry.name}\`` : `\`${entry.name} (${entry.word})\``;
+function mapper(entry: TagSimilarityEntry) {
+	return {
+		label: entry.name === entry.word ? entry.name : `${entry.name} (${entry.word})`,
+		value: entry.name,
+		emoji: {
+			id: EMOJI_ID_DJS,
+		},
+	};
 }
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
@@ -48,6 +60,31 @@ export function findSimilar(query: string, tagCache: Collection<string, Tag>, n 
 		.slice(0, n);
 }
 
+export function findTag(
+	tagCache: Collection<string, Tag>,
+	query: string,
+	user?: string,
+	target?: string,
+): string | null {
+	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
+	if (!tag) return null;
+	const messageParts = [];
+	if (user || target) {
+		messageParts.push('*Tag suggestion');
+	}
+	if (target) {
+		messageParts.push(` for <@${target}>`);
+	}
+	if (user) {
+		messageParts.push(` selected by <@${user}>`);
+	}
+	if (user || target) {
+		messageParts.push('*\n');
+	}
+	messageParts.push(tag.content);
+	return messageParts.join('');
+}
+
 export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {
 	const prev = tagCache.size;
 	tagCache.clear();
@@ -70,24 +107,27 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 	return res;
 }
 
-export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
+export function showTag(
+	res: Response,
+	query: string,
+	tagCache: Collection<string, Tag>,
+	user?: string,
+	target?: string,
+): Response {
 	query = query.trim().toLowerCase();
-	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
-	if (tag) {
-		prepareResponse(
-			res,
-			`${target ? `*Tag suggestion for <@${target}>:*\n` : ''}${tag.content}`,
-			false,
-			target ? [target] : [],
-		);
+	const content = findTag(tagCache, query, user, target)!;
+	if (content) {
+		prepareResponse(res, content, false, target ? [target] : []);
 	} else {
 		const similar = findSimilar(query, tagCache, CLOSEST_MATCH_AMOUNT);
 		if (similar.length) {
-			prepareErrorResponse(
+			prepareSelectMenu(
 				res,
-				`Could not find a tag with name or alias \`${query}\`. Maybe you mean one of ${similar
-					.map(mapper)
-					.join(', ')}?`,
+				`Could not find a tag with name or alias \`${query}\`. Maybe you mean one of these?`,
+				similar.map(mapper),
+				4,
+				`tag|${target ?? ''}`,
+				true,
 			);
 		} else {
 			prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${query}\`.`);

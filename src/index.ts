@@ -8,7 +8,7 @@ import { djsGuide } from './functions/guide';
 import { mdnSearch } from './functions/mdn';
 import { nodeSearch } from './functions/node';
 import { API_BASE_DISCORD, DEFAULT_DOCS_BRANCH, PREFIX_BUG, PREFIX_TEAPOT } from './util/constants';
-import { loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
+import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
 import fetch from 'node-fetch';
 import Doc from 'discord.js-docs';
@@ -79,7 +79,7 @@ export function start() {
 					}
 
 					if (name === 'tag') {
-						return (await showTag(res, args.query, tagCache, args.target)).end();
+						return (await showTag(res, args.query, tagCache, undefined, args.target)).end();
 					}
 
 					if (name === 'tagsearch') {
@@ -122,6 +122,28 @@ export function start() {
 								},
 								body: JSON.stringify({
 									content: fetchDocResult(source, doc, selected[0], user, target),
+									allowed_mentions: { users: target.length ? [target] : [] },
+								}),
+							});
+						} catch (err) {
+							logger.error(err);
+						}
+						return;
+					}
+
+					if (op === 'tag') {
+						prepareResponse(res, 'Suggestion sent', false, [], [], 7);
+						res.end();
+
+						try {
+							const user = message.user?.id ?? message.member.user.id;
+							await fetch(`${API_BASE_DISCORD}/webhooks/${process.env.DISCORD_CLIENT_ID!}/${token as string}`, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								body: JSON.stringify({
+									content: findTag(tagCache, selected[0], user, target),
 									allowed_mentions: { users: target.length ? [target] : [] },
 								}),
 							});
