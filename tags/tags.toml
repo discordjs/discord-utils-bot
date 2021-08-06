@@ -772,8 +772,8 @@ content = """
 keywords = ["api-spam", "api spam", "api abuse", "rainbow roles", "rainbowroles", "spam"]
 content = """
 Ratelimits are dynamically assigned by the API based on current load and may change at any point.
-• The scale from okay to api spam is sliding and heavily depends on the action you are taking
-• Rainbow roles, clock and counter channels or DMing advertisement to all members are examples of things that are not okay
+• The scale from okay to API-spam is sliding and depends heavily on the action you are taking
+• Rainbow roles, clock and counter channels, and DM'ing advertisements to all members are all examples of things that are not okay
 """
 
 [abort]
