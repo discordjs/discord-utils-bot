@@ -170,7 +170,7 @@ const channel = client.channels.cache.find(channel => channel.name === "general"
 [node-version]
 keywords = ["node-version", "nv", "flat", "fields flat", "catch {", "update node"]
 content = """
-Please update node.js to version 16.0.0 or newer!
+Please update node.js to version 16.6.0 or newer!
 • [Download](<https://nodejs.org/en/download>)
 • [Linux (nodesource)](<https://github.com/nodesource/distributions>)
 """
