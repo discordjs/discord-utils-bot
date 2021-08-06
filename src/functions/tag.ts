@@ -14,6 +14,7 @@ import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { logger } from '../util/logger';
 import fetch from 'node-fetch';
+import { suggestionString } from '../util';
 
 export interface Tag {
 	keywords: string[];
@@ -68,21 +69,7 @@ export function findTag(
 ): string | null {
 	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
 	if (!tag) return null;
-	const messageParts = [];
-	if (user || target) {
-		messageParts.push('*Tag suggestion');
-	}
-	if (target) {
-		messageParts.push(` for <@${target}>`);
-	}
-	if (user) {
-		messageParts.push(` selected by <@${user}>`);
-	}
-	if (user || target) {
-		messageParts.push('*\n');
-	}
-	messageParts.push(tag.content);
-	return messageParts.join('');
+	return suggestionString('tag', tag.content, user, target);
 }
 
 export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {

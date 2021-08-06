@@ -16,3 +16,29 @@ export function truncate(text: string, len: number, splitChar = ' '): string {
 	const resText = res.join(splitChar);
 	return resText.length === text.length ? resText : `${resText.trim()}...`;
 }
+
+export function suggestionString(
+	suggestionType: string,
+	guaranteed?: string,
+	author?: string,
+	target?: string,
+): string {
+	const messageParts = [];
+	const [first, ...rest] = suggestionType;
+	if (author || target) {
+		messageParts.push(`*${first.toUpperCase()}${rest.join('')} suggestion`);
+		if (target) {
+			messageParts.push(` for <@${target}>`);
+		}
+		if (author) {
+			messageParts.push(` from <@${author}>`);
+		}
+		messageParts.push(':*\n');
+	}
+
+	if (guaranteed) {
+		messageParts.push(guaranteed);
+	}
+
+	return messageParts.join('');
+}

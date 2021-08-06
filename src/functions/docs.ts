@@ -3,7 +3,7 @@ import Doc from 'discord.js-docs';
 import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
 import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV, PREFIX_FAIL } from '../util/constants';
 
-import { formatEmoji, truncate } from '../util';
+import { formatEmoji, suggestionString, truncate } from '../util';
 
 function escapeMDLinks(s = ''): string {
 	return s.replace(/\[(.+?)\]\((.+?)\)/g, '[$1](<$2>)');
@@ -45,22 +45,7 @@ export function fetchDocResult(source: string, doc: Doc, query: string, user?: s
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
 	const icon = formatEmoji(source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
-	const messageParts = [];
-	if (user || target) {
-		messageParts.push('*Documentation suggestion');
-	}
-	if (target) {
-		messageParts.push(` for <@${target}>`);
-	}
-	if (user) {
-		messageParts.push(` selected by <@${user}>`);
-	}
-	if (user || target) {
-		messageParts.push('*\n');
-	}
-	messageParts.push(`${icon} ${resolveElementString(element, doc)}`);
-
-	return messageParts.join('');
+	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, user, target);
 }
 
 export function djsDocs(
