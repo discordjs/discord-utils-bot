@@ -458,9 +458,8 @@ Sending and editing now takes only a single object parameter!
 - channel.send('Hello!', { embed });
 + channel.send({ content: 'Hello!', embeds: [embed, embed2] });
 ```
-• Full migration guide: [coming soon](<https://discordjs.guide>)
+• Full migration guide: [learn more](<https://discordjs.guide/additional-info/changes-in-v13.html>)
 """
-# TODO: final guide link to v13-changes, once available
 
 [codeblock]
 keywords = ["codeblock", "code block", "code blocks", "cb", "code box", "codebox"]
@@ -638,9 +637,8 @@ const client = new Client({
 keywords = ["discord-buttons", "discord buttons", "discordbuttons"]
 content = """
 **We do not provide any help with third party libraries like discord-buttons.**
-• Discord.js supports buttons natively: [WIP guide](<https://v13-prep.discordjs.guide/interactions/buttons.html>)
+• Discord.js supports buttons natively: [guide](<https://discordjs.guide/interactions/buttons.html>)
 """
-# TODO: insert guide link after button guide is merged
 
 [find-id]
 keywords = ["find-id", "find by id", "id-find", "find id", "fbi"]
@@ -800,8 +798,7 @@ keywords = ["v13-changes", "v13 changes", "changes", "v13", "13"]
 content = """
 Version 13 is still in development, the branch moves quickly.
 • install preview: `npm i discord.js@dev`
-• [Preview update guide](<https://deploy-preview-680--discordjs-guide.netlify.app/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
-*\\🚧 This is still a draft and may not be up to date at all times*
+• [Update guide](<https://discordjs.guide/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
 """
 
 [filter]
