@@ -30,4 +30,4 @@ Put your tag content here!
 - Keywords need to include the tag name
 - Backslashes have to be escaped! `\\`
 - Code blocks work and newlines are respected
-- The repository inlcudes vscode code-snippets for tags, masked links, "learn more" links, a bullet point and arrow character
+- The repository includes vscode code-snippets for tags, masked links, "learn more" links, a bullet point and arrow character
