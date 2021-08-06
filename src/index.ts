@@ -76,7 +76,7 @@ export function start() {
 					}
 
 					if (name === 'tagsearch') {
-						return (await searchTag(res, args.query, tagCache)).end();
+						return (await searchTag(res, args.query, tagCache, args.target)).end();
 					}
 
 					if (name === 'tagreload') {

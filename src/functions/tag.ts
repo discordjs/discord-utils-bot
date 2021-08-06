@@ -125,20 +125,35 @@ export function showTag(
 	return res;
 }
 
-export function searchTag(res: Response, query: string, tagCache: Collection<string, Tag>): Response {
+export function searchTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
 	query = query.toLowerCase();
 
-	const result: string[] = [];
+	const result = [];
 	for (const [key, tag] of tagCache.entries()) {
-		if (tag.keywords.find((s) => s.toLowerCase().includes(query)) || tag.content.toLowerCase().includes(query)) {
+		const foundKeyword = tag.keywords.find((s) => s.toLowerCase().includes(query));
+		const isContentMatch = tag.content.toLowerCase().includes(query);
+		if (foundKeyword || isContentMatch) {
 			if (result.join(', ').length + tag.keywords.length + 6 < MAX_MESSAGE_LENGTH) {
-				result.push(`\`${key}\``);
+				result.push({
+					label: key,
+					value: key,
+					emoji: {
+						id: EMOJI_ID_DJS,
+					},
+				});
 			}
 		}
 	}
 
 	if (result.length) {
-		prepareResponse(res, `Found tags: ${result.join(', ')}`, true);
+		prepareSelectMenu(
+			res,
+			`${formatEmoji(EMOJI_ID_DJS)} Select a query result to send it:`,
+			result,
+			4,
+			`tag|${target ?? ''}`,
+			true,
+		);
 	} else {
 		prepareErrorResponse(res, `No tags matching query \`${query}\` found.`);
 	}
