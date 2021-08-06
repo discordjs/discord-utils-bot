@@ -55,14 +55,7 @@ export function start() {
 						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
 
 						return (
-							await djsDocs(
-								res,
-								doc,
-								args.source ?? DEFAULT_DOCS_BRANCH,
-								args.query,
-								message.user ? message.user.id : message.member.user.id,
-								args.target,
-							)
+							await djsDocs(res, doc, args.source ?? DEFAULT_DOCS_BRANCH, args.query, undefined, args.target)
 						).end();
 					}
 
