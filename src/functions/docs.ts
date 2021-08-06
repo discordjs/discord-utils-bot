@@ -69,7 +69,7 @@ export function djsDocs(
 	if (results?.length) {
 		prepareSelectMenu(
 			res,
-			`${icon} No match. Select a similar earch result to send it:`,
+			`${icon} No match. Select a similar search result to send it:`,
 			results.map((r) => buildSelectOption(r, icon)),
 			4,
 			`docsearch|${target ?? ''}|${source}`,
