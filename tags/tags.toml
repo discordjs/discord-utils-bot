@@ -618,7 +618,7 @@ Despite sounding similar there is a distinct difference between users and member
 [linter]
 keywords = ["linter", "lint", "eslint", "jslint"]
 content = """
-"> Lint, or a linter, is a tool that analyzes source code to flag programming errors, bugs, stylistic errors, and suspicious constructs." 
+"Lint, or a linter, is a tool that analyzes source code to flag programming errors, bugs, stylistic errors, and suspicious constructs." 
 • Set up a linter in your development environment: [learn more](<https://discordjs.guide/preparations/setting-up-a-linter.html>)
 """
 
