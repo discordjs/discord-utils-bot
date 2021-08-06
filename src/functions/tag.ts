@@ -14,7 +14,7 @@ import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { logger } from '../util/logger';
 import fetch from 'node-fetch';
-import { suggestionString } from '../util';
+import { formatEmoji, suggestionString } from '../util';
 
 export interface Tag {
 	keywords: string[];
@@ -110,7 +110,9 @@ export function showTag(
 		if (similar.length) {
 			prepareSelectMenu(
 				res,
-				`Could not find a tag with name or alias \`${query}\`. Maybe you mean one of these?`,
+				`${formatEmoji(
+					EMOJI_ID_DJS,
+				)} Could not find a tag with name or alias \`${query}\`. Select a similar result from the list to send it instead:`,
 				similar.map(mapper),
 				4,
 				`tag|${target ?? ''}`,

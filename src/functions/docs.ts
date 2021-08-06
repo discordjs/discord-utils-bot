@@ -1,7 +1,7 @@
 import { Response } from 'polka';
 import Doc from 'discord.js-docs';
 import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
-import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV, PREFIX_FAIL } from '../util/constants';
+import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV } from '../util/constants';
 
 import { formatEmoji, suggestionString, truncate } from '../util';
 
@@ -65,11 +65,12 @@ export function djsDocs(
 	}
 
 	const results = doc.search(query);
+	const icon = formatEmoji(source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
 	if (results?.length) {
 		prepareSelectMenu(
 			res,
-			`${PREFIX_FAIL} No match. Here are some search results:`,
-			results.map((r) => buildSelectOption(r, source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS)),
+			`${icon} No match. Select a similar earch result to send it:`,
+			results.map((r) => buildSelectOption(r, icon)),
 			4,
 			`docsearch|${target ?? ''}|${source}`,
 			true,
