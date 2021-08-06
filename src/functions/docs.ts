@@ -65,12 +65,12 @@ export function djsDocs(
 	}
 
 	const results = doc.search(query);
-	const icon = formatEmoji(source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
+	const iconId = source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS;
 	if (results?.length) {
 		prepareSelectMenu(
 			res,
-			`${icon} No match. Select a similar search result to send it:`,
-			results.map((r) => buildSelectOption(r, icon)),
+			`${formatEmoji(iconId)} No match. Select a similar search result to send it:`,
+			results.map((r) => buildSelectOption(r, iconId)),
 			4,
 			`docsearch|${target ?? ''}|${source}`,
 			true,
