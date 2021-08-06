@@ -84,7 +84,7 @@ content = """
 keywords = ["hierarchy", "roleorder"]
 content = """
 • Bots cannot moderate (kick/ban/nickname/...) a target with a higher or equally high highest role or the guild owner.
-• Bots cannot modify (edit/add/remove) roles that are higher or equally high compared to the bots highest role.
+• Bots cannot modify (edit/add/remove) roles that are higher or equally high compared to the bot's highest role.
 • The `ADMINISTRATOR` permission does not skip these checks.
 """
 
@@ -152,7 +152,7 @@ Discord.js documentation:
 keywords = ["snipe", "snipe command", "snipe commands", "snipecommands"]
 content = """
 Snipe commands are widely considered a violation of user privacy. If a message is deleted it should stay that way.
-• Logs for moderation purpose are fine
+• Logs for moderation purposes are fine
 • Bringing back a deleted message by just anyone to expose or humiliate a user is not
 """
 
@@ -286,7 +286,7 @@ content = """
 [notation]
 keywords = ["notation", "<>", "understanding notation", "notation guide"]
 content = """
-Explaining `<Class>` and `Class#method` notiation: [learn more](<https://discordjs.guide/additional-info/notation.html>)
+Explaining `<Class>` and `Class#method` notation: [learn more](<https://discordjs.guide/additional-info/notation.html>)
 """
 
 [collection]
@@ -501,7 +501,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 """
 
 [version]
-keywords = ["version", "discord.js verison", "provide version", "find version"]
+keywords = ["version", "discord.js version", "provide version", "find version"]
 content = """
 Determining your discord.js version:
 • `npm list discord.js`
@@ -600,7 +600,7 @@ keywords = ["inequality", "!==", "!="]
 content = """
 Checking for things to not be equal in JavaScript:
 ```diff
-- if (!yourVariable === yourOtherVariable) // !yourVariable is coereced to a boolean value
+- if (!yourVariable === yourOtherVariable) // !yourVariable is coerced to a boolean value
 + if (yourVariable !== yourOtherVariable) // checks that one is not equal to the other
 ```
 • Comparison operators in JavaScript: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Comparison>)
@@ -609,7 +609,7 @@ Checking for things to not be equal in JavaScript:
 [member-user]
 keywords = ["member-user", "member user", "usermember", "user member", "user-member"]
 content = """
-Despite sounding similar there is a distinct differenc between users and members in Discord:
+Despite sounding similar there is a distinct difference between users and members in Discord:
 • [User](<https://discord.js.org/#/docs/main/stable/class/User>): global discord user data (global avatar, username, tag, id) 
 • [GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
 • Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/main/stable/class/GuildMember?scrollTo=user>)
@@ -680,7 +680,7 @@ client
     .on("warn", console.log)
 ```
 • Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
-• If the output is too long to post conside using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
+• If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
 """
 
 [install]
@@ -722,7 +722,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
 [self-invite]
 keywords = ["self-invite", "selfinvite", "self invite", "backdoor"]
 content = """
-Discord does not condone bots creating invites without expressed consent of the guild owner/admins. [source (discord API server)](<https://discord.com/channels/81384788765712384/381870553235193857/686320169995337728>)
+Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (discord API server)](<https://discord.com/channels/81384788765712384/381870553235193857/686320169995337728>)
 • If you are experiencing problems with a particular guild, have your bot leave and/or blacklist it
 """
 
@@ -773,7 +773,7 @@ content = """
 [api-spam]
 keywords = ["api-spam", "api spam", "api abuse", "rainbow roles", "rainbowroles", "spam"]
 content = """
-Ratelimits are dynamically assigne by the API based on current load and may change at any point.
+Ratelimits are dynamically assigned by the API based on current load and may change at any point.
 • The scale from okay to api spam is sliding and heavily depends on the action you are taking
 • Rainbow roles, clock and counter channels or DMing advertisement to all members are examples of things that are not okay
 """
