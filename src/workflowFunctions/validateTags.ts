@@ -4,7 +4,7 @@ import * as TOML from '@ltd/j-toml';
 import { Tag } from '../functions/tag';
 import { red } from 'kleur';
 
-type ConflictType = 'uniqueKeywords' | 'headerInKeywords' | 'emptyKeyword';
+type ConflictType = 'uniqueKeywords' | 'headerInKeywords' | 'emptyKeyword' | 'unescapedLink';
 
 interface Conflict {
 	firstName: string;
@@ -18,8 +18,25 @@ function validateTags() {
 	const data = TOML.parse(file, 1.0, '\n');
 	const conflicts: Conflict[] = [];
 	for (const [key, value] of Object.entries(data)) {
+		const v = value as unknown as Tag;
+		const codeBlockRegex = /(`{1,3}).+?\1/gs;
+		const detectionRegex = /\[[^\[\]]+?\]\([^<][^\(\)]+?[^>]\)/g;
+		const cleanedContent = v.content.replace(codeBlockRegex, '');
+
+		const conflictLinks = [];
+		let result: RegExpExecArray | null;
+		while ((result = detectionRegex.exec(cleanedContent)) !== null) {
+			conflictLinks.push(result[0]);
+		}
+		if (conflictLinks.length) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: conflictLinks,
+				type: 'unescapedLink',
+			});
+		}
 		for (const [otherKey, otherValue] of Object.entries(data)) {
-			const v = value as unknown as Tag;
 			const oV = otherValue as unknown as Tag;
 			if (
 				(v.keywords.some((k) => !k.replace(/\s+/g, '').length) || !v.content.replace(/\s+/g, '').length) &&
@@ -59,16 +76,20 @@ function validateTags() {
 
 	if (conflicts.length) {
 		const parts = [];
-		const { uniqueConflicts, headerConflicts, emptyConflicts } = conflicts.reduce(
+		const { uniqueConflicts, headerConflicts, emptyConflicts, linkConflicts } = conflicts.reduce(
 			(a, c) => {
-				if (c.type === 'uniqueKeywords') {
-					a.uniqueConflicts.push(c);
-				}
-				if (c.type === 'headerInKeywords') {
-					a.headerConflicts.push(c);
-				}
-				if (c.type === 'emptyKeyword') {
-					a.emptyConflicts.push(c);
+				switch (c.type) {
+					case 'uniqueKeywords':
+						a.uniqueConflicts.push(c);
+						break;
+					case 'headerInKeywords':
+						a.headerConflicts.push(c);
+						break;
+					case 'emptyKeyword':
+						a.emptyConflicts.push(c);
+						break;
+					case 'unescapedLink':
+						a.linkConflicts.push(c);
 				}
 				return a;
 			},
@@ -76,6 +97,7 @@ function validateTags() {
 				uniqueConflicts: [] as Conflict[],
 				headerConflicts: [] as Conflict[],
 				emptyConflicts: [] as Conflict[],
+				linkConflicts: [] as Conflict[],
 			},
 		);
 
@@ -96,11 +118,20 @@ function validateTags() {
 
 		if (emptyConflicts.length) {
 			parts.push(
-				`Tag validation error: Tag keywords and body can not be empty:\n${emptyConflicts
+				`Tag validation error: Tag keywords and body cannot be empty:\n${emptyConflicts
 					.map((c, i) => red(`${i}. [${c.firstName}]`))
 					.join('\n')}`,
 			);
 		}
+
+		if (linkConflicts.length) {
+			parts.push(
+				`Tag validation error: Masked links need to be escaped as [label](<link>):\n${linkConflicts
+					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
+					.join('\n')}`,
+			);
+		}
+
 		// eslint-disable-next-line no-console
 		console.error(parts.join('\n\n'));
 		process.exit(1);
