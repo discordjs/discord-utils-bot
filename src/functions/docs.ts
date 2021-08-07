@@ -44,7 +44,7 @@ function buildSelectOption(result: DocElement, emojiId: string) {
 export function fetchDocResult(source: string, doc: Doc, query: string, user?: string, target?: string): string | null {
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
-	const icon = formatEmoji(source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
+	const icon = formatEmoji(source === 'main' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
 	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, user, target);
 }
 
@@ -65,7 +65,7 @@ export function djsDocs(
 	}
 
 	const results = doc.search(query);
-	const iconId = source === 'master' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS;
+	const iconId = source === 'main' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS;
 	if (results?.length) {
 		prepareSelectMenu(
 			res,

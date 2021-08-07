@@ -145,7 +145,7 @@ keywords = ["docs", "djsdocs", "thedocs", "documentation"]
 content = """
 Discord.js documentation:
 • stable release: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
-• developer release: [learn more](<https://discord.js.org/#/docs/main/master/general/welcome>)
+• developer release: [learn more](<https://discord.js.org/#/docs/main/main/general/welcome>)
 """
 
 [snipe]
@@ -163,7 +163,7 @@ content = """
 const channel = client.channels.cache.get("222086648706498562");
 const channel = client.channels.cache.find(channel => channel.name === "general");
 ```
-• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/master/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/main/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
 
@@ -264,7 +264,7 @@ content = """
 You can control which entities receive notifications via the `allowedMentions` option.
 • Set a [default on the client](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>): `new Discord.Client({ allowedMentions: ["users", "roles"], ... })`
 • Overwrite the default for [specific messages](<https://discord.js.org/#/docs/main/stable/typedef/MessageMentionOptions>): `channel.send("...", { users: ["348607796335607817"] })`
-• Configuring if a user should be notified in an [interaction response](<https://discord.js.org/#/docs/main/master/typedef/MessageMentionOptions>) is done via the `repliedUser` key
+• Configuring if a user should be notified in an [interaction response](<https://discord.js.org/#/docs/main/main/typedef/MessageMentionOptions>) is done via the `repliedUser` key
 """
 
 [escape-emojis]
@@ -496,7 +496,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 • `CLIENT_ID` needs to be replaced with your bot Id
 • Permission calculator: [learn more](<https://finitereality.github.io/permissions-calculator>)
 • If you need slash commands and the bot scope you can use `scope=bot applications.commands`
-• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/main/master/class/Client?scrollTo=generateInvite>)
+• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/main/main/class/Client?scrollTo=generateInvite>)
 """
 
 [version]
@@ -551,7 +551,7 @@ content = """
 How we generate our documentation:
 • (1) Source code is run through the [docgen](<https://github.com/discordjs/docgen>) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
 • (2) The output JSON file is named by the branch or tag name and committed to the docs branch of its corresponding repository
-• (3) The [website](<https://github.com/discordjs/website>) pulls a list of branches and tags from GitHub, with the repo being specified in a [DataSource](<https://github.com/discordjs/website/tree/master/src/data>)
+• (3) The [website](<https://github.com/discordjs/website>) pulls a list of branches and tags from GitHub, with the repo being specified in a [DataSource](<https://github.com/discordjs/website/tree/main/src/data>)
 • (4) The website downloads the JSON file from the docs branch for the selected tag/branch, then parses and displays it
 """
 
@@ -643,7 +643,7 @@ content = """
 [find-id]
 keywords = ["find-id", "find by id", "id-find", "find id", "fbi"]
 content = """
-Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/master/class/Collection>) by key (mostly the associated Id)
+Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>) by key (mostly the associated Id)
 ```diff
 - someCollection.find(structure => structure.id === "348607796335607817")
 + someCollection.get("348607796335607817")
