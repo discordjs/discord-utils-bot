@@ -124,6 +124,42 @@ const data = [
 		name: 'invite',
 		description: 'Use discord.js docs in your server!',
 	},
+	{
+		name: 'tag',
+		description: 'Send a tag by name or alias',
+		options: [
+			{
+				type: 3,
+				name: 'query',
+				description: 'Tag name or alias',
+				required: true,
+			},
+			{
+				name: 'target',
+				description: 'User to mention',
+				required: false,
+				type: 6,
+			},
+		],
+	},
+	{
+		name: 'tagsearch',
+		description: 'Query and select a tag by name, alias or content',
+		options: [
+			{
+				type: 3,
+				name: 'query',
+				description: 'Tag name, alias, or content',
+				required: true,
+			},
+			{
+				name: 'target',
+				description: 'User to mention',
+				required: false,
+				type: 6,
+			},
+		],
+	},
 ];
 
 void deploy(data);

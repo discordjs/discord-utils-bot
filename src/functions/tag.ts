@@ -1,13 +1,20 @@
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
 import { Response } from 'polka';
 import Collection from '@discordjs/collection';
 import { distance } from 'fastest-levenshtein';
-import { CLOSEST_MATCH_AMOUNT, MAX_MESSAGE_LENGTH, PREFIX_SUCCESS, REMOTE_TAG_URL } from '../util/constants';
+import {
+	CLOSEST_MATCH_AMOUNT,
+	EMOJI_ID_DJS,
+	MAX_MESSAGE_LENGTH,
+	PREFIX_SUCCESS,
+	REMOTE_TAG_URL,
+} from '../util/constants';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { logger } from '../util/logger';
 import fetch from 'node-fetch';
+import { formatEmoji, suggestionString } from '../util';
 
 export interface Tag {
 	keywords: string[];
@@ -20,8 +27,14 @@ export interface TagSimilarityEntry {
 	lev: number;
 }
 
-function mapper(entry: TagSimilarityEntry): string {
-	return entry.name === entry.word ? `\`${entry.name}\`` : `\`${entry.name} (${entry.word})\``;
+function mapper(entry: TagSimilarityEntry) {
+	return {
+		label: entry.name === entry.word ? entry.name : `${entry.name} (${entry.word})`,
+		value: entry.name,
+		emoji: {
+			id: EMOJI_ID_DJS,
+		},
+	};
 }
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
@@ -48,6 +61,17 @@ export function findSimilar(query: string, tagCache: Collection<string, Tag>, n 
 		.slice(0, n);
 }
 
+export function findTag(
+	tagCache: Collection<string, Tag>,
+	query: string,
+	user?: string,
+	target?: string,
+): string | null {
+	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
+	if (!tag) return null;
+	return suggestionString('tag', tag.content, user, target);
+}
+
 export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {
 	const prev = tagCache.size;
 	tagCache.clear();
@@ -70,24 +94,29 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 	return res;
 }
 
-export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
+export function showTag(
+	res: Response,
+	query: string,
+	tagCache: Collection<string, Tag>,
+	user?: string,
+	target?: string,
+): Response {
 	query = query.trim().toLowerCase();
-	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
-	if (tag) {
-		prepareResponse(
-			res,
-			`${target ? `*Tag suggestion for <@${target}>:*\n` : ''}${tag.content}`,
-			false,
-			target ? [target] : [],
-		);
+	const content = findTag(tagCache, query, user, target)!;
+	if (content) {
+		prepareResponse(res, content, false, target ? [target] : []);
 	} else {
 		const similar = findSimilar(query, tagCache, CLOSEST_MATCH_AMOUNT);
 		if (similar.length) {
-			prepareErrorResponse(
+			prepareSelectMenu(
 				res,
-				`Could not find a tag with name or alias \`${query}\`. Maybe you mean one of ${similar
-					.map(mapper)
-					.join(', ')}?`,
+				`${formatEmoji(
+					EMOJI_ID_DJS,
+				)} Could not find a tag with name or alias \`${query}\`. Select a similar result from the list to send it instead:`,
+				similar.map(mapper),
+				4,
+				`tag|${target ?? ''}`,
+				true,
 			);
 		} else {
 			prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${query}\`.`);
@@ -96,20 +125,35 @@ export function showTag(res: Response, query: string, tagCache: Collection<strin
 	return res;
 }
 
-export function searchTag(res: Response, query: string, tagCache: Collection<string, Tag>): Response {
+export function searchTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
 	query = query.toLowerCase();
 
-	const result: string[] = [];
+	const result = [];
 	for (const [key, tag] of tagCache.entries()) {
-		if (tag.keywords.find((s) => s.toLowerCase().includes(query)) || tag.content.toLowerCase().includes(query)) {
+		const foundKeyword = tag.keywords.find((s) => s.toLowerCase().includes(query));
+		const isContentMatch = tag.content.toLowerCase().includes(query);
+		if (foundKeyword || isContentMatch) {
 			if (result.join(', ').length + tag.keywords.length + 6 < MAX_MESSAGE_LENGTH) {
-				result.push(`\`${key}\``);
+				result.push({
+					label: key,
+					value: key,
+					emoji: {
+						id: EMOJI_ID_DJS,
+					},
+				});
 			}
 		}
 	}
 
 	if (result.length) {
-		prepareResponse(res, `Found tags: ${result.join(', ')}`, true);
+		prepareSelectMenu(
+			res,
+			`${formatEmoji(EMOJI_ID_DJS)} Select a query result to send it:`,
+			result,
+			4,
+			`tag|${target ?? ''}`,
+			true,
+		);
 	} else {
 		prepareErrorResponse(res, `No tags matching query \`${query}\` found.`);
 	}

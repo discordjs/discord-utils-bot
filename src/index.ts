@@ -3,13 +3,15 @@ import { verifyKey } from 'discord-interactions';
 import { logger } from './util/logger';
 import { jsonParser } from './util/jsonParser';
 import { prepareAck, prepareResponse } from './util/respond';
-import { djsDocs } from './functions/docs';
+import { djsDocs, fetchDocResult } from './functions/docs';
 import { djsGuide } from './functions/guide';
 import { mdnSearch } from './functions/mdn';
 import { nodeSearch } from './functions/node';
-import { DEFAULT_DOCS_BRANCH, PREFIX_BUG, PREFIX_TEAPOT } from './util/constants';
-import { loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
+import { API_BASE_DISCORD, DEFAULT_DOCS_BRANCH, PREFIX_BUG, PREFIX_TEAPOT } from './util/constants';
+import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
+import fetch from 'node-fetch';
+import Doc from 'discord.js-docs';
 
 const tagCache: Collection<string, Tag> = new Collection();
 void loadTags(tagCache);
@@ -50,7 +52,11 @@ export function start() {
 					);
 
 					if (name === 'docs') {
-						return (await djsDocs(res, args.source ?? DEFAULT_DOCS_BRANCH, args.query, args.target)).end();
+						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
+
+						return (
+							await djsDocs(res, doc, args.source ?? DEFAULT_DOCS_BRANCH, args.query, undefined, args.target)
+						).end();
 					}
 
 					if (name === 'guide') {
@@ -66,11 +72,11 @@ export function start() {
 					}
 
 					if (name === 'tag') {
-						return (await showTag(res, args.query, tagCache, args.target)).end();
+						return (await showTag(res, args.query, tagCache, undefined, args.target)).end();
 					}
 
 					if (name === 'tagsearch') {
-						return (await searchTag(res, args.query, tagCache)).end();
+						return (await searchTag(res, args.query, tagCache, args.target)).end();
 					}
 
 					if (name === 'tagreload') {
@@ -88,6 +94,57 @@ export function start() {
 					}
 
 					logger.warn(`Unknown interaction received: ${name as string} guild: ${message.guild_id as string}`);
+				}
+				if (message.type === 3) {
+					const { token } = message;
+					const { custom_id: cId, values: selected } = message.data;
+					const [op, target, source] = cId.split('|');
+
+					if (op === 'docsearch') {
+						const doc = await Doc.fetch(source, { force: true });
+
+						prepareResponse(res, 'Suggestion sent.', false, [], [], 7);
+						res.end();
+
+						try {
+							const user = message.user?.id ?? message.member.user.id;
+							await fetch(`${API_BASE_DISCORD}/webhooks/${process.env.DISCORD_CLIENT_ID!}/${token as string}`, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								body: JSON.stringify({
+									content: fetchDocResult(source, doc, selected[0], user, target),
+									allowed_mentions: { users: target.length ? [target] : [] },
+								}),
+							});
+						} catch (err) {
+							logger.error(err);
+						}
+						return;
+					}
+
+					if (op === 'tag') {
+						prepareResponse(res, 'Suggestion sent', false, [], [], 7);
+						res.end();
+
+						try {
+							const user = message.user?.id ?? message.member.user.id;
+							await fetch(`${API_BASE_DISCORD}/webhooks/${process.env.DISCORD_CLIENT_ID!}/${token as string}`, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								body: JSON.stringify({
+									content: findTag(tagCache, selected[0], user, target),
+									allowed_mentions: { users: target.length ? [target] : [] },
+								}),
+							});
+						} catch (err) {
+							logger.error(err);
+						}
+						return;
+					}
 				}
 				logger.warn(`Received interaction of type ${message.type as string}`);
 				prepareResponse(res, `${PREFIX_BUG} This shouldn't be there...`, true);
