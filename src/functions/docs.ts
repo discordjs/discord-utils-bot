@@ -1,9 +1,9 @@
-import { Response } from 'polka';
+import { bold, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
 import Doc from 'discord.js-docs';
-import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
-import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV } from '../util/constants';
-
+import { Response } from 'polka';
 import { formatEmoji, suggestionString, truncate } from '../util';
+import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV } from '../util/constants';
+import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
 
 function escapeMDLinks(s = ''): string {
 	return s.replace(/\[(.+?)\]\((.+?)\)/g, '[$1](<$2>)');
@@ -16,16 +16,16 @@ function formatInheritance(prefix: string, inherits: DocElement[], doc: Doc): st
 
 export function resolveElementString(element: DocElement, doc: Doc): string {
 	const parts = [];
-	if (element.docType === 'event') parts.push('**(event)** ');
-	if (element.static) parts.push('**(static)** ');
-	parts.push(`__**${escapeMDLinks(element.link ?? '')}**__`);
+	if (element.docType === 'event') parts.push(`${bold('(event)')} `);
+	if (element.static) parts.push(`${bold('(static)')} `);
+	parts.push(underscore(bold(escapeMDLinks(element.link ?? ''))));
 	if (element.extends) parts.push(formatInheritance('extends', element.extends, doc));
 	if (element.implements) parts.push(formatInheritance('implements', element.implements, doc));
-	if (element.access === 'private') parts.push(' **PRIVATE**');
-	if (element.deprecated) parts.push(' **DEPRECATED**');
+	if (element.access === 'private') parts.push(` ${bold('PRIVATE')}`);
+	if (element.deprecated) parts.push(` ${bold('DEPRECATED')}`);
 
 	const s = escapeMDLinks(element.formattedDescription ?? element.description ?? '').split('\n');
-	const description = s.length > 1 ? `${s[0]} [(more...)](<${element.url ?? ''}>)` : s[0];
+	const description = s.length > 1 ? `${s[0]} ${hyperlink('(more...)', hideLinkEmbed(element.url ?? ''))}` : s[0];
 
 	return `${parts.join('')}\n${description}`;
 }
@@ -78,6 +78,6 @@ export function djsDocs(
 		return res;
 	}
 
-	prepareErrorResponse(res, `Nothing found with provided parameters.`);
+	prepareErrorResponse(res, 'Nothing found with provided parameters.');
 	return res;
 }

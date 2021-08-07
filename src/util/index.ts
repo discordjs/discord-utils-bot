@@ -1,3 +1,6 @@
+import { userMention } from '@discordjs/builders';
+
+// TODO (favna): replace with function from builders after release
 export function formatEmoji(emojiId: string, animated = false): string {
 	return `<${animated ? 'a' : ''}:_:${emojiId}>`;
 }
@@ -28,10 +31,10 @@ export function suggestionString(
 	if (author || target) {
 		messageParts.push(`*${first.toUpperCase()}${rest.join('')} suggestion`);
 		if (target) {
-			messageParts.push(` for <@${target}>`);
+			messageParts.push(` for ${userMention(target)}`);
 		}
 		if (author) {
-			messageParts.push(` from <@${author}>`);
+			messageParts.push(` from ${userMention(author)}`);
 		}
 		messageParts.push(':*\n');
 	}

@@ -68,7 +68,7 @@ export function start() {
 					}
 
 					if (name === 'node') {
-						return (await nodeSearch(res, args.query, args.target)).end();
+						return (await nodeSearch(res, args.query, args.version, args.target)).end();
 					}
 
 					if (name === 'tag') {
