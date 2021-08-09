@@ -28,7 +28,7 @@ const data = [
 					},
 					{
 						name: 'discord.js@dev',
-						value: 'master',
+						value: 'main',
 					},
 					{
 						name: 'stable (default)',
