@@ -39,6 +39,10 @@ function escapeMDLinks(s = ''): string {
 	return s.replace(/\[(.+?)\]\((.+?)\)/g, '[$1](<$2>)');
 }
 
+function stripMd(s = ''): string {
+	return s.replace(/[`\*_]/gi, '');
+}
+
 function formatInheritance(prefix: string, inherits: DocElement[], doc: Doc): string {
 	const res = inherits.map((element: any) => element.flat(5));
 	return ` (${prefix} ${res.map((element) => escapeMDLinks(doc.formatType(element))).join(' and ')})`;
@@ -64,7 +68,7 @@ function buildSelectOption(result: DocElement, dev = false) {
 	return {
 		label: result.formattedName,
 		value: result.formattedName,
-		description: truncate(result.formattedDescription ?? result.description ?? 'No description found', 47),
+		description: truncate(stripMd(result.description ?? 'No description found'), 95),
 		emoji: {
 			id: docTypeEmojiId(result.docType, dev),
 		},
