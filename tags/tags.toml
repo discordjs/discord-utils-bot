@@ -833,7 +833,7 @@ content = """
 """
 
 [could-not-connect]
-keywords = ["cnc",  "could not connect", "couldn't connect", "cc", "connection closed"]
+keywords = ["could-not-connect", "cnc",  "could not connect", "couldn't connect", "cc", "connection closed"]
 content = """
 Things to consider when getting a connection closed/could not connect error:
 • What transport are you using? If it's `'websocket'`, change that to `'ipc'`.
