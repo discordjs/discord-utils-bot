@@ -838,8 +838,8 @@ content = """
 Things to consider when getting a connection closed/could not connect error:
 • What transport are you using? If it's `'websocket'`, change that to `'ipc'`.
 • Is the ID you are trying to login with your user ID? If so, you should be using a `Client ID` from the [Developer Portal](<https://discord.com/developers/applications>) instead.
-• Is the ID a string? If not, JavaScript will truncate it's value causing.
-• Are you using the Discord app? It won't be able to connect to the web version. Likewise, bots cannot utilize RPC.
+• Is the ID a string? If not, JavaScript will truncate it's value causing the connection to fail.
+• Are you using the Discord app? It won't be able to connect to the web version. Similarly, bots cannot use RPC.
 • Is your code running on the same machine as the Discord app?
 • Are you trying to run it from WSL? If so, it won't be able to connect either.
 • Have you installed Discord from the snap store? If so, install it from your distro's package repository or directly from the Discord website.
@@ -853,5 +853,5 @@ If you want to add buttons to your rich presence, inside your `setActivity` call
 buttons: [ { label: " ", url: " " }, { label: " ", url: " "} ]
 ```
 You can have up to 2 buttons.
-*You __will not__ be able to press these buttons on your own account, so dont freak out when something doesnt pop up when you click it.*
+*You __will not__ be able to press these buttons on your own account, so dont freak out when something doesn't pop up when you click it.*
 """
