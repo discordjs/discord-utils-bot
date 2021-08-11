@@ -1,9 +1,17 @@
-import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
+import {
+	bold,
+	formatEmoji,
+	hideLinkEmbed,
+	hyperlink,
+	inlineCode,
+	italic,
+	underscore,
+	userMention,
+} from '@discordjs/builders';
 import fetch from 'node-fetch';
 import { Response } from 'polka';
 import TurndownService from 'turndown';
 import type { NodeDocs } from '../types/NodeDocs';
-import { formatEmoji } from '../util';
 import { API_BASE_NODE, API_DOCS_NODE, EMOJI_ID_NODE } from '../util/constants';
 import { logger } from '../util/logger';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
@@ -105,7 +113,7 @@ export async function nodeSearch(
 		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
 		const fullURL = `${moduleURL}.html${anchor}`;
 		const parts = [
-			`${formatEmoji(EMOJI_ID_NODE)} \ ${hyperlink(
+			`${formatEmoji(EMOJI_ID_NODE) as string} \ ${hyperlink(
 				underscore(bold(result.textRaw as string)),
 				hideLinkEmbed(fullURL),
 			)}`,

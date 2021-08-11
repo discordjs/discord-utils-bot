@@ -114,7 +114,7 @@ const data = [
 			},
 			{
 				name: 'version',
-				description: 'Which version of Node.js do you want to search?',
+				description: 'Node.js version to search documentation for',
 				required: false,
 				type: 3,
 				choices: [

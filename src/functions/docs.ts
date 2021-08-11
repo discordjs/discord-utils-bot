@@ -1,7 +1,7 @@
-import { bold, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
+import { bold, formatEmoji, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
 import Doc from 'discord.js-docs';
 import { Response } from 'polka';
-import { formatEmoji, suggestionString, truncate } from '../util';
+import { suggestionString, truncate } from '../util';
 import { EMOJI_ID_DJS, EMOJI_ID_DJS_DEV } from '../util/constants';
 import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
 
@@ -44,7 +44,7 @@ function buildSelectOption(result: DocElement, emojiId: string) {
 export function fetchDocResult(source: string, doc: Doc, query: string, user?: string, target?: string): string | null {
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
-	const icon = formatEmoji(source === 'main' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS);
+	const icon = formatEmoji(source === 'main' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS) as string;
 	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, user, target);
 }
 
@@ -69,7 +69,7 @@ export function djsDocs(
 	if (results?.length) {
 		prepareSelectMenu(
 			res,
-			`${formatEmoji(iconId)} No match. Select a similar search result to send it:`,
+			`${formatEmoji(iconId) as string} No match. Select a similar search result to send it:`,
 			results.map((r) => buildSelectOption(r, iconId)),
 			4,
 			`docsearch|${target ?? ''}|${source}`,

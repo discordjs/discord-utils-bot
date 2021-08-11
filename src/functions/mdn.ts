@@ -1,8 +1,16 @@
-import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
+import {
+	bold,
+	formatEmoji,
+	hideLinkEmbed,
+	hyperlink,
+	inlineCode,
+	italic,
+	underscore,
+	userMention,
+} from '@discordjs/builders';
 import fetch from 'node-fetch';
 import { Response } from 'polka';
 import { encode } from 'querystring';
-import { formatEmoji } from '../util';
 import { API_BASE_MDN, EMOJI_ID_MDN } from '../util/constants';
 import { logger } from '../util/logger';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
@@ -38,7 +46,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 			.replace(boldCodeBlockRegex, bold(inlineCode('$1')));
 
 		const parts = [
-			`${formatEmoji(EMOJI_ID_MDN)} \ ${hyperlink(underscore(bold(hit.title)), hideLinkEmbed(url))}`,
+			`${formatEmoji(EMOJI_ID_MDN) as string} \ ${hyperlink(underscore(bold(hit.title)), hideLinkEmbed(url))}`,
 			intro,
 		];
 

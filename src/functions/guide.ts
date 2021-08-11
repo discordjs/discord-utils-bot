@@ -1,12 +1,11 @@
 const ALGOLIA_APP = process.env.ALGOLIA_APP ?? 'MISSING';
 const ALGOLIA_KEY = process.env.ALGOLIA_KEY ?? 'MISSING';
 
-import { hideLinkEmbed, hyperlink } from '@discordjs/builders';
+import { formatEmoji, hideLinkEmbed, hyperlink } from '@discordjs/builders';
 import { decode } from 'html-entities';
 import fetch from 'node-fetch';
 import { Response } from 'polka';
 import { stringify } from 'querystring';
-import { formatEmoji } from '../util';
 import { API_BASE_ALGOLIA, DEFAULT_GUIDE_RESULT_AMOUNT, EMOJI_ID_GUIDE } from '../util/constants';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
 
@@ -49,9 +48,9 @@ export async function djsGuide(
 
 	prepareResponse(
 		response,
-		`${target ? `*Guide suggestion for <@${target}>:*\n` : ''}${formatEmoji(
-			EMOJI_ID_GUIDE,
-		)} **discordjs.guide results:**\n${result.join('\n')}`,
+		`${target ? `*Guide suggestion for <@${target}>:*\n` : ''}${
+			formatEmoji(EMOJI_ID_GUIDE) as string
+		} **discordjs.guide results:**\n${result.join('\n')}`,
 		false,
 		target ? [target] : [],
 	);

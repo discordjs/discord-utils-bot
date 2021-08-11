@@ -1,10 +1,5 @@
 import { userMention } from '@discordjs/builders';
 
-// TODO (favna): replace with function from builders after release
-export function formatEmoji(emojiId: string, animated = false): string {
-	return `<${animated ? 'a' : ''}:_:${emojiId}>`;
-}
-
 export function truncate(text: string, len: number, splitChar = ' '): string {
 	if (text.length <= len) return text;
 	const words = text.split(splitChar);
