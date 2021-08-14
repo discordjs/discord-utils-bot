@@ -209,7 +209,7 @@ content = """
 [get-undefined]
 keywords = ["get-undefined", "get undefined"]
 content = """
-• The provided Id is incorrect (copy role Ids from context menus, not message mentions)
+• The provided id is incorrect (copy role ids from context menus, not message mentions)
 • The client does not have this structure cached (try fetching instead)
 • The client is not yet ready (move the code into any event listener callback)
 """
