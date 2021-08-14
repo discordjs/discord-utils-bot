@@ -12,6 +12,7 @@ import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functi
 import Collection from '@discordjs/collection';
 import fetch from 'node-fetch';
 import Doc from 'discord.js-docs';
+import { discordDeveloperDocs } from './functions/discorddocs';
 
 const tagCache: Collection<string, Tag> = new Collection();
 void loadTags(tagCache);
@@ -61,6 +62,10 @@ export function start() {
 
 					if (name === 'guide') {
 						return (await djsGuide(res, args.query, args.results, args.target)).end();
+					}
+
+					if (name === 'ddocs') {
+						return (await discordDeveloperDocs(res, args.query, args.results, args.target)).end();
 					}
 
 					if (name === 'mdn') {
