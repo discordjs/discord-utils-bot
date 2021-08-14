@@ -14,7 +14,8 @@ import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { logger } from '../util/logger';
 import fetch from 'node-fetch';
-import { formatEmoji, suggestionString } from '../util';
+import { suggestionString } from '../util';
+import { formatEmoji } from '@discordjs/builders';
 
 export interface Tag {
 	keywords: string[];
@@ -110,9 +111,9 @@ export function showTag(
 		if (similar.length) {
 			prepareSelectMenu(
 				res,
-				`${formatEmoji(
-					EMOJI_ID_DJS,
-				)} Could not find a tag with name or alias \`${query}\`. Select a similar result from the list to send it instead:`,
+				`${
+					formatEmoji(EMOJI_ID_DJS) as string
+				} Could not find a tag with name or alias \`${query}\`. Select a similar result from the list to send it instead:`,
 				similar.map(mapper),
 				4,
 				`tag|${target ?? ''}`,
@@ -148,7 +149,7 @@ export function searchTag(res: Response, query: string, tagCache: Collection<str
 	if (result.length) {
 		prepareSelectMenu(
 			res,
-			`${formatEmoji(EMOJI_ID_DJS)} Select a query result to send it:`,
+			`${formatEmoji(EMOJI_ID_DJS) as string} Select a query result to send it:`,
 			result,
 			4,
 			`tag|${target ?? ''}`,

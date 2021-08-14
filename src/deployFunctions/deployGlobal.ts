@@ -113,6 +113,26 @@ const data = [
 				type: 3,
 			},
 			{
+				name: 'version',
+				description: 'Node.js version to search documentation for',
+				required: false,
+				type: 3,
+				choices: [
+					{
+						name: 'v12',
+						value: 'latest-v12.x',
+					},
+					{
+						name: 'v14',
+						value: 'latest-v14.x',
+					},
+					{
+						name: 'v16 (default)',
+						value: 'latest-v16.x',
+					},
+				],
+			},
+			{
 				name: 'target',
 				description: 'User to mention',
 				required: false,
