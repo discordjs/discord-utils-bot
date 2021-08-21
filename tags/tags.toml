@@ -579,7 +579,6 @@ keywords = ["timers", "settimouet", "set timeout", "interval", "set interval", "
 content = """
 Controlling the flow of time in Node.js:
 • Guide on base Node.js timers: [learn more](<https://nodejs.org/en/docs/guides/timers-in-node/>)
-• The [Client](<https://discord.js.org/#/docs/main/stable/class/Client>) class comes with its own timer methods that will automatically cancel the timer if the client is destroyed 
 """
 
 [paste-code]
