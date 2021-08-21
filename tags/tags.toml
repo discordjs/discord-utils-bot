@@ -831,3 +831,29 @@ content = """
 • Websocket intents limit events and decrease memory usage: [learn more](<https://discordjs.guide/popular-topics/intents.html>)
 • See what intents you need [here](<https://discord.com/developers/docs/topics/gateway#list-of-intents>)
 """
+
+[replit-nodejs16]
+keywords = ["replit","node","nodejs","16","nodejsv16","replitnode16","upgradereplit"]
+content = """
+Replit currently only supports nodejs v12, so if you want to download nodejs v16, you need to do the following:
+• Go to the `shell` tab
+• Run `npm init -y`
+• You put the scripts in the package.json: ```json
+  {
+    "scripts": {
+        "start": "node .",
+        "node-update": "npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH",
+        "node-clean": "rm -rf node_modules && rm package-lock.json && npm cache clear --force && npm cache clean --force && npm i",
+        "node-update-then-clean": "npm run node-update && npm run node-clean"
+    }
+  }```
+
+• Then create a `.replit` file in which you put `run="npm start"`
+• Go to the `shell` tab again
+• Run `npm run node-update-then-clean`
+• Done! After downloading you have nodejs v16. But don't forget to start the project using the `Run` button or `npm start`
+
+**INFO:** Replit console constantly shows you that you have nodejs v12. To verify the correct version, you can add `console.log(process.version)` to the code.
+
+Tutorial by **Hyro#8938** with 💖
+"""
