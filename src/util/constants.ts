@@ -27,7 +27,7 @@ export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
 export const API_BASE_DISCORD_APLICATIONS = `${API_BASE_DISCORD}/applications` as const;
 export const CLOSEST_MATCH_AMOUNT = 5;
-export const DEFAULT_ALGOLIA_RESULT_AMOUNT = 3;
+export const DEFAULT_ALGOLIA_RESULT_AMOUNT = 2;
 export const MAX_MESSAGE_LENGTH = 4096;
 export const REMOTE_TAG_URL =
 	'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags/tags.toml' as const;
