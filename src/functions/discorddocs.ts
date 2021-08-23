@@ -51,7 +51,7 @@ export async function discordDeveloperDocs(
 		response,
 		`${target ? `${italic(`Documentation suggestion for ${userMention(target)}:`)}\n` : ''}${
 			formatEmoji(EMOJI_ID_CLYDE_BLURPLE) as string
-		} ${bold('discord developer docs results:')}\n${result.join('\n')}`,
+		} ${bold('Discord Developer docs results:')}\n${result.join('\n')}`,
 		false,
 		target ? [target] : [],
 	);
