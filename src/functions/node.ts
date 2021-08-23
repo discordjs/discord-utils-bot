@@ -12,7 +12,7 @@ import fetch from 'node-fetch';
 import { Response } from 'polka';
 import TurndownService from 'turndown';
 import type { NodeDocs } from '../types/NodeDocs';
-import { API_BASE_NODE, API_DOCS_NODE, EMOJI_ID_NODE } from '../util/constants';
+import { API_BASE_NODE, EMOJI_ID_NODE } from '../util/constants';
 import { logger } from '../util/logger';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
 
@@ -83,7 +83,7 @@ export async function nodeSearch(
 ): Promise<Response> {
 	query = query.trim();
 	try {
-		const url = `${API_DOCS_NODE}/dist/${version}/docs/api/all.json`;
+		const url = `${API_BASE_NODE}/dist/${version}/docs/api/all.json`;
 		let allNodeData = cache.get(url);
 
 		if (!allNodeData) {
