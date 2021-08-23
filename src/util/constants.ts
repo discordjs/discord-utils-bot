@@ -19,6 +19,7 @@ export const EMOJI_ID_CLASS_DEV = '874573855715385394' as const;
 export const EMOJI_ID_EVENT_DEV = '874573950796066816' as const;
 export const EMOJI_ID_ENUM_DEV = '874573867572662273' as const;
 export const EMOJI_ID_INTERFACE_DEV = '874573940956217415' as const;
+export const EMOJI_ID_CLYDE_BLURPLE = '876041770423701554' as const;
 export const API_BASE_MDN = 'https://developer.mozilla.org' as const;
 export const API_BASE_NODE = 'https://nodejs.org' as const;
 export const API_DOCS_NODE = `${API_BASE_NODE}/dist/latest/docs/api` as const;
@@ -26,7 +27,7 @@ export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
 export const API_BASE_DISCORD_APLICATIONS = `${API_BASE_DISCORD}/applications` as const;
 export const CLOSEST_MATCH_AMOUNT = 5;
-export const DEFAULT_GUIDE_RESULT_AMOUNT = 3;
+export const DEFAULT_ALGOLIA_RESULT_AMOUNT = 2;
 export const MAX_MESSAGE_LENGTH = 4096;
 export const REMOTE_TAG_URL =
 	'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags/tags.toml' as const;
