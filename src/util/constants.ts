@@ -22,7 +22,6 @@ export const EMOJI_ID_INTERFACE_DEV = '874573940956217415' as const;
 export const EMOJI_ID_CLYDE_BLURPLE = '876041770423701554' as const;
 export const API_BASE_MDN = 'https://developer.mozilla.org' as const;
 export const API_BASE_NODE = 'https://nodejs.org' as const;
-export const API_DOCS_NODE = `${API_BASE_NODE}/dist/latest/docs/api` as const;
 export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
 export const API_BASE_DISCORD_APLICATIONS = `${API_BASE_DISCORD}/applications` as const;
