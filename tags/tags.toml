@@ -209,7 +209,7 @@ content = """
 [get-undefined]
 keywords = ["get-undefined", "get undefined"]
 content = """
-• The provided Id is incorrect (copy role Ids from context menus, not message mentions)
+• The provided id is incorrect (copy role ids from context menus, not message mentions)
 • The client does not have this structure cached (try fetching instead)
 • The client is not yet ready (move the code into any event listener callback)
 """
@@ -233,7 +233,7 @@ The "canary" client is Discord's public test build
 [snowflake]
 keywords = ["snowflake", "❄", "discord snowflake", "discord id", "snowflakes"]
 content = """
-Discord Ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+Discord ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
 """
 
 [typescript]
@@ -246,8 +246,8 @@ TypeScript (TS) is a typed superset of JavaScript that compiles to plain JavaScr
 [devmode]
 keywords = ["devmode", "developermode", "developer mode", "copy id", "get id", "role id"]
 content = """
-Enable developer mode to gain access to the "copy Id" context menu: [learn more](<https://support.discord.com/hc/en-us/articles/206346498>)
-• copy role Ids from context menus (guild settings, user profiles) not message mentions!
+Enable developer mode to gain access to the "copy id" context menu: [learn more](<https://support.discord.com/hc/en-us/articles/206346498>)
+• copy role ids from context menus (guild settings, user profiles) not message mentions!
 """
 
 [token-reset]
@@ -273,7 +273,7 @@ content = """
 • Custom emojis: `\\:name:` ➞ `<a:name:id>`
 • Twemojis: `\\:name:` ➞ unicode representation
 • Emoji picker (windows): `WIN` + `.`
-• Right-clicking any emoji will not copy its Id!
+• Right-clicking any emoji will not copy its id!
 """
 
 [dev-tos]
@@ -493,7 +493,7 @@ Bot invite structure:
 ```prolog
 https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 ```
-• `CLIENT_ID` needs to be replaced with your bot Id
+• `CLIENT_ID` needs to be replaced with your bot id
 • Permission calculator: [learn more](<https://finitereality.github.io/permissions-calculator>)
 • If you need slash commands and the bot scope you can use `scope=bot applications.commands`
 • You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/main/main/class/Client?scrollTo=generateInvite>)
@@ -642,7 +642,7 @@ content = """
 [find-id]
 keywords = ["find-id", "find by id", "id-find", "find id", "fbi"]
 content = """
-Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>) by key (mostly the associated Id)
+Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>) by key (mostly the associated id)
 ```diff
 - someCollection.find(structure => structure.id === "348607796335607817")
 + someCollection.get("348607796335607817")
