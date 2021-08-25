@@ -261,10 +261,13 @@ content = """
 [allowed-mentions]
 keywords = ["allowed-mentions", "allowed mentions", "enable mentions", "disable mentions", "allow mentions"]
 content = """
-You can control which entities receive notifications via the `allowedMentions` option.
-• Set a [default on the client](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>): `new Discord.Client({ allowedMentions: ["users", "roles"], ... })`
-• Overwrite the default for [specific messages](<https://discord.js.org/#/docs/main/stable/typedef/MessageMentionOptions>): `channel.send("...", { users: ["348607796335607817"] })`
-• Configuring if a user should be notified in an [interaction response](<https://discord.js.org/#/docs/main/main/typedef/MessageMentionOptions>) is done via the `repliedUser` key
+You can control which entities receive notifications via the `allowedMentions` option. You can:
+• Set a [default on the client](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>)
+• Set for a [specific message](<https://discord.js.org/#/docs/main/stable/typedef/MessageMentionOptions>)
+• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/main/main/typedef/MessageMentionOptions>)
+```js
+{ ..., allowedMentions: { parse: ["users", "roles"] } }
+```
 """
 
 [escape-emojis]
