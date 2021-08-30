@@ -391,16 +391,15 @@ Persisting data through restarts requires a database. Check out the resources be
 """
 
 [wait]
-keywords = ["wait", "delay", "sleep"]
+keywords = ["wait", "delay", "sleep", "setTimeout"]
 content = """
 ```js
-const { promisify } = require('util');
-const wait = promisify(setTimeout);
+const { setTimeout } = require('timers/promises');
 // using async/await
-await wait(5000);
+await setTimeout(5000);
 ...
 // using then-callbacks
-wait(5000).then(() => { ... });
+setTimeout(5000).then(() => { ... });
 ```
 """
 
