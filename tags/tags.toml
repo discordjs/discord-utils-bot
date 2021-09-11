@@ -843,7 +843,7 @@ If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to e
 """
 
 [collection-array]
-keywords = ["collection-array", "array", "array()", "collection array"]
+keywords = ["collection-array", "collection array"]
 content = """
 Converting a collection to an array:
 • Do you need to? Most of the time, using the collection is better.
