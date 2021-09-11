@@ -843,10 +843,9 @@ If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to e
 """
 
 [collection-array]
-keywords = ["collection-array", "collection array"]
+keywords = ["collection-array", "collection array", "cta", "collection to array"]
 content = """
 Converting a collection to an array:
-• Do you need to? Most of the time, using the collection is better.
-• If you you need the array, you can do: `[...<Collection>.values()]` or `Array.from(<Collection>.values())`.
-[Learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>)
+• Do you need to? Most of the time, using the collection is both better and easier. See: [for...of](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map>), [forEach](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach>), and [collection.map()](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=map>)
+• If you you need the array, you can use [Map.values()](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>), and do: `[...<Collection>.values()]` or `Array.from(<Collection>.values())`.
 """
