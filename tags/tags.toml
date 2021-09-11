@@ -841,3 +841,12 @@ content = """
 If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 """
+
+[collection-array]
+keywords = ["collection-array", "array", "array()", "collection array"]
+content = """
+Converting a collection to an array:
+• Do you need to? Most of the time, using the collection is better.
+• If you you need the array, you can do: `[...<Collection>.values()]` or `Array.from(<Collection>.values())`.
+[Learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>)
+"""
