@@ -841,3 +841,13 @@ content = """
 If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 """
+
+[collection-array]
+keywords = ["collection-array", "collection array", "cta", "collection to array"]
+content = """
+**Converting a Collection to an array**
+You only need to convert it to an array if you need the index of an entry:
+• Iteration (looping) is possible with [`for...of`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map>) over [`Collection#values`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>) or [`forEach`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach>)
+• You can transform a Collection to an array with [`Collection#map`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=map>)
+• If you need indices, you can get the array using [`[...collection.values()]`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>)
+"""
