@@ -855,20 +855,16 @@ You only need to convert it to an array if you need the index of an entry:
 [429]
 keywords = ["429"]
 content = """
-You have been rate limited by discord.
-For most endpoints, this shouldn't happen, because djs handles them for you. If it does, it means you are spamming an endpoint and discord put a very long rate limit for you on that specific endpoint.
+• You have been rate limited by discord.
+• For most endpoints, this shouldn't happen, because djs handles them for you. If it does, it means you are spamming an endpoint and discord put a very long rate limit for you on that specific endpoint.
 """
 
 [429-gateway]
 keywords = ["429-gateway"]
 content = """
-Warning : this only applies to 429's on gateway, for general 429 errors, refer to the 429 tag.
---
-Getting 429 hit on route /gateway/bot when you add client.on('debug', console.log)? 
-Reasons : 
-§ You (or someone else) logged in 1000+ times in 24 hours. If you have auto restart on for your code upon crash, you know the culprit.
-> Are you using shared hosting like Glitch or Repl.it?
-§ If yes, your IP has probably been banned by Discord, and theres nothing you can do rly except contact their support, or migrate to a better VPS.
+Getting a 429 on `/gateway/bot`?
+• You (or someone else) logged in 1000+ times in 24 hours. If you have auto restart on for your code upon crash, you know the culprit.
+• Your IP has been banned by Discord.
+• If no situations above suits you, check Discord Status & contact Discord Support.
 > Tip -> Temporary Cloudflare IP bans can last up to 1 hour. In case of IP ban, you can download your bot's code and host it locally.
-§ If no situations above suits you, check Discord Status & contact Discord Support.
 """
