@@ -3,6 +3,7 @@ import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { Tag } from '../functions/tag';
 import { red } from 'kleur';
+import { AUTOCOMPLETE_MAX_ITEMS } from '../util/constants';
 
 type ConflictType = 'uniqueKeywords' | 'headerInKeywords' | 'emptyKeyword' | 'unescapedLink';
 
@@ -80,7 +81,7 @@ function validateTags() {
 		}
 	}
 
-	if (conflicts.length || hoisted > 20) {
+	if (conflicts.length || hoisted > AUTOCOMPLETE_MAX_ITEMS) {
 		const parts = [];
 		const { uniqueConflicts, headerConflicts, emptyConflicts, linkConflicts } = conflicts.reduce(
 			(a, c) => {
@@ -138,8 +139,8 @@ function validateTags() {
 			);
 		}
 
-		if (hoisted > 20) {
-			parts.push(`Amount of hoisted tags exceeds 20 (is ${hoisted})`);
+		if (hoisted > AUTOCOMPLETE_MAX_ITEMS) {
+			parts.push(`Amount of hoisted tags exceeds ${AUTOCOMPLETE_MAX_ITEMS} (is ${hoisted})`);
 		}
 
 		// eslint-disable-next-line no-console
