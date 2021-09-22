@@ -2,7 +2,7 @@ import polka, { NextHandler, Request, Response } from 'polka';
 import { verifyKey } from 'discord-interactions';
 import { logger } from './util/logger';
 import { jsonParser } from './util/jsonParser';
-import { prepareAck, prepareResponse } from './util/respond';
+import { prepareAck, prepareHeader, prepareResponse } from './util/respond';
 import { djsDocs, fetchDocResult } from './functions/docs';
 import { djsGuide } from './functions/guide';
 import { mdnSearch } from './functions/mdn';
@@ -175,6 +175,87 @@ export function start() {
 						}
 						return;
 					}
+				}
+				if (message.type === 4) {
+					prepareHeader(res);
+					const name = message.data.name;
+					const options = message.data.options ?? [];
+					const args = Object.fromEntries(
+						options.map(({ name, value }: { name: string; value: any }) => [name, value]),
+					);
+					if (name === 'docs') {
+						const results = [];
+						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
+
+						const searchResult = doc.search(args.query.length ? args.query : 'Client') ?? [];
+						for (const r of searchResult) {
+							results.push({
+								name: r.formattedName,
+								value: r.formattedName,
+							});
+						}
+
+						res.write(
+							JSON.stringify({
+								data: {
+									choices: results.slice(0, 19),
+								},
+								type: 8,
+							}),
+						);
+					} else if (name === 'tag') {
+						const results: { name: string; value: string }[] = [];
+
+						if (args.query.length) {
+							const keywordMatches: { name: string; value: string }[] = [];
+							const contentMatches: { name: string; value: string }[] = [];
+							const exactKeywords: { name: string; value: string }[] = [];
+							for (const [key, tag] of tagCache.entries()) {
+								const exactKeyword = tag.keywords.find((s) => s.toLowerCase() === args.query.toLowerCase());
+								const includesKeyword = tag.keywords.find((s) => s.toLowerCase().includes(args.query.toLowerCase()));
+								const isContentMatch = tag.content.toLowerCase().includes(args.query);
+								if (exactKeyword) {
+									exactKeywords.push({
+										name: `${key}`, // ⭐
+										value: key,
+									});
+								} else if (includesKeyword) {
+									keywordMatches.push({
+										name: `${key}`, // 🏷️
+										value: key,
+									});
+								} else if (isContentMatch) {
+									contentMatches.push({
+										name: `${key}`, // 📄
+										value: key,
+									});
+								}
+							}
+							results.push(...exactKeywords, ...keywordMatches, ...contentMatches);
+						} else {
+							results.push(
+								...tagCache
+									.filter((t) => t.hoisted)
+									.map((_, key) => {
+										return {
+											name: `${key}`, // 📌
+											value: key,
+										};
+									}),
+							);
+						}
+
+						res.write(
+							JSON.stringify({
+								data: {
+									choices: results.slice(0, 19),
+								},
+								type: 8,
+							}),
+						);
+					}
+					res.end();
+					return;
 				}
 				logger.warn(`Received interaction of type ${message.type as string}`);
 				prepareResponse(res, `${PREFIX_BUG} This shouldn't be there...`, true);
