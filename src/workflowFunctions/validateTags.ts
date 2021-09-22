@@ -17,6 +17,7 @@ function validateTags() {
 	const file = readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'));
 	const data = TOML.parse(file, 1.0, '\n');
 	const conflicts: Conflict[] = [];
+	let hoisted = 0;
 	for (const [key, value] of Object.entries(data)) {
 		const v = value as unknown as Tag;
 		const codeBlockRegex = /(`{1,3}).+?\1/gs;
@@ -36,6 +37,11 @@ function validateTags() {
 				type: 'unescapedLink',
 			});
 		}
+
+		if (v.hoisted) {
+			hoisted++;
+		}
+
 		for (const [otherKey, otherValue] of Object.entries(data)) {
 			const oV = otherValue as unknown as Tag;
 			if (
@@ -74,7 +80,7 @@ function validateTags() {
 		}
 	}
 
-	if (conflicts.length) {
+	if (conflicts.length || hoisted > 20) {
 		const parts = [];
 		const { uniqueConflicts, headerConflicts, emptyConflicts, linkConflicts } = conflicts.reduce(
 			(a, c) => {
@@ -130,6 +136,10 @@ function validateTags() {
 					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
 					.join('\n')}`,
 			);
+		}
+
+		if (hoisted > 20) {
+			parts.push(`Amount of hoisted tags exceeds 20 (is ${hoisted})`);
 		}
 
 		// eslint-disable-next-line no-console
