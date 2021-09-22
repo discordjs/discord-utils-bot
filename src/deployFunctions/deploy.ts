@@ -8,10 +8,10 @@ config({ path: resolve(__dirname, '../../.env') });
 
 export async function deploy(data: any, dev = false) {
 	const midRoute = dev ? `/guilds/${process.env.DISCORD_DEVGUILD_ID as string}` : '';
-	const route = `${API_BASE_DISCORD}/${process.env.DISCORD_CLIENT_ID as string}${midRoute}/commands`;
+	const route = `${API_BASE_DISCORD}/applications/${process.env.DISCORD_CLIENT_ID as string}${midRoute}/commands`;
 
 	try {
-		logger.info('Starting update');
+		logger.info(`Starting update on route ${route}`);
 		const res = await fetch(route, {
 			headers: {
 				'Content-Type': 'application/json',
