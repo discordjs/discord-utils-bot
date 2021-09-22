@@ -10,6 +10,7 @@ const data = [
 				name: 'query',
 				description: 'Class or Class#method combination to search for',
 				required: true,
+				autocomplete: true,
 			},
 			{
 				name: 'target',
@@ -199,6 +200,7 @@ const data = [
 				name: 'query',
 				description: 'Tag name or alias',
 				required: true,
+				autocomplete: true,
 			},
 			{
 				name: 'target',
