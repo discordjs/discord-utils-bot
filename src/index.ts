@@ -191,17 +191,17 @@ export function start() {
 								const isContentMatch = tag.content.toLowerCase().includes(args.query);
 								if (exactKeyword) {
 									exactKeywords.push({
-										name: `⭐ ${key}`,
+										name: `${key}`, // ⭐
 										value: key,
 									});
 								} else if (includesKeyword) {
 									keywordMatches.push({
-										name: `🏷️ ${key}`,
+										name: `${key}`, // 🏷️
 										value: key,
 									});
 								} else if (isContentMatch) {
 									contentMatches.push({
-										name: `📄 ${key}`,
+										name: `${key}`, // 📄
 										value: key,
 									});
 								}
@@ -213,7 +213,7 @@ export function start() {
 									.filter((t) => t.hoisted)
 									.map((_, key) => {
 										return {
-											name: `📌 ${key}`,
+											name: `${key}`, // 📌
 											value: key,
 										};
 									}),
