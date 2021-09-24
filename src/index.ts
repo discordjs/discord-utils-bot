@@ -158,16 +158,32 @@ export function start() {
 					const args = Object.fromEntries(
 						options.map(({ name, value }: { name: string; value: any }) => [name, value]),
 					);
+					const query: string = args.query.trim();
 					if (name === 'docs') {
 						const results = [];
 						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
 
-						const searchResult = doc.search(args.query.length ? args.query : 'Client') ?? [];
-						for (const r of searchResult) {
-							results.push({
-								name: r.formattedName,
-								value: r.formattedName,
-							});
+						if (query.length) {
+							const element = doc.get(...query.split(/\.|#/));
+							if (element) {
+								results.push({ name: element.formattedName, value: element.formattedName });
+							} else {
+								const searchResult = doc.search(query) ?? [];
+								for (const r of searchResult) {
+									results.push({
+										name: r.formattedName,
+										value: r.formattedName,
+									});
+								}
+							}
+						} else {
+							const searchResult = doc.search('Client') ?? [];
+							for (const r of searchResult) {
+								results.push({
+									name: r.formattedName,
+									value: r.formattedName,
+								});
+							}
 						}
 
 						res.write(
