@@ -156,7 +156,7 @@ export function start() {
 				res.end();
 			} catch (error) {
 				logger.error(error as Error);
-				prepareResponse(res, `${PREFIX_TEAPOT} Looks like something wrent wrong here, please try again later!`, true);
+				prepareResponse(res, `${PREFIX_TEAPOT} Looks like something went wrong here, please try again later!`, true);
 			}
 		})
 		.listen(parseInt(process.env.PORT!, 10));
