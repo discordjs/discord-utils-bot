@@ -338,7 +338,7 @@ content = """
 keywords = ["undefined", "not defined", "of null", "of undefined", "ofnull", "ofundefined"]
 content = """
 • `ReferenceError: "x" is not defined`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined>)
-• `TypeError: Cannot read property "x" of undefined/null`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property>)
+• `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property>)
 """
 
 [oauth]
