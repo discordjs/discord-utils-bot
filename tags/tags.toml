@@ -407,7 +407,7 @@ setTimeout(5000).then(() => { ... });
 keywords = ["sharding", "sharding types", "when to shard", "wts"]
 content = """
 • Necessary at 2,500 guilds (discord will not let your bot connect)
-• Internal sharding (recommended):
+• Internal sharding:
 ```js
 const client = new Discord.Client({ shards: 'auto' }); // auto shards
 const client = new Discord.Client({ shards: [0, 1] }); // specific shards
