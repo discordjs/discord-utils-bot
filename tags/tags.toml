@@ -853,7 +853,7 @@ You only need to convert it to an array if you need the index of an entry:
 """
 
 [member-count]
-keywords = ["member-count", "member count", "user count", "uc"]
+keywords = ["member-count", "member count", "user-count", "user count", "uc"]
 content = """
 **Getting user count**
 • `client.users.cache.size` is unreliable because it will only return *cached* users
