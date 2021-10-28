@@ -858,6 +858,7 @@ content = """
 **Getting user count**
 • `client.users.cache.size` is unreliable because it will only return *cached* users
 • The preferred method is using [`collection.reduce()`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=reduce>) on `client.guilds.cache`
-
-`client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)`
+```js
+client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
+```
 """
