@@ -24,6 +24,6 @@ export async function deploy(data: any, dev = false) {
 		logger.info('Update completed');
 	} catch (error) {
 		logger.info('Request failed:');
-		logger.error(error);
+		logger.error(error as Error);
 	}
 }

@@ -19,6 +19,6 @@ export const jsonParser = () => async (req: Request, _: Response, next: NextHand
 
 		await next();
 	} catch (e) {
-		void next(badData(e?.toString()));
+		void next(badData((e as Error).message));
 	}
 };

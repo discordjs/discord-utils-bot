@@ -86,10 +86,10 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 			true,
 		);
 	} catch (error) {
-		logger.error(error);
+		logger.error(error as Error);
 		prepareErrorResponse(
 			res,
-			`Something went wrong while loading tags ${remote ? '(remote)' : '(local)'}\n\`${error.message as string}\``,
+			`Something went wrong while loading tags ${remote ? '(remote)' : '(local)'}\n\`${(error as Error).message}\``,
 		);
 	}
 	return res;

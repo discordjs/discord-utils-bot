@@ -149,7 +149,7 @@ export function start() {
 								}),
 							});
 						} catch (err) {
-							logger.error(err);
+							logger.error(err as Error);
 						}
 						return;
 					}
@@ -171,7 +171,7 @@ export function start() {
 								}),
 							});
 						} catch (err) {
-							logger.error(err);
+							logger.error(err as Error);
 						}
 						return;
 					}
@@ -180,8 +180,8 @@ export function start() {
 				prepareResponse(res, `${PREFIX_BUG} This shouldn't be there...`, true);
 				res.end();
 			} catch (error) {
-				logger.error(error);
-				prepareResponse(res, `${PREFIX_TEAPOT} Looks like something wrent wrong here, please try again later!`, true);
+				logger.error(error as Error);
+				prepareResponse(res, `${PREFIX_TEAPOT} Looks like something went wrong here, please try again later!`, true);
 			}
 		})
 		.listen(parseInt(process.env.PORT!, 10));

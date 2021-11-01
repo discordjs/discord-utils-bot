@@ -46,7 +46,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 			.replace(boldCodeBlockRegex, bold(inlineCode('$1')));
 
 		const parts = [
-			`${formatEmoji(EMOJI_ID_MDN) as string} \ ${hyperlink(underscore(bold(hit.title)), hideLinkEmbed(url))}`,
+			`${formatEmoji(EMOJI_ID_MDN) as string} \ ${underscore(bold(hyperlink(hit.title, hideLinkEmbed(url))))}`,
 			intro,
 		];
 
@@ -59,7 +59,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 
 		return res;
 	} catch (error) {
-		logger.error(error);
+		logger.error(error as Error);
 		prepareErrorResponse(res, `Something went wrong.`);
 		return res;
 	}

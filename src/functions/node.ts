@@ -113,9 +113,8 @@ export async function nodeSearch(
 		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
 		const fullURL = `${moduleURL}.html${anchor}`;
 		const parts = [
-			`${formatEmoji(EMOJI_ID_NODE) as string} \ ${hyperlink(
-				underscore(bold(result.textRaw as string)),
-				hideLinkEmbed(fullURL),
+			`${formatEmoji(EMOJI_ID_NODE) as string} \ ${underscore(
+				bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))),
 			)}`,
 		];
 
@@ -137,7 +136,7 @@ export async function nodeSearch(
 
 		return res;
 	} catch (error) {
-		logger.error(error);
+		logger.error(error as Error);
 		prepareErrorResponse(res, `Something went wrong.`);
 		return res;
 	}

@@ -338,7 +338,7 @@ content = """
 keywords = ["undefined", "not defined", "of null", "of undefined", "ofnull", "ofundefined"]
 content = """
 • `ReferenceError: "x" is not defined`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined>)
-• `TypeError: Cannot read property "x" of undefined/null`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property>)
+• `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property>)
 """
 
 [oauth]
@@ -407,8 +407,8 @@ setTimeout(5000).then(() => { ... });
 keywords = ["sharding", "sharding types", "when to shard", "wts"]
 content = """
 • Necessary at 2,500 guilds (discord will not let your bot connect)
-• Internal sharding (recommended):
-```
+• Internal sharding:
+```js
 const client = new Discord.Client({ shards: 'auto' }); // auto shards
 const client = new Discord.Client({ shards: [0, 1] }); // specific shards
 ```
@@ -586,7 +586,7 @@ Controlling the flow of time in Node.js:
 [paste-code]
 keywords = ["paste-code", "bins", "paste code", "code bins", "codepaste", "bin"]
 content = """
-To share long code snippets use a service like [gist](<https://gist.github.com>), [sourcebin](<https://sourceb.in>) , [starbin](<https://starb.in>), or similar instead of posting them as large code blocks.
+To share long code snippets use a service like [gist](<https://gist.github.com>), [sourcebin](<https://sourceb.in>), [starbin](<https://starb.in>), or similar instead of posting them as large code blocks.
 """
 
 [frameworks]
@@ -840,4 +840,25 @@ content = """
 
 If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
+"""
+
+[collection-array]
+keywords = ["collection-array", "collection array", "cta", "collection to array"]
+content = """
+**Converting a Collection to an array**
+You only need to convert it to an array if you need the index of an entry:
+• Iteration (looping) is possible with [`for...of`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map>) over [`Collection#values`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>) or [`forEach`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach>)
+• You can transform a Collection to an array with [`Collection#map`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=map>)
+• If you need indices, you can get the array using [`[...collection.values()]`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>)
+"""
+
+[member-count]
+keywords = ["member-count", "member count", "user-count", "user count", "uc"]
+content = """
+**Getting your bot's member count**
+• `client.users.cache.size` is unreliable because it will only return *cached* users
+• The preferred method is using [`collection.reduce()`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=reduce>) on `client.guilds.cache`
+```js
+client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
+```
 """
