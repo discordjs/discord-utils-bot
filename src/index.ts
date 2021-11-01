@@ -7,7 +7,14 @@ import { djsDocs, fetchDocResult } from './functions/docs';
 import { djsGuide } from './functions/guide';
 import { mdnSearch } from './functions/mdn';
 import { nodeSearch } from './functions/node';
-import { API_BASE_DISCORD, DEFAULT_DOCS_BRANCH, PREFIX_BUG, PREFIX_TEAPOT } from './util/constants';
+import {
+	API_BASE_DISCORD,
+	BUILDERS_DOCS_BRANCH_URL,
+	DEFAULT_DOCS_BRANCH,
+	PREFIX_BUG,
+	PREFIX_TEAPOT,
+	VOICE_DOCS_BRANCH_URL,
+} from './util/constants';
 import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
 import fetch from 'node-fetch';
@@ -53,6 +60,15 @@ export function start() {
 					);
 
 					if (name === 'docs') {
+						switch (args.source) {
+							case 'voice':
+								args.source = VOICE_DOCS_BRANCH_URL;
+								break;
+							case 'builders':
+								args.source = BUILDERS_DOCS_BRANCH_URL;
+								break;
+						}
+
 						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
 
 						return (
@@ -103,9 +119,18 @@ export function start() {
 				if (message.type === 3) {
 					const { token } = message;
 					const { custom_id: cId, values: selected } = message.data;
-					const [op, target, source] = cId.split('|');
+					const [op, target] = cId.split('|');
+					let source = cId.split('|')[2];
 
 					if (op === 'docsearch') {
+						switch (source) {
+							case 'voice':
+								source = VOICE_DOCS_BRANCH_URL;
+								break;
+							case 'builders':
+								source = BUILDERS_DOCS_BRANCH_URL;
+								break;
+						}
 						const doc = await Doc.fetch(source, { force: true });
 
 						prepareResponse(res, 'Suggestion sent.', false, [], [], 7);
