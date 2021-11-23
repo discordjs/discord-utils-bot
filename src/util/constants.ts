@@ -31,3 +31,6 @@ export const MAX_MESSAGE_LENGTH = 4096;
 export const REMOTE_TAG_URL =
 	'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags/tags.toml' as const;
 export const DEFAULT_DOCS_BRANCH = 'stable' as const;
+export const VOICE_DOCS_BRANCH_URL = 'https://raw.githubusercontent.com/discordjs/voice/docs/stable.json' as const;
+export const BUILDERS_DOCS_BRANCH_URL =
+	'https://raw.githubusercontent.com/discordjs/builders/docs/stable.json' as const;

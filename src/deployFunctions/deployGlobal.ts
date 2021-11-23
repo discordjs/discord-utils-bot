@@ -34,6 +34,14 @@ const data = [
 						name: 'stable (default)',
 						value: 'stable',
 					},
+					{
+						name: 'voice',
+						value: 'voice',
+					},
+					{
+						name: 'builders',
+						value: 'builders',
+					},
 				],
 			},
 		],
