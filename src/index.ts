@@ -11,12 +11,17 @@ import { API_BASE_DISCORD, DEFAULT_DOCS_BRANCH, PREFIX_BUG, PREFIX_TEAPOT } from
 import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
 import fetch from 'node-fetch';
-import Doc from 'discord.js-docs';
+import { Doc } from 'discordjs-docs-parser';
 import { discordDeveloperDocs } from './functions/discorddocs';
 
 const tagCache: Collection<string, Tag> = new Collection();
 void loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
+
+// Set built in escape markdown links to true
+Doc.setGlobalOptions({
+	escapeMarkdownLinks: true,
+});
 
 function verify(req: Request, res: Response, next: NextHandler) {
 	const signature = req.headers['x-signature-ed25519'];
