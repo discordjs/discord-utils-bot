@@ -764,9 +764,9 @@ content = """
 ```diff
   const attachment = new MessageAttachment('./image.png', 'image1.png');
   const embed = new MessageEmbed()
+-   .attachFiles([attachment])
     .setTitle('Attachments')
-    .setImage(`attachment://${attachment.name}`)
--   .attachFiles([attachment]);
+    .setImage(`attachment://${attachment.name}`);
 
 - channel.send(embed)
 + channel.send({
