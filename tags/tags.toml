@@ -762,10 +762,17 @@ keywords = ["embed-files", "embed files"]
 content = """
 `MessageEmbed#attachFiles` has been removed. Files should be attached via the message option object instead:
 ```diff
-- const embed = new MessageEmbed().setTitle('Attachments').attachFiles(['./image1.png', './image2.jpg']);
+  const attachment = new MessageAttachment('./image.png', 'image1.png');
+  const embed = new MessageEmbed()
+-   .attachFiles([attachment])
+    .setTitle('Attachments')
+    .setImage(`attachment://${attachment.name}`);
+
 - channel.send(embed)
-+ const embed = new MessageEmbed().setTitle('Attachments');
-+ channel.send({ embeds: [embed], files: ['./image1.png', './image2.jpg'] });
++ channel.send({
++   embeds: [embed],
++   files: [attachment]
++ });
 ```
 """
 
