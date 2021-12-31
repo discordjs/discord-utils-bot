@@ -24,7 +24,7 @@ const data = [
 				description: 'Source repository to use',
 				choices: [
 					{
-						name: 'collection (util structure)',
+						name: 'Collection (util structure)',
 						value: 'collection',
 					},
 					{
@@ -32,16 +32,20 @@ const data = [
 						value: 'main',
 					},
 					{
-						name: 'stable (default)',
+						name: 'Stable (default)',
 						value: 'stable',
 					},
 					{
-						name: 'voice',
+						name: 'Voice',
 						value: 'voice',
 					},
 					{
-						name: 'builders',
+						name: 'Builders',
 						value: 'builders',
+					},
+					{
+						name: 'RPC',
+						value: 'rpc',
 					},
 				],
 			},
