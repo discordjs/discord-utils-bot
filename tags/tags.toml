@@ -884,7 +884,8 @@ Image: https://i.imgur.com/taMHw7o.png
 [footer]
 keywords = ["footer"]
 content = """
-**<MessageEmbed>.setFooter() now takes an object:**
+`<MessageEmbed>.setFooter()` now takes an object:
+
 ```diff
 - embed.setFooter('This is an example text', 'https://exampleicon.com')
 + embed.setFooter({ text: 'This is an example text', iconURL: 'https://exampleicon.com' })
