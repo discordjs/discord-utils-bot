@@ -873,10 +873,20 @@ client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 [add-to-server-button]
 keywords = ["add-to-server-button", "add to server button", "add to server", "ats", "profile-invite", "profile-invite", "authorization link", "auth link"]
 content = """
-**"Add to Server" button**
+**\"Add to Server\" button**
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > OAuth2 (General) > Default Authorization Link
-• Set authorization method to "In-app Authorization"
+• Set authorization method to \"In-app Authorization\"
 • Check scopes `bot` and `applications.commands`
 
 Image: https://i.imgur.com/taMHw7o.png
+"""
+
+[footer]
+keywords = ["footer"]
+content = """
+**<MessageEmbed>.setFooter() now takes an object:**
+```diff
+- embed.setFooter('This is an example text', 'https://exampleicon.com')
++ embed.setFooter({ text: 'This is an example text', iconURL: 'https://exampleicon.com' })
+```
 """
