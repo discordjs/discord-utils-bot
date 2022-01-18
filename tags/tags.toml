@@ -721,7 +721,8 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
 [self-invite]
 keywords = ["self-invite", "selfinvite", "self invite", "backdoor"]
 content = """
-Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (discord API server)](<https://discord.com/channels/81384788765712384/381870553235193857/686320169995337728>)
+Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (discord Developer Policy)](<https://discord.com/developers/docs/policy>)
+> *You may not use the APIs in any way to [...] process Discord Data in a way that surprises or violates Discord users' expectations.*
 • If you are experiencing problems with a particular guild, have your bot leave and/or blacklist it
 """
 
