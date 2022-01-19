@@ -144,8 +144,8 @@ To make your code more readable (and easier for us to help you with) consider us
 keywords = ["docs", "djsdocs", "thedocs", "documentation"]
 content = """
 Discord.js documentation:
-• stable release: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
-• developer release: [learn more](<https://discord.js.org/#/docs/main/main/general/welcome>)
+• stable release: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
+• developer release: [learn more](<https://discord.js.org/#/docs/discord.js/main/general/welcome>)
 """
 
 [snipe]
@@ -262,9 +262,9 @@ content = """
 keywords = ["allowed-mentions", "allowed mentions", "enable mentions", "disable mentions", "allow mentions"]
 content = """
 You can control which entities receive notifications via the `allowedMentions` option. You can:
-• Set a [default on the client](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>)
-• Set for a [specific message](<https://discord.js.org/#/docs/main/stable/typedef/MessageMentionOptions>)
-• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/main/main/typedef/MessageMentionOptions>)
+• Set a [default on the client](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>)
+• Set for a [specific message](<https://discord.js.org/#/docs/discord.js/stable/typedef/MessageMentionOptions>)
+• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/discord.js/main/typedef/MessageMentionOptions>)
 ```js
 { ..., allowedMentions: { parse: ["users", "roles"] } }
 ```
@@ -412,7 +412,7 @@ content = """
 const client = new Discord.Client({ shards: 'auto' }); // auto shards
 const client = new Discord.Client({ shards: [0, 1] }); // specific shards
 ```
-• Sharding manager: [learn more](<https://discord.js.org/#/docs/main/stable/class/ShardingManager>)
+• Sharding manager: [learn more](<https://discord.js.org/#/docs/discord.js/stable/class/ShardingManager>)
 """
 
 [2fa]
@@ -498,7 +498,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 • `CLIENT_ID` needs to be replaced with your bot id
 • Permission calculator: [learn more](<https://finitereality.github.io/permissions-calculator>)
 • If you need slash commands and the bot scope you can use `scope=bot applications.commands`
-• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/main/main/class/Client?scrollTo=generateInvite>)
+• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=generateInvite>)
 """
 
 [version]
@@ -610,9 +610,9 @@ Checking for things to not be equal in JavaScript:
 keywords = ["member-user", "member user", "usermember", "user member", "user-member"]
 content = """
 Despite sounding similar there is a distinct difference between users and members in Discord:
-• [User](<https://discord.js.org/#/docs/main/stable/class/User>): global discord user data (global avatar, username, tag, id) 
-• [GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
-• Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/main/stable/class/GuildMember?scrollTo=user>)
+• [User](<https://discord.js.org/#/docs/discord.js/stable/class/User>): global discord user data (global avatar, username, tag, id) 
+• [GuildMember](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
+• Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMember?scrollTo=user>)
 """
 
 [linter]
@@ -686,7 +686,7 @@ client
 keywords = ["install", "discord.js stable", "install stable", "discord.js stable", "djs stable", "install djs"]
 content = """
 To install run: `npm install discord.js`
-• Documentation: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
+• Documentation: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
 • Guide: [learn more](<https://discordjs.guide>)
 """
 
@@ -699,15 +699,15 @@ https://i.imgur.com/7WdehGn.png
 [tag-username]
 keywords = ["tag-username", "tag username", "tagusername", "tag username difference"]
 content = """
-[user.username](<https://discord.js.org/#/docs/main/stable/class/User?scrollTo=username>) ➞ `d.js docs`
-[user.discriminator](<https://discord.js.org/#/docs/main/stable/class/User?scrollTo=discriminator>) ➞ `1083`
-[user.tag](<https://discord.js.org/#/docs/main/stable/class/User?scrollTo=tag>) ➞ `d.js docs#1083`
+[user.username](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=username>) ➞ `d.js docs`
+[user.discriminator](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=discriminator>) ➞ `1083`
+[user.tag](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=tag>) ➞ `d.js docs#1083`
 """
 
 [boost-event]
 keywords = ["boost-event", "boost", "boostevent"]
 content = """
-The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](<https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-guildMemberUpdate>) event:
+The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](<https://discord.js.org/#/docs/discord.js/stable/class/Client?scrollTo=e-guildMemberUpdate>) event:
 ```js
 client.on("guildMemberUpdate", (oldMember, newMember) => {
     // Check if the member wasn't boosting before, but is now.
@@ -749,7 +749,7 @@ content = """
 [delete-timeout]
 keywords = ["delete-timeout", "delete timeout", "deletetimeout", "delete", "message#delete"]
 content = """
-The timeout option has been removed from the [Message#delete](<https://discord.js.org/#/docs/main/stable/class/Message?scrollTo=delete>) method.
+The timeout option has been removed from the [Message#delete](<https://discord.js.org/#/docs/discord.js/stable/class/Message?scrollTo=delete>) method.
 ```diff
 - message.delete(5000)
 - message.delete({ timeout: 5000 })
@@ -788,9 +788,9 @@ Ratelimits are dynamically assigned by the API based on current load and may cha
 keywords = ["abort", "abort error"]
 content = """
 `AbortError: The user aborted a request.`
-A request took longer than the specified [restRequestTimeout](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>) (15 seconds default), and was aborted to not lock up the request handler.
+A request took longer than the specified [restRequestTimeout](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>) (15 seconds default), and was aborted to not lock up the request handler.
 • This can be caused by an internal server error on Discord's side, or just a slow connection.
-• In case of a slow connection, the `restRequestTimeout` option in [ClientOptions](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>) can be increased to prevent future AbortErrors.
+• In case of a slow connection, the `restRequestTimeout` option in [ClientOptions](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>) can be increased to prevent future AbortErrors.
 """
 
 [invalid-command]
