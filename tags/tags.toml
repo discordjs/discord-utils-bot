@@ -881,3 +881,16 @@ content = """
 
 Image: https://i.imgur.com/taMHw7o.png
 """
+
+[author-footer]
+keywords = ["author-footer", "footer", "author", "setFooter", "setAuthor"]
+content = """
+`<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
+```diff
+- embed.setAuthor('This is an example text', 'https://exampleicon.com', 'https://websiteofauthor.com')
++ embed.setAuthor({ name: 'This is an example text', url: 'https://websiteofauthor.com', iconURL: 'https://exampleicon.com' })
+
+- embed.setFooter('This is an example text', 'https://exampleicon.com')
++ embed.setFooter({ text: 'This is an example text', iconURL: 'https://exampleicon.com' })
+```
+"""
