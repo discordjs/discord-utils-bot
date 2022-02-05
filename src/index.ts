@@ -17,7 +17,7 @@ import {
 } from './util/constants';
 import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import Doc from 'discord.js-docs';
 import { discordDeveloperDocs } from './functions/discorddocs';
 

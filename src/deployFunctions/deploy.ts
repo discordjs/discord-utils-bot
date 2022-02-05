@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { resolve } from 'path';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { API_BASE_DISCORD } from '../util/constants';
 import { logger } from '../util/logger';
 
@@ -20,7 +20,7 @@ export async function deploy(data: any, dev = false) {
 			method: 'put',
 			body: JSON.stringify(data),
 		}).then((r) => r.json());
-		logger.info(res);
+		logger.info(res as object);
 		logger.info('Update completed');
 	} catch (error) {
 		logger.info('Request failed:');
