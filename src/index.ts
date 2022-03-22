@@ -59,62 +59,68 @@ export function start() {
 						options.map(({ name, value }: { name: string; value: any }) => [name, value]),
 					);
 
-					if (name === 'docs') {
-						switch (args.source) {
-							case 'voice':
-								args.source = VOICE_DOCS_BRANCH_URL;
-								break;
-							case 'builders':
-								args.source = BUILDERS_DOCS_BRANCH_URL;
-								break;
-						}
+                    switch(name) {
+					    case 'docs': {
+					    	switch (args.source) {
+					    		case 'voice':
+					    			args.source = VOICE_DOCS_BRANCH_URL;
+					    			break;
+					    		case 'builders':
+					    			args.source = BUILDERS_DOCS_BRANCH_URL;
+					    			break;
+					    	}
 
-						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
+					    	const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
 
-						return (
-							await djsDocs(res, doc, args.source ?? DEFAULT_DOCS_BRANCH, args.query, undefined, args.target)
-						).end();
-					}
+					    	return (
+					    		await djsDocs(res, doc, args.source ?? DEFAULT_DOCS_BRANCH, args.query, undefined, args.target)
+					    	).end();
+					    }
+                        break;
+					    case 'guide': {
+					    	return (await djsGuide(res, args.query, args.results, args.target)).end();
+					    }
+                        break;
+					    case 'ddocs': {
+					    	return (await discordDeveloperDocs(res, args.query, args.results, args.target)).end();
+					    }
+                        break;
+					    case 'mdn': {
+					    	return (await mdnSearch(res, args.query, args.target)).end();
+					    }
+                        break;
+					    case 'node': {
+					    	return (await nodeSearch(res, args.query, args.version, args.target)).end();
+					    }
+                        break;
+					    case 'tag': {
+					    	return (await showTag(res, args.query, tagCache, undefined, args.target)).end();
+					    }
+                        break;
+					    case 'tagsearch': {
+					    	return (await searchTag(res, args.query, tagCache, args.target)).end();
+					    }
+                        break;
+					    case 'tagreload': {
+					    	return (await reloadTags(res, tagCache, args.remote)).end();
+					    }
+                        break;
+					    case 'invite': {
+					    	prepareResponse(
+					    		res,
+					    		`Add the discord.js interaction to your server: [(click here)](<https://discord.com/api/oauth2/authorize?client_id=${process
+					    			.env.DISCORD_CLIENT_ID!}&scope=applications.commands>)`,
+					    		true,
+					    	);
+					    	return res.end();
+					    }
+                        break;
+                        default: {
+                            logger.warn(`Unknown interaction received: ${name as string} guild: ${message.guild_id as string}`);
+                        }
+                        break;
+                    }
 
-					if (name === 'guide') {
-						return (await djsGuide(res, args.query, args.results, args.target)).end();
-					}
-
-					if (name === 'ddocs') {
-						return (await discordDeveloperDocs(res, args.query, args.results, args.target)).end();
-					}
-
-					if (name === 'mdn') {
-						return (await mdnSearch(res, args.query, args.target)).end();
-					}
-
-					if (name === 'node') {
-						return (await nodeSearch(res, args.query, args.version, args.target)).end();
-					}
-
-					if (name === 'tag') {
-						return (await showTag(res, args.query, tagCache, undefined, args.target)).end();
-					}
-
-					if (name === 'tagsearch') {
-						return (await searchTag(res, args.query, tagCache, args.target)).end();
-					}
-
-					if (name === 'tagreload') {
-						return (await reloadTags(res, tagCache, args.remote)).end();
-					}
-
-					if (name === 'invite') {
-						prepareResponse(
-							res,
-							`Add the discord.js interaction to your server: [(click here)](<https://discord.com/api/oauth2/authorize?client_id=${process
-								.env.DISCORD_CLIENT_ID!}&scope=applications.commands>)`,
-							true,
-						);
-						return res.end();
-					}
-
-					logger.warn(`Unknown interaction received: ${name as string} guild: ${message.guild_id as string}`);
 				}
 				if (message.type === 3) {
 					const { token } = message;
