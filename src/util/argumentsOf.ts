@@ -1,4 +1,4 @@
-import { APIGuildMember, APIPartialChannel, APIRole, ApplicationCommandOptionType } from 'discord-api-types/v10';
+import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 
 export type Command = Readonly<{
 	name: string;
@@ -46,20 +46,20 @@ type TypeIdToType<T, O, C> = T extends ApplicationCommandOptionType.Subcommand
 	? C extends readonly { value: string }[]
 		? C[number]['value']
 		: string
-	: T extends ApplicationCommandOptionType.Integer | /* ApplicationCommandOptionType.Number */ 10
+	: T extends ApplicationCommandOptionType.Integer | ApplicationCommandOptionType.Number
 	? C extends readonly { value: number }[]
 		? C[number]['value']
 		: number
 	: T extends ApplicationCommandOptionType.Boolean
 	? boolean
 	: T extends ApplicationCommandOptionType.User
-	? APIGuildMember & { permissions: Permissions }
+	? string
 	: T extends ApplicationCommandOptionType.Channel
-	? APIPartialChannel & { permissions: Permissions }
+	? string
 	: T extends ApplicationCommandOptionType.Role
-	? APIRole
+	? string
 	: T extends ApplicationCommandOptionType.Mentionable
-	? (APIGuildMember & { permissions: Permissions }) | (APIPartialChannel & { permissions: Permissions }) | APIRole
+	? string
 	: never;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

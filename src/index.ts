@@ -83,7 +83,7 @@ export function start() {
 						switch (name) {
 							case 'discorddocs': {
 								const castArgs = args as ArgumentsOf<typeof DiscordDocsCommand>;
-								(await discordDeveloperDocs(res, castArgs.query, castArgs.results, castArgs.target?.user?.id)).end();
+								(await discordDeveloperDocs(res, castArgs.query, castArgs.results, castArgs.target)).end();
 								break;
 							}
 
@@ -97,14 +97,14 @@ export function start() {
 										castArgs.source ?? DEFAULT_DOCS_BRANCH,
 										castArgs.query,
 										undefined,
-										castArgs.target?.user?.id,
+										castArgs.target,
 									)
 								).end();
 								break;
 							}
 							case 'guide': {
 								const castArgs = args as ArgumentsOf<typeof GuideCommand>;
-								await djsGuide(res, castArgs.query, castArgs.results, castArgs.target?.user?.id);
+								await djsGuide(res, castArgs.query, castArgs.results, castArgs.target);
 								break;
 							}
 							case 'invite': {
@@ -118,17 +118,17 @@ export function start() {
 							}
 							case 'mdn': {
 								const castArgs = args as ArgumentsOf<typeof MdnCommand>;
-								await mdnSearch(res, castArgs.query, castArgs.target?.user?.id);
+								await mdnSearch(res, castArgs.query, castArgs.target);
 								break;
 							}
 							case 'node': {
 								const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-								await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target?.user?.id);
+								await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target);
 								break;
 							}
 							case 'tag': {
 								const castArgs = args as ArgumentsOf<typeof TagCommand>;
-								await showTag(res, castArgs.query, tagCache, undefined, castArgs.target?.user?.id);
+								await showTag(res, castArgs.query, tagCache, undefined, castArgs.target);
 								break;
 							}
 							case 'tagreload': {
