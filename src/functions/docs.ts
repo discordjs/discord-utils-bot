@@ -69,30 +69,17 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 	return `${parts.join('')}\n${description}`;
 }
 
-export function fetchDocResult(
-	source: SourcesStringUnion,
-	doc: Doc,
-	query: string,
-	user?: string,
-	target?: string,
-): string | null {
+export function fetchDocResult(source: SourcesStringUnion, doc: Doc, query: string, target?: string): string | null {
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
 	const icon = formatEmoji(docTypeEmojiId(element.docType, source === 'main'));
-	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, user, target);
+	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, target);
 }
 
-export function djsDocs(
-	res: Response,
-	doc: Doc,
-	source: SourcesStringUnion,
-	query: string,
-	user?: string,
-	target?: string,
-): Response {
+export function djsDocs(res: Response, doc: Doc, source: SourcesStringUnion, query: string, target?: string): Response {
 	query = query.trim();
 
-	const singleResult = fetchDocResult(source, doc, query, user, target);
+	const singleResult = fetchDocResult(source, doc, query, target);
 	if (singleResult) {
 		prepareResponse(res, singleResult, false, target ? [target] : [], [], 4);
 		return res;

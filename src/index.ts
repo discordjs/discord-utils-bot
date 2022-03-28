@@ -2,12 +2,12 @@ import polka, { NextHandler, Request, Response, Middleware } from 'polka';
 import { verifyKey } from 'discord-interactions';
 import { logger } from './util/logger';
 import { jsonParser } from './util/jsonParser';
-import { prepareAck, prepareResponse } from './util/respond';
+import { prepareAck, prepareErrorResponse, prepareResponse } from './util/respond';
 import { djsDocs } from './functions/docs';
 import { djsGuide } from './functions/guide';
 import { mdnSearch } from './functions/mdn';
 import { nodeSearch } from './functions/node';
-import { DEFAULT_DOCS_BRANCH, PREFIX_BUG, PREFIX_TEAPOT } from './util/constants';
+import { API_BASE_MDN, PREFIX_BUG, PREFIX_TEAPOT } from './util/constants';
 import { loadTags, reloadTags, showTag, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
 import { Doc } from 'discordjs-docs-parser';
@@ -16,14 +16,14 @@ import { InteractionType, APIInteraction, ApplicationCommandType } from 'discord
 import { transformInteraction } from './util/interactionOptions';
 import { ArgumentsOf } from './util/argumentsOf';
 import { DiscordDocsCommand } from './interactions/discorddocs';
-import { DocsCommand } from './interactions/docs';
 import { GuideCommand } from './interactions/guide';
 import { MdnCommand } from './interactions/mdn';
 import { NodeCommand } from './interactions/node';
 import { TagCommand } from './interactions/tag';
 import { TagReloadCommand } from './interactions/tagreload';
-import { djsDocsAutoComplete } from './functions/autocomplete/docsAutoComplete';
 import { tagAutoComplete } from './functions/autocomplete/tagAutoComplete';
+import { resolveOptionsToDocsAutoComplete, djsDocsAutoComplete } from './functions/autocomplete/docsAutoComplete';
+import { mdnAutoComplete } from './functions/autocomplete/mdnAutoComplete';
 
 type CommandName =
 	| 'discorddocs'
@@ -35,9 +35,15 @@ type CommandName =
 	| 'tag'
 	| 'tagreload'
 	| 'not_implemented';
-type CommandAutoCompleteName = 'docs' | 'tag' | 'not_implemented';
+type CommandAutoCompleteName = 'docs' | 'tag' | 'mdn' | 'not_implemented';
+
+export interface MDNIndexEntry {
+	title: string;
+	url: string;
+}
 
 const tagCache: Collection<string, Tag> = new Collection();
+const mdnIndexCache: MDNIndexEntry[] = [];
 void loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
 
@@ -62,7 +68,15 @@ function verify(req: Request, res: Response, next: NextHandler) {
 	void next();
 }
 
-export function start() {
+export async function start() {
+	const mdnData = (await fetch(`${API_BASE_MDN}/en-US/search-index.json`)
+		.then((r) => r.json())
+		.catch(() => undefined)) as MDNIndexEntry[] | undefined;
+	if (mdnData) {
+		const mdnResult = mdnData;
+		mdnIndexCache.push(...mdnResult.map((r) => ({ title: r.title, url: `${r.url}` })));
+	}
+
 	polka()
 		.use(jsonParser(), verify as Middleware)
 		.post('/interactions', async (req, res) => {
@@ -88,20 +102,18 @@ export function start() {
 							}
 
 							case 'docs': {
-								const castArgs = args as ArgumentsOf<typeof DocsCommand>;
-								const doc = await Doc.fetch(castArgs.source ?? DEFAULT_DOCS_BRANCH, { force: true });
-								(
-									await djsDocs(
-										res,
-										doc,
-										castArgs.source ?? DEFAULT_DOCS_BRANCH,
-										castArgs.query,
-										undefined,
-										castArgs.target,
-									)
-								).end();
+								const resolved = resolveOptionsToDocsAutoComplete(options);
+								if (!resolved) {
+									prepareErrorResponse(res, `Payload looks different than expected`);
+									break;
+								}
+
+								const { source, query, target } = resolved;
+								const doc = await Doc.fetch(source, { force: true });
+								(await djsDocs(res, doc, source, query, target)).end();
 								break;
 							}
+
 							case 'guide': {
 								const castArgs = args as ArgumentsOf<typeof GuideCommand>;
 								await djsGuide(res, castArgs.query, castArgs.results, castArgs.target);
@@ -128,7 +140,7 @@ export function start() {
 							}
 							case 'tag': {
 								const castArgs = args as ArgumentsOf<typeof TagCommand>;
-								await showTag(res, castArgs.query, tagCache, undefined, castArgs.target);
+								await showTag(res, castArgs.query, tagCache, castArgs.target);
 								break;
 							}
 							case 'tagreload': {
@@ -152,6 +164,10 @@ export function start() {
 							await tagAutoComplete(res, data.options, tagCache);
 							break;
 						}
+						case 'mdn': {
+							await mdnAutoComplete(res, data.options, mdnIndexCache);
+							break;
+						}
 						default:
 							logger.warn(`Unknown auto complete received: ${name} guild: ${message.guild_id!}`);
 					}
@@ -170,4 +186,4 @@ export function start() {
 	logger.info(`Listening for interactions on port ${parseInt(process.env.PORT!, 10)}`);
 }
 
-start();
+void start();

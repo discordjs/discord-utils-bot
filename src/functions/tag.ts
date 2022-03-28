@@ -46,15 +46,10 @@ export function findSimilar(query: string, tagCache: Collection<string, Tag>, n 
 		.slice(0, n);
 }
 
-export function findTag(
-	tagCache: Collection<string, Tag>,
-	query: string,
-	user?: string,
-	target?: string,
-): string | null {
+export function findTag(tagCache: Collection<string, Tag>, query: string, target?: string): string | null {
 	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
 	if (!tag) return null;
-	return suggestionString('tag', tag.content, user, target);
+	return suggestionString('tag', tag.content, target);
 }
 
 export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {
@@ -79,15 +74,9 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 	return res;
 }
 
-export function showTag(
-	res: Response,
-	query: string,
-	tagCache: Collection<string, Tag>,
-	user?: string,
-	target?: string,
-): Response {
+export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
 	query = query.trim().toLowerCase();
-	const content = findTag(tagCache, query, user, target)!;
+	const content = findTag(tagCache, query, target)!;
 	if (content) {
 		prepareResponse(res, content, false, target ? [target] : []);
 	} else {

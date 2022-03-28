@@ -1,50 +1,130 @@
 import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 
+const QUERY_DESCRIPTION = 'Class or Class#method combination to search for' as const;
+const TARGET_DESCRIPTION = 'User to mention' as const;
+const SUBCOMMAND_DESCRIPTION_PREFIX = 'Display docs for' as const;
+
 export const DocsCommand = {
 	name: 'docs',
 	description: 'Display discord.js documentation',
 	options: [
 		{
-			type: ApplicationCommandOptionType.String,
-			name: 'query',
-			description: 'Class or Class#method combination to search for',
-			required: true,
-			autocomplete: true,
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'discord-js',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
+				},
+				{
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+			],
 		},
 		{
-			type: ApplicationCommandOptionType.User,
-			name: 'target',
-			description: 'User to mention',
-			required: false,
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'discord-js-dev',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@dev`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
+				},
+				{
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+			],
 		},
 		{
-			type: ApplicationCommandOptionType.String,
-			name: 'source',
-			description: 'Source repository to use',
-			choices: [
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'collection',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} @discordjs/collection`,
+			options: [
 				{
-					name: 'Collection (util structure)',
-					value: 'collection',
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
 				},
 				{
-					name: 'discord.js@dev',
-					value: 'main',
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'voice',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} @discordjs/voice`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
 				},
 				{
-					name: 'Stable (default)',
-					value: 'stable',
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'builders',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} @discordjs/builders`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
 				},
 				{
-					name: 'Voice',
-					value: 'voice',
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'rpc',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord-rpc`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
 				},
 				{
-					name: 'Builders',
-					value: 'builders',
-				},
-				{
-					name: 'RPC',
-					value: 'rpc',
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
 				},
 			],
 		},

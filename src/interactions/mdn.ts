@@ -9,6 +9,7 @@ export const MdnCommand = {
 			name: 'query',
 			description: 'Class or method to search for',
 			required: true,
+			autocomplete: true,
 		},
 		{
 			type: ApplicationCommandOptionType.User,

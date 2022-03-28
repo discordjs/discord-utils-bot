@@ -15,23 +15,11 @@ export function truncate(text: string, len: number, splitChar = ' '): string {
 	return resText.length === text.length ? resText : `${resText.trim()}...`;
 }
 
-export function suggestionString(
-	suggestionType: string,
-	guaranteed?: string,
-	author?: string,
-	target?: string,
-): string {
-	const messageParts = [];
+export function suggestionString(suggestionType: string, guaranteed?: string, target?: string): string {
 	const [first, ...rest] = suggestionType;
-	if (author || target) {
-		messageParts.push(`*${first.toUpperCase()}${rest.join('')} suggestion`);
-		if (target) {
-			messageParts.push(` for ${userMention(target)}`);
-		}
-		if (author) {
-			messageParts.push(` from ${userMention(author)}`);
-		}
-		messageParts.push(':*\n');
+	const messageParts = [];
+	if (target) {
+		messageParts.push(`*${first.toUpperCase()}${rest.join('')} suggestion for ${userMention(target)}:*\n`);
 	}
 
 	if (guaranteed) {
