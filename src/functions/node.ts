@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import {
 	bold,
 	formatEmoji,
@@ -68,6 +72,7 @@ function findResult(data: any, query: string) {
 	for (const category of ['class', 'classMethod', 'method', 'event', 'module', 'global', 'misc'] as QueryType[]) {
 		const res = findRec(data, query, category);
 		if (res) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return res;
 		}
 	}

@@ -1,8 +1,8 @@
 import { bold, formatEmoji, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
 import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
-import { suggestionString, truncate } from '../util';
-import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
+import { suggestionString } from '../util';
+import { prepareErrorResponse, prepareResponse } from '../util/respond';
 import {
 	EMOJI_ID_CLASS,
 	EMOJI_ID_CLASS_DEV,
@@ -33,10 +33,6 @@ function docTypeEmojiId(docType: DocTypes | null, dev = false): string {
 		default:
 			return dev ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS;
 	}
-}
-
-function stripMd(s = ''): string {
-	return s.replace(/[`\*_]/gi, '');
 }
 
 function extractGenericTypeInfill(type: string): string {
@@ -73,17 +69,6 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 	return `${parts.join('')}\n${description}`;
 }
 
-function buildSelectOption(result: DocElement, dev = false) {
-	return {
-		label: result.formattedName,
-		value: result.formattedName,
-		description: truncate(stripMd(result.description ?? 'No description found'), 95),
-		emoji: {
-			id: docTypeEmojiId(result.docType, dev),
-		},
-	};
-}
-
 export function fetchDocResult(
 	source: SourcesStringUnion,
 	doc: Doc,
@@ -110,21 +95,6 @@ export function djsDocs(
 	const singleResult = fetchDocResult(source, doc, query, user, target);
 	if (singleResult) {
 		prepareResponse(res, singleResult, false, target ? [target] : [], [], 4);
-		return res;
-	}
-
-	const results = doc.search(query);
-	if (results?.length) {
-		prepareSelectMenu(
-			res,
-			`${formatEmoji(
-				source === 'main' ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS,
-			)} No match. Select a similar search result to send it:`,
-			results.map((r) => buildSelectOption(r, source === 'main')),
-			4,
-			`docsearch|${target ?? ''}|${source}`,
-			true,
-		);
 		return res;
 	}
 

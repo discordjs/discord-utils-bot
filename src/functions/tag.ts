@@ -1,21 +1,14 @@
-import { prepareErrorResponse, prepareResponse, prepareSelectMenu } from '../util/respond';
+import { prepareErrorResponse, prepareResponse } from '../util/respond';
 import { Response } from 'polka';
 import Collection from '@discordjs/collection';
 import { distance } from 'fastest-levenshtein';
-import {
-	CLOSEST_MATCH_AMOUNT,
-	EMOJI_ID_DJS,
-	MAX_MESSAGE_LENGTH,
-	PREFIX_SUCCESS,
-	REMOTE_TAG_URL,
-} from '../util/constants';
+import { PREFIX_SUCCESS, REMOTE_TAG_URL } from '../util/constants';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { logger } from '../util/logger';
 import fetch from 'node-fetch';
 import { suggestionString } from '../util';
-import { formatEmoji } from '@discordjs/builders';
 
 export interface Tag {
 	keywords: string[];
@@ -27,16 +20,6 @@ export interface TagSimilarityEntry {
 	word: string;
 	name: string;
 	lev: number;
-}
-
-function mapper(entry: TagSimilarityEntry) {
-	return {
-		label: entry.name === entry.word ? entry.name : `${entry.name} (${entry.word})`,
-		value: entry.name,
-		emoji: {
-			id: EMOJI_ID_DJS,
-		},
-	};
 }
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
@@ -108,56 +91,7 @@ export function showTag(
 	if (content) {
 		prepareResponse(res, content, false, target ? [target] : []);
 	} else {
-		const similar = findSimilar(query, tagCache, CLOSEST_MATCH_AMOUNT);
-		if (similar.length) {
-			prepareSelectMenu(
-				res,
-				`${
-					formatEmoji(EMOJI_ID_DJS) as string
-				} Could not find a tag with name or alias \`${query}\`. Select a similar result from the list to send it instead:`,
-				similar.map(mapper),
-				4,
-				`tag|${target ?? ''}`,
-				true,
-			);
-		} else {
-			prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${query}\`.`);
-		}
-	}
-	return res;
-}
-
-export function searchTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
-	query = query.toLowerCase();
-
-	const result = [];
-	for (const [key, tag] of tagCache.entries()) {
-		const foundKeyword = tag.keywords.find((s) => s.toLowerCase().includes(query));
-		const isContentMatch = tag.content.toLowerCase().includes(query);
-		if (foundKeyword || isContentMatch) {
-			if (result.join(', ').length + tag.keywords.length + 6 < MAX_MESSAGE_LENGTH) {
-				result.push({
-					label: key,
-					value: key,
-					emoji: {
-						id: EMOJI_ID_DJS,
-					},
-				});
-			}
-		}
-	}
-
-	if (result.length) {
-		prepareSelectMenu(
-			res,
-			`${formatEmoji(EMOJI_ID_DJS) as string} Select a query result to send it:`,
-			result,
-			4,
-			`tag|${target ?? ''}`,
-			true,
-		);
-	} else {
-		prepareErrorResponse(res, `No tags matching query \`${query}\` found.`);
+		prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${query}\`.`);
 	}
 	return res;
 }
