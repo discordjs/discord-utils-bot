@@ -12,7 +12,7 @@ import {
 	underscore,
 	userMention,
 } from '@discordjs/builders';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { Response } from 'polka';
 import TurndownService from 'turndown';
 import type { NodeDocs } from '../types/NodeDocs';

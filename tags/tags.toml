@@ -322,10 +322,10 @@ The `@everyone` role is much better suited for announcements
 """
 
 [fetch]
-keywords = ["fetch", "node-fetch", "node fetch", "http requests", "call rest apis"]
+keywords = ["fetch", "undici", "node fetch", "http requests", "call rest apis"]
 content = """
 Making HTTP requests (for example to call rest APIs)
-• Node: [learn more](<https://www.npmjs.com/package/node-fetch>)
+• Node: [learn more](<https://www.npmjs.com/package/undici>)
 • MDN: [learn more](<https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API>) 
 """
 

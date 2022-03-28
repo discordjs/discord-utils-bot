@@ -8,7 +8,7 @@ import {
 	underscore,
 	userMention,
 } from '@discordjs/builders';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { Response } from 'polka';
 import { encode } from 'querystring';
 import { API_BASE_MDN, EMOJI_ID_MDN } from '../util/constants';

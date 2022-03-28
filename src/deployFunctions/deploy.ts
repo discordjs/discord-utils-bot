@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { resolve } from 'path';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { API_BASE_DISCORD } from '../util/constants';
 import { logger } from '../util/logger';
 
@@ -12,14 +12,14 @@ export async function deploy(data: any, dev = false) {
 
 	try {
 		logger.info(`Starting update on route ${route}`);
-		const res = (await fetch(route, {
+		const res = await fetch(route, {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bot ${process.env.DISCORD_TOKEN!}`,
 			},
 			method: 'put',
 			body: JSON.stringify(data),
-		}).then((r) => r.json())) as unknown;
+		}).then((r) => r.json());
 		logger.info(res as string);
 		logger.info('Update completed');
 	} catch (error) {

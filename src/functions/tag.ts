@@ -7,7 +7,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { logger } from '../util/logger';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { suggestionString } from '../util';
 
 export interface Tag {

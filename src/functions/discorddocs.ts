@@ -3,7 +3,7 @@ const ALGOLIA_KEY = process.env.DDOCS_ALOGLIA_KEY ?? 'MISSING';
 
 import { formatEmoji, hideLinkEmbed, hyperlink, bold, italic, userMention } from '@discordjs/builders';
 import { decode } from 'html-entities';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { Response } from 'polka';
 import { stringify } from 'querystring';
 import { AlgoliaSearchResult } from '../types/algolia';

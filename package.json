@@ -40,16 +40,15 @@
 		"fastest-levenshtein": "^1.0.12",
 		"html-entities": "^2.3.2",
 		"kleur": "^4.1.4",
-		"node-fetch": "^2.6.1",
 		"pino": "^6.11.3",
 		"polka": "1.0.0-next.15",
-		"turndown": "^7.1.1"
+		"turndown": "^7.1.1",
+		"undici": "^4.16.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
 		"@commitlint/config-angular": "^12.1.4",
 		"@types/node": "^16.0.0",
-		"@types/node-fetch": "^2.5.10",
 		"@types/pino": "^6.3.8",
 		"@types/turndown": "^5.0.1",
 		"@typescript-eslint/eslint-plugin": "^4.28.1",
