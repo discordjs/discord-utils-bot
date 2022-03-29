@@ -1,7 +1,7 @@
 import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
 import { Response } from 'polka';
-import { MDNIndexEntry } from '../..';
 import { MdnCommand } from '../../interactions/mdn';
+import { MDNIndexEntry } from '../../types/mdn';
 import { AUTOCOMPLETE_MAX_ITEMS, transformInteraction } from '../../util';
 
 interface MDNCandidate {
