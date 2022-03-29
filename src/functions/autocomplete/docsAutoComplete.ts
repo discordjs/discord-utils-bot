@@ -6,7 +6,7 @@ import {
 } from 'discord-api-types/v10';
 import { Doc, DocElement, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
-import { DEFAULT_DOCS_BRANCH, prepareErrorResponse } from '../../util';
+import { AUTOCOMPLETE_MAX_ITEMS, DEFAULT_DOCS_BRANCH, prepareErrorResponse } from '../../util';
 
 function autoCompleteMap(elements: DocElement[]) {
 	return elements.map((e) => ({ name: e.formattedName, value: e.formattedName }));
@@ -86,7 +86,7 @@ export async function djsDocsAutoComplete(
 	res.write(
 		JSON.stringify({
 			data: {
-				choices: autoCompleteMap(searchResult).slice(0, 19),
+				choices: autoCompleteMap(searchResult).slice(0, AUTOCOMPLETE_MAX_ITEMS - 1),
 			},
 			type: InteractionResponseType.ApplicationCommandAutocompleteResult,
 		}),

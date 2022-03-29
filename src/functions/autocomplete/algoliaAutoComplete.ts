@@ -5,7 +5,7 @@ import { stringify } from 'node:querystring';
 import { decode } from 'html-entities';
 
 import { AlgoliaHit, AlgoliaSearchResult } from '../../types/algolia';
-import { API_BASE_ALGOLIA, truncate } from '../../util';
+import { API_BASE_ALGOLIA, AUTOCOMPLETE_MAX_ITEMS, truncate } from '../../util';
 
 export function resolveHitToNamestring(hit: AlgoliaHit) {
 	const { hierarchy } = hit;
@@ -52,7 +52,7 @@ export async function algoliaAutoComplete(
 	res.write(
 		JSON.stringify({
 			data: {
-				choices: autoCompleteMap(result.hits.slice(0, 5)),
+				choices: autoCompleteMap(result.hits.slice(0, AUTOCOMPLETE_MAX_ITEMS - 1)),
 			},
 			type: InteractionResponseType.ApplicationCommandAutocompleteResult,
 		}),

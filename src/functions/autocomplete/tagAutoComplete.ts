@@ -2,7 +2,7 @@ import Collection from '@discordjs/collection';
 import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
 import { Response } from 'polka';
 import { TagCommand } from '../../interactions/tag';
-import { transformInteraction } from '../../util';
+import { AUTOCOMPLETE_MAX_ITEMS, transformInteraction } from '../../util';
 import { Tag } from '../tag';
 
 export function tagAutoComplete(
@@ -56,7 +56,7 @@ export function tagAutoComplete(
 	res.write(
 		JSON.stringify({
 			data: {
-				choices: results.slice(0, 19),
+				choices: results.slice(0, AUTOCOMPLETE_MAX_ITEMS - 1),
 			},
 			type: InteractionResponseType.ApplicationCommandAutocompleteResult,
 		}),

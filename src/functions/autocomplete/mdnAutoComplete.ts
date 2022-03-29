@@ -2,7 +2,7 @@ import { APIApplicationCommandInteractionDataOption, InteractionResponseType } f
 import { Response } from 'polka';
 import { MDNIndexEntry } from '../..';
 import { MdnCommand } from '../../interactions/mdn';
-import { transformInteraction } from '../../util';
+import { AUTOCOMPLETE_MAX_ITEMS, transformInteraction } from '../../util';
 
 interface MDNCandidate {
 	entry: MDNIndexEntry;
@@ -47,7 +47,7 @@ export function mdnAutoComplete(
 	res.write(
 		JSON.stringify({
 			data: {
-				choices: autoCompleteMap(sortedCandidates).slice(0, 19),
+				choices: autoCompleteMap(sortedCandidates).slice(0, AUTOCOMPLETE_MAX_ITEMS - 1),
 			},
 			type: InteractionResponseType.ApplicationCommandAutocompleteResult,
 		}),
