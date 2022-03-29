@@ -36,7 +36,6 @@
 		"discord-api-types": "^0.30.0-next.f702988.1648076699",
 		"discordjs-docs-parser": "^1.1.1",
 		"dotenv": "^10.0.0",
-		"fastest-levenshtein": "^1.0.12",
 		"html-entities": "^2.3.2",
 		"kleur": "^4.1.4",
 		"pino": "^6.11.3",

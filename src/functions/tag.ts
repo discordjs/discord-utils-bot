@@ -1,6 +1,5 @@
 import { Response } from 'polka';
 import Collection from '@discordjs/collection';
-import { distance } from 'fastest-levenshtein';
 import {
 	PREFIX_SUCCESS,
 	REMOTE_TAG_URL,
@@ -37,17 +36,6 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 	for (const [key, value] of Object.entries(data)) {
 		tagCache.set(key, value as unknown as Tag);
 	}
-}
-
-export function findSimilar(query: string, tagCache: Collection<string, Tag>, n = 1): Array<TagSimilarityEntry> {
-	return tagCache
-		.map((tag, key) => {
-			const possible: TagSimilarityEntry[] = [];
-			tag.keywords.forEach((a) => possible.push({ word: a, lev: distance(query, a.toLowerCase()), name: key }));
-			return possible.sort((a, b) => a.lev - b.lev)[0];
-		})
-		.sort((a, b) => a.lev - b.lev)
-		.slice(0, n);
 }
 
 export function findTag(tagCache: Collection<string, Tag>, query: string, target?: string): string | null {
