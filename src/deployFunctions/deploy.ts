@@ -1,9 +1,7 @@
 import { config } from 'dotenv';
 import { resolve } from 'path';
 import { fetch } from 'undici';
-import { API_BASE_DISCORD } from '../util/constants';
-import { logger } from '../util/logger';
-
+import { logger, API_BASE_DISCORD } from '../util';
 config({ path: resolve(__dirname, '../../.env') });
 
 export async function deploy(data: any, dev = false) {

@@ -5,8 +5,7 @@ import { stringify } from 'node:querystring';
 import { decode } from 'html-entities';
 
 import { AlgoliaHit, AlgoliaSearchResult } from '../../types/algolia';
-import { API_BASE_ALGOLIA } from '../../util/constants';
-import { truncate } from '../../util';
+import { API_BASE_ALGOLIA, truncate } from '../../util';
 
 export function resolveHitToNamestring(hit: AlgoliaHit) {
 	const { hierarchy } = hit;

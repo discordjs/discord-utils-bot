@@ -7,8 +7,13 @@ import { fetch } from 'undici';
 import { Response } from 'polka';
 import { stringify } from 'querystring';
 import { AlgoliaSearchResult } from '../types/algolia';
-import { API_BASE_ALGOLIA, DEFAULT_ALGOLIA_RESULT_AMOUNT, EMOJI_ID_GUIDE } from '../util/constants';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import {
+	API_BASE_ALGOLIA,
+	DEFAULT_ALGOLIA_RESULT_AMOUNT,
+	EMOJI_ID_GUIDE,
+	prepareErrorResponse,
+	prepareResponse,
+} from '../util';
 
 export async function djsGuide(
 	response: Response,

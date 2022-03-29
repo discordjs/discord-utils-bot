@@ -3,7 +3,7 @@ import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { Tag } from '../functions/tag';
 import { red } from 'kleur';
-import { AUTOCOMPLETE_MAX_ITEMS } from '../util/constants';
+import { AUTOCOMPLETE_MAX_ITEMS } from '../util';
 
 type ConflictType = 'uniqueKeywords' | 'headerInKeywords' | 'emptyKeyword' | 'unescapedLink';
 

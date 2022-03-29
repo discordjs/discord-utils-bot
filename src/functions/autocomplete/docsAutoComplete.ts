@@ -6,8 +6,7 @@ import {
 } from 'discord-api-types/v10';
 import { Doc, DocElement, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
-import { DEFAULT_DOCS_BRANCH } from '../../util/constants';
-import { prepareErrorResponse } from '../../util/respond';
+import { DEFAULT_DOCS_BRANCH, prepareErrorResponse } from '../../util';
 
 function autoCompleteMap(elements: DocElement[]) {
 	return elements.map((e) => ({ name: e.formattedName, value: e.formattedName }));

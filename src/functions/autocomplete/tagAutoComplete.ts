@@ -2,7 +2,7 @@ import Collection from '@discordjs/collection';
 import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
 import { Response } from 'polka';
 import { TagCommand } from '../../interactions/tag';
-import { transformInteraction } from '../../util/interactionOptions';
+import { transformInteraction } from '../../util';
 import { Tag } from '../tag';
 
 export function tagAutoComplete(

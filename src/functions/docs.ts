@@ -1,8 +1,6 @@
 import { bold, formatEmoji, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
 import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
-import { suggestionString } from '../util';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
 import {
 	EMOJI_ID_CLASS,
 	EMOJI_ID_CLASS_DEV,
@@ -16,7 +14,10 @@ import {
 	EMOJI_ID_INTERFACE_DEV,
 	EMOJI_ID_METHOD,
 	EMOJI_ID_METHOD_DEV,
-} from '../util/constants';
+	prepareErrorResponse,
+	prepareResponse,
+	suggestionString,
+} from '../util';
 
 function docTypeEmojiId(docType: DocTypes | null, dev = false): string {
 	switch (docType) {

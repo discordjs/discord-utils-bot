@@ -10,9 +10,7 @@ import {
 } from '@discordjs/builders';
 import { fetch } from 'undici';
 import { Response } from 'polka';
-import { API_BASE_MDN, EMOJI_ID_MDN } from '../util/constants';
-import { logger } from '../util/logger';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import { API_BASE_MDN, EMOJI_ID_MDN, logger, prepareErrorResponse, prepareResponse } from '../util';
 
 const cache = new Map<string, Document>();
 

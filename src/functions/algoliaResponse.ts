@@ -2,10 +2,8 @@ import { formatEmoji, hideLinkEmbed, hyperlink, userMention, italic, bold } from
 import { fetch } from 'undici';
 import { Response } from 'polka';
 import { AlgoliaHit } from '../types/algolia';
-import { API_BASE_ALGOLIA } from '../util/constants';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import { API_BASE_ALGOLIA, prepareErrorResponse, prepareResponse, truncate } from '../util';
 import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete';
-import { truncate } from '../util';
 
 export async function algoliaResponse(
 	res: Response,

@@ -2,7 +2,7 @@ import { APIApplicationCommandInteractionDataOption, InteractionResponseType } f
 import { Response } from 'polka';
 import { MDNIndexEntry } from '../..';
 import { MdnCommand } from '../../interactions/mdn';
-import { transformInteraction } from '../../util/interactionOptions';
+import { transformInteraction } from '../../util';
 
 interface MDNCandidate {
 	entry: MDNIndexEntry;
