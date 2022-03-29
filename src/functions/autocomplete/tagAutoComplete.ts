@@ -1,10 +1,8 @@
 import Collection from '@discordjs/collection';
-import {
-	APIApplicationCommandInteractionDataOption,
-	ApplicationCommandOptionType,
-	InteractionResponseType,
-} from 'discord-api-types/v10';
+import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
 import { Response } from 'polka';
+import { TagCommand } from '../../interactions/tag';
+import { transformInteraction } from '../../util/interactionOptions';
 import { Tag } from '../tag';
 
 export function tagAutoComplete(
@@ -12,18 +10,7 @@ export function tagAutoComplete(
 	options: APIApplicationCommandInteractionDataOption[],
 	tagCache: Collection<string, Tag>,
 ): Response {
-	let query;
-	for (const option of options) {
-		if (option.name === 'query' && option.type === ApplicationCommandOptionType.String) {
-		}
-
-		if (option.type === ApplicationCommandOptionType.String) {
-			if (option.name === 'query') {
-				query = option.value.trim();
-			}
-		}
-	}
-
+	const { query } = transformInteraction<typeof TagCommand>(options);
 	const results: { name: string; value: string }[] = [];
 
 	// eslint-disable-next-line @typescript-eslint/prefer-optional-chain

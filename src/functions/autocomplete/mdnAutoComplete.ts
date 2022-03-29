@@ -1,42 +1,12 @@
-import {
-	APIApplicationCommandInteractionDataOption,
-	ApplicationCommandOptionType,
-	InteractionResponseType,
-} from 'discord-api-types/v10';
+import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
 import { Response } from 'polka';
 import { MDNIndexEntry } from '../..';
-
-interface MDNAutoCompleteData {
-	query: string;
-	target?: string;
-}
+import { MdnCommand } from '../../interactions/mdn';
+import { transformInteraction } from '../../util/interactionOptions';
 
 interface MDNCandidate {
 	entry: MDNIndexEntry;
 	matches: string[];
-}
-
-export function resolveOptionsToMDNAutoComplete(
-	options: APIApplicationCommandInteractionDataOption[],
-): MDNAutoCompleteData {
-	let target;
-	let query = '';
-	for (const option of options) {
-		if (option.type === ApplicationCommandOptionType.String) {
-			if (option.name === 'query') {
-				query = option.value;
-			}
-		} else if (option.type === ApplicationCommandOptionType.User) {
-			if (option.name === 'target') {
-				target = option.value;
-			}
-		}
-	}
-
-	return {
-		target,
-		query,
-	};
 }
 
 function autoCompleteMap(elements: MDNCandidate[]) {
@@ -48,7 +18,7 @@ export function mdnAutoComplete(
 	options: APIApplicationCommandInteractionDataOption[],
 	cache: MDNIndexEntry[],
 ): Response {
-	const { query } = resolveOptionsToMDNAutoComplete(options);
+	const { query } = transformInteraction<typeof MdnCommand>(options);
 
 	const parts = query.split(/\.|#/).map((p) => p.toLowerCase());
 	const candidates = [];
