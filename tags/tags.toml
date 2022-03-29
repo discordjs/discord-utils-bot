@@ -428,7 +428,7 @@ Elevated permissions are required to execute this action. You need to activate 2
 keywords = ["embed-limits", "embedlimits", "embed limits"]
 content = """
 Limits for embed structures:
-• [Discord Developer Documentation](<https://discord.com/developers/docs/resources/channel#embed-limits>)
+• [Discord Developer Documentation](<https://discord.com/developers/docs/resources/channel#embed-object-embed-limits>)
 """
 
 [matching-parameters]
