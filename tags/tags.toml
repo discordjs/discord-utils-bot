@@ -255,7 +255,7 @@ keywords = ["token-reset", "tokenreset", "reset token", "token danger", "token c
 content = """
 • Visit the [Discord developer application dashboard](<https://discord.com/developers/applications>) and select the corresponding application
 • Click on "Bot" on the left side
-• Click the "Regenerate" button and "Yes, do it!" on the popup
+• Click the "Reset Token" button and (if enabled) enter your 2FA code on the popup
 """
 
 [allowed-mentions]
