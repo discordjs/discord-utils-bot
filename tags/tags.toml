@@ -515,7 +515,8 @@ content = """
 Finding your bot token:
 • Visit the [application dashboard](<https://discord.com/developers/applications/me>) and select your application
 • Navigate to the Bot tab (not General Information, not OAuth2)!
-• Click `copy` below TOKEN | https://goo.gl/EQ25Rb (image)
+• Click `Rest Token` and copy token | https://i.imgur.com/c12eP0t.png (image)
+Note: Remember to change the token in your application after you reset it
 """
 
 [promise]
