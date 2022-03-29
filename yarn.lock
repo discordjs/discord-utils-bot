@@ -449,15 +449,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*":
+"@types/node@*", "@types/node@17":
   version "17.0.23"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.23.tgz#3b41a6e643589ac6442bdbd7a4a3ded62f33f7da"
   integrity sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==
-
-"@types/node@^16.0.0":
-  version "16.11.26"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.26.tgz#63d204d136c9916fb4dcd1b50f9740fe86884e47"
-  integrity sha512-GZ7bu5A6+4DtG7q9GsoHXy3ALcgeIHP4NnL0Vv2wu0uUB/yQex26v0tf6/na1mm0+bS9Uw+0DFex7aaKr2qawQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -999,13 +994,6 @@ discord-api-types@^0.30.0-next.f702988.1648076699:
   version "0.30.0-next.f702988.1648076699"
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.30.0-next.f702988.1648076699.tgz#2a9e7804dc0fe87d0e490380b1ceb7ea5e6071ac"
   integrity sha512-LMnB/ndlMMqdf1uziSyL5F2fcJrjhFisVBnEOnZpSTmMh+sI34Kq6Axl+dWVLUorNtqXuEi6an+ANfIDTrpITw==
-
-discord-interactions@^2.3.0:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/discord-interactions/-/discord-interactions-2.4.1.tgz#3142a130473eb95219681b7d6ca499aab82d5804"
-  integrity sha512-UPSfB47Pf4pn+qllp9hjUr5v+u45BZH9g+1dP4FxA1V4ngRV7hkDSdU2LR8drIPreJAHENPWYdd8rvWPtrdK1Q==
-  dependencies:
-    tweetnacl "^1.0.3"
 
 discordjs-docs-parser@^1.1.1:
   version "1.1.1"
@@ -2652,11 +2640,6 @@ turndown@^7.1.1:
   integrity sha512-BEkXaWH7Wh7e9bd2QumhfAXk5g34+6QUmmWx+0q6ThaVOLuLUqsnkq35HQ5SBHSaxjSfSM7US5o4lhJNH7B9MA==
   dependencies:
     domino "^2.1.6"
-
-tweetnacl@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
-  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

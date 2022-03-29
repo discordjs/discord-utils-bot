@@ -1,5 +1,4 @@
-import polka, { NextHandler, Request, Response, Middleware } from 'polka';
-import { verifyKey } from 'discord-interactions';
+import polka, { Middleware } from 'polka';
 import { logger } from './util/logger';
 import { jsonParser } from './util/jsonParser';
 import { prepareAck, prepareErrorResponse, prepareResponse } from './util/respond';
@@ -24,6 +23,7 @@ import { resolveOptionsToDocsAutoComplete, djsDocsAutoComplete } from './functio
 import { mdnAutoComplete } from './functions/autocomplete/mdnAutoComplete';
 import { algoliaAutoComplete } from './functions/autocomplete/algoliaAutoComplete';
 import { algoliaResponse } from './functions/algoliaResponse';
+import { verify } from './util/verify';
 
 type CommandName = 'discorddocs' | 'docs' | 'guide' | 'invite' | 'mdn' | 'node' | 'tag' | 'tagreload';
 type CommandAutoCompleteName = 'docs' | 'tag' | 'mdn' | 'guide' | 'discorddocs';
@@ -42,22 +42,6 @@ logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
 Doc.setGlobalOptions({
 	escapeMarkdownLinks: true,
 });
-
-function verify(req: Request, res: Response, next: NextHandler) {
-	const signature = req.headers['x-signature-ed25519'];
-	const timestamp = req.headers['x-signature-timestamp'];
-
-	if (!signature || !timestamp) {
-		res.writeHead(401);
-		return res.end();
-	}
-	const isValid = verifyKey(req.rawBody, signature as string, timestamp as string, process.env.DISCORD_PUBKEY!);
-	if (!isValid) {
-		res.statusCode = 401;
-		return res.end();
-	}
-	void next();
-}
 
 export async function start() {
 	const mdnData = (await fetch(`${API_BASE_MDN}/en-US/search-index.json`)
