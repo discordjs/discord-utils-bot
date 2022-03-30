@@ -1,3 +1,4 @@
+import { hideLinkEmbed, hyperlink } from '@discordjs/builders';
 import Collection from '@discordjs/collection';
 import { APIApplicationCommandInteraction, ApplicationCommandType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';
@@ -80,8 +81,13 @@ export async function handleApplicationCommand(
 			case 'invite': {
 				prepareResponse(
 					res,
-					`Add the discord.js interaction to your server: [(click here)](<https://discord.com/api/oauth2/authorize?client_id=${process
-						.env.DISCORD_CLIENT_ID!}&scope=applications.commands>)`,
+					`${hyperlink(
+						'(click here)',
+						hideLinkEmbed(
+							`https://discord.com/api/oauth2/authorize?client_id=${process.env
+								.DISCORD_CLIENT_ID!}&scope=applications.commands`,
+						),
+					)}`,
 					true,
 				);
 				break;
