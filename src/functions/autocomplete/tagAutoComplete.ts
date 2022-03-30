@@ -13,8 +13,7 @@ export function tagAutoComplete(
 	const { query } = transformInteraction<typeof TagCommand>(options);
 	const results: { name: string; value: string }[] = [];
 
-	// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-	if (query && query.length) {
+	if (query.length) {
 		const keywordMatches: { name: string; value: string }[] = [];
 		const contentMatches: { name: string; value: string }[] = [];
 		const exactKeywords: { name: string; value: string }[] = [];
