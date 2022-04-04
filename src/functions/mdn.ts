@@ -14,6 +14,10 @@ import { API_BASE_MDN, EMOJI_ID_MDN, logger, prepareErrorResponse, prepareRespon
 
 const cache = new Map<string, Document>();
 
+function escape(text: string) {
+	return text.replace(/\|\|/g, '|\u200B|').replace(/\*/g, '\\*');
+}
+
 export async function mdnSearch(res: Response, query: string, target?: string): Promise<Response> {
 	query = query.trim();
 	try {
@@ -33,14 +37,13 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 
 		const linkReplaceRegex = /\[(.+?)\]\((.+?)\)/g;
 		const boldCodeBlockRegex = /`\*\*(.*)\*\*`/g;
-		const intro = hit.summary
+		const intro = escape(hit.summary)
 			.replace(/\s+/g, ' ')
 			.replace(linkReplaceRegex, hyperlink('$1', hideLinkEmbed(`${API_BASE_MDN}$2`)))
-			.replace(boldCodeBlockRegex, bold(inlineCode('$1')))
-			.replace(/\|\|/g, '|\u200B|');
+			.replace(boldCodeBlockRegex, bold(inlineCode('$1')));
 
 		const parts = [
-			`${formatEmoji(EMOJI_ID_MDN) as string} \ ${underscore(bold(hyperlink(hit.title, hideLinkEmbed(url))))}`,
+			`${formatEmoji(EMOJI_ID_MDN) as string} \ ${underscore(bold(hyperlink(escape(hit.title), hideLinkEmbed(url))))}`,
 			intro,
 		];
 
