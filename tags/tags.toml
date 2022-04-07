@@ -163,7 +163,7 @@ content = """
 const channel = client.channels.cache.get("222086648706498562");
 const channel = client.channels.cache.find(channel => channel.name === "general");
 ```
-• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/main/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/stable/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
 
@@ -264,7 +264,7 @@ content = """
 You can control which entities receive notifications via the `allowedMentions` option. You can:
 • Set a [default on the client](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>)
 • Set for a [specific message](<https://discord.js.org/#/docs/discord.js/stable/typedef/MessageMentionOptions>)
-• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/discord.js/main/typedef/MessageMentionOptions>)
+• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/discord.js/stable/typedef/MessageMentionOptions>)
 ```js
 { ..., allowedMentions: { parse: ["users", "roles"] } }
 ```
@@ -295,7 +295,7 @@ Explaining `<Class>` and `Class#method` notation: [learn more](<https://discordj
 [collection]
 keywords = ["collection", "collections", "collection methods"]
 content = """
-Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • Guide: [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
 
@@ -498,7 +498,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 • `CLIENT_ID` needs to be replaced with your bot id
 • Permission calculator: [learn more](<https://finitereality.github.io/permissions-calculator>)
 • If you need slash commands and the bot scope you can use `scope=bot applications.commands`
-• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=generateInvite>)
+• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/discord.js/stable/class/Client?scrollTo=generateInvite>)
 """
 
 [version]
@@ -645,7 +645,7 @@ content = """
 [find-id]
 keywords = ["find-id", "find by id", "id-find", "find id", "fbi"]
 content = """
-Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>) by key (mostly the associated id)
+Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>) by key (mostly the associated id)
 ```diff
 - someCollection.find(structure => structure.id === "348607796335607817")
 + someCollection.get("348607796335607817")
@@ -857,7 +857,7 @@ content = """
 **Converting a Collection to an array**
 You only need to convert it to an array if you need the index of an entry:
 • Iteration (looping) is possible with [`for...of`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map>) over [`Collection#values`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>) or [`forEach`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach>)
-• You can transform a Collection to an array with [`Collection#map`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=map>)
+• You can transform a Collection to an array with [`Collection#map`](<https://discord.js.org/#/docs/collection/stable/class/Collection?scrollTo=map>)
 • If you need indices, you can get the array using [`[...collection.values()]`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>)
 """
 
@@ -866,7 +866,7 @@ keywords = ["member-count", "member count", "user-count", "user count", "uc"]
 content = """
 **Getting your bot's member count**
 • `client.users.cache.size` is unreliable because it will only return *cached* users
-• The preferred method is using [`collection.reduce()`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=reduce>) on `client.guilds.cache`
+• The preferred method is using [`collection.reduce()`](<https://discord.js.org/#/docs/collection/stable/class/Collection?scrollTo=reduce>) on `client.guilds.cache`
 ```js
 client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 ```
