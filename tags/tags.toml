@@ -903,5 +903,7 @@ content = """
 You have alredy replied to the interaction.
 • Use `<Interaction>.followUp()` to send a new message
 • If you deferred reply it's better to use `<Interaction>.editReply()`
-• Guide: [learn more](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>)
+• Replying to slash commands: [learn more](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>)
+• Responding to buttons: [learn more](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>)
+• Responding to select menus: [learn more](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
