@@ -895,3 +895,12 @@ content = """
 + embed.setFooter({ text: 'This is an example text', iconURL: 'https://example.com/icon.png' })
 ```
 """
+
+[interaction-acknowledged]
+keywords = ["interaction-acknowledged", "interaction", "acknowledged", "reply"]
+content = """
+`DiscordAPIError: Interaction has already been acknowledged`
+You have alredy replied to the interaction by `<Interaction>.reply()` or `<Interaction>.deferReply()`.
+• Use `<Interaction>.followUp()` to send a new message
+• If you defered reply it's better to use `<Interaction>.editReply()`
+"""
