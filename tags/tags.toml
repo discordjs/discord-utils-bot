@@ -896,8 +896,8 @@ content = """
 ```
 """
 
-[interaction-acknowledged]
-keywords = ["interaction-acknowledged", "interaction", "acknowledged", "reply", "deferReply"]
+[already-acknowledged]
+keywords = ["already-acknowledged", "interaction-acknowledged"]
 content = """
 `DiscordAPIError: Interaction has already been acknowledged`
 You have alredy replied to the interaction by `<Interaction>.reply()` or `<Interaction>.deferReply()`.
