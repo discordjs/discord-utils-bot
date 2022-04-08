@@ -900,7 +900,7 @@ content = """
 keywords = ["already-acknowledged", "interaction-acknowledged"]
 content = """
 `DiscordAPIError: Interaction has already been acknowledged`
-You have alredy replied to the interaction by `<Interaction>.reply()` or `<Interaction>.deferReply()`.
+You have alredy replied to the interaction.
 • Use `<Interaction>.followUp()` to send a new message
 • If you defered reply it's better to use `<Interaction>.editReply()`
 """
