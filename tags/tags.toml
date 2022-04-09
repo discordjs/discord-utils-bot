@@ -847,7 +847,7 @@ keywords = ["privileged-intents", "privileged intents", "privileged", "p intents
 content = """
 `Error [DISALLOWED_INTENTS]: Privileged intent provided is not enabled or whitelisted.`
 
-If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to enable them in the developer portal:
+If you are using the `GUILD_MEMBERS`, `GUILD_PRESENCES`, or `MESSAGE_CONTENT` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 """
 
