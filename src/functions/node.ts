@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import {
 	bold,
 	formatEmoji,
@@ -8,13 +12,11 @@ import {
 	underscore,
 	userMention,
 } from '@discordjs/builders';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { Response } from 'polka';
 import TurndownService from 'turndown';
 import type { NodeDocs } from '../types/NodeDocs';
-import { API_BASE_NODE, EMOJI_ID_NODE } from '../util/constants';
-import { logger } from '../util/logger';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import { API_BASE_NODE, EMOJI_ID_NODE, logger, prepareErrorResponse, prepareResponse } from '../util';
 
 const td = new TurndownService({ codeBlockStyle: 'fenced' });
 
@@ -68,6 +70,7 @@ function findResult(data: any, query: string) {
 	for (const category of ['class', 'classMethod', 'method', 'event', 'module', 'global', 'misc'] as QueryType[]) {
 		const res = findRec(data, query, category);
 		if (res) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return res;
 		}
 	}

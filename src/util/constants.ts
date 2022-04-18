@@ -1,11 +1,11 @@
 export const PREFIX_FAIL = '`❌`' as const;
 export const PREFIX_SUCCESS = '`✅`' as const;
 export const PREFIX_BUG = '`🐞`' as const;
-export const PREFIX_TEAPOT = '``🍵418`' as const;
+export const PREFIX_TEAPOT = '`🍵418`' as const;
 export const EMOJI_ID_DJS = '851461487498493952' as const;
 export const EMOJI_ID_DJS_DEV = '851461195554619442' as const;
 export const EMOJI_ID_GUIDE = '862626783890636830' as const;
-export const EMOJI_ID_MDN = '818272565419573308' as const;
+export const EMOJI_ID_MDN = '957801942573256854' as const;
 export const EMOJI_ID_NODE = '818292297644245103' as const;
 export const EMOJI_ID_FIELD = '874569322742308864' as const;
 export const EMOJI_ID_METHOD = '874569335308431382' as const;
@@ -25,12 +25,8 @@ export const API_BASE_NODE = 'https://nodejs.org' as const;
 export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
 export const API_BASE_DISCORD_APLICATIONS = `${API_BASE_DISCORD}/applications` as const;
-export const CLOSEST_MATCH_AMOUNT = 5;
-export const DEFAULT_ALGOLIA_RESULT_AMOUNT = 2;
+export const AUTOCOMPLETE_MAX_ITEMS = 20;
 export const MAX_MESSAGE_LENGTH = 4096;
 export const REMOTE_TAG_URL =
 	'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags/tags.toml' as const;
 export const DEFAULT_DOCS_BRANCH = 'stable' as const;
-export const VOICE_DOCS_BRANCH_URL = 'https://raw.githubusercontent.com/discordjs/voice/docs/stable.json' as const;
-export const BUILDERS_DOCS_BRANCH_URL =
-	'https://raw.githubusercontent.com/discordjs/builders/docs/stable.json' as const;

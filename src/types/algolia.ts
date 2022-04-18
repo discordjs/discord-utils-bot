@@ -8,6 +8,7 @@ export interface AlgoliaHit {
 	content: string | null;
 	hierarchy: AlgoliaHitHierarchy;
 	url: string;
+	objectID: string;
 }
 
 export interface AlgoliaHitHierarchy {

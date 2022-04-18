@@ -108,6 +108,7 @@ keywords = ["faq", "frequently asked questions", "guide faq", "guidefaq"]
 content = """
 **F**requently **A**sked **Q**uestions: [learn more](<https://discordjs.guide/popular-topics/faq>)
 """
+hoisted = true
 
 [avatars]
 keywords = ["avatars", "avatar methods", "avatarmethods"]
@@ -191,6 +192,7 @@ If you aren't getting any errors, try to place `console.log` checkpoints through
 • Once you do, log relevant values and if-conditions
 • More sophisticated debugging methods are breakpoints and runtime inspections: [learn more](<https://code.visualstudio.com/docs/nodejs/nodejs-debugging>)
 """
+hoisted = true
 
 [rpc-bot]
 keywords = ["rpc-bot", "rich presence bot", "rpc bot", "rpb", "rich presence bot", "bot rpc"]
@@ -298,6 +300,7 @@ content = """
 Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • Guide: [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
+hoisted = true
 
 [ffmpeg]
 keywords = ["ffmpeg"]
@@ -319,10 +322,10 @@ The `@everyone` role is much better suited for announcements
 """
 
 [fetch]
-keywords = ["fetch", "node-fetch", "node fetch", "http requests", "call rest apis"]
+keywords = ["fetch", "undici", "node fetch", "http requests", "call rest apis"]
 content = """
 Making HTTP requests (for example to call rest APIs)
-• Node: [learn more](<https://www.npmjs.com/package/node-fetch>)
+• Node: [learn more](<https://www.npmjs.com/package/undici>)
 • MDN: [learn more](<https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API>) 
 """
 
@@ -340,6 +343,7 @@ content = """
 • `ReferenceError: "x" is not defined`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined>)
 • `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property>)
 """
+hoisted = true
 
 [oauth]
 keywords = ["oauth", "oauth2", "oa", "oa2"]
@@ -527,6 +531,7 @@ Resources to understand Promise:
 • Guide: [learn more](<https://discordjs.guide/additional-info/async-await.html>)
 • JavaScript info: [learn more](<https://javascript.info/async-await>)
 """
+hoisted = true
 
 [embed-mentions]
 keywords = ["embed-mentions", "embedmentions", "embed mentions"]
@@ -660,6 +665,7 @@ To help you we need more information:
 • What is your code?
 • What errors and debug logs do you have?
 """
+hoisted = true
 
 [regex]
 keywords = ["regex", "regexp", "regular expressions", "regularexpressions"]
@@ -682,6 +688,7 @@ client
 • Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
 • If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
 """
+hoisted = true
 
 [install]
 keywords = ["install", "discord.js stable", "install stable", "discord.js stable", "djs stable", "install djs"]
@@ -690,6 +697,7 @@ To install run: `npm install discord.js`
 • Documentation: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
 • Guide: [learn more](<https://discordjs.guide>)
 """
+hoisted = true
 
 [token-anatomy]
 keywords = ["token-anatomy", "token parts", "tokenparts", "token anatomy", "tokenformat", "token breakdown", "tokenbreakdown"]
@@ -810,6 +818,7 @@ Version 13 has released! Please update at your earliest convenience, we will not
 • Update: `npm rm discord.js` `npm i discord.js`
 • [Update guide](<https://discordjs.guide/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
 """
+hoisted = true
 
 [filter]
 keywords = ["filter"]
@@ -820,6 +829,7 @@ The filter for collectors has moved into the options:
 + const collector = message.createReactionCollector({ filter, ...options });
 ```
 """
+hoisted = true
 
 [event-deprecation]
 keywords = ["event-deprecation", "event deprecation", "messageCreate", "interactionCreate"]
@@ -834,6 +844,7 @@ The old events still work, but you'll receive a deprecation warning until you sw
 + client.on('interactionCreate', interaction => { ... });
 ```
 """
+hoisted = true
 
 [intents]
 keywords = ["intents", "no-members"]
@@ -841,6 +852,7 @@ content = """
 • Websocket intents limit events and decrease memory usage: [learn more](<https://discordjs.guide/popular-topics/intents.html>)
 • See what intents you need [here](<https://discord.com/developers/docs/topics/gateway#list-of-intents>)
 """
+hoisted = true
 
 [privileged-intents]
 keywords = ["privileged-intents", "privileged intents", "privileged", "p intents", "p-intents", "whitelisted-intents"]
@@ -850,6 +862,7 @@ content = """
 If you are using the `GUILD_MEMBERS`, `GUILD_PRESENCES`, or `MESSAGE_CONTENT` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 """
+hoisted = true
 
 [collection-array]
 keywords = ["collection-array", "collection array", "cta", "collection to array"]
