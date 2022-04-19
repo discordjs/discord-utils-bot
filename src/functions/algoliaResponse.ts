@@ -1,4 +1,4 @@
-import { formatEmoji, hideLinkEmbed, hyperlink, userMention, italic, bold } from '@discordjs/builders';
+import { hideLinkEmbed, hyperlink, userMention, italic, bold } from '@discordjs/builders';
 import { fetch } from 'undici';
 import { Response } from 'polka';
 import { AlgoliaHit } from '../types/algolia';
@@ -12,6 +12,7 @@ export async function algoliaResponse(
 	algoliaIndex: string,
 	algoliaObjectId: string,
 	emojiId: string,
+	emojiName: string,
 	target?: string,
 ): Promise<Response> {
 	const full = `http://${algoliaAppId}.${API_BASE_ALGOLIA}/1/indexes/${algoliaIndex}/${encodeURIComponent(
@@ -29,7 +30,7 @@ export async function algoliaResponse(
 
 		prepareResponse(
 			res,
-			`${target ? `${italic(`Suggestion for ${userMention(target)}:`)}\n` : ''}${formatEmoji(emojiId)}  ${bold(
+			`${target ? `${italic(`Suggestion for ${userMention(target)}:`)}\n` : ''}<:${emojiName}:${emojiId}>  ${bold(
 				resolveHitToNamestring(hit),
 			)}${hit.content?.length ? `\n${truncate(hit.content, 300)}` : ''}\n${hyperlink(
 				'read more',
