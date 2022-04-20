@@ -920,3 +920,13 @@ You have alredy replied to the interaction.
 • Responding to buttons: [learn more](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>)
 • Responding to select menus: [learn more](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
+
+[number-id]
+keywords = ["number-id", "integer-overflow", "id", "snowflake"]
+content = """
+Discord IDs are too high for numbers in JavaScript, so they must be represented as strings
+```diff
+- client.guilds.cache.get(123456789012345678)
++ client.guilds.cache.get("123456789012345678")
+```
+"""
