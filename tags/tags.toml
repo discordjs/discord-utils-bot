@@ -924,7 +924,7 @@ You have alredy replied to the interaction.
 [number-id]
 keywords = ["number-id", "integer-overflow", "id", "snowflake"]
 content = """
-Discord IDs are too high for numbers in JavaScript, so they must be represented as strings
+Discord IDs are too high to be represented as numbers in JavaScript, so they must be represented as strings
 ```diff
 - client.guilds.cache.get(123456789012345678)
 + client.guilds.cache.get("123456789012345678")
