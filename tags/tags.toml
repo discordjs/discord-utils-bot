@@ -235,7 +235,12 @@ The "canary" client is Discord's public test build
 [snowflake]
 keywords = ["snowflake", "❄", "discord snowflake", "discord id", "snowflakes"]
 content = """
-Discord ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+• Discord IDs follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+• Discord IDs are too high to be represented as numbers in JavaScript, so they must be represented as strings
+```diff
+- client.guilds.cache.get(123456789012345678)
++ client.guilds.cache.get("123456789012345678")
+```
 """
 
 [typescript]
@@ -919,14 +924,4 @@ You have alredy replied to the interaction.
 • Replying to slash commands: [learn more](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>)
 • Responding to buttons: [learn more](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>)
 • Responding to select menus: [learn more](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
-"""
-
-[number-id]
-keywords = ["number-id", "integer-overflow", "id", "snowflake"]
-content = """
-Discord IDs are too high to be represented as numbers in JavaScript, so they must be represented as strings
-```diff
-- client.guilds.cache.get(123456789012345678)
-+ client.guilds.cache.get("123456789012345678")
-```
 """
