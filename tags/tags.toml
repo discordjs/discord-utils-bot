@@ -640,11 +640,14 @@ const client = new Client({
 ```
 """
 
-[discord-buttons]
-keywords = ["discord-buttons", "discord buttons", "discordbuttons"]
+[third-party-libraries]
+keywords = ["discord-buttons", "discord buttons", "discordbuttons", "discord-modals", "discord modals", "discordmodals"]
 content = """
-**We do not provide any help with third party libraries like discord-buttons.**
-• Discord.js supports buttons natively: [guide](<https://discordjs.guide/interactions/buttons.html>)
+**We do not provide any help with third party libraries**
+Discord.js supports buttons natively
+Modals are available on dev version. Stable release in 13.7.0
+• Buttons: [learn more](<https://discordjs.guide/interactions/buttons.html>)
+• Modals (dev): [learn more](<https://deploy-preview-1060--discordjs-guide.netlify.app/interactions/modals.html>)
 """
 
 [find-id]
