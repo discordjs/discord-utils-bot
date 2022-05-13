@@ -235,7 +235,12 @@ The "canary" client is Discord's public test build
 [snowflake]
 keywords = ["snowflake", "❄", "discord snowflake", "discord id", "snowflakes"]
 content = """
-Discord ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+• Discord ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+• Discord ids must be represented as strings as they are larger than `Number.MAX_SAFE_INTEGER`, the largest integer that can be represented in JavaScript
+```diff
+- client.guilds.cache.get(123456789012345678)
++ client.guilds.cache.get("123456789012345678")
+```
 """
 
 [typescript]
