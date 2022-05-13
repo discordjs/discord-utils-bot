@@ -77,7 +77,6 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 	if (element.static) parts.push(`${bold('(static)')} `);
 	parts.push(underscore(bold(element.link)));
 	if (element.extends) parts.push(formatInheritance('extends', element.extends, doc));
-	if (element.implements) parts.push(formatInheritance('implements', element.implements, doc));
 	if (element.access === 'private') parts.push(` ${bold('PRIVATE')}`);
 	if (element.deprecated) parts.push(` ${bold('DEPRECATED')}`);
 
