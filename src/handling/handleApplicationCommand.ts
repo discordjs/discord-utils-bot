@@ -47,6 +47,7 @@ export async function handleApplicationCommand(
 					'discord',
 					castArgs.query,
 					EMOJI_ID_CLYDE_BLURPLE,
+					'discord',
 					castArgs.target,
 				);
 				break;
@@ -74,6 +75,7 @@ export async function handleApplicationCommand(
 					'discordjs',
 					castArgs.query,
 					EMOJI_ID_GUIDE,
+					'guide',
 					castArgs.target,
 				);
 				break;

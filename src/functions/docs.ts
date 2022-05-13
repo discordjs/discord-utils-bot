@@ -1,4 +1,4 @@
-import { bold, formatEmoji, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
+import { bold, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
 import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
 import {
@@ -33,6 +33,23 @@ function docTypeEmojiId(docType: DocTypes | null, dev = false): string {
 			return dev ? EMOJI_ID_EVENT_DEV : EMOJI_ID_EVENT;
 		default:
 			return dev ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS;
+	}
+}
+
+function docTypeEmojiName(docType: DocTypes | null, dev = false): string {
+	switch (docType) {
+		case DocTypes.Typedef:
+			return 'interface';
+		case DocTypes.Prop:
+			return 'property';
+		case DocTypes.Class:
+			return 'class';
+		case DocTypes.Method:
+			return 'method';
+		case DocTypes.Event:
+			return 'event';
+		default:
+			return dev ? 'discordjs-dev' : 'discordjs';
 	}
 }
 
@@ -73,7 +90,8 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 export function fetchDocResult(source: SourcesStringUnion, doc: Doc, query: string, target?: string): string | null {
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
-	const icon = formatEmoji(docTypeEmojiId(element.docType, source === 'main'));
+	const isMain = source === 'main';
+	const icon = `<:${docTypeEmojiName(element.docType, isMain)}:${docTypeEmojiId(element.docType, isMain)}>`;
 	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, target);
 }
 
