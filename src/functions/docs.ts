@@ -1,4 +1,4 @@
-import { bold, formatEmoji, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
+import { bold, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
 import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
 import {
@@ -36,6 +36,23 @@ function docTypeEmojiId(docType: DocTypes | null, dev = false): string {
 	}
 }
 
+function docTypeEmojiName(docType: DocTypes | null, dev = false): string {
+	switch (docType) {
+		case DocTypes.Typedef:
+			return 'interface';
+		case DocTypes.Prop:
+			return 'property';
+		case DocTypes.Class:
+			return 'class';
+		case DocTypes.Method:
+			return 'method';
+		case DocTypes.Event:
+			return 'event';
+		default:
+			return dev ? 'discordjs-dev' : 'discordjs';
+	}
+}
+
 function extractGenericTypeInfill(type: string): string {
 	const match = /<(?<type>[A-Za-z]+)>/.exec(type);
 	return match?.groups?.type ? match.groups.type : type;
@@ -60,7 +77,6 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 	if (element.static) parts.push(`${bold('(static)')} `);
 	parts.push(underscore(bold(element.link)));
 	if (element.extends) parts.push(formatInheritance('extends', element.extends, doc));
-	if (element.implements) parts.push(formatInheritance('implements', element.implements, doc));
 	if (element.access === 'private') parts.push(` ${bold('PRIVATE')}`);
 	if (element.deprecated) parts.push(` ${bold('DEPRECATED')}`);
 
@@ -73,7 +89,8 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 export function fetchDocResult(source: SourcesStringUnion, doc: Doc, query: string, target?: string): string | null {
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
-	const icon = formatEmoji(docTypeEmojiId(element.docType, source === 'main'));
+	const isMain = source === 'main';
+	const icon = `<:${docTypeEmojiName(element.docType, isMain)}:${docTypeEmojiId(element.docType, isMain)}>`;
 	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, target);
 }
 

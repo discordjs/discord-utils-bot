@@ -2,16 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import {
-	bold,
-	formatEmoji,
-	hideLinkEmbed,
-	hyperlink,
-	inlineCode,
-	italic,
-	underscore,
-	userMention,
-} from '@discordjs/builders';
+import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
 import { fetch } from 'undici';
 import { Response } from 'polka';
 import TurndownService from 'turndown';
@@ -116,9 +107,7 @@ export async function nodeSearch(
 		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
 		const fullURL = `${moduleURL}.html${anchor}`;
 		const parts = [
-			`${formatEmoji(EMOJI_ID_NODE) as string} \ ${underscore(
-				bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))),
-			)}`,
+			`<:node:${EMOJI_ID_NODE}> \ ${underscore(bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))))}`,
 		];
 
 		const intro = td.turndown(result.desc ?? '').split('\n\n')[0];
