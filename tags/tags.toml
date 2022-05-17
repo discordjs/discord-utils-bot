@@ -926,3 +926,22 @@ You have alredy replied to the interaction.
 • Responding to buttons: [learn more](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>)
 • Responding to select menus: [learn more](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
+
+[channel-type]
+keywords = ["channel-type", "channel", "text", "dm"]
+content = """
+Starting in v13, the naming for channel types have been changed to match the API
+• `GUILD_TEXT` - a standard text channel
+• `GUILD_VOICE` - a voice channel
+• `DM` - a direct message CHANNEL
+• `GUILD_CATEGORY` - a category channel
+• `GUILD_NEWS` - an announcement channel
+• `GUILD_NEWS_THREAD` - a public thread in a `GUILD_NEWS` channel
+• `GUILD_PUBLIC_THREAD` - a public thread in a `GUILD_TEXT` channel
+• `GUILD_PRIVATE_THREAD` - a private thread in a `GUILD_TEXT` channel
+• `GUILD_STAGE_VOICE` - a stage channel
+
+[discord.js documentation](<https://discord.js.org/#/docs/discord.js/13.7.0/typedef/ChannelType>)
+[Discord API documentation](<https://discord.com/developers/docs/resources/channel#channel-object-channel-types>)
+"""
+
