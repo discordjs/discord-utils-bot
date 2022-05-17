@@ -928,7 +928,7 @@ You have alredy replied to the interaction.
 """
 
 [channel-type]
-keywords = ["channel-type", "channel", "text", "dm"]
+keywords = ["channel-type", "channel", "text", "dm", "ctype"]
 content = """
 Starting in v13, the naming for channel types have been changed to match the API
 • `GUILD_TEXT` - a standard text channel
