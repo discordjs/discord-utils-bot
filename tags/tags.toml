@@ -916,10 +916,13 @@ content = """
 """
 
 [already-acknowledged]
-keywords = ["already-acknowledged", "interaction-acknowledged"]
+keywords = ["already-acknowledged", "interaction-acknowledged", "already-replied"]
 content = """
-`DiscordAPIError: Interaction has already been acknowledged`
-You have alredy replied to the interaction.
+• `DiscordAPIError: Interaction has already been acknowledged`
+• `[INTERACTION_ALREADY_REPLIED]: The reply to this interaction has already been sent or deferred.`
+
+You have already replied to the interaction.
+
 • Use `<Interaction>.followUp()` to send a new message
 • If you deferred reply it's better to use `<Interaction>.editReply()`
 • Replying to slash commands: [learn more](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>)
