@@ -927,3 +927,10 @@ You have already replied to the interaction.
 • If you deferred reply it's better to use `<Interaction>.editReply()`
 • Responding to [slash commands](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
+
+[djs-sponsor]
+keywords = ["djs-sponsor", "sponsor", "sponsor-role"]
+content = """
+Like what we do and want to put some money behind it? Donate to discord.js at <https://github.com/sponsors/discordjs> or <https://opencollective.com/discordjs> and get a sweet role to rep in our support server!
+To get the role, create a private gist at <https://gist.github.com/> with your Discord tag (`d.js docs#1083`) or user ID (`348607796335607817`) and your transaction id or screenshot of the donation, and send the link to <@81440962496172032> via direct message.
+"""
