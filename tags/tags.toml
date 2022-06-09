@@ -282,7 +282,7 @@ keywords = ["escape-emojis", "escape emojis", "emoji id"]
 content = """
 • Custom emojis: `\\:name:` ➞ `<a:name:id>`
 • Twemojis: `\\:name:` ➞ unicode representation
-• Emoji picker (windows): `WIN` + `.`
+• Emoji picker: `WIN` + `.` / `CMD` + `CTRL` + `SPACE` / `CTRL` + `.` 
 • Right-clicking any emoji will not copy its id!
 """
 
