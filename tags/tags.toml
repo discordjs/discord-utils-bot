@@ -931,11 +931,10 @@ You have already replied to the interaction.
 [djs-sponsor]
 keywords = ["djs-sponsor", "sponsor", "sponsor-role"]
 content = """
-Like what we do and want to put some money behind it?
-Donate to discord.js at [GitHub](<https://github.com/sponsors/discordjs>) or [OpenCollective](<https://opencollective.com/discordjs>).
+Like what we do and want to put some money behind it? Donate to discord.js at [GitHub](<https://github.com/sponsors/discordjs>) or [OpenCollective](<https://opencollective.com/discordjs>)!
 To rep your support with a role on our support server:
-• Create a private [gist](<https://gist.github.com/>)
-• With your Discord tag (`d.js docs#1083`) or user ID (`348607796335607817`)
-• With your Transaction id or screenshot of the donation
-• Send the link to <@81440962496172032> via direct message
+**1)** Create a private [gist](<https://gist.github.com/>)
+**2)** Include your Discord tag (`d.js docs#1083`) or user ID (`348607796335607817`)
+**3)** Include your Transaction id or screenshot of the donation
+**4)** Send the link to the gist to <@81440962496172032> via direct message
 """
