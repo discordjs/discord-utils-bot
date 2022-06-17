@@ -942,8 +942,9 @@ To rep your support with a role on our support server:
 [duplicate-commands]
 keywords = ["duplicate-commands", "double-commands", "guild-command", "global-command"]
 content = """
-If you have duplicate commands on your server, this means you registered both global and guild commands. You can remove the duplicates by resetting either the global or guild commands
-To reset your global commands, use `<Client>.application.commands.set([])`
-To reset your guild commands, use `<Guild>.commands.set([])`
-"""
+If you have duplicate commands on your server, you registered both global and guild commands. 
+You can remove the duplicates by resetting either the global or guild commands
 
+To reset global commands, use `<Client>.application.commands.set([])`
+To reset guild commands, use `<Guild>.commands.set([])`
+"""
