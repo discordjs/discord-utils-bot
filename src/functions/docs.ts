@@ -28,6 +28,7 @@ function docTypeEmojiId(docType: DocTypes | null, dev = false): string {
 		case DocTypes.Class:
 			return dev ? EMOJI_ID_CLASS_DEV : EMOJI_ID_CLASS;
 		case DocTypes.Method:
+		case DocTypes.Function:
 			return dev ? EMOJI_ID_METHOD_DEV : EMOJI_ID_METHOD;
 		case DocTypes.Event:
 			return dev ? EMOJI_ID_EVENT_DEV : EMOJI_ID_EVENT;
@@ -45,6 +46,7 @@ function docTypeEmojiName(docType: DocTypes | null, dev = false): string {
 		case DocTypes.Class:
 			return 'class';
 		case DocTypes.Method:
+		case DocTypes.Function:
 			return 'method';
 		case DocTypes.Event:
 			return 'event';
