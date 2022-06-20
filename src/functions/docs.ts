@@ -51,7 +51,7 @@ function docTypeEmojiName(docType: DocTypes | null, dev = false): string {
 		case DocTypes.Event:
 			return 'event';
 		default:
-			return dev ? 'discordjs-dev' : 'discordjs';
+			return dev ? 'djsatdev' : 'discordjs';
 	}
 }
 
