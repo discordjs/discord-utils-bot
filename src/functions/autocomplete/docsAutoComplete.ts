@@ -4,7 +4,7 @@ import {
 	ApplicationCommandOptionType,
 	InteractionResponseType,
 } from 'discord-api-types/v10';
-import { Doc, DocElement, SourcesStringUnion } from 'discordjs-docs-parser';
+import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
 import { Response } from 'polka';
 import { AUTOCOMPLETE_MAX_ITEMS, DEFAULT_DOCS_BRANCH, prepareErrorResponse } from '../../util';
 
@@ -80,7 +80,7 @@ export async function djsDocsAutoComplete(
 	const { source, query } = resolved;
 
 	const doc = await Doc.fetch(source, { force: true });
-	const searchResult = doc.search(query) ?? [];
+	const searchResult = doc.search(query)?.filter((element) => element.docType !== DocTypes.Param) ?? [];
 
 	res.setHeader('Content-Type', 'application/json');
 	res.write(
