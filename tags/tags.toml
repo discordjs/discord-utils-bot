@@ -938,3 +938,13 @@ To rep your support with a role on our support server:
 **3)** Include your Transaction id or screenshot of the donation
 **4)** Send the link to the gist to <@81440962496172032> (`Crawl#0002`) via direct message
 """
+
+[duplicate-commands]
+keywords = ["duplicate-commands", "double-commands", "guild-command", "global-command"]
+content = """
+If you have duplicate commands on your server, you registered both global and guild commands. 
+
+You can remove the duplicates by resetting either the global or guild commands
+• Resetting global commands: `rest.put(Routes.applicationCommands(clientId), { body: [] })`
+• Resetting guild commands: `rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })`
+"""
