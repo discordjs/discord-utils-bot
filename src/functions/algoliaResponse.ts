@@ -4,6 +4,7 @@ import { Response } from 'polka';
 import { AlgoliaHit } from '../types/algolia';
 import { API_BASE_ALGOLIA, prepareErrorResponse, prepareResponse, truncate } from '../util';
 import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete';
+import { decode } from 'he';
 
 export async function algoliaResponse(
 	res: Response,
@@ -32,7 +33,7 @@ export async function algoliaResponse(
 			res,
 			`${target ? `${italic(`Suggestion for ${userMention(target)}:`)}\n` : ''}<:${emojiName}:${emojiId}>  ${bold(
 				resolveHitToNamestring(hit),
-			)}${hit.content?.length ? `\n${truncate(hit.content, 300)}` : ''}\n${hyperlink(
+			)}${hit.content?.length ? `\n${truncate(decode(hit.content), 300)}` : ''}\n${hyperlink(
 				'read more',
 				hideLinkEmbed(hit.url),
 			)}`,
