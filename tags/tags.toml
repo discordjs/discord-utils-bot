@@ -637,10 +637,11 @@ content = """
 keywords = ["voice-timeout", "voice connection timeout", "vct"]
 content = """
 `Error [VOICE_CONNECTION_TIMEOUT]: Connection not established within 15 seconds.`
-Make sure you have provided `GUILD_VOICE_STATES` intent to the client:
+Make sure you have provided the `GuildVoiceStates` intent to the client:
 ```js
+const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
-    intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES']
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates]
 });
 ```
 """
@@ -818,12 +819,12 @@ content = """
 • Refresh your command list to receive the updated command and try again
 """
 
-[v13-changes]
-keywords = ["v13-changes", "v13 changes", "changes", "v13", "13"]
+[v14-changes]
+keywords = ["v14-changes", "v14 changes", "changes", "v14", "14"]
 content = """
-Version 13 has released! Please update at your earliest convenience, we will not indefinitely support v12.
+Version 14 has released! Please update at your earliest convenience.
 • Update: `npm rm discord.js` `npm i discord.js`
-• [Update guide](<https://discordjs.guide/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
+• [Update guide](<https://discordjs.guide/additional-info/changes-in-v14.html>) (use `CTRL` + `F` to search for the old method or property)
 """
 hoisted = true
 
@@ -838,11 +839,10 @@ The filter for collectors has moved into the options:
 """
 hoisted = true
 
-[event-deprecation]
-keywords = ["event-deprecation", "event deprecation", "messageCreate", "interactionCreate"]
+[event-removal]
+keywords = ["event-removal", "event removal", "messageCreate", "interactionCreate"]
 content = """
 The `message` and `interaction` events were renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
-The old events still work, but you'll receive a deprecation warning until you switch over.
 
 ```diff
 - client.on('message', message => { ... });
@@ -866,7 +866,7 @@ keywords = ["privileged-intents", "privileged intents", "privileged", "p intents
 content = """
 `Error [DISALLOWED_INTENTS]: Privileged intent provided is not enabled or whitelisted.`
 
-If you are using the `GUILD_MEMBERS`, `GUILD_PRESENCES`, or `MESSAGE_CONTENT` intents, you need to enable them in the developer portal:
+If you are using the `GuildMembers`, `GuildPresences`, or `MessageContent` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 """
 hoisted = true
