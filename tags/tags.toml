@@ -950,7 +950,7 @@ You can remove the duplicates by resetting either the global or guild commands
 """
 
 [case]
-keywords = ["snaketopascal", "change-case", "changecase"]
+keywords = ["case", "snaketopascal", "change-case", "changecase"]
 content = """
 `RangeError [BitFieldInvalid]: Invalid bitfield flag or number: undefined`
 • All `SCREAMING_SNAKE_CASE` enums have been changed to `PascalCase`
