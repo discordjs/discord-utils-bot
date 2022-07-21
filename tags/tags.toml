@@ -108,6 +108,7 @@ keywords = ["faq", "frequently asked questions", "guide faq", "guidefaq"]
 content = """
 **F**requently **A**sked **Q**uestions: [learn more](<https://discordjs.guide/popular-topics/faq>)
 """
+hoisted = true
 
 [avatars]
 keywords = ["avatars", "avatar methods", "avatarmethods"]
@@ -144,8 +145,8 @@ To make your code more readable (and easier for us to help you with) consider us
 keywords = ["docs", "djsdocs", "thedocs", "documentation"]
 content = """
 Discord.js documentation:
-• stable release: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
-• developer release: [learn more](<https://discord.js.org/#/docs/main/main/general/welcome>)
+• stable release: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
+• developer release: [learn more](<https://discord.js.org/#/docs/discord.js/main/general/welcome>)
 """
 
 [snipe]
@@ -163,7 +164,7 @@ content = """
 const channel = client.channels.cache.get("222086648706498562");
 const channel = client.channels.cache.find(channel => channel.name === "general");
 ```
-• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/main/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/stable/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
 
@@ -191,6 +192,7 @@ If you aren't getting any errors, try to place `console.log` checkpoints through
 • Once you do, log relevant values and if-conditions
 • More sophisticated debugging methods are breakpoints and runtime inspections: [learn more](<https://code.visualstudio.com/docs/nodejs/nodejs-debugging>)
 """
+hoisted = true
 
 [rpc-bot]
 keywords = ["rpc-bot", "rich presence bot", "rpc bot", "rpb", "rich presence bot", "bot rpc"]
@@ -233,7 +235,12 @@ The "canary" client is Discord's public test build
 [snowflake]
 keywords = ["snowflake", "❄", "discord snowflake", "discord id", "snowflakes"]
 content = """
-Discord ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+• Discord ids follow the snowflake format: [learn more](<https://discord.com/developers/docs/reference#snowflakes>)
+• Discord ids must be represented as strings as they are larger than `Number.MAX_SAFE_INTEGER`, the largest integer that can be represented in JavaScript
+```diff
+- client.guilds.cache.get(123456789012345678)
++ client.guilds.cache.get("123456789012345678")
+```
 """
 
 [typescript]
@@ -255,16 +262,16 @@ keywords = ["token-reset", "tokenreset", "reset token", "token danger", "token c
 content = """
 • Visit the [Discord developer application dashboard](<https://discord.com/developers/applications>) and select the corresponding application
 • Click on "Bot" on the left side
-• Click the "Regenerate" button and "Yes, do it!" on the popup
+• Click the "Reset Token" button and (if enabled) enter your 2FA code on the popup
 """
 
 [allowed-mentions]
 keywords = ["allowed-mentions", "allowed mentions", "enable mentions", "disable mentions", "allow mentions"]
 content = """
 You can control which entities receive notifications via the `allowedMentions` option. You can:
-• Set a [default on the client](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>)
-• Set for a [specific message](<https://discord.js.org/#/docs/main/stable/typedef/MessageMentionOptions>)
-• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/main/main/typedef/MessageMentionOptions>)
+• Set a [default on the client](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>)
+• Set for a [specific message](<https://discord.js.org/#/docs/discord.js/stable/typedef/MessageMentionOptions>)
+• Use the `repliedUser` key to disable [in-line reply mentions](<https://discord.js.org/#/docs/discord.js/stable/typedef/MessageMentionOptions>)
 ```js
 { ..., allowedMentions: { parse: ["users", "roles"] } }
 ```
@@ -275,7 +282,7 @@ keywords = ["escape-emojis", "escape emojis", "emoji id"]
 content = """
 • Custom emojis: `\\:name:` ➞ `<a:name:id>`
 • Twemojis: `\\:name:` ➞ unicode representation
-• Emoji picker (windows): `WIN` + `.`
+• Emoji picker: `WIN` + `.` / `CMD` + `CTRL` + `SPACE` / `CTRL` + `.` 
 • Right-clicking any emoji will not copy its id!
 """
 
@@ -295,9 +302,10 @@ Explaining `<Class>` and `Class#method` notation: [learn more](<https://discordj
 [collection]
 keywords = ["collection", "collections", "collection methods"]
 content = """
-Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • Guide: [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
+hoisted = true
 
 [ffmpeg]
 keywords = ["ffmpeg"]
@@ -319,10 +327,10 @@ The `@everyone` role is much better suited for announcements
 """
 
 [fetch]
-keywords = ["fetch", "node-fetch", "node fetch", "http requests", "call rest apis"]
+keywords = ["fetch", "undici", "node fetch", "http requests", "call rest apis"]
 content = """
 Making HTTP requests (for example to call rest APIs)
-• Node: [learn more](<https://www.npmjs.com/package/node-fetch>)
+• Node: [learn more](<https://www.npmjs.com/package/undici>)
 • MDN: [learn more](<https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API>) 
 """
 
@@ -340,6 +348,7 @@ content = """
 • `ReferenceError: "x" is not defined`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined>)
 • `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property>)
 """
+hoisted = true
 
 [oauth]
 keywords = ["oauth", "oauth2", "oa", "oa2"]
@@ -412,7 +421,7 @@ content = """
 const client = new Discord.Client({ shards: 'auto' }); // auto shards
 const client = new Discord.Client({ shards: [0, 1] }); // specific shards
 ```
-• Sharding manager: [learn more](<https://discord.js.org/#/docs/main/stable/class/ShardingManager>)
+• Sharding manager: [learn more](<https://discord.js.org/#/docs/discord.js/stable/class/ShardingManager>)
 """
 
 [2fa]
@@ -428,7 +437,7 @@ Elevated permissions are required to execute this action. You need to activate 2
 keywords = ["embed-limits", "embedlimits", "embed limits"]
 content = """
 Limits for embed structures:
-• [Discord Developer Documentation](<https://discord.com/developers/docs/resources/channel#embed-limits>)
+• [Discord Developer Documentation](<https://discord.com/developers/docs/resources/channel#embed-object-embed-limits>)
 """
 
 [matching-parameters]
@@ -498,7 +507,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 • `CLIENT_ID` needs to be replaced with your bot id
 • Permission calculator: [learn more](<https://finitereality.github.io/permissions-calculator>)
 • If you need slash commands and the bot scope you can use `scope=bot applications.commands`
-• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/main/main/class/Client?scrollTo=generateInvite>)
+• You can use #generateInvite instead: [learn more](<https://discord.js.org/#/docs/discord.js/stable/class/Client?scrollTo=generateInvite>)
 """
 
 [version]
@@ -515,7 +524,8 @@ content = """
 Finding your bot token:
 • Visit the [application dashboard](<https://discord.com/developers/applications/me>) and select your application
 • Navigate to the Bot tab (not General Information, not OAuth2)!
-• Click `copy` below TOKEN | https://goo.gl/EQ25Rb (image)
+• Click `Reset Token` and copy token | https://i.imgur.com/c12eP0t.png (image)
+Note: Remember to change the token in your application after you reset it
 """
 
 [promise]
@@ -526,6 +536,7 @@ Resources to understand Promise:
 • Guide: [learn more](<https://discordjs.guide/additional-info/async-await.html>)
 • JavaScript info: [learn more](<https://javascript.info/async-await>)
 """
+hoisted = true
 
 [embed-mentions]
 keywords = ["embed-mentions", "embedmentions", "embed mentions"]
@@ -610,9 +621,9 @@ Checking for things to not be equal in JavaScript:
 keywords = ["member-user", "member user", "usermember", "user member", "user-member"]
 content = """
 Despite sounding similar there is a distinct difference between users and members in Discord:
-• [User](<https://discord.js.org/#/docs/main/stable/class/User>): global discord user data (global avatar, username, tag, id) 
-• [GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
-• Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/main/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/main/stable/class/GuildMember?scrollTo=user>)
+• [User](<https://discord.js.org/#/docs/discord.js/stable/class/User>): global discord user data (global avatar, username, tag, id) 
+• [GuildMember](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
+• Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMember?scrollTo=user>)
 """
 
 [linter]
@@ -626,25 +637,28 @@ content = """
 keywords = ["voice-timeout", "voice connection timeout", "vct"]
 content = """
 `Error [VOICE_CONNECTION_TIMEOUT]: Connection not established within 15 seconds.`
-Make sure you have provided `GUILD_VOICE_STATES` intent to the client:
+Make sure you have provided the `GuildVoiceStates` intent to the client:
 ```js
+const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
-    intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES']
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates]
 });
 ```
 """
 
-[discord-buttons]
-keywords = ["discord-buttons", "discord buttons", "discordbuttons"]
+[third-party-libraries]
+keywords = ["third-party-libraries", "discord-buttons", "discord buttons", "discordbuttons", "discord-modals", "discord modals", "discordmodals"]
 content = """
-**We do not provide any help with third party libraries like discord-buttons.**
-• Discord.js supports buttons natively: [guide](<https://discordjs.guide/interactions/buttons.html>)
+**We do not provide any help with third party libraries**
+Buttons and Modals are supported natively.
+• Buttons: [learn more](<https://discordjs.guide/interactions/buttons.html>)
+• Modals: [learn more](<https://discordjs.guide/interactions/modals.html>)
 """
 
 [find-id]
 keywords = ["find-id", "find by id", "id-find", "find id", "fbi"]
 content = """
-Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/main/class/Collection>) by key (mostly the associated id)
+Don't use the find method to query a [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>) by key (mostly the associated id)
 ```diff
 - someCollection.find(structure => structure.id === "348607796335607817")
 + someCollection.get("348607796335607817")
@@ -659,6 +673,7 @@ To help you we need more information:
 • What is your code?
 • What errors and debug logs do you have?
 """
+hoisted = true
 
 [regex]
 keywords = ["regex", "regexp", "regular expressions", "regularexpressions"]
@@ -681,14 +696,16 @@ client
 • Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
 • If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
 """
+hoisted = true
 
 [install]
 keywords = ["install", "discord.js stable", "install stable", "discord.js stable", "djs stable", "install djs"]
 content = """
 To install run: `npm install discord.js`
-• Documentation: [learn more](<https://discord.js.org/#/docs/main/stable/general/welcome>)
+• Documentation: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
 • Guide: [learn more](<https://discordjs.guide>)
 """
+hoisted = true
 
 [token-anatomy]
 keywords = ["token-anatomy", "token parts", "tokenparts", "token anatomy", "tokenformat", "token breakdown", "tokenbreakdown"]
@@ -699,15 +716,15 @@ https://i.imgur.com/7WdehGn.png
 [tag-username]
 keywords = ["tag-username", "tag username", "tagusername", "tag username difference"]
 content = """
-[user.username](<https://discord.js.org/#/docs/main/stable/class/User?scrollTo=username>) ➞ `d.js docs`
-[user.discriminator](<https://discord.js.org/#/docs/main/stable/class/User?scrollTo=discriminator>) ➞ `1083`
-[user.tag](<https://discord.js.org/#/docs/main/stable/class/User?scrollTo=tag>) ➞ `d.js docs#1083`
+[user.username](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=username>) ➞ `d.js docs`
+[user.discriminator](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=discriminator>) ➞ `1083`
+[user.tag](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=tag>) ➞ `d.js docs#1083`
 """
 
 [boost-event]
 keywords = ["boost-event", "boost", "boostevent"]
 content = """
-The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](<https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-guildMemberUpdate>) event:
+The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](<https://discord.js.org/#/docs/discord.js/stable/class/Client?scrollTo=e-guildMemberUpdate>) event:
 ```js
 client.on("guildMemberUpdate", (oldMember, newMember) => {
     // Check if the member wasn't boosting before, but is now.
@@ -721,7 +738,8 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
 [self-invite]
 keywords = ["self-invite", "selfinvite", "self invite", "backdoor"]
 content = """
-Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (discord API server)](<https://discord.com/channels/81384788765712384/381870553235193857/686320169995337728>)
+Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (discord Developer Policy)](<https://discord.com/developers/docs/policy>)
+> *You may not use the APIs in any way to [...] process Discord Data in a way that surprises or violates Discord users' expectations.*
 • If you are experiencing problems with a particular guild, have your bot leave and/or blacklist it
 """
 
@@ -749,7 +767,7 @@ content = """
 [delete-timeout]
 keywords = ["delete-timeout", "delete timeout", "deletetimeout", "delete", "message#delete"]
 content = """
-The timeout option has been removed from the [Message#delete](<https://discord.js.org/#/docs/main/stable/class/Message?scrollTo=delete>) method.
+The timeout option has been removed from the [Message#delete](<https://discord.js.org/#/docs/discord.js/stable/class/Message?scrollTo=delete>) method.
 ```diff
 - message.delete(5000)
 - message.delete({ timeout: 5000 })
@@ -762,10 +780,17 @@ keywords = ["embed-files", "embed files"]
 content = """
 `MessageEmbed#attachFiles` has been removed. Files should be attached via the message option object instead:
 ```diff
-- const embed = new MessageEmbed().setTitle('Attachments').attachFiles(['./image1.png', './image2.jpg']);
+  const attachment = new MessageAttachment('./image.png', 'image1.png');
+  const embed = new MessageEmbed()
+-   .attachFiles([attachment])
+    .setTitle('Attachments')
+    .setImage(`attachment://${attachment.name}`);
+
 - channel.send(embed)
-+ const embed = new MessageEmbed().setTitle('Attachments');
-+ channel.send({ embeds: [embed], files: ['./image1.png', './image2.jpg'] });
++ channel.send({
++   embeds: [embed],
++   files: [attachment]
++ });
 ```
 """
 
@@ -781,9 +806,9 @@ Ratelimits are dynamically assigned by the API based on current load and may cha
 keywords = ["abort", "abort error"]
 content = """
 `AbortError: The user aborted a request.`
-A request took longer than the specified [restRequestTimeout](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>) (15 seconds default), and was aborted to not lock up the request handler.
+A request took longer than the specified [restRequestTimeout](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>) (15 seconds default), and was aborted to not lock up the request handler.
 • This can be caused by an internal server error on Discord's side, or just a slow connection.
-• In case of a slow connection, the `restRequestTimeout` option in [ClientOptions](<https://discord.js.org/#/docs/main/stable/typedef/ClientOptions>) can be increased to prevent future AbortErrors.
+• In case of a slow connection, the `restRequestTimeout` option in [ClientOptions](<https://discord.js.org/#/docs/discord.js/stable/typedef/ClientOptions>) can be increased to prevent future AbortErrors.
 """
 
 [invalid-command]
@@ -794,13 +819,14 @@ content = """
 • Refresh your command list to receive the updated command and try again
 """
 
-[v13-changes]
-keywords = ["v13-changes", "v13 changes", "changes", "v13", "13"]
+[v14-changes]
+keywords = ["v14-changes", "v14 changes", "changes", "v14", "14"]
 content = """
-Version 13 has released! Please update at your earliest convenience, we will not indefinitely support v12.
+Version 14 has released! Please update at your earliest convenience.
 • Update: `npm rm discord.js` `npm i discord.js`
-• [Update guide](<https://discordjs.guide/additional-info/changes-in-v13.html>) (use `CTRL` + `F` to search for the old method or property)
+• [Update guide](<https://discordjs.guide/additional-info/changes-in-v14.html>) (use `CTRL` + `F` to search for the old method or property)
 """
+hoisted = true
 
 [filter]
 keywords = ["filter"]
@@ -811,12 +837,12 @@ The filter for collectors has moved into the options:
 + const collector = message.createReactionCollector({ filter, ...options });
 ```
 """
+hoisted = true
 
-[event-deprecation]
-keywords = ["event-deprecation", "event deprecation", "messageCreate", "interactionCreate"]
+[event-removal]
+keywords = ["event-removal", "event removal", "messageCreate", "interactionCreate"]
 content = """
 The `message` and `interaction` events were renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
-The old events still work, but you'll receive a deprecation warning until you switch over.
 
 ```diff
 - client.on('message', message => { ... });
@@ -825,6 +851,7 @@ The old events still work, but you'll receive a deprecation warning until you sw
 + client.on('interactionCreate', interaction => { ... });
 ```
 """
+hoisted = true
 
 [intents]
 keywords = ["intents", "no-members"]
@@ -832,15 +859,17 @@ content = """
 • Websocket intents limit events and decrease memory usage: [learn more](<https://discordjs.guide/popular-topics/intents.html>)
 • See what intents you need [here](<https://discord.com/developers/docs/topics/gateway#list-of-intents>)
 """
+hoisted = true
 
 [privileged-intents]
 keywords = ["privileged-intents", "privileged intents", "privileged", "p intents", "p-intents", "whitelisted-intents"]
 content = """
 `Error [DISALLOWED_INTENTS]: Privileged intent provided is not enabled or whitelisted.`
 
-If you are using the `GUILD_MEMBERS` or `GUILD_PRESENCES` intents, you need to enable them in the developer portal:
+If you are using the `GuildMembers`, `GuildPresences`, or `MessageContent` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 """
+hoisted = true
 
 [collection-array]
 keywords = ["collection-array", "collection array", "cta", "collection to array"]
@@ -848,7 +877,7 @@ content = """
 **Converting a Collection to an array**
 You only need to convert it to an array if you need the index of an entry:
 • Iteration (looping) is possible with [`for...of`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map>) over [`Collection#values`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>) or [`forEach`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach>)
-• You can transform a Collection to an array with [`Collection#map`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=map>)
+• You can transform a Collection to an array with [`Collection#map`](<https://discord.js.org/#/docs/collection/stable/class/Collection?scrollTo=map>)
 • If you need indices, you can get the array using [`[...collection.values()]`](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values>)
 """
 
@@ -857,7 +886,7 @@ keywords = ["member-count", "member count", "user-count", "user count", "uc"]
 content = """
 **Getting your bot's member count**
 • `client.users.cache.size` is unreliable because it will only return *cached* users
-• The preferred method is using [`collection.reduce()`](<https://discord.js.org/#/docs/collection/main/class/Collection?scrollTo=reduce>) on `client.guilds.cache`
+• The preferred method is using [`collection.reduce()`](<https://discord.js.org/#/docs/collection/stable/class/Collection?scrollTo=reduce>) on `client.guilds.cache`
 ```js
 client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 ```
@@ -872,4 +901,50 @@ content = """
 • Check scopes `bot` and `applications.commands`
 
 Image: https://i.imgur.com/taMHw7o.png
+"""
+
+[author-footer]
+keywords = ["author-footer", "footer", "author", "setFooter", "setAuthor"]
+content = """
+`<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
+```diff
+- embed.setAuthor('This is an example text', 'https://example.com/icon.png', 'https://websiteofauthor.com')
++ embed.setAuthor({ name: 'This is an example text', url: 'https://websiteofauthor.com', iconURL: 'https://example.com/icon.png' })
+
+- embed.setFooter('This is an example text', 'https://example.com/icon.png')
++ embed.setFooter({ text: 'This is an example text', iconURL: 'https://example.com/icon.png' })
+```
+"""
+
+[already-acknowledged]
+keywords = ["already-acknowledged", "interaction-acknowledged", "already-replied"]
+content = """
+• `DiscordAPIError: Interaction has already been acknowledged`
+• `[INTERACTION_ALREADY_REPLIED]: The reply to this interaction has already been sent or deferred.`
+
+You have already replied to the interaction.
+• Use `<Interaction>.followUp()` to send a new message
+• If you deferred reply it's better to use `<Interaction>.editReply()`
+• Responding to [slash commands](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
+"""
+
+[djs-sponsor]
+keywords = ["djs-sponsor", "sponsor", "sponsor-role"]
+content = """
+Like what we do and want to put some money behind it? Donate to discord.js at [GitHub](<https://github.com/sponsors/discordjs>) or [OpenCollective](<https://opencollective.com/discordjs>)!
+To rep your support with a role on our support server:
+**1)** Create a private [gist](<https://gist.github.com/>)
+**2)** Include your Discord tag (`d.js docs#1083`) or user ID (`348607796335607817`)
+**3)** Include your Transaction id or screenshot of the donation
+**4)** Send the link to the gist to <@81440962496172032> (`Crawl#0002`) via direct message
+"""
+
+[duplicate-commands]
+keywords = ["duplicate-commands", "double-commands", "guild-command", "global-command"]
+content = """
+If you have duplicate commands on your server, you registered both global and guild commands. 
+
+You can remove the duplicates by resetting either the global or guild commands
+• Resetting global commands: `rest.put(Routes.applicationCommands(clientId), { body: [] })`
+• Resetting guild commands: `rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })`
 """

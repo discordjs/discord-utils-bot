@@ -1,40 +1,9 @@
+import { InteractionResponseType } from 'discord-api-types/v10';
 import { Response } from 'polka';
 import { PREFIX_FAIL } from './constants';
 
 export function prepareHeader(response: Response) {
 	response.setHeader('Content-Type', 'application/json');
-}
-
-export function prepareSelectMenu(
-	response: Response,
-	content: string,
-	options: any[],
-	type: number,
-	customId: string,
-	ephemeral = false,
-) {
-	prepareHeader(response);
-	response.write(
-		JSON.stringify({
-			data: {
-				content,
-				components: [
-					{
-						type: 1,
-						components: [
-							{
-								type: 3,
-								custom_id: customId,
-								options,
-							},
-						],
-					},
-				],
-				flags: ephemeral ? 64 : 0,
-			},
-			type,
-		}),
-	);
 }
 
 export function prepareResponse(
@@ -43,7 +12,7 @@ export function prepareResponse(
 	ephemeral = false,
 	users: string[] = [],
 	parse: string[] = [],
-	type = 4,
+	type = InteractionResponseType.ChannelMessageWithSource,
 ): void {
 	prepareHeader(response);
 	response.write(
@@ -69,7 +38,7 @@ export function prepareAck(response: Response) {
 	response.statusCode = 200;
 	response.write(
 		JSON.stringify({
-			type: 1,
+			type: InteractionResponseType.Pong,
 		}),
 	);
 }

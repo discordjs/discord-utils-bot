@@ -1,5 +1,5 @@
 import { badRequest, badData } from '@hapi/boom';
-import type { Request, Response, NextHandler } from 'polka';
+import type { Request, Response, NextHandler, Middleware } from 'polka';
 
 declare module 'polka' {
 	export interface Request {
@@ -7,7 +7,7 @@ declare module 'polka' {
 	}
 }
 
-export const jsonParser = () => async (req: Request, _: Response, next: NextHandler) => {
+export const jsonParser = (): Middleware => async (req: Request, _: Response, next: NextHandler) => {
 	if (!req.headers['content-type']?.startsWith('application/json')) return next(badRequest('Unexpected content type'));
 	req.setEncoding('utf8');
 
@@ -15,6 +15,7 @@ export const jsonParser = () => async (req: Request, _: Response, next: NextHand
 		let data = '';
 		for await (const chunk of req) data += chunk;
 		req.rawBody = data;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		req.body = JSON.parse(data);
 
 		await next();

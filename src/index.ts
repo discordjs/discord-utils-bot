@@ -1,39 +1,64 @@
-import polka, { NextHandler, Request, Response } from 'polka';
-import { verifyKey } from 'discord-interactions';
-import { logger } from './util/logger';
-import { jsonParser } from './util/jsonParser';
-import { prepareAck, prepareResponse } from './util/respond';
-import { djsDocs, fetchDocResult } from './functions/docs';
-import { djsGuide } from './functions/guide';
-import { mdnSearch } from './functions/mdn';
-import { nodeSearch } from './functions/node';
-import {
-	API_BASE_DISCORD,
-	BUILDERS_DOCS_BRANCH_URL,
-	DEFAULT_DOCS_BRANCH,
-	PREFIX_BUG,
-	PREFIX_TEAPOT,
-	VOICE_DOCS_BRANCH_URL,
-} from './util/constants';
-import { findTag, loadTags, reloadTags, searchTag, showTag, Tag } from './functions/tag';
+import polka, { Middleware, NextHandler, Request, Response } from 'polka';
+import { logger, jsonParser, prepareAck, prepareResponse, API_BASE_MDN, PREFIX_BUG, PREFIX_TEAPOT } from './util';
+import { loadTags, Tag } from './functions/tag';
 import Collection from '@discordjs/collection';
-import fetch from 'node-fetch';
-import Doc from 'discord.js-docs';
-import { discordDeveloperDocs } from './functions/discorddocs';
+import { Doc } from 'discordjs-docs-parser';
+import { InteractionType, APIInteraction } from 'discord-api-types/v10';
+import { webcrypto } from 'node:crypto';
+import { handleApplicationCommand } from './handling/handleApplicationCommand';
+import { handleApplicationCommandAutocomplete } from './handling/handleApplicationCommandAutocomplete';
+import { MDNIndexEntry } from './types/mdn';
 
-const tagCache: Collection<string, Tag> = new Collection();
-void loadTags(tagCache);
-logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
+// @ts-expect-error
+const { subtle } = webcrypto;
 
-function verify(req: Request, res: Response, next: NextHandler) {
-	const signature = req.headers['x-signature-ed25519'];
-	const timestamp = req.headers['x-signature-timestamp'];
+const encoder = new TextEncoder();
+
+function hex2bin(hex: string) {
+	const buf = new Uint8Array(Math.ceil(hex.length / 2));
+	for (let i = 0; i < buf.length; i++) {
+		buf[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+	}
+	return buf;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+const PUBKEY = subtle.importKey(
+	'raw',
+	hex2bin(process.env.DISCORD_PUBKEY!),
+	{
+		name: 'NODE-ED25519',
+		namedCurve: 'NODE-ED25519',
+		public: true,
+	},
+	true,
+	['verify'],
+);
+const PORT = parseInt(process.env.PORT!, 10);
+
+async function verify(req: Request, res: Response, next: NextHandler) {
+	if (!req.headers['x-signature-ed25519']) {
+		res.writeHead(401);
+		return res.end();
+	}
+	const signature = req.headers['x-signature-ed25519'] as string;
+	const timestamp = req.headers['x-signature-timestamp'] as string;
 
 	if (!signature || !timestamp) {
 		res.writeHead(401);
 		return res.end();
 	}
-	const isValid = verifyKey(req.rawBody, signature as string, timestamp as string, process.env.DISCORD_PUBKEY!);
+
+	const hexSignature = hex2bin(signature);
+
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+	const isValid = await subtle.verify(
+		'NODE-ED25519',
+		await PUBKEY,
+		hexSignature,
+		encoder.encode(timestamp + req.rawBody),
+	);
+
 	if (!isValid) {
 		res.statusCode = 401;
 		return res.end();
@@ -41,151 +66,51 @@ function verify(req: Request, res: Response, next: NextHandler) {
 	void next();
 }
 
-export function start() {
+const tagCache: Collection<string, Tag> = new Collection();
+const mdnIndexCache: MDNIndexEntry[] = [];
+void loadTags(tagCache);
+logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
+
+Doc.setGlobalOptions({
+	escapeMarkdownLinks: true,
+});
+
+export async function start() {
+	const mdnData = (await fetch(`${API_BASE_MDN}/en-US/search-index.json`)
+		.then((r) => r.json())
+		.catch(() => undefined)) as MDNIndexEntry[] | undefined;
+	if (mdnData) {
+		mdnIndexCache.push(...mdnData.map((r) => ({ title: r.title, url: `${r.url}` })));
+	}
+
 	polka()
-		.use(jsonParser(), verify)
+		.use(jsonParser(), verify as Middleware)
 		.post('/interactions', async (req, res) => {
 			try {
-				const message = req.body;
-				if (message.type === 1) {
-					prepareAck(res);
-					return res.end();
+				const message = req.body as APIInteraction;
+				switch (message.type) {
+					case InteractionType.Ping:
+						prepareAck(res);
+						break;
+					case InteractionType.ApplicationCommand:
+						await handleApplicationCommand(res, message, tagCache);
+						break;
+					case InteractionType.ApplicationCommandAutocomplete:
+						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache);
+						break;
+					default:
+						logger.warn(`Received interaction of type ${message.type}`);
+						prepareResponse(res, `${PREFIX_TEAPOT} This shouldn't be here...`, true);
 				}
-				if (message.type === 2) {
-					const options = message.data.options ?? [];
-					const name = message.data.name;
-
-					const args = Object.fromEntries(
-						options.map(({ name, value }: { name: string; value: any }) => [name, value]),
-					);
-
-					if (name === 'docs') {
-						switch (args.source) {
-							case 'voice':
-								args.source = VOICE_DOCS_BRANCH_URL;
-								break;
-							case 'builders':
-								args.source = BUILDERS_DOCS_BRANCH_URL;
-								break;
-						}
-
-						const doc = await Doc.fetch(args.source ?? DEFAULT_DOCS_BRANCH, { force: true });
-
-						return (
-							await djsDocs(res, doc, args.source ?? DEFAULT_DOCS_BRANCH, args.query, undefined, args.target)
-						).end();
-					}
-
-					if (name === 'guide') {
-						return (await djsGuide(res, args.query, args.results, args.target)).end();
-					}
-
-					if (name === 'ddocs') {
-						return (await discordDeveloperDocs(res, args.query, args.results, args.target)).end();
-					}
-
-					if (name === 'mdn') {
-						return (await mdnSearch(res, args.query, args.target)).end();
-					}
-
-					if (name === 'node') {
-						return (await nodeSearch(res, args.query, args.version, args.target)).end();
-					}
-
-					if (name === 'tag') {
-						return (await showTag(res, args.query, tagCache, undefined, args.target)).end();
-					}
-
-					if (name === 'tagsearch') {
-						return (await searchTag(res, args.query, tagCache, args.target)).end();
-					}
-
-					if (name === 'tagreload') {
-						return (await reloadTags(res, tagCache, args.remote)).end();
-					}
-
-					if (name === 'invite') {
-						prepareResponse(
-							res,
-							`Add the discord.js interaction to your server: [(click here)](<https://discord.com/api/oauth2/authorize?client_id=${process
-								.env.DISCORD_CLIENT_ID!}&scope=applications.commands>)`,
-							true,
-						);
-						return res.end();
-					}
-
-					logger.warn(`Unknown interaction received: ${name as string} guild: ${message.guild_id as string}`);
-				}
-				if (message.type === 3) {
-					const { token } = message;
-					const { custom_id: cId, values: selected } = message.data;
-					const [op, target] = cId.split('|');
-					let source = cId.split('|')[2];
-
-					if (op === 'docsearch') {
-						switch (source) {
-							case 'voice':
-								source = VOICE_DOCS_BRANCH_URL;
-								break;
-							case 'builders':
-								source = BUILDERS_DOCS_BRANCH_URL;
-								break;
-						}
-						const doc = await Doc.fetch(source, { force: true });
-
-						prepareResponse(res, 'Suggestion sent.', false, [], [], 7);
-						res.end();
-
-						try {
-							const user = message.user?.id ?? message.member.user.id;
-							await fetch(`${API_BASE_DISCORD}/webhooks/${process.env.DISCORD_CLIENT_ID!}/${token as string}`, {
-								method: 'POST',
-								headers: {
-									'Content-Type': 'application/json',
-								},
-								body: JSON.stringify({
-									content: fetchDocResult(source, doc, selected[0], user, target),
-									allowed_mentions: { users: target.length ? [target] : [] },
-								}),
-							});
-						} catch (err) {
-							logger.error(err as Error);
-						}
-						return;
-					}
-
-					if (op === 'tag') {
-						prepareResponse(res, 'Suggestion sent', false, [], [], 7);
-						res.end();
-
-						try {
-							const user = message.user?.id ?? message.member.user.id;
-							await fetch(`${API_BASE_DISCORD}/webhooks/${process.env.DISCORD_CLIENT_ID!}/${token as string}`, {
-								method: 'POST',
-								headers: {
-									'Content-Type': 'application/json',
-								},
-								body: JSON.stringify({
-									content: findTag(tagCache, selected[0], user, target),
-									allowed_mentions: { users: target.length ? [target] : [] },
-								}),
-							});
-						} catch (err) {
-							logger.error(err as Error);
-						}
-						return;
-					}
-				}
-				logger.warn(`Received interaction of type ${message.type as string}`);
-				prepareResponse(res, `${PREFIX_BUG} This shouldn't be there...`, true);
-				res.end();
 			} catch (error) {
 				logger.error(error as Error);
-				prepareResponse(res, `${PREFIX_TEAPOT} Looks like something went wrong here, please try again later!`, true);
+				prepareResponse(res, `${PREFIX_BUG} Looks like something went wrong here, please try again later!`, true);
 			}
+
+			res.end();
 		})
-		.listen(parseInt(process.env.PORT!, 10));
-	logger.info(`Listening for interactions on port ${parseInt(process.env.PORT!, 10)}`);
+		.listen(PORT);
+	logger.info(`Listening for interactions on port ${PORT}.`);
 }
 
-start();
+void start();

@@ -1,20 +1,13 @@
-import {
-	bold,
-	formatEmoji,
-	hideLinkEmbed,
-	hyperlink,
-	inlineCode,
-	italic,
-	underscore,
-	userMention,
-} from '@discordjs/builders';
-import fetch from 'node-fetch';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
+import { fetch } from 'undici';
 import { Response } from 'polka';
 import TurndownService from 'turndown';
 import type { NodeDocs } from '../types/NodeDocs';
-import { API_BASE_NODE, EMOJI_ID_NODE } from '../util/constants';
-import { logger } from '../util/logger';
-import { prepareErrorResponse, prepareResponse } from '../util/respond';
+import { API_BASE_NODE, EMOJI_ID_NODE, logger, prepareErrorResponse, prepareResponse } from '../util';
 
 const td = new TurndownService({ codeBlockStyle: 'fenced' });
 
@@ -68,6 +61,7 @@ function findResult(data: any, query: string) {
 	for (const category of ['class', 'classMethod', 'method', 'event', 'module', 'global', 'misc'] as QueryType[]) {
 		const res = findRec(data, query, category);
 		if (res) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return res;
 		}
 	}
@@ -113,9 +107,7 @@ export async function nodeSearch(
 		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
 		const fullURL = `${moduleURL}.html${anchor}`;
 		const parts = [
-			`${formatEmoji(EMOJI_ID_NODE) as string} \ ${underscore(
-				bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))),
-			)}`,
+			`<:node:${EMOJI_ID_NODE}> \ ${underscore(bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))))}`,
 		];
 
 		const intro = td.turndown(result.desc ?? '').split('\n\n')[0];
