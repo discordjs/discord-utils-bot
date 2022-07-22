@@ -960,5 +960,6 @@ If you aren't getting content, embeds or attachments of a message, make sure you
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+});
 ```
 """
