@@ -953,7 +953,7 @@ You can remove the duplicates by resetting either the global or guild commands
 keywords = ["no-content", "nocontent", "message-content", "messagecontent"]
 content = """
 If you aren't getting content, embeds or attachments of a message, make sure you have the `MessageContent` intent.
-• Enable it in the [Developer Portal](https://discord.com/developers/applications) > Your app > Bot > Privileged Gateway Intents
+• Enable it in the [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
 • Provide the intent to your client:
 
 ```js
