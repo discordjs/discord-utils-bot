@@ -10,7 +10,7 @@ export const DocsCommand = {
 	options: [
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: 'discord-js',
+			name: 'discord-js-13',
 			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js`,
 			options: [
 				{
@@ -30,7 +30,7 @@ export const DocsCommand = {
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: 'discord-js-dev',
+			name: 'discord-js-14',
 			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@dev`,
 			options: [
 				{
