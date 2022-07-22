@@ -459,18 +459,6 @@ Mass DMing users is not allowed as per developer ToS, considered spam and can ge
 • Mention `@​​​everyone` to inform all your users at once instead
 • Discord Developer Terms of Service: [learn more](<https://discordapp.com/developers/docs/legal>) | [FAQ summary](<https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e>)
 """
-[send]
-keywords = ["send", "v13send", "v13 send"]
-content = """
-Sending and editing now takes only a single object parameter!
-```diff
-- channel.send(embed);
-+ channel.send({ embeds: [embed, embed2] });
-- channel.send('Hello!', { embed });
-+ channel.send({ content: 'Hello!', embeds: [embed, embed2] });
-```
-• Full migration guide: [learn more](<https://discordjs.guide/additional-info/changes-in-v13.html>)
-"""
 
 [codeblock]
 keywords = ["codeblock", "code block", "code blocks", "cb", "code box", "codebox"]
@@ -716,9 +704,9 @@ https://i.imgur.com/7WdehGn.png
 [tag-username]
 keywords = ["tag-username", "tag username", "tagusername", "tag username difference"]
 content = """
-[user.username](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=username>) ➞ `d.js docs`
-[user.discriminator](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=discriminator>) ➞ `1083`
-[user.tag](<https://discord.js.org/#/docs/discord.js/stable/class/User?scrollTo=tag>) ➞ `d.js docs#1083`
+[user.username](<https://discord.js.org/#/docs/discord.js/main/class/User?scrollTo=username>) ➞ `d.js docs`
+[user.discriminator](<https://discord.js.org/#/docs/discord.js/main/class/User?scrollTo=discriminator>) ➞ `1083`
+[user.tag](<https://discord.js.org/#/docs/discord.js/main/class/User?scrollTo=tag>) ➞ `d.js docs#1083`
 """
 
 [boost-event]
@@ -772,25 +760,6 @@ The timeout option has been removed from the [Message#delete](<https://discord.j
 - message.delete(5000)
 - message.delete({ timeout: 5000 })
 + setTimeout(() => { message.delete() }, 5000)
-```
-"""
-
-[embed-files]
-keywords = ["embed-files", "embed files"]
-content = """
-`MessageEmbed#attachFiles` has been removed. Files should be attached via the message option object instead:
-```diff
-  const attachment = new MessageAttachment('./image.png', 'image1.png');
-  const embed = new MessageEmbed()
--   .attachFiles([attachment])
-    .setTitle('Attachments')
-    .setImage(`attachment://${attachment.name}`);
-
-- channel.send(embed)
-+ channel.send({
-+   embeds: [embed],
-+   files: [attachment]
-+ });
 ```
 """
 
@@ -906,7 +875,7 @@ Image: https://i.imgur.com/taMHw7o.png
 [author-footer]
 keywords = ["author-footer", "footer", "author", "setFooter", "setAuthor"]
 content = """
-`<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
+`<EmbedBuilder>.setFooter()` and `<EmbedBuilder>.setAuthor()` now each take an object:
 ```diff
 - embed.setAuthor('This is an example text', 'https://example.com/icon.png', 'https://websiteofauthor.com')
 + embed.setAuthor({ name: 'This is an example text', url: 'https://websiteofauthor.com', iconURL: 'https://example.com/icon.png' })
@@ -923,8 +892,8 @@ content = """
 • `[INTERACTION_ALREADY_REPLIED]: The reply to this interaction has already been sent or deferred.`
 
 You have already replied to the interaction.
-• Use `<Interaction>.followUp()` to send a new message
-• If you deferred reply it's better to use `<Interaction>.editReply()`
+• Use `<BaseInteraction>.followUp()` to send a new message
+• If you deferred reply it's better to use `<BaseInteraction>.editReply()`
 • Responding to [slash commands](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
 
