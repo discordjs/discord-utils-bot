@@ -14,9 +14,9 @@ function autoCompleteMap(elements: DocElement[]) {
 
 export function toSourceString(s: string): SourcesStringUnion {
 	switch (s) {
-		case 'discord-js':
-			return 'stable';
-		case 'discord-js-dev':
+		case 'discord-js-13':
+			return '13.9.0';
+		case 'discord-js-14':
 			return 'main';
 		case 'collection':
 		case 'voice':
