@@ -949,6 +949,19 @@ You can remove the duplicates by resetting either the global or guild commands
 • Resetting guild commands: `rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })`
 """
 
+[no-content]
+keywords = ["no-content", "nocontent", "message-content", "messagecontent"]
+content = """
+If you aren't getting content, embeds or attachments of a message, make sure you have the `MessageContent` intent [enabled in the Developer Portal](<https://discord.com/developers/applications>) and provide it to your client:
+
+```js
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+});
+```
+"""
+
 [case]
 keywords = ["case", "snaketopascal", "change-case", "changecase"]
 content = """
