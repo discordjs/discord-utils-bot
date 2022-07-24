@@ -113,4 +113,12 @@ export async function start() {
 	logger.info(`Listening for interactions on port ${PORT}.`);
 }
 
+process.on('unhandledRejection', (reason, promise) => {
+	logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err, origin) => {
+	logger.error(`Caught exception: ${err.message}\nException origin: ${origin}`, err);
+});
+
 void start();

@@ -1,5 +1,5 @@
 export interface AlgoliaSearchResult {
-	hits: AlgoliaHit[];
+	hits?: AlgoliaHit[];
 	query: string;
 }
 

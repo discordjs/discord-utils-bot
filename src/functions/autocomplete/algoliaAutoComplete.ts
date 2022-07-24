@@ -52,7 +52,7 @@ export async function algoliaAutoComplete(
 	res.write(
 		JSON.stringify({
 			data: {
-				choices: autoCompleteMap(result.hits.slice(0, AUTOCOMPLETE_MAX_ITEMS - 1)),
+				choices: autoCompleteMap(result.hits?.slice(0, AUTOCOMPLETE_MAX_ITEMS - 1) ?? []),
 			},
 			type: InteractionResponseType.ApplicationCommandAutocompleteResult,
 		}),
