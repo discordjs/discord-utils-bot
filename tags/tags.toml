@@ -955,5 +955,5 @@ content = """
 `RangeError [BitFieldInvalid]: Invalid bitfield flag or number: undefined`
 • All `SCREAMING_SNAKE_CASE` enums have been changed to `PascalCase`
 • Intents: `Intents.FLAGS.GUILD_MESSAGES` -> `GatewayIntentBits.GuildMessages`
-• Permissions: `Permissions.FLAGS.GUILD_MESSAGES` -> `PermissionBitFields.Flags.GuildMessages`
+• Permissions: `Permissions.FLAGS.SEND_MESSAGES` -> `PermissionFlagsBits.SendMessages`
 """
