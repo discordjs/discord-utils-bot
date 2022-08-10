@@ -1001,7 +1001,33 @@ keywords = ["channel-typeguards", "narrow channel types", "narrow-types"]
 content = """
 Instead of using method-based type guard functions, you can narrow channel types with the `.type` property
 ```diff
--channel.isText()
-+channel.type === ChannelType.GuildText
+- channel.isText()
++ channel.type === ChannelType.GuildText
+```
+"""
+
+[member-fetch-timeout]
+keywords = ["member-fetch-timeout", "member-timeout", "member fetch timeout"]
+content = """
+Fetching members can time out on large guilds, as they arrive in chunks through the websocket connections.
+• You can specify the `time` option in `FetchMembersOptions` to specify how long you want to wait.
+• Make sure you have the required `GuildMembers` [gateway intent](<https://discordjs.guide/popular-topics/intents>) enabled
+"""
+
+[custom-client-properties]
+keywords = ["custom-client-properties", "custom properties on client"]
+content = """
+We highly recommend you extend the `Client` structure properly instead of just attaching custom properties like `.commands` to the regular discord.js `Client` instance.
+• Using typescript, you might want to consider [casting](<https://www.typescripttutorial.net/typescript-tutorial/type-casting/>) or [augmenting the module type](<https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules>)
+"""
+
+[components-per-message]
+keywords = ["components-per-message", "message component collector", "collecting-on-message"]
+content = """
+If you are waiting for button or select menu input from a specific message, don't create the collector on the channel.
+• Channel collectors return component interactions for any component within that channel.
+```diff
+- <Channel>.createMessageComponentCollector(…)
++ <Message>.createMessageComponentCollector(…)
 ```
 """
