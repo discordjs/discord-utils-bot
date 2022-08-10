@@ -469,7 +469,8 @@ Sending and editing now takes only a single object parameter!
 - channel.send('Hello!', { embed });
 + channel.send({ content: 'Hello!', embeds: [embed, embed2] });
 ```
-• Full migration guide: [learn more](<https://discordjs.guide/additional-info/changes-in-v13.html>)
+• V12-v13 migration guide: [learn more](<https://discordjs.guide/additional-info/changes-in-v13.html>)
+• V13-v14 migration guide: [learn more](<https://discordjs.guide/additional-info/changes-in-v14.html>)
 """
 
 [codeblock]
@@ -969,4 +970,38 @@ content = """
 • All `SCREAMING_SNAKE_CASE` enums have been changed to `PascalCase`
 • Intents: `Intents.FLAGS.GUILD_MESSAGES` -> `GatewayIntentBits.GuildMessages`
 • Permissions: `Permissions.FLAGS.SEND_MESSAGES` -> `PermissionFlagsBits.SendMessages`
+"""
+
+[dm-messages]
+keywords = ["dm-messages", "dm messages", "receive dms", "not getting dms", "receive-dms", "not-getting-dms"]
+content = """
+To receive direct message events on `"messageCreate"` with your bot, you will need:
+• The `DirectMessages` [gateway intent](<https://discordjs.guide/popular-topics/intents>)
+• The `Channel` [partial setting](<https://discordjs.guide/popular-topics/partials>)
+"""
+
+[all-intents]
+keywords = ["all-intents", "98303", "32767", "magic-intents", "magic intents", "magic all intent", "all intents"]
+content = """
+We highly recommend only specifying the [intents](<https://discordjs.guide/popular-topics/intents>) you actually need.
+• Note, that `98303`, `32767` or whatever other magic number you read represents "all intents", somewhere, gets outdated as soon as new intents are introduced.
+• The number will always represent the same set of intents, excluding new ones, there is no magic "all intents" bit.
+"""
+
+[manager-functions]
+keywords = ["manager-functions", "structureless actions", "no need to fetch", "no-fetch"]
+content = """
+If you only have the id for a structure you can often avoid fetching it before taking an action on it
+• Managers have functions to directly target the API while providing the id
+• Examples: `guild.members.ban("348607796335607817")`, `channel.messages.edit("348607796335607817", "new content")`
+"""
+
+[channel-typeguards]
+keywords = ["channel-typeguards", "narrow channel types", "narrow-types"]
+content = """
+Instead of using method-based type guard functions, you can narrow channel types with the `.type` property
+```diff
+-channel.isText()
++channel.type === ChannelType.GuildText
+```
 """
