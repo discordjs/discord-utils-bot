@@ -637,7 +637,7 @@ content = """
 [voice-timeout]
 keywords = ["voice-timeout", "voice connection timeout", "vct"]
 content = """
-`Error [VoiceConnectionTimout]: Connection not established within 15 seconds.`
+`Error [VoiceConnectionTimeout]: Connection not established within 15 seconds.`
 Make sure you have provided the `GuildVoiceStates` intent to the client:
 ```js
 const { Client, GatewayIntentBits } = require('discord.js');
