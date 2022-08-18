@@ -85,7 +85,7 @@ keywords = ["hierarchy", "roleorder"]
 content = """
 • Bots cannot moderate (kick/ban/nickname/...) a target with a higher or equally high highest role or the guild owner.
 • Bots cannot modify (edit/add/remove) roles that are higher or equally high compared to the bot's highest role.
-• The `ADMINISTRATOR` permission does not skip these checks.
+• The `Administrator` permission does not skip these checks.
 """
 
 [edit-channel]
@@ -637,7 +637,7 @@ content = """
 [voice-timeout]
 keywords = ["voice-timeout", "voice connection timeout", "vct"]
 content = """
-`Error [VOICE_CONNECTION_TIMEOUT]: Connection not established within 15 seconds.`
+`Error [VoiceConnectionTimeout]: Connection not established within 15 seconds.`
 Make sure you have provided the `GuildVoiceStates` intent to the client:
 ```js
 const { Client, GatewayIntentBits } = require('discord.js');
@@ -865,7 +865,7 @@ hoisted = true
 [privileged-intents]
 keywords = ["privileged-intents", "privileged intents", "privileged", "p intents", "p-intents", "whitelisted-intents"]
 content = """
-`Error [DISALLOWED_INTENTS]: Privileged intent provided is not enabled or whitelisted.`
+`Error [DisallowedIntents]: Privileged intent provided is not enabled or whitelisted.`
 
 If you are using the `GuildMembers`, `GuildPresences`, or `MessageContent` intents, you need to enable them in the developer portal:
 • [Developer Portal](<https://discord.com/developers/applications>) > Your app > Bot > Privileged Gateway Intents
@@ -921,7 +921,7 @@ content = """
 keywords = ["already-acknowledged", "interaction-acknowledged", "already-replied"]
 content = """
 • `DiscordAPIError: Interaction has already been acknowledged`
-• `[INTERACTION_ALREADY_REPLIED]: The reply to this interaction has already been sent or deferred.`
+• `[InteractionAlreadyReplied]: The reply to this interaction has already been sent or deferred.`
 
 You have already replied to the interaction.
 • Use `<Interaction>.followUp()` to send a new message
