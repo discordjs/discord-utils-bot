@@ -31,7 +31,7 @@ Discord might be having API issues! Check the [Discord API status](<https://disc
 [markdown]
 keywords = ["markdown", "md"]
 content = """
-Using markdown in discord to spice up your messages:
+Using markdown in Discord to spice up your messages:
 • [Discord support article](<https://support.discord.com/hc/en-us/articles/210298617>) 
 • [Gist with examples](<https://gist.github.com/matthewzring/9f7bbfd102003963f9be7dbcf7d40e51>)
 """
@@ -229,7 +229,7 @@ keywords = ["canary", "discord canary"]
 content = """
 The "canary" client is Discord's public test build
 • Install: [win](<https://discordapp.com/api/download/canary?platform=win>) | [osx](<https://discordapp.com/api/download/canary?platform=osx>) | [linux](<https://discordapp.com/api/download/canary?platform=linux>)
-• Report discord client bugs: [join the Discord Testers server](<https://discord.gg/discord-testers>)
+• Report Discord client bugs: [join the Discord Testers server](<https://discord.gg/discord-testers>)
 """
 
 [snowflake]
@@ -415,7 +415,7 @@ setTimeout(5000).then(() => { ... });
 [sharding]
 keywords = ["sharding", "sharding types", "when to shard", "wts"]
 content = """
-• Necessary at 2,500 guilds (discord will not let your bot connect)
+• Necessary at 2,500 guilds (Discord will not let your bot connect)
 • Internal sharding:
 ```js
 const client = new Discord.Client({ shards: 'auto' }); // auto shards
@@ -552,9 +552,9 @@ Some parts of an embed will **not** properly resolve mentions (leave them in the
 [not-discord]
 keywords = ["not-discord", "trustandsafety", "contact", "billing", "discord", "not discord", "tns", "support"]
 content = """
-We are not Discord, just some nerds who develop discord bots!
+We are not Discord, just some nerds who develop Discord bots!
 • [/report](<https://dis.gd/report>) reports (harassment/hacking/spam/abuse) and appeals
-• [/support](<https://dis.gd/support>) anything discord related
+• [/support](<https://dis.gd/support>) anything Discord related
 • [/billing](<https://dis.gd/billing>) payment/nitro
 • [/feedback](<https://dis.gd/feedback>) feedback/feature requests
 """
@@ -622,7 +622,7 @@ Checking for things to not be equal in JavaScript:
 keywords = ["member-user", "member user", "usermember", "user member", "user-member"]
 content = """
 Despite sounding similar there is a distinct difference between users and members in Discord:
-• [User](<https://discord.js.org/#/docs/discord.js/stable/class/User>): global discord user data (global avatar, username, tag, id) 
+• [User](<https://discord.js.org/#/docs/discord.js/stable/class/User>): global Discord user data (global avatar, username, tag, id) 
 • [GuildMember](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMember>): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
 • Conversion: [User ➞ GuildMember](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMemberManager?scrollTo=fetch>) | [GuildMember ➞ User](<https://discord.js.org/#/docs/discord.js/stable/class/GuildMember?scrollTo=user>)
 """
@@ -739,7 +739,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
 [self-invite]
 keywords = ["self-invite", "selfinvite", "self invite", "backdoor"]
 content = """
-Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (discord Developer Policy)](<https://discord.com/developers/docs/policy>)
+Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (Discord Developer Policy)](<https://discord.com/developers/docs/policy>)
 > *You may not use the APIs in any way to [...] process Discord Data in a way that surprises or violates Discord users' expectations.*
 • If you are experiencing problems with a particular guild, have your bot leave and/or blacklist it
 """
