@@ -25,8 +25,9 @@ Put your tag content here!
 ```
 
 - Tag names should always use `-` over spaces
-- Keywords should prioritise `-` over spaces for consistency
 - Keywords need to include the name of the tag
+- Keywords should prioritise `-` over spaces for consistency
+- Keywords are mutated under-the-hood to accept both dashes and spaces. This means it is not necessary to add "keyword-1" and "keyword 1" in a list of keywords
 - Backslashes have to be escaped! `\\`
 - Code blocks work and newlines are respected
 - The application uses slash command interactions only, you can use emojis from the Discord server (please do not use global emojis from other servers, as we can't control them being deleted at any point)
