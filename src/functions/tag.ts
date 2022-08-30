@@ -26,7 +26,7 @@ export interface TagSimilarityEntry {
 }
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
-	let file: any;
+	let file;
 	if (remote) {
 		file = await fetch(REMOTE_TAG_URL).then((r) => r.text());
 	} else {
@@ -34,7 +34,21 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 	}
 	const data = TOML.parse(file, 1.0, '\n');
 	for (const [key, value] of Object.entries(data)) {
-		tagCache.set(key, value as unknown as Tag);
+		const tag = value as unknown as Tag;
+
+		for (const keyword of tag.keywords) {
+			if (keyword.includes('-')) {
+				const newKeyword = keyword.replace(/-/g, ' ');
+				if (!tag.keywords.includes(newKeyword)) tag.keywords.push(keyword.replace(/-/g, ' '));
+			}
+
+			if (keyword.includes(' ')) {
+				const newKeyword = keyword.replace(/ /g, '-');
+				if (!tag.keywords.includes(newKeyword)) tag.keywords.push(keyword.replace(/ /g, '-'));
+			}
+		}
+
+		tagCache.set(key, tag);
 	}
 }
 

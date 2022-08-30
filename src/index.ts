@@ -66,7 +66,7 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 	void next();
 }
 
-const tagCache: Collection<string, Tag> = new Collection();
+const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
 void loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
