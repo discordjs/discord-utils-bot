@@ -68,7 +68,7 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 
 export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
 	query = query.trim().toLowerCase();
-	const content = findTag(tagCache, query, target)!;
+	const content = findTag(tagCache, query, target);
 	if (content) {
 		prepareResponse(res, content, false, target ? [target] : []);
 	} else {

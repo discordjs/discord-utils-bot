@@ -80,7 +80,7 @@ export async function start() {
 		.then((r) => r.json())
 		.catch(() => undefined)) as MDNIndexEntry[] | undefined;
 	if (mdnData) {
-		mdnIndexCache.push(...mdnData.map((r) => ({ title: r.title, url: `${r.url}` })));
+		mdnIndexCache.push(...mdnData.map((r) => ({ title: r.title, url: r.url })));
 	}
 
 	polka()
