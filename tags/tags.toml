@@ -227,9 +227,9 @@ content = """
 [canary]
 keywords = ["canary", "discord canary"]
 content = """
-The "canary" client is Discord's public test build
-• Install: [win](<https://discordapp.com/api/download/canary?platform=win>) | [osx](<https://discordapp.com/api/download/canary?platform=osx>) | [linux](<https://discordapp.com/api/download/canary?platform=linux>)
-• Report Discord client bugs: [join the Discord Testers server](<https://discord.gg/discord-testers>)
+The "canary" client is Discord's public test build.
+• Install: [win](<https://discord.com/api/downloads/distributions/app/installers/latest?platform=win&channel=canary&arch=x86>) | [osx](<https://discord.com/api/download/canary?platform=osx>) | linux ([deb](<https://discord.com/api/download/canary?platform=linux&format=deb>) | [tar.gz](<https://discord.com/api/download/canary?platform=linux&format=tar.gz>)) 
+• Report Discord client bugs: <https://dis.gd/bugreport>
 """
 
 [snowflake]
