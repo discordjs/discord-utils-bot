@@ -41,7 +41,7 @@
 		"pino": "^6.11.3",
 		"polka": "1.0.0-next.15",
 		"turndown": "^7.1.1",
-		"undici": "^5.8.0"
+		"undici": "^5.8.2"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
