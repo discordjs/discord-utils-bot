@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ApplicationCommandOptionType, APIApplicationCommandInteractionDataOption } from 'discord-api-types/v10';
 import { Command, ArgumentsOf } from './argumentsOf';

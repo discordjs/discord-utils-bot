@@ -20,7 +20,6 @@ export function prepareResponse(
 			data: {
 				content,
 				flags: ephemeral ? MessageFlags.Ephemeral : 0,
-				// eslint-disable-next-line @typescript-eslint/naming-convention
 				allowed_mentions: { parse, users },
 				components: [],
 			},
