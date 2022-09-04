@@ -981,7 +981,7 @@ keywords = ["all-intents", "98303", "32767", "magic-intents", "magic intents", "
 content = """
 We highly recommend only specifying the [intents](<https://discordjs.guide/popular-topics/intents>) you actually need.
 • Note, that `98303`, `32767` or whatever other magic number you read that represents "all intents", gets outdated as soon as new intents are introduced.
-• The number will always represent the same set of intents, and will not include new intents. There is no magic "all intents" bit.
+• The number will always represent the same set of intents, and will not include new ones. There is no magic "all intents" bit.
 """
 
 [manager-functions]
