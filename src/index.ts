@@ -66,7 +66,7 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 	void next();
 }
 
-const tagCache: Collection<string, Tag> = new Collection();
+const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
 void loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
@@ -112,10 +112,6 @@ export async function start() {
 		.listen(PORT);
 	logger.info(`Listening for interactions on port ${PORT}.`);
 }
-
-process.on('unhandledRejection', (reason, promise) => {
-	logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
-});
 
 process.on('uncaughtException', (err, origin) => {
 	logger.error(`Caught exception: ${err.message}\nException origin: ${origin}`, err);

@@ -26,12 +26,10 @@ export interface TagSimilarityEntry {
 }
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
-	let file: any;
-	if (remote) {
-		file = await fetch(REMOTE_TAG_URL).then((r) => r.text());
-	} else {
-		file = readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'), { encoding: 'utf8' });
-	}
+	const file = remote
+		? await fetch(REMOTE_TAG_URL).then((r) => r.text())
+		: readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'), { encoding: 'utf8' });
+
 	const data = TOML.parse(file, 1.0, '\n');
 	for (const [key, value] of Object.entries(data)) {
 		tagCache.set(key, value as unknown as Tag);
@@ -39,6 +37,7 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 }
 
 export function findTag(tagCache: Collection<string, Tag>, query: string, target?: string): string | null {
+	query = query.replace(/\s+/g, '-');
 	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
 	if (!tag) return null;
 	return suggestionString('tag', tag.content, target);
