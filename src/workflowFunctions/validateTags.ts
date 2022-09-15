@@ -5,7 +5,14 @@ import { Tag } from '../functions/tag';
 import { red } from 'kleur';
 import { AUTOCOMPLETE_MAX_ITEMS } from '../util';
 
-type ConflictType = 'uniqueKeywords' | 'headerInKeywords' | 'emptyKeyword' | 'unescapedLink';
+enum ConflictType {
+	UniqueKeywords,
+	HeaderInKeywords,
+	NonEmptyKeyword,
+	NonEmptyBody,
+	EscapeLinks,
+	NoWhiteSpace,
+}
 
 interface Conflict {
 	firstName: string;
@@ -35,7 +42,7 @@ function validateTags() {
 				firstName: key,
 				secondName: '',
 				conflictKeyWords: conflictLinks,
-				type: 'unescapedLink',
+				type: ConflictType.EscapeLinks,
 			});
 		}
 
@@ -43,28 +50,46 @@ function validateTags() {
 			hoisted++;
 		}
 
+		if (!v.keywords.includes(key)) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: [],
+				type: ConflictType.HeaderInKeywords,
+			});
+		}
+
+		if (v.keywords.some((k) => !k.replace(/\s+/g, '').length)) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: [],
+				type: ConflictType.NonEmptyKeyword,
+			});
+		}
+
+		if (!v.content.replace(/[\s\r\n]+/g, '').length) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: [],
+				type: ConflictType.NonEmptyBody,
+			});
+		}
+
+		const whiteSpaceKeywords = v.keywords.filter((k) => /\s/.exec(k));
+		if (whiteSpaceKeywords.length) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: whiteSpaceKeywords,
+				type: ConflictType.NoWhiteSpace,
+			});
+		}
+
 		for (const [otherKey, otherValue] of Object.entries(data)) {
 			const oV = otherValue as unknown as Tag;
-			if (
-				(v.keywords.some((k) => !k.replace(/\s+/g, '').length) || !v.content.replace(/\s+/g, '').length) &&
-				!conflicts.some((c) => c.type === 'emptyKeyword' && c.firstName === key)
-			) {
-				conflicts.push({
-					firstName: key,
-					secondName: '',
-					conflictKeyWords: [],
-					type: 'emptyKeyword',
-				});
-			}
 			if (key !== otherKey) {
-				if (!v.keywords.includes(key) && !conflicts.some((c) => c.type === 'headerInKeywords' && c.firstName === key)) {
-					conflicts.push({
-						firstName: key,
-						secondName: '',
-						conflictKeyWords: [],
-						type: 'headerInKeywords',
-					});
-				}
 				const conflictKeyWords = v.keywords.filter((k) => oV.keywords.includes(k));
 				if (
 					conflictKeyWords.length &&
@@ -74,7 +99,7 @@ function validateTags() {
 						firstName: key,
 						secondName: otherKey,
 						conflictKeyWords,
-						type: 'uniqueKeywords',
+						type: ConflictType.UniqueKeywords,
 					});
 				}
 			}
@@ -83,27 +108,42 @@ function validateTags() {
 
 	if (conflicts.length || hoisted > AUTOCOMPLETE_MAX_ITEMS) {
 		const parts = [];
-		const { uniqueConflicts, headerConflicts, emptyConflicts, linkConflicts } = conflicts.reduce(
+		const {
+			uniqueConflicts,
+			headerConflicts,
+			emptyKeywordConflicts,
+			emptyBodyConflicts,
+			linkConflicts,
+			noWhiteSpaceConflicts,
+		} = conflicts.reduce(
 			(a, c) => {
 				switch (c.type) {
-					case 'uniqueKeywords':
+					case ConflictType.UniqueKeywords:
 						a.uniqueConflicts.push(c);
 						break;
-					case 'headerInKeywords':
+					case ConflictType.HeaderInKeywords:
 						a.headerConflicts.push(c);
 						break;
-					case 'emptyKeyword':
-						a.emptyConflicts.push(c);
+					case ConflictType.NonEmptyKeyword:
+						a.emptyKeywordConflicts.push(c);
 						break;
-					case 'unescapedLink':
+					case ConflictType.NonEmptyBody:
+						a.emptyBodyConflicts.push(c);
+						break;
+					case ConflictType.EscapeLinks:
 						a.linkConflicts.push(c);
+						break;
+					case ConflictType.NoWhiteSpace:
+						a.noWhiteSpaceConflicts.push(c);
 				}
 				return a;
 			},
 			{
 				uniqueConflicts: [] as Conflict[],
 				headerConflicts: [] as Conflict[],
-				emptyConflicts: [] as Conflict[],
+				emptyKeywordConflicts: [] as Conflict[],
+				emptyBodyConflicts: [] as Conflict[],
+				noWhiteSpaceConflicts: [] as Conflict[],
 				linkConflicts: [] as Conflict[],
 			},
 		);
@@ -123,10 +163,26 @@ function validateTags() {
 			);
 		}
 
-		if (emptyConflicts.length) {
+		if (emptyBodyConflicts.length) {
 			parts.push(
-				`Tag validation error: Tag keywords and body cannot be empty:\n${emptyConflicts
+				`Tag validation error: Tag body cannot be empty:\n${emptyBodyConflicts
 					.map((c, i) => red(`${i}. [${c.firstName}]`))
+					.join('\n')}`,
+			);
+		}
+
+		if (emptyKeywordConflicts.length) {
+			parts.push(
+				`Tag validation error: Tag keywords cannot be empty:\n${emptyKeywordConflicts
+					.map((c, i) => red(`${i}. [${c.firstName}]`))
+					.join('\n')}`,
+			);
+		}
+
+		if (noWhiteSpaceConflicts.length) {
+			parts.push(
+				`Tag validation error: Tag names and keywords cannot include whitespace (use - instead):\n${noWhiteSpaceConflicts
+					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
 					.join('\n')}`,
 			);
 		}
