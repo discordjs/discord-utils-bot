@@ -303,7 +303,7 @@ Explaining `<Class>` and `Class#method` notation: [learn more](<https://discordj
 keywords = ["collection", "collections", "collection-methods"]
 content = """
 Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
-• Guide: [learn more](<https://discordjs.guide/additional-info/collections.html>)
+• Guide: [learn more](<https://discordjs.guide/additional-info/collections.html>) [🍪](<https://gist.github.com/almostSouji/71a33e5f8e84a0960b4ed3a1609915f5>)
 """
 hoisted = true
 
