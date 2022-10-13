@@ -4,7 +4,17 @@ import { GuideCommand } from '../interactions/guide';
 import { InviteCommand } from '../interactions/invite';
 import { MdnCommand } from '../interactions/mdn';
 import { NodeCommand } from '../interactions/node';
+import { NpmReloadCommand } from '../interactions/npmreload';
 import { TagCommand } from '../interactions/tag';
 import { deploy } from './deploy';
 
-void deploy([DiscordDocsCommand, DocsCommand, GuideCommand, InviteCommand, MdnCommand, NodeCommand, TagCommand]);
+void deploy([
+	DiscordDocsCommand,
+	DocsCommand,
+	GuideCommand,
+	InviteCommand,
+	MdnCommand,
+	NodeCommand,
+	TagCommand,
+	NpmReloadCommand,
+]);
