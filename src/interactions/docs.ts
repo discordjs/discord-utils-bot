@@ -12,7 +12,7 @@ export const DocsCommand = {
 		{
 			type: ApplicationCommandOptionType.Subcommand,
 			name: 'discord-js-v13',
-			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js`,
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@v13-lts`,
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
@@ -38,7 +38,7 @@ export const DocsCommand = {
 		{
 			type: ApplicationCommandOptionType.Subcommand,
 			name: 'discord-js-v14',
-			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@dev`,
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@latest`,
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
