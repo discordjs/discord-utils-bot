@@ -4,19 +4,22 @@ import {
 	ApplicationCommandOptionType,
 	InteractionResponseType,
 } from 'discord-api-types/v10';
-import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
+import { Doc, DocElement, DocTypes, sources } from 'discordjs-docs-parser';
 import { Response } from 'polka';
+import { CustomSourcesString, CustomSourcesStringUnion } from '../../types/discordjs-docs-parser';
 import { AUTOCOMPLETE_MAX_ITEMS, DEFAULT_DOCS_BRANCH, prepareErrorResponse } from '../../util';
 
 function autoCompleteMap(elements: DocElement[]) {
 	return elements.map((e) => ({ name: e.formattedName, value: e.formattedName }));
 }
 
-export function toSourceString(s: string): SourcesStringUnion {
+export function toSourceString(s: string): CustomSourcesStringUnion {
 	switch (s) {
 		case 'discord-js-v13':
-			return 'stable';
+			return 'v13-lts';
 		case 'discord-js-v14':
+			return 'latest';
+		case 'discord-js-dev':
 			return 'main';
 		case 'collection':
 		case 'voice':
@@ -28,7 +31,7 @@ export function toSourceString(s: string): SourcesStringUnion {
 }
 
 interface DocsAutoCompleteData {
-	source: SourcesStringUnion;
+	source: CustomSourcesStringUnion;
 	query: string;
 	target?: string;
 	ephemeral?: boolean;
@@ -76,6 +79,7 @@ export function resolveOptionsToDocsAutoComplete(
 export async function djsDocsAutoComplete(
 	res: Response,
 	options: APIApplicationCommandInteractionDataOption[],
+	customSources: Map<CustomSourcesString, string>,
 ): Promise<Response> {
 	const resolved = resolveOptionsToDocsAutoComplete(options);
 	if (!resolved) {
@@ -85,6 +89,12 @@ export async function djsDocsAutoComplete(
 
 	const { source, query } = resolved;
 
+	// @ts-expect-error: This implements custom sources
+	sources.set('v13-lts', customSources.get('v13-lts')!);
+	// @ts-expect-error: This implements custom sources
+	sources.set('latest', customSources.get('latest')!);
+
+	// @ts-expect-error: This implements custom sources
 	const doc = await Doc.fetch(source, { force: true });
 	const searchResult = doc.search(query)?.filter((element) => element.docType !== DocTypes.Param) ?? [];
 

@@ -63,6 +63,26 @@ export const DocsCommand = {
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: 'discord-js-dev',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@dev`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
+				},
+				{
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: 'collection',
 			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} @discordjs/collection`,
 			options: [
