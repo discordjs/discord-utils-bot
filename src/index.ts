@@ -8,6 +8,8 @@ import { webcrypto } from 'node:crypto';
 import { handleApplicationCommand } from './handling/handleApplicationCommand';
 import { handleApplicationCommandAutocomplete } from './handling/handleApplicationCommandAutocomplete';
 import { MDNIndexEntry } from './types/mdn';
+import { loadLatestNpmVersion } from './functions/npm';
+import { CustomSourcesString } from './types/discordjs-docs-parser';
 
 // @ts-expect-error
 const { subtle } = webcrypto;
@@ -68,7 +70,9 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 
 const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
+const customSources = new Map<CustomSourcesString, string>();
 void loadTags(tagCache);
+void loadLatestNpmVersion(customSources);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
 
 Doc.setGlobalOptions({
@@ -93,10 +97,10 @@ export async function start() {
 						prepareAck(res);
 						break;
 					case InteractionType.ApplicationCommand:
-						await handleApplicationCommand(res, message, tagCache);
+						await handleApplicationCommand(res, message, tagCache, customSources);
 						break;
 					case InteractionType.ApplicationCommandAutocomplete:
-						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache);
+						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache, customSources);
 						break;
 					default:
 						logger.warn(`Received interaction of type ${message.type}`);

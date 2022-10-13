@@ -1,6 +1,7 @@
 import { bold, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
-import { Doc, DocElement, DocTypes, SourcesStringUnion } from 'discordjs-docs-parser';
+import { Doc, DocElement, DocTypes } from 'discordjs-docs-parser';
 import { Response } from 'polka';
+import { CustomSourcesStringUnion } from '../types/discordjs-docs-parser';
 import {
 	EMOJI_ID_CLASS,
 	EMOJI_ID_CLASS_DEV,
@@ -88,7 +89,12 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 	return `${parts.join('')}\n${description}`;
 }
 
-export function fetchDocResult(source: SourcesStringUnion, doc: Doc, query: string, target?: string): string | null {
+export function fetchDocResult(
+	source: CustomSourcesStringUnion,
+	doc: Doc,
+	query: string,
+	target?: string,
+): string | null {
 	const element = doc.get(...query.split(/\.|#/));
 	if (!element) return null;
 	const isMain = source === 'main';
@@ -96,7 +102,14 @@ export function fetchDocResult(source: SourcesStringUnion, doc: Doc, query: stri
 	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, target);
 }
 
-export function djsDocs(res: Response, doc: Doc, source: SourcesStringUnion, query: string, target?: string, ephemeral?: boolean): Response {
+export function djsDocs(
+	res: Response,
+	doc: Doc,
+	source: CustomSourcesStringUnion,
+	query: string,
+	target?: string,
+	ephemeral?: boolean
+): Response {
 	query = query.trim();
 
 	const singleResult = fetchDocResult(source, doc, query, target);

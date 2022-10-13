@@ -9,6 +9,7 @@ import { GuideCommand } from '../interactions/guide';
 import { transformInteraction } from '../util';
 import { Response } from 'polka';
 import { MDNIndexEntry } from '../types/mdn';
+import { CustomSourcesString } from '../types/discordjs-docs-parser';
 
 type CommandAutoCompleteName = 'docs' | 'tag' | 'mdn' | 'guide' | 'discorddocs';
 
@@ -17,12 +18,13 @@ export async function handleApplicationCommandAutocomplete(
 	message: APIApplicationCommandAutocompleteInteraction,
 	tagCache: Collection<string, Tag>,
 	mdnIndexCache: MDNIndexEntry[],
+	customSources: Map<CustomSourcesString, string>,
 ) {
 	const data = message.data;
 	const name = data.name as CommandAutoCompleteName;
 	switch (name) {
 		case 'docs': {
-			await djsDocsAutoComplete(res, data.options);
+			await djsDocsAutoComplete(res, data.options, customSources);
 			break;
 		}
 		case 'tag': {
