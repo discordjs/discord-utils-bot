@@ -283,6 +283,6 @@ export async function validateTags(runResponseValidation: boolean) {
 	if (warnings.length) {
 		printWarnings(warnings);
 	}
-	process.stderr.write(green(`\n\nTag validation passed with ${warnings.length} warnings 🎉\n\n`));
+	process.stdout.write(green(`\n\nTag validation passed with ${warnings.length} warnings 🎉\n\n`));
 	process.exit(0);
 }
