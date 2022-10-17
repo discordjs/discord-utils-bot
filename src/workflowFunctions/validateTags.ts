@@ -28,11 +28,11 @@ interface Warning {
 	description: string;
 }
 
-function printWarnings(warnings: Warning[]) {
-	process.stdout.write('\n\n');
-	process.stdout.write('Tag validation warnings:\n');
-	process.stdout.write(warnings.map((w, i) => yellow(`${i}. ${w.name}: ${w.description}`)).join('\n'));
-	process.stdout.write('\n');
+function printWarnings(warnings: Warning[], stream: NodeJS.WriteStream) {
+	stream.write('\n\n');
+	stream.write('Tag validation warnings:\n');
+	stream.write(warnings.map((w, i) => yellow(`${i}. ${w.name}: ${w.description}`)).join('\n'));
+	stream.write('\n');
 }
 
 export async function validateTags(runResponseValidation: boolean) {
@@ -273,7 +273,7 @@ export async function validateTags(runResponseValidation: boolean) {
 		process.stderr.write('\n');
 
 		if (warnings.length) {
-			printWarnings(warnings);
+			printWarnings(warnings, process.stderr);
 		}
 
 		process.stderr.write(red('\n\nTag validation failed\n\n'));
@@ -281,7 +281,7 @@ export async function validateTags(runResponseValidation: boolean) {
 	}
 
 	if (warnings.length) {
-		printWarnings(warnings);
+		printWarnings(warnings, process.stdout);
 	}
 	process.stdout.write(green(`\n\nTag validation passed with ${warnings.length} warnings 🎉\n\n`));
 	process.exit(0);
