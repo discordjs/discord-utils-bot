@@ -10,7 +10,8 @@
 		"prettier": "prettier --write **/*.{ts,js,toml}",
 		"cmd:glob": "node dist/deployFunctions/deployGlobal.js",
 		"cmd:dev": "node dist/deployFunctions/deployDev.js",
-		"validate-tags": "node dist/workflowFunctions/validateTags.js",
+		"validate-tags": "node dist/workflowFunctions/validateTagsWithoutLinks.js",
+		"validate-tags:withlinks": "node dist/workflowFunctions/validateTagsWithLinks.js",
 		"prepare": "is-ci || husky install"
 	},
 	"main": "dist/index.js",
@@ -41,7 +42,7 @@
 		"pino": "^6.11.3",
 		"polka": "1.0.0-next.15",
 		"turndown": "^7.1.1",
-		"undici": "^5.8.2"
+		"undici": "^5.11.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",

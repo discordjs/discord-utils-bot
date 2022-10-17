@@ -71,13 +71,13 @@ Manage your application state with pm2 so you can restart, stop and delete proce
 [node-opus]
 keywords = ["node-opus", "discordjs/opus", "opus-windows"]
 content = """
-    **__Installing @​​​​discordjs/opus on Windows__**
+    **__Installing @discordjs/opus on Windows__**
     • Open Command Prompt or PowerShell as Administrator
     • `npm i windows-build-tools --production --vs2015 --add-python-to-PATH --global`
     • Close the Command Prompt/PowerShell window.
     • Go to your working directory (where you use `node bot.js`).
     • Hold `Shift + Right-Click` then select "Open command window here" or "Open PowerShell window here"
-    • `npm i @​​​​​discordjs/opus`
+    • `npm i @discordjs/opus`
 """
 
 [hierarchy]
@@ -137,7 +137,7 @@ content = """
 keywords = ["beautify", "beautifyer", "indents"]
 content = """
 To make your code more readable (and easier for us to help you with) consider using a beautifier.
-• Quick online tool: [beautifier.io](<beautifier.io>)
+• Quick online tool: [beautifier.io](<https://beautifier.io>)
 • Script and Editor integrations: [prettier](<https://prettier.io/docs/en/editors.html>)
 """
 
@@ -456,7 +456,7 @@ execute(message, client, args);
 keywords = ["mass-dm", "massdm", "dmall", "dmal-all"]
 content = """
 Mass DMing users is not allowed as per developer ToS, considered spam and can get you and your bot banned.
-• Mention `@​​​everyone` to inform all your users at once instead
+• Mention `@everyone` to inform all your users at once instead
 • Discord Developer Terms of Service: [learn more](<https://discordapp.com/developers/docs/legal>) | [FAQ summary](<https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e>)
 """
 [send]
@@ -695,7 +695,7 @@ client
     .on("warn", console.log)
 ```
 • Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
-• If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
+• If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [paste.gg](<https://paste.gg/>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
 """
 hoisted = true
 
@@ -914,7 +914,7 @@ content = """
 You have already replied to the interaction.
 • Use `<Interaction>.followUp()` to send a new message
 • If you deferred reply it's better to use `<Interaction>.editReply()`
-• Responding to [slash commands](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
+• Responding to [slash commands](<https://discordjs.guide/slash-commands/response-methods.html>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
 
 [djs-sponsor]

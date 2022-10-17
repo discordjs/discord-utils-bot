@@ -2,8 +2,9 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { Tag } from '../functions/tag';
-import { red } from 'kleur';
+import { red, green, yellow } from 'kleur';
 import { AUTOCOMPLETE_MAX_ITEMS } from '../util';
+import { request } from 'undici';
 
 enum ConflictType {
 	UniqueKeywords,
@@ -12,6 +13,7 @@ enum ConflictType {
 	NonEmptyBody,
 	EscapeLinks,
 	NoWhiteSpace,
+	Status404Link,
 }
 
 interface Conflict {
@@ -21,28 +23,82 @@ interface Conflict {
 	type: ConflictType;
 }
 
-function validateTags() {
+interface Warning {
+	name: string;
+	description: string;
+}
+
+function printWarnings(warnings: Warning[]) {
+	process.stdout.write('\n\n');
+	process.stdout.write('Tag validation warnings:\n');
+	process.stdout.write(warnings.map((w, i) => yellow(`${i}. ${w.name}: ${w.description}`)).join('\n'));
+	process.stdout.write('\n');
+}
+
+export async function validateTags(runResponseValidation: boolean) {
 	const file = readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'));
 	const data = TOML.parse(file, 1.0, '\n');
 	const conflicts: Conflict[] = [];
+	const warnings: Warning[] = [];
+
 	let hoisted = 0;
 	for (const [key, value] of Object.entries(data)) {
 		const v = value as unknown as Tag;
 		const codeBlockRegex = /(`{1,3}).+?\1/gs;
-		const detectionRegex = /\[[^\[\]]+?\]\([^<][^\(\)]+?[^>]\)/g;
+		const markDownLinkRegex = /\[[^\[\]]+?\]\((?<startbracket><)?(?<link>[^\(\)]+?)(?<endbracket>>)?\)/g;
 		const cleanedContent = v.content.replace(codeBlockRegex, '');
 
-		const conflictLinks = [];
+		const unescapedLinks: string[] = [];
+		const invalidLinks: string[] = [];
+
 		let result: RegExpExecArray | null;
-		while ((result = detectionRegex.exec(cleanedContent)) !== null) {
-			conflictLinks.push(result[0]);
+		while ((result = markDownLinkRegex.exec(cleanedContent)) !== null) {
+			const groups = result.groups;
+
+			if (groups?.link) {
+				if (!(groups.startbracket && groups.endbracket)) {
+					unescapedLinks.push(result[0]);
+				}
+
+				if (runResponseValidation) {
+					process.stdout.write(`\n[ ] Testing link: ${groups.link}`);
+					const res = await request(groups.link, {
+						maxRedirections: 1,
+						headers: {
+							'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0',
+						},
+					}).catch(() => null);
+					process.stdout.write('\r\x1b[K');
+					if (!res || res.statusCode === 404) {
+						invalidLinks.push(`${groups.link} (${res?.statusCode ?? 'request failed'})`);
+						process.stdout.write(`[${red('✖')}] ${groups.link} (${red(res?.statusCode ?? 'request failed')})`);
+					} else if (res.statusCode === 200) {
+						process.stdout.write(`[${green('✔')}] ${groups.link} (${green(res.statusCode)})`);
+					} else {
+						warnings.push({
+							name: key,
+							description: `Non-200 statuscode response on: ${groups.link} (${res.statusCode})`,
+						});
+						process.stdout.write(`[${yellow('✔')}] ${groups.link} (${yellow(res.statusCode)})`);
+					}
+				}
+			}
 		}
-		if (conflictLinks.length) {
+		if (unescapedLinks.length) {
 			conflicts.push({
 				firstName: key,
 				secondName: '',
-				conflictKeyWords: conflictLinks,
+				conflictKeyWords: unescapedLinks,
 				type: ConflictType.EscapeLinks,
+			});
+		}
+
+		if (invalidLinks.length) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: invalidLinks,
+				type: ConflictType.Status404Link,
 			});
 		}
 
@@ -113,8 +169,9 @@ function validateTags() {
 			headerConflicts,
 			emptyKeywordConflicts,
 			emptyBodyConflicts,
-			linkConflicts,
+			unescapedMarkdownLinkConflicts,
 			noWhiteSpaceConflicts,
+			status404LinkConflicts,
 		} = conflicts.reduce(
 			(a, c) => {
 				switch (c.type) {
@@ -131,10 +188,13 @@ function validateTags() {
 						a.emptyBodyConflicts.push(c);
 						break;
 					case ConflictType.EscapeLinks:
-						a.linkConflicts.push(c);
+						a.unescapedMarkdownLinkConflicts.push(c);
 						break;
 					case ConflictType.NoWhiteSpace:
 						a.noWhiteSpaceConflicts.push(c);
+						break;
+					case ConflictType.Status404Link:
+						a.status404LinkConflicts.push(c);
 				}
 				return a;
 			},
@@ -144,7 +204,8 @@ function validateTags() {
 				emptyKeywordConflicts: [] as Conflict[],
 				emptyBodyConflicts: [] as Conflict[],
 				noWhiteSpaceConflicts: [] as Conflict[],
-				linkConflicts: [] as Conflict[],
+				unescapedMarkdownLinkConflicts: [] as Conflict[],
+				status404LinkConflicts: [] as Conflict[],
 			},
 		);
 
@@ -187,9 +248,17 @@ function validateTags() {
 			);
 		}
 
-		if (linkConflicts.length) {
+		if (unescapedMarkdownLinkConflicts.length) {
 			parts.push(
-				`Tag validation error: Masked links need to be escaped as [label](<link>):\n${linkConflicts
+				`Tag validation error: Masked links need to be escaped as [label](<link>):\n${unescapedMarkdownLinkConflicts
+					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
+					.join('\n')}`,
+			);
+		}
+
+		if (status404LinkConflicts.length) {
+			parts.push(
+				`Tag validation error: Links returned a 404 status code:\n${status404LinkConflicts
 					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
 					.join('\n')}`,
 			);
@@ -199,11 +268,21 @@ function validateTags() {
 			parts.push(`Amount of hoisted tags exceeds ${AUTOCOMPLETE_MAX_ITEMS} (is ${hoisted})`);
 		}
 
-		// eslint-disable-next-line no-console
-		console.error(parts.join('\n\n'));
+		process.stderr.write('\n');
+		process.stderr.write(parts.join('\n\n'));
+		process.stderr.write('\n');
+
+		if (warnings.length) {
+			printWarnings(warnings);
+		}
+
+		process.stderr.write(red('\n\nTag validation failed\n\n'));
 		process.exit(1);
 	}
+
+	if (warnings.length) {
+		printWarnings(warnings);
+	}
+	process.stderr.write(green(`\n\nTag validation passed with ${warnings.length} warnings 🎉\n\n`));
 	process.exit(0);
 }
-
-validateTags();
