@@ -162,9 +162,9 @@ keywords = ["specific-channel", "specificchannel", "pick-channel"]
 content = """
 ```js
 const channel = client.channels.cache.get("222086648706498562");
-const channel = client.channels.cache.find(channel => channel.name === "general");
+const channel = guild.channels.cache.find(channel => channel.name === "general");
 ```
-• Caches caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/stable/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/main/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
 
