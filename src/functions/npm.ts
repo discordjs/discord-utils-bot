@@ -29,7 +29,6 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 		v13: customSources.get('v13-lts')!,
 		latest: customSources.get('latest')!,
 	};
-	customSources.clear();
 	try {
 		await loadLatestNpmVersion(customSources);
 
