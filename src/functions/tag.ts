@@ -16,6 +16,7 @@ import { fetch } from 'undici';
 export interface Tag {
 	keywords: string[];
 	content: string;
+	'content-v13'?: string;
 	hoisted: boolean;
 }
 
@@ -36,11 +37,16 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 	}
 }
 
-export function findTag(tagCache: Collection<string, Tag>, query: string, target?: string): string | null {
+export function findTag(
+	tagCache: Collection<string, Tag>,
+	query: string,
+	version: number,
+	target?: string,
+): string | null {
 	query = query.replace(/\s+/g, '-');
 	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
 	if (!tag) return null;
-	return suggestionString('tag', tag.content, target);
+	return suggestionString('tag', version === 13 && 'content-v13' in tag ? tag['content-v13'] : tag.content, target);
 }
 
 export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {
@@ -65,9 +71,15 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 	return res;
 }
 
-export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
+export function showTag(
+	res: Response,
+	query: string,
+	tagCache: Collection<string, Tag>,
+	version: number,
+	target?: string,
+): Response {
 	query = query.trim().toLowerCase();
-	const content = findTag(tagCache, query, target);
+	const content = findTag(tagCache, query, version, target);
 	if (content) {
 		prepareResponse(res, content, false, target ? [target] : []);
 	} else {

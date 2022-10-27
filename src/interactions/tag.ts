@@ -17,5 +17,21 @@ export const TagCommand = {
 			description: 'User to mention',
 			required: false,
 		},
+		{
+			type: ApplicationCommandOptionType.Integer,
+			name: 'version',
+			description: 'The version of the tag (default: v14)',
+			required: false,
+			choices: [
+				{
+					name: 'v14',
+					value: 14,
+				},
+				{
+					name: 'v13',
+					value: 13,
+				},
+			],
+		},
 	],
 } as const;

@@ -106,7 +106,7 @@ export async function handleApplicationCommand(
 			}
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				await showTag(res, castArgs.query, tagCache, castArgs.target);
+				await showTag(res, castArgs.query, tagCache, castArgs.version ?? 14, castArgs.target);
 				break;
 			}
 			case 'tagreload': {

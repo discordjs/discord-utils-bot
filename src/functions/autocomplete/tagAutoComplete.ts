@@ -21,7 +21,8 @@ export function tagAutoComplete(
 		for (const [key, tag] of tagCache.entries()) {
 			const exactKeyword = tag.keywords.find((s) => s.toLowerCase() === cleanedQuery);
 			const includesKeyword = tag.keywords.find((s) => s.toLowerCase().includes(cleanedQuery));
-			const isContentMatch = tag.content.toLowerCase().includes(cleanedQuery);
+			const isContentMatch =
+				tag.content.toLowerCase().includes(cleanedQuery) || tag['content-v13']?.toLowerCase().includes(cleanedQuery);
 			if (exactKeyword) {
 				exactKeywords.push({
 					name: `✅ ${key}`,
