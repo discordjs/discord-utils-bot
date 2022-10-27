@@ -73,12 +73,7 @@ const mdnIndexCache: MDNIndexEntry[] = [];
 const customSources = new Map<CustomSourcesString, string>();
 void loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
-await loadLatestNpmVersion(customSources);
-logger.info({
-    msg: 'Loaded latest npm versions for discord.js',
-    ['v13-lts']: customSources.get('v13-lts'),
-    latest: customSources.get('latest'),
-})
+void loadLatestNpmVersion(customSources);
 
 Doc.setGlobalOptions({
 	escapeMarkdownLinks: true,

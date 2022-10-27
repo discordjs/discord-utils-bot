@@ -9,7 +9,6 @@ function formatVersionToRaw(version: string): string {
 }
 
 export async function loadLatestNpmVersion(customSources: Map<CustomSourcesString, string>): Promise<void> {
-	logger.info('Fetching latest npm versions...');
 	const response = await request('https://registry.npmjs.org/discord.js');
 	if (response.statusCode !== 200) {
 		throw new Error('Failed to fetch latest npm version');
@@ -22,6 +21,19 @@ export async function loadLatestNpmVersion(customSources: Map<CustomSourcesStrin
 
 	customSources.set('v13-lts', formatVersionToRaw(json['dist-tags']['v13-lts']));
 	customSources.set('latest', formatVersionToRaw(json['dist-tags'].latest));
+
+	for (const version of customSources.values()) {
+		const response = await request(version);
+		if (response.statusCode !== 200) {
+			throw new Error(`Failed to verify source ${version}: ${response.statusCode}`);
+		}
+	}
+
+	logger.info({
+		msg: 'Loaded latest npm versions for discord.js',
+		'v13-lts': customSources.get('v13-lts'),
+		latest: customSources.get('latest'),
+	});
 }
 
 export async function reloadNpmVersions(res: Response, customSources: Map<CustomSourcesString, string>) {
@@ -39,11 +51,7 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 
 		prepareResponse(
 			res,
-			`${PREFIX_SUCCESS} **Npm versions updated!**\nPrevious versions: \`\`\`json\n${JSON.stringify(
-				prev,
-				null,
-				4,
-			)}\`\`\`\nNew versions: \`\`\`json\n${JSON.stringify(newVersions, null, 4)}\`\`\``,
+			`${PREFIX_SUCCESS} **Npm versions updated!**\nVersions: \n• v13-lts: \`${prev.v13}\` 🠚 \`${newVersions.v13}\`\n• Latest: \`${prev.latest}\` 🠚 \`${newVersions.latest}\``,
 			true,
 		);
 	} catch (error) {
