@@ -8,6 +8,10 @@ function formatVersionToRaw(version: string): string {
 	return `https://raw.githubusercontent.com/discordjs/docs/main/discord.js/${version}.json`;
 }
 
+function getVersionFromRaw(raw: string): string {
+	return raw.split('/').pop()!.split('.').slice(0, 3).join('.');
+}
+
 export async function loadLatestNpmVersion(customSources: Map<CustomSourcesString, string>): Promise<void> {
 	const response = await request('https://registry.npmjs.org/discord.js');
 	if (response.statusCode !== 200) {
@@ -22,11 +26,15 @@ export async function loadLatestNpmVersion(customSources: Map<CustomSourcesStrin
 	customSources.set('v13-lts', formatVersionToRaw(json['dist-tags']['v13-lts']));
 	customSources.set('latest', formatVersionToRaw(json['dist-tags'].latest));
 
-	for (const version of customSources.values()) {
-		const response = await request(version);
-		if (response.statusCode !== 200) {
-			throw new Error(`Failed to verify source ${version}: ${response.statusCode}`);
-		}
+	const responses = await Promise.all(
+		Array.from(customSources.values())
+			.map((url) => request(url))
+			.map((r) => r.catch(() => undefined)),
+	);
+
+	const failed = responses.filter((r) => r?.statusCode !== 200);
+	if (failed.length) {
+		throw new Error(`Failed to fetch ${failed.join(', ')} versions`);
 	}
 
 	logger.info({
@@ -51,7 +59,11 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 
 		prepareResponse(
 			res,
-			`${PREFIX_SUCCESS} **Npm versions updated!**\nVersions: \n• v13-lts: \`${prev.v13}\` 🠚 \`${newVersions.v13}\`\n• Latest: \`${prev.latest}\` 🠚 \`${newVersions.latest}\``,
+			`${PREFIX_SUCCESS} **Npm versions updated!**\n\n• v13-lts: \`${getVersionFromRaw(
+				prev.v13,
+			)}\` 🠚 \`${getVersionFromRaw(newVersions.v13)}\`\n• Latest: \`${getVersionFromRaw(
+				prev.latest,
+			)}\` 🠚 \`${getVersionFromRaw(newVersions.latest)}\``,
 			true,
 		);
 	} catch (error) {
