@@ -1019,3 +1019,15 @@ If you are waiting for button or select menu input from a specific message, don'
 + <Message>.createMessageComponentCollector(…)
 ```
 """
+
+[generic-actionrow]
+keywords = ["generic-actionrow", "generic-builder", "component-builder", "generic-actionrowbuilder"]
+content = """
+In TypeScript the `ActionRowBuilder` class has a generic type parameter that specifies the type of component the action row holds:
+```ts
+const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button)
+const row = new ActionRowBuilder<SelectMenuBuilder>().addComponents(selectMenu)
+const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
+```
+"""
+
