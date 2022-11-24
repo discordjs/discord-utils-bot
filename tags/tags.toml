@@ -32,7 +32,7 @@ Discord might be having API issues! Check the [Discord API status](<https://disc
 keywords = ["markdown", "md"]
 content = """
 Using markdown in Discord to spice up your messages:
-• [Discord support article](<https://support.discord.com/hc/en-us/articles/210298617>) 
+• [Discord support article](<https://support.discord.com/hc/articles/210298617>) 
 • [Gist with examples](<https://gist.github.com/matthewzring/9f7bbfd102003963f9be7dbcf7d40e51>)
 """
 
@@ -253,7 +253,7 @@ TypeScript (TS) is a typed superset of JavaScript that compiles to plain JavaScr
 [devmode]
 keywords = ["devmode", "developermode", "developer-mode", "copy-id", "get-id", "role-id"]
 content = """
-Enable developer mode to gain access to the "copy id" context menu: [learn more](<https://support.discord.com/hc/en-us/articles/206346498>)
+Enable developer mode to gain access to the "copy id" context menu: [learn more](<https://support.discord.com/hc/articles/206346498>)
 • copy role ids from context menus (guild settings, user profiles) not message mentions!
 """
 
@@ -430,7 +430,7 @@ content = """
 `DiscordAPIError: Two factor is required for this operation`
 Elevated permissions are required to execute this action. You need to activate 2FA on your developer account in order to do this with the bot.
 • Elevated permissions: [learn more](<https://discordjs.guide/popular-topics/permissions-extended.html#elevated-permissions>)
-• Setting up 2FA: [learn more](<https://support.discord.com/hc/en-us/articles/219576828>)
+• Setting up 2FA: [learn more](<https://support.discord.com/hc/articles/219576828>)
 """
 
 [embed-limits]
