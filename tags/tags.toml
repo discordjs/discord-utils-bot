@@ -920,8 +920,9 @@ You have already replied to the interaction.
 [djs-sponsor]
 keywords = ["djs-sponsor", "sponsor", "sponsor-role"]
 content = """
-Like what we do and want to put some money behind it? Donate to discord.js at [GitHub](<https://github.com/sponsors/discordjs>) or [OpenCollective](<https://opencollective.com/discordjs>)!
-To rep your support with a role on our support server:
+Like what we do and want to put some money behind it? Donate to discord.js and rep your support with a role on our support server:
+• [OpenCollective](<https://opencollective.com/discordjs>): Use </claim-sponsor:1046604458991300619> and provide your OC slug *(Settings > Info > URL slug)*
+• [GitHub Sponsors](<https://github.com/sponsors/discordjs>):
 **1)** Create a private [gist](<https://gist.github.com/>)
 **2)** Include your Discord tag (`d.js docs#1083`) or user ID (`348607796335607817`)
 **3)** Include your Transaction id or screenshot of the donation
