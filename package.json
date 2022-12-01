@@ -1,7 +1,7 @@
 {
 	"name": "slash-utils",
 	"version": "0.0.0",
-	"description": "Slash command utilities for the discord.js support server",
+	"description": "Slash command utilities for the discord.js support server.",
 	"scripts": {
 		"build": "rimraf dist && tsc --skipLibCheck",
 		"start": "node dist/index.js",

@@ -11,6 +11,6 @@
 
 # Privacy Policy
 
-This is a HTTP interaction command-only Discord application and does not read any message you send, unless you provide it as an argument to one of its commands. Adding the `bot` scope to your sever does not yield any benefit. This application does not have a websocket connection and does not read any events.
+This is a HTTP interaction command-only Discord application and does not read any message you send, unless you provide it as an argument to one of its commands. Adding the `bot` scope to your server does not yield any benefit. This application does not have a WebSocket connection and does not read any events.
 
-If you contribute tags via the GitHub repository you agree that the provided content is persisted and shown to users on any Discord server with no attribution save the GitHub repository and git history.
+If you contribute tags via the GitHub repository, you agree that the provided content is persisted and shown to users on any Discord server with no attribution save the GitHub repository and git history.
