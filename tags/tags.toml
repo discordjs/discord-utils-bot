@@ -516,7 +516,7 @@ keywords = ["version", "discord.js-version", "provide-version", "find-version"]
 content = """
 Determining your discord.js version:
 • `npm list discord.js`
-• Make sure you use the right [documentation](<https://discord.js.org/#/docs>) for your installed verison (selector on the left)
+• Make sure you use the right [documentation](<https://discord.js.org/#/docs>) for your installed version (selector on the left)
 """
 
 [token]
