@@ -32,7 +32,7 @@ Discord might be having API issues! Check the [Discord API status](<https://disc
 keywords = ["markdown", "md"]
 content = """
 Using markdown in Discord to spice up your messages:
-• [Discord support article](<https://support.discord.com/hc/en-us/articles/210298617>) 
+• [Discord support article](<https://support.discord.com/hc/articles/210298617>) 
 • [Gist with examples](<https://gist.github.com/matthewzring/9f7bbfd102003963f9be7dbcf7d40e51>)
 """
 
@@ -71,13 +71,13 @@ Manage your application state with pm2 so you can restart, stop and delete proce
 [node-opus]
 keywords = ["node-opus", "discordjs/opus", "opus-windows"]
 content = """
-    **__Installing @​​​​discordjs/opus on Windows__**
+    **__Installing @discordjs/opus on Windows__**
     • Open Command Prompt or PowerShell as Administrator
     • `npm i windows-build-tools --production --vs2015 --add-python-to-PATH --global`
     • Close the Command Prompt/PowerShell window.
     • Go to your working directory (where you use `node bot.js`).
     • Hold `Shift + Right-Click` then select "Open command window here" or "Open PowerShell window here"
-    • `npm i @​​​​​discordjs/opus`
+    • `npm i @discordjs/opus`
 """
 
 [hierarchy]
@@ -137,14 +137,14 @@ content = """
 keywords = ["beautify", "beautifyer", "indents"]
 content = """
 To make your code more readable (and easier for us to help you with) consider using a beautifier.
-• Quick online tool: [beautifier.io](<beautifier.io>)
+• Quick online tool: [beautifier.io](<https://beautifier.io>)
 • Script and Editor integrations: [prettier](<https://prettier.io/docs/en/editors.html>)
 """
 
 [docs]
 keywords = ["docs", "djsdocs", "thedocs", "documentation"]
 content = """
-Discord.js documentation:
+discord.js documentation:
 • stable release: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
 • developer release: [learn more](<https://discord.js.org/#/docs/discord.js/main/general/welcome>)
 """
@@ -162,16 +162,16 @@ keywords = ["specific-channel", "specificchannel", "pick-channel"]
 content = """
 ```js
 const channel = client.channels.cache.get("222086648706498562");
-const channel = client.channels.cache.find(channel => channel.name === "general");
+const channel = guild.channels.cache.find(channel => channel.name === "general");
 ```
-• Caches caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/stable/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+• Caches in discord.js are [Collections](<https://discord.js.org/#/docs/collection/main/class/Collection>) which extend the native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • [learn more](<https://discordjs.guide/additional-info/collections.html>)
 """
 
 [node-version]
 keywords = ["node-version", "nv", "flat", "fields-flat", "catch-{", "update-node", "abortcontroller"]
 content = """
-Please update node.js to version 16.6.0 or newer!
+Please update Node.js to version 16.9.0 or newer!
 • [Download](<https://nodejs.org/en/download>)
 • [Linux (nodesource)](<https://github.com/nodesource/distributions>)
 """
@@ -253,7 +253,7 @@ TypeScript (TS) is a typed superset of JavaScript that compiles to plain JavaScr
 [devmode]
 keywords = ["devmode", "developermode", "developer-mode", "copy-id", "get-id", "role-id"]
 content = """
-Enable developer mode to gain access to the "copy id" context menu: [learn more](<https://support.discord.com/hc/en-us/articles/206346498>)
+Enable developer mode to gain access to the "copy id" context menu: [learn more](<https://support.discord.com/hc/articles/206346498>)
 • copy role ids from context menus (guild settings, user profiles) not message mentions!
 """
 
@@ -302,7 +302,7 @@ Explaining `<Class>` and `Class#method` notation: [learn more](<https://discordj
 [collection]
 keywords = ["collection", "collections", "collection-methods"]
 content = """
-Discord.js uses [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
+discord.js uses [Collection](<https://discord.js.org/#/docs/collection/stable/class/Collection>), an extension of the JS native [Map](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map>) structure.
 • Guide: [learn more](<https://discordjs.guide/additional-info/collections.html>) [🍪](<https://gist.github.com/almostSouji/71a33e5f8e84a0960b4ed3a1609915f5>)
 """
 hoisted = true
@@ -310,7 +310,7 @@ hoisted = true
 [ffmpeg]
 keywords = ["ffmpeg"]
 content = """
-• NPM: `npm install ffmpeg-static`
+• npm: `npm install ffmpeg-static`
 • Install: [Download](<https://www.ffmpeg.org>) | [chocolatey](<https://chocolatey.org>) | [homebrew](<https://brew.sh>) | your distributions package manager
 • Tutorial: [YouTube](<https://www.youtube.com/watch?v=SW-iKrT_nJs>)
 • ffmpeg-binaries is [deprecated](<https://www.npmjs.com/package/ffmpeg-binaries>), uninstall it with `npm rm ffmpeg-binaries`
@@ -430,7 +430,7 @@ content = """
 `DiscordAPIError: Two factor is required for this operation`
 Elevated permissions are required to execute this action. You need to activate 2FA on your developer account in order to do this with the bot.
 • Elevated permissions: [learn more](<https://discordjs.guide/popular-topics/permissions-extended.html#elevated-permissions>)
-• Setting up 2FA: [learn more](<https://support.discord.com/hc/en-us/articles/219576828>)
+• Setting up 2FA: [learn more](<https://support.discord.com/hc/articles/219576828>)
 """
 
 [embed-limits]
@@ -456,7 +456,7 @@ execute(message, client, args);
 keywords = ["mass-dm", "massdm", "dmall", "dmal-all"]
 content = """
 Mass DMing users is not allowed as per developer ToS, considered spam and can get you and your bot banned.
-• Mention `@​​​everyone` to inform all your users at once instead
+• Mention `@everyone` to inform all your users at once instead
 • Discord Developer Terms of Service: [learn more](<https://discordapp.com/developers/docs/legal>) | [FAQ summary](<https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e>)
 """
 [send]
@@ -516,7 +516,7 @@ keywords = ["version", "discord.js-version", "provide-version", "find-version"]
 content = """
 Determining your discord.js version:
 • `npm list discord.js`
-• Make sure you use the right [documentation](<https://discord.js.org/#/docs>) for your installed verison (selector on the left)
+• Make sure you use the right [documentation](<https://discord.js.org/#/docs>) for your installed version (selector on the left)
 """
 
 [token]
@@ -680,7 +680,7 @@ hoisted = true
 keywords = ["regex", "regexp", "regular-expressions", "regularexpressions"]
 content = """
 Regular expressions can make parsing and validating strings effortless:
-• Beginner guide: [learn more](<https://blog.bitsrc.io/a-beginners-guide-to-regular-expressions-regex-in-javascript-9c58feb27eb4>)
+• Beginner guide: [learn more](<https://blog.bitsrc.io/9c58feb27eb4>)
 • Online Tester/Debugger: [regex101](<https://regex101.com>) | [regexr](<http://regexr.com>) | [debuggex](<https://www.debuggex.com>)
 • Interactive Guide: [learn more](<https://regexone.com>)
 """
@@ -695,7 +695,7 @@ client
     .on("warn", console.log)
 ```
 • Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
-• If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [hasteb.in](<https://hasteb.in>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
+• If the output is too long to post consider using a bin instead: [gist](<https://gist.github.com>) | [paste.gg](<https://paste.gg/>) | [sourceb.in](<https://sourceb.in>) | [hastebin](<https://hastebin.com>)
 """
 hoisted = true
 
@@ -895,7 +895,7 @@ Image: https://i.imgur.com/taMHw7o.png
 [author-footer]
 keywords = ["author-footer", "footer", "author", "setFooter", "setAuthor"]
 content = """
-`<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
+`v13` `<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
 ```diff
 - embed.setAuthor('This is an example text', 'https://example.com/icon.png', 'https://websiteofauthor.com')
 + embed.setAuthor({ name: 'This is an example text', url: 'https://websiteofauthor.com', iconURL: 'https://example.com/icon.png' })
@@ -914,14 +914,15 @@ content = """
 You have already replied to the interaction.
 • Use `<Interaction>.followUp()` to send a new message
 • If you deferred reply it's better to use `<Interaction>.editReply()`
-• Responding to [slash commands](<https://discordjs.guide/interactions/slash-commands.html#replying-to-slash-commands>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
+• Responding to [slash commands](<https://discordjs.guide/slash-commands/response-methods.html>) / [buttons](<https://discordjs.guide/interactions/buttons.html#responding-to-buttons>) / [select menus](<https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus>)
 """
 
 [djs-sponsor]
 keywords = ["djs-sponsor", "sponsor", "sponsor-role"]
 content = """
-Like what we do and want to put some money behind it? Donate to discord.js at [GitHub](<https://github.com/sponsors/discordjs>) or [OpenCollective](<https://opencollective.com/discordjs>)!
-To rep your support with a role on our support server:
+Like what we do and want to put some money behind it? Donate to discord.js and rep your support with a role on our support server:
+• [OpenCollective](<https://opencollective.com/discordjs>): Use </claim-sponsor:1046604458991300619> and provide your OC slug *(Settings > Info > URL slug)*
+• [GitHub Sponsors](<https://github.com/sponsors/discordjs>):
 **1)** Create a private [gist](<https://gist.github.com/>)
 **2)** Include your Discord tag (`d.js docs#1083`) or user ID (`348607796335607817`)
 **3)** Include your Transaction id or screenshot of the donation
@@ -997,7 +998,7 @@ Instead of using method-based type guard functions, you can narrow channel types
 [member-fetch-timeout]
 keywords = ["member-fetch-timeout", "member-timeout", "member-fetch-timeout"]
 content = """
-Fetching members can time out on large guilds, as they arrive in chunks through the websocket connections.
+Fetching members can time out on large guilds, as they arrive in chunks through the WebSocket connections.
 • You can specify the `time` option in `FetchMembersOptions` to specify how long you want to wait.
 • Make sure you have the required `GuildMembers` [gateway intent](<https://discordjs.guide/popular-topics/intents>) enabled
 """
@@ -1017,6 +1018,17 @@ If you are waiting for button or select menu input from a specific message, don'
 ```diff
 - <Channel>.createMessageComponentCollector(…)
 + <Message>.createMessageComponentCollector(…)
+```
+"""
+
+[generic-actionrow]
+keywords = ["generic-actionrow", "generic-builder", "component-builder", "generic-actionrowbuilder"]
+content = """
+In TypeScript the `ActionRowBuilder` class has a generic type parameter that specifies the type of component the action row holds:
+```ts
+const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button)
+const row = new ActionRowBuilder<SelectMenuBuilder>().addComponents(selectMenu)
+const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 ```
 """
 

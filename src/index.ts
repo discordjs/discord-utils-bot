@@ -117,4 +117,8 @@ process.on('uncaughtException', (err, origin) => {
 	logger.error(`Caught exception: ${err.message}\nException origin: ${origin}`, err);
 });
 
+process.on('unhandledRejection', (reason, promise) => {
+	logger.error(`Unhandled Rejection at: ${String(promise)}\nreason: ${String(reason)}`);
+});
+
 void start();

@@ -1,0 +1,27 @@
+name: Validate with link responses
+on: [workflow_dispatch]
+
+jobs:
+  validate:
+    name: validate
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node v17
+        uses: actions/setup-node@v2
+        with:
+          node-version: 17
+
+      - name: Install dependencies
+        run: rm -rf node_modules && yarn install --frozen-lockfile
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run TSC
+        run: yarn build
+
+      - name: Validate Tags
+        run: yarn validate-tags:withlinks

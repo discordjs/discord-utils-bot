@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 
 export const DiscordDocsCommand = {
 	name: 'discorddocs',
-	description: 'Search discord developer documentation',
+	description: 'Search Discord developer documentation',
 	options: [
 		{
 			type: ApplicationCommandOptionType.String,
