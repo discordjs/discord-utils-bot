@@ -1027,7 +1027,7 @@ content = """
 In TypeScript the `ActionRowBuilder` class has a generic type parameter that specifies the type of component the action row holds:
 ```ts
 const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button)
-const row = new ActionRowBuilder<SelectMenuBuilder>().addComponents(selectMenu)
+const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu)
 const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 ```
 """
