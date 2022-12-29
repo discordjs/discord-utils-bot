@@ -1033,7 +1033,7 @@ const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 """
 
 [builder]
-keywords = ["builder", "components", "embeds"]
+keywords = ["builder", "components", "embeds", "from"]
 content = """
 Structures from the API cannot be edited directly. To do so, you can create a new structure (a builder) using the `.from()` method
 ```js
