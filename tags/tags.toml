@@ -72,12 +72,20 @@ Manage your application state with pm2 so you can restart, stop and delete proce
 keywords = ["node-opus", "discordjs/opus", "opus-windows"]
 content = """
     **__Installing @discordjs/opus on Windows__**
+    **Install using Node.js Installer (recommended)**
+    • Open the Node.js Installer (v14 and higher) you can get it from <https://nodejs.org> 
+    • Go through the installer until you see a page titled "Tools for Native Modules" and if you already have node press the Change button to add/remove features
+    • Check the box that says "Automatically install the necessary tools" and after your done with the installer Windows Build Tools should install automatically in a terminal
+    • Enter the directory your bot files are located in (where `node_modules` is and `package.json`)
+    • Hold `Shift + Right-Click` then select "Open command window here" or "Open PowerShell window here"
+    • Then run the command `npm install @discordjs/opus`
+    **Install using npm package manager (deprecated)**
     • Open Command Prompt or PowerShell as Administrator
     • `npm i windows-build-tools --production --vs2015 --add-python-to-PATH --global`
     • Close the Command Prompt/PowerShell window.
-    • Go to your working directory (where you use `node bot.js`).
+    • Enter the directory your bot files are located in (where `node_modules` is and `package.json`)
     • Hold `Shift + Right-Click` then select "Open command window here" or "Open PowerShell window here"
-    • `npm i @discordjs/opus`
+    • Then run the command `npm install @discordjs/opus`
 """
 
 [hierarchy]
