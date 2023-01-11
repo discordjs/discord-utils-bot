@@ -1027,7 +1027,7 @@ content = """
 In TypeScript the `ActionRowBuilder` class has a generic type parameter that specifies the type of component the action row holds:
 ```ts
 const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button)
-const row = new ActionRowBuilder<SelectMenuBuilder>().addComponents(selectMenu)
+const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu)
 const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 ```
 """
@@ -1040,4 +1040,23 @@ Structures from the API cannot be edited directly. To do so, you can create a ne
 const newEmbed = EmbedBuilder.from(embed).setTitle("title")
 const newRow = ActionRowBuilder.from(row).addComponents(component)
 ```
+
+[voice-debug]
+keywords = ["voice-debug", "voice-debugging", "voice"]
+content = """
+To debug your voice connection and player:
+• Use `debug: true` when creating your `VoiceConnection` and `AudioPlayer`
+• Add an event listener to the <VoiceConnection> and the <AudioPlayer>: 
+```js
+// Add one for each class if applicable
+<AudioPlayer | VoiceConnection>
+    .on('debug', console.log)
+    .on('error', console.error)
+```
+• Add an `error` listener to the stream you are passing to the resource:
+```js
+<Stream>.on('error', console.error)
+```
+
+> Note: The `<>` represents classes that need to be adapted to their respective name in your code
 """
