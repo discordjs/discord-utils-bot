@@ -1031,3 +1031,23 @@ const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(select
 const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 ```
 """
+
+[voice-debug]
+keywords = ["voice-debug", "voice-debugging", "voice"]
+content = """
+To debug your voice connection and player:
+• Use `debug: true` when creating your `VoiceConnection` and `AudioPlayer`
+• Add an event listener to the <VoiceConnection> and the <AudioPlayer>: 
+```js
+// Add one for each class if applicable
+<AudioPlayer | VoiceConnection>
+    .on('debug', console.log)
+    .on('error', console.error)
+```
+• Add an `error` listener to the stream you are passing to the resource:
+```js
+<Stream>.on('error', console.error)
+```
+
+> Note: The `<>` represents classes that need to be adapted to their respective name in your code
+"""
