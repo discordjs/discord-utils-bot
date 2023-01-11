@@ -459,6 +459,7 @@ Mass DMing users is not allowed as per developer ToS, considered spam and can ge
 • Mention `@everyone` to inform all your users at once instead
 • Discord Developer Terms of Service: [learn more](<https://discordapp.com/developers/docs/legal>) | [FAQ summary](<https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e>)
 """
+
 [send]
 keywords = ["send", "v13send", "v13-send"]
 content = """
@@ -563,7 +564,7 @@ We are not Discord, just some nerds who develop Discord bots!
 keywords = ["docgen", "doc-gen", "djs-docs"]
 content = """
 How we generate our documentation:
-• (1) Source code is run through the [docgen](<https://github.com/discordjs/docgen>) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
+• (1) Source code is run through the [docgen](<https://github.com/discordjs/discord.js/tree/main/packages/docgen>) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
 • (2) The output JSON file is named by the branch or tag name and committed to the docs branch of its corresponding repository
 • (3) The [website](<https://github.com/discordjs/website>) pulls a list of branches and tags from GitHub, with the repo being specified in a [DataSource](<https://github.com/discordjs/website/tree/main/src/data>)
 • (4) The website downloads the JSON file from the docs branch for the selected tag/branch, then parses and displays it
