@@ -467,6 +467,7 @@ Mass DMing users is not allowed as per developer ToS, considered spam and can ge
 • Mention `@everyone` to inform all your users at once instead
 • Discord Developer Terms of Service: [learn more](<https://discordapp.com/developers/docs/legal>) | [FAQ summary](<https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e>)
 """
+
 [send]
 keywords = ["send", "v13send", "v13-send"]
 content = """
@@ -571,7 +572,7 @@ We are not Discord, just some nerds who develop Discord bots!
 keywords = ["docgen", "doc-gen", "djs-docs"]
 content = """
 How we generate our documentation:
-• (1) Source code is run through the [docgen](<https://github.com/discordjs/docgen>) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
+• (1) Source code is run through the [docgen](<https://github.com/discordjs/discord.js/tree/main/packages/docgen>) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
 • (2) The output JSON file is named by the branch or tag name and committed to the docs branch of its corresponding repository
 • (3) The [website](<https://github.com/discordjs/website>) pulls a list of branches and tags from GitHub, with the repo being specified in a [DataSource](<https://github.com/discordjs/website/tree/main/src/data>)
 • (4) The website downloads the JSON file from the docs branch for the selected tag/branch, then parses and displays it
@@ -1038,4 +1039,34 @@ const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button)
 const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(selectMenu)
 const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 ```
+"""
+
+[builder]
+keywords = ["builder", "components", "embeds", "from"]
+content = """
+Structures from the API cannot be edited directly. To do so, you can create a new structure (a builder) using the `.from()` method
+```js
+const newEmbed = EmbedBuilder.from(embed).setTitle("title")
+const newRow = ActionRowBuilder.from(row).addComponents(component)
+```
+"""
+
+[voice-debug]
+keywords = ["voice-debug", "voice-debugging", "voice"]
+content = """
+To debug your voice connection and player:
+• Use `debug: true` when creating your `VoiceConnection` and `AudioPlayer`
+• Add an event listener to the <VoiceConnection> and the <AudioPlayer>: 
+```js
+// Add one for each class if applicable
+<AudioPlayer | VoiceConnection>
+    .on('debug', console.log)
+    .on('error', console.error)
+```
+• Add an `error` listener to the stream you are passing to the resource:
+```js
+<Stream>.on('error', console.error)
+```
+
+> Note: The `<>` represents classes that need to be adapted to their respective name in your code
 """
