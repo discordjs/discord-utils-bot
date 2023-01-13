@@ -69,10 +69,10 @@ Manage your application state with pm2 so you can restart, stop and delete proce
 """
 
 [node-opus]
-keywords = ["node-opus", "discordjs/opus", "opus-windows", "opus"]
+keywords = ["node-opus", "discordjs/opus", "opus-windows"]
 content = """
     **__Installing @discordjs/opus on Windows__**
-    `@discordjs/opus` requires Node v12.x, Python 3.x and Windows Build Tools
+    `@discordjs/opus` requires Node v12+, Python 3+, and Microsoft Build Tools 2017+
     • Install the offical Node.js installer for your node version
     • Run the installer and find a page titled "Tools for Native Modules"
     • Check the box that says "Automatically install the necessary tools" and should install in a terminal
