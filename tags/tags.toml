@@ -424,7 +424,7 @@ const client = new Discord.Client({ shards: [0, 1] }); // specific shards
 """
 
 [2fa]
-keywords = ["2fa", "2-factor-auth", "two-factor-auth", "2-factor-authentification"]
+keywords = ["2fa", "2-factor-auth", "two-factor-auth", "2-factor-authentication"]
 content = """
 `DiscordAPIError: Two factor is required for this operation`
 Elevated permissions are required to execute this action. You need to activate 2FA on your developer account in order to do this with the bot.

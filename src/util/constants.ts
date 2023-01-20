@@ -24,7 +24,6 @@ export const API_BASE_MDN = 'https://developer.mozilla.org' as const;
 export const API_BASE_NODE = 'https://nodejs.org' as const;
 export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
-export const API_BASE_DISCORD_APLICATIONS = `${API_BASE_DISCORD}/applications` as const;
 export const AUTOCOMPLETE_MAX_ITEMS = 20;
 export const MAX_MESSAGE_LENGTH = 4096;
 export const REMOTE_TAG_URL =
