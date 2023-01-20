@@ -4,3 +4,6 @@
 # build flow
 dist/
 node_modules/
+
+# miscellaneous
+.DS_Store
