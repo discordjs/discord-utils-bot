@@ -21,7 +21,6 @@ export function toSourceString(s: string): SourcesStringUnion {
 		case 'collection':
 		case 'voice':
 		case 'builders':
-		case 'rpc':
 			return s;
 	}
 
