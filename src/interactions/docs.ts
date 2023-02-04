@@ -108,25 +108,5 @@ export const DocsCommand = {
 				},
 			],
 		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
-			name: 'rpc',
-			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord-rpc`,
-			options: [
-				{
-					type: ApplicationCommandOptionType.String,
-					name: 'query',
-					description: QUERY_DESCRIPTION,
-					required: true,
-					autocomplete: true,
-				},
-				{
-					type: ApplicationCommandOptionType.User,
-					name: 'target',
-					description: TARGET_DESCRIPTION,
-					required: false,
-				},
-			],
-		},
 	],
 } as const;
