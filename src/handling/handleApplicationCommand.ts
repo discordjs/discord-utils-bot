@@ -98,22 +98,22 @@ export async function handleApplicationCommand(
 			}
 			case 'mdn': {
 				const castArgs = args as ArgumentsOf<typeof MdnCommand>;
-				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.ephemeral ?? false);
+				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.ephemeral);
 				break;
 			}
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.ephemeral ?? false);
+				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.ephemeral);
 				break;
 			}
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.ephemeral ?? false);
+				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.ephemeral);
 				break;
 			}
 			case 'tagreload': {
 				const castArgs = args as ArgumentsOf<typeof TagReloadCommand>;
-				await reloadTags(res, tagCache, castArgs.remote ?? false);
+				await reloadTags(res, tagCache, castArgs.remote);
 				break;
 			}
 		}

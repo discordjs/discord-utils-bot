@@ -58,8 +58,8 @@ export function resolveOptionsToDocsAutoComplete(
 			if (opt.name === 'target') {
 				target = opt.value;
 			}
-		} else if(opt.type === ApplicationCommandOptionType.Boolean) {
-			if(opt.name === 'ephemeral') {
+		} else if (opt.type === ApplicationCommandOptionType.Boolean) {
+			if (opt.name === 'ephemeral') {
 				ephemeral = opt.value;
 			}
 		}
