@@ -3,7 +3,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 const QUERY_DESCRIPTION = 'Class or Class#method combination to search for' as const;
 const TARGET_DESCRIPTION = 'User to mention' as const;
 const SUBCOMMAND_DESCRIPTION_PREFIX = 'Display docs for' as const;
-
+const EPHEMERAL_DESCRIPTION = 'Whether to reply ephemerally' as const;
 export const DocsCommand = {
 	name: 'docs',
 	description: 'Display discord.js documentation',
@@ -26,6 +26,12 @@ export const DocsCommand = {
 					description: TARGET_DESCRIPTION,
 					required: false,
 				},
+				{
+					type: ApplicationCommandOptionType.Boolean,
+					name: 'ephemeral',
+					description: EPHEMERAL_DESCRIPTION,
+					required: false,
+				},
 			],
 		},
 		{
@@ -44,6 +50,12 @@ export const DocsCommand = {
 					type: ApplicationCommandOptionType.User,
 					name: 'target',
 					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+				{
+					type: ApplicationCommandOptionType.Boolean,
+					name: 'ephemeral',
+					description: EPHEMERAL_DESCRIPTION,
 					required: false,
 				},
 			],
@@ -66,6 +78,12 @@ export const DocsCommand = {
 					description: TARGET_DESCRIPTION,
 					required: false,
 				},
+				{
+					type: ApplicationCommandOptionType.Boolean,
+					name: 'ephemeral',
+					description: EPHEMERAL_DESCRIPTION,
+					required: false,
+				},
 			],
 		},
 		{
@@ -86,6 +104,12 @@ export const DocsCommand = {
 					description: TARGET_DESCRIPTION,
 					required: false,
 				},
+				{
+					type: ApplicationCommandOptionType.Boolean,
+					name: 'ephemeral',
+					description: EPHEMERAL_DESCRIPTION,
+					required: false,
+				},
 			],
 		},
 		{
@@ -104,6 +128,12 @@ export const DocsCommand = {
 					type: ApplicationCommandOptionType.User,
 					name: 'target',
 					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+				{
+					type: ApplicationCommandOptionType.Boolean,
+					name: 'ephemeral',
+					description: EPHEMERAL_DESCRIPTION,
 					required: false,
 				},
 			],

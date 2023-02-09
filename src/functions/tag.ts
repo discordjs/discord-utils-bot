@@ -65,11 +65,11 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 	return res;
 }
 
-export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string): Response {
+export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string, ephemeral?: boolean): Response {
 	query = query.trim().toLowerCase();
 	const content = findTag(tagCache, query, target);
 	if (content) {
-		prepareResponse(res, content, false, target ? [target] : []);
+		prepareResponse(res, content, ephemeral ?? false, target ? [target] : []);
 	} else {
 		prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${query}\`.`);
 	}

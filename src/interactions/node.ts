@@ -36,5 +36,11 @@ export const NodeCommand = {
 			description: 'User to mention',
 			required: false,
 		},
+		{
+			type: ApplicationCommandOptionType.Boolean,
+			name: 'ephemeral',
+			description: 'Whether to reply ephemerally',
+			required: false,
+		},
 	],
 } as const;
