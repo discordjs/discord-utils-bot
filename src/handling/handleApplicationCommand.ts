@@ -23,7 +23,6 @@ import {
 	EMOJI_ID_GUIDE,
 	prepareResponse,
 } from '../util';
-import { InviteCommand } from '../interactions/invite';
 
 type CommandName = 'discorddocs' | 'docs' | 'guide' | 'invite' | 'mdn' | 'node' | 'tag' | 'tagreload';
 
@@ -84,7 +83,6 @@ export async function handleApplicationCommand(
 				break;
 			}
 			case 'invite': {
-				const castArgs = args as ArgumentsOf<typeof InviteCommand>;
 				prepareResponse(
 					res,
 					`${hyperlink(
@@ -94,7 +92,7 @@ export async function handleApplicationCommand(
 								.DISCORD_CLIENT_ID!}&scope=applications.commands`,
 						),
 					)}`,
-					castArgs.ephemeral ?? false,
+					true,
 				);
 				break;
 			}
