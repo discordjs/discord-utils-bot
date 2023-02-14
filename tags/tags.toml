@@ -144,7 +144,7 @@ To make your code more readable (and easier for us to help you with) consider us
 keywords = ["docs", "djsdocs", "thedocs", "documentation"]
 content = """
 discord.js documentation:
-• stable release: [learn more](<https://discord.js.org/#/docs/discord.js/main/general/welcome>)
+• stable release: [learn more](<https://discord.js.org/#/docs/discord.js/stable/general/welcome>)
 • developer release: [learn more](<https://discord.js.org/#/docs/discord.js/main/general/welcome>)
 """
 
