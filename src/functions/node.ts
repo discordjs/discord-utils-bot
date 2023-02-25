@@ -74,6 +74,7 @@ export async function nodeSearch(
 	query: string,
 	version = 'latest-v16.x',
 	target?: string,
+	ephemeral?: boolean,
 ): Promise<Response> {
 	query = query.trim();
 	try {
@@ -122,7 +123,7 @@ export async function nodeSearch(
 		prepareResponse(
 			res,
 			`${target ? `${italic(`Documentation suggestion for ${userMention(target)}:`)}\n` : ''}${parts.join('\n')}`,
-			false,
+			ephemeral ?? false,
 			target ? [target] : [],
 		);
 

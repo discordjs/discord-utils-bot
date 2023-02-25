@@ -49,6 +49,7 @@ export async function handleApplicationCommand(
 					EMOJI_ID_CLYDE_BLURPLE,
 					'discord',
 					castArgs.target,
+					castArgs.hide,
 				);
 				break;
 			}
@@ -60,9 +61,9 @@ export async function handleApplicationCommand(
 					break;
 				}
 
-				const { source, query, target } = resolved;
+				const { source, query, target, ephemeral } = resolved;
 				const doc = await Doc.fetch(source, { force: true });
-				(await djsDocs(res, doc, source, query, target)).end();
+				(await djsDocs(res, doc, source, query, target, ephemeral)).end();
 				break;
 			}
 
@@ -77,6 +78,7 @@ export async function handleApplicationCommand(
 					EMOJI_ID_GUIDE,
 					'guide',
 					castArgs.target,
+					castArgs.hide,
 				);
 				break;
 			}
@@ -96,22 +98,22 @@ export async function handleApplicationCommand(
 			}
 			case 'mdn': {
 				const castArgs = args as ArgumentsOf<typeof MdnCommand>;
-				await mdnSearch(res, castArgs.query, castArgs.target);
+				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.hide);
 				break;
 			}
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target);
+				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.hide);
 				break;
 			}
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				await showTag(res, castArgs.query, tagCache, castArgs.target);
+				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.hide);
 				break;
 			}
 			case 'tagreload': {
 				const castArgs = args as ArgumentsOf<typeof TagReloadCommand>;
-				await reloadTags(res, tagCache, castArgs.remote ?? false);
+				await reloadTags(res, tagCache, castArgs.remote);
 				break;
 			}
 		}

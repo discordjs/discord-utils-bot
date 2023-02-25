@@ -31,6 +31,7 @@ interface DocsAutoCompleteData {
 	source: SourcesStringUnion;
 	query: string;
 	target?: string;
+	ephemeral?: boolean;
 }
 
 export function resolveOptionsToDocsAutoComplete(
@@ -46,6 +47,7 @@ export function resolveOptionsToDocsAutoComplete(
 
 	let query = 'Client';
 	let target;
+	let ephemeral;
 
 	for (const opt of root.options) {
 		if (opt.type === ApplicationCommandOptionType.String) {
@@ -56,6 +58,10 @@ export function resolveOptionsToDocsAutoComplete(
 			if (opt.name === 'target') {
 				target = opt.value;
 			}
+		} else if (opt.type === ApplicationCommandOptionType.Boolean) {
+			if (opt.name === 'hide') {
+				ephemeral = opt.value;
+			}
 		}
 	}
 
@@ -63,6 +69,7 @@ export function resolveOptionsToDocsAutoComplete(
 		query,
 		target,
 		source,
+		ephemeral,
 	};
 }
 

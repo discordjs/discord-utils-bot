@@ -15,6 +15,7 @@ export async function algoliaResponse(
 	emojiId: string,
 	emojiName: string,
 	target?: string,
+	ephemeral?: boolean,
 ): Promise<Response> {
 	const full = `http://${algoliaAppId}.${API_BASE_ALGOLIA}/1/indexes/${algoliaIndex}/${encodeURIComponent(
 		algoliaObjectId,
@@ -37,7 +38,7 @@ export async function algoliaResponse(
 				'read more',
 				hideLinkEmbed(hit.url),
 			)}`,
-			false,
+			ephemeral ?? false,
 			target ? [target] : [],
 		);
 	} catch {

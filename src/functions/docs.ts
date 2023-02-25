@@ -96,12 +96,12 @@ export function fetchDocResult(source: SourcesStringUnion, doc: Doc, query: stri
 	return suggestionString('documentation', `${icon} ${resolveElementString(element, doc)}`, target);
 }
 
-export function djsDocs(res: Response, doc: Doc, source: SourcesStringUnion, query: string, target?: string): Response {
+export function djsDocs(res: Response, doc: Doc, source: SourcesStringUnion, query: string, target?: string, ephemeral?: boolean): Response {
 	query = query.trim();
 
 	const singleResult = fetchDocResult(source, doc, query, target);
 	if (singleResult) {
-		prepareResponse(res, singleResult, false, target ? [target] : [], [], 4);
+		prepareResponse(res, singleResult, ephemeral ?? false, target ? [target] : [], [], 4);
 		return res;
 	}
 

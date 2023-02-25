@@ -9,7 +9,7 @@ function escape(text: string) {
 	return text.replace(/\|\|/g, '|\u200B|').replace(/\*/g, '\\*');
 }
 
-export async function mdnSearch(res: Response, query: string, target?: string): Promise<Response> {
+export async function mdnSearch(res: Response, query: string, target?: string, ephemeral?: boolean): Promise<Response> {
 	query = query.trim();
 	try {
 		const qString = `${API_BASE_MDN}/${query}/index.json`;
@@ -41,7 +41,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 		prepareResponse(
 			res,
 			`${target ? `${italic(`Documentation suggestion for ${userMention(target)}:`)}\n` : ''}${parts.join('\n')}`,
-			false,
+			ephemeral ?? false,
 			target ? [target] : [],
 		);
 
