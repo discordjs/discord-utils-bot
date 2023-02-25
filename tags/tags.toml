@@ -1065,6 +1065,6 @@ To debug your voice connection and player:
 [interaction-buttons-in-webhooks]
 keywords = ["interaction-buttons-in-webhooks", "no-button"]
 content = """
-Only webhooks that created by a bot can send messages with interaction buttons. This is done so that Discord know to which bot to send the interaction.
+Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
 • Creating webhooks with discord.js: [learn more](<https://discordjs.guide/popular-topics/webhooks.html#creating-webhooks-with-discord-js>)
 """
