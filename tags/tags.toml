@@ -1067,3 +1067,10 @@ keywords = ["http-interactions-bot", "no-status"]
 content = """
 HTTP interactions receives through HTTP webhooks instead of the Discord Gateway. Bots that are not connected to the Gateway, but use HTTP interactions are online and have no status. discord.js doesn't support HTTP interactions because it is based on the Gateway; use [discord-interactions](<https://www.npmjs.com/package/discord-interactions>) instead.
 """
+
+[interaction-buttons-in-webhooks]
+keywords = ["interaction-buttons-in-webhooks", "no-button"]
+content = """
+Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
+• Creating webhooks with discord.js: [learn more](<https://discordjs.guide/popular-topics/webhooks.html#creating-webhooks-with-discord-js>)
+"""
