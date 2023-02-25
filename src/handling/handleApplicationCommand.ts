@@ -49,7 +49,7 @@ export async function handleApplicationCommand(
 					EMOJI_ID_CLYDE_BLURPLE,
 					'discord',
 					castArgs.target,
-					castArgs.ephemeral,
+					castArgs.hide,
 				);
 				break;
 			}
@@ -78,7 +78,7 @@ export async function handleApplicationCommand(
 					EMOJI_ID_GUIDE,
 					'guide',
 					castArgs.target,
-					castArgs.ephemeral,
+					castArgs.hide,
 				);
 				break;
 			}
@@ -98,17 +98,17 @@ export async function handleApplicationCommand(
 			}
 			case 'mdn': {
 				const castArgs = args as ArgumentsOf<typeof MdnCommand>;
-				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.ephemeral);
+				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.hide);
 				break;
 			}
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.ephemeral);
+				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.hide);
 				break;
 			}
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.ephemeral);
+				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.hide);
 				break;
 			}
 			case 'tagreload': {
