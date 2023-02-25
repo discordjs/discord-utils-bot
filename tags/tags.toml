@@ -1061,3 +1061,10 @@ To debug your voice connection and player:
 
 > Note: The `<>` represents classes that need to be adapted to their respective name in your code
 """
+
+[interaction-buttons-in-webhooks]
+keywords = ["interaction-buttons-in-webhooks", "no-button"]
+content = """
+Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
+• Creating webhooks with discord.js: [learn more](<https://discordjs.guide/popular-topics/webhooks.html#creating-webhooks-with-discord-js>)
+"""
