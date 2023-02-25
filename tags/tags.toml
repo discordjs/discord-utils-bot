@@ -1062,6 +1062,12 @@ To debug your voice connection and player:
 > Note: The `<>` represents classes that need to be adapted to their respective name in your code
 """
 
+[http-interactions-bot]
+keywords = ["http-interactions-bot", "no-status"]
+content = """
+HTTP-only applications receive interactions through HTTP webhooks instead of the Discord Gateway. Bots that are not connected to the Gateway, but use HTTP interactions appear as online without a status. Discord.js does not support HTTP interactions. Use [discord-interactions](<https://www.npmjs.com/package/discord-interactions>) instead.
+"""
+
 [interaction-buttons-in-webhooks]
 keywords = ["interaction-buttons-in-webhooks", "no-button"]
 content = """
