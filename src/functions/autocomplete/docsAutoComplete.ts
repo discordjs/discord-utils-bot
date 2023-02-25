@@ -59,7 +59,7 @@ export function resolveOptionsToDocsAutoComplete(
 				target = opt.value;
 			}
 		} else if (opt.type === ApplicationCommandOptionType.Boolean) {
-			if (opt.name === 'ephemeral') {
+			if (opt.name === 'hide') {
 				ephemeral = opt.value;
 			}
 		}
