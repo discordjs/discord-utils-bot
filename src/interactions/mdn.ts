@@ -19,8 +19,8 @@ export const MdnCommand = {
 		},
 		{
 			type: ApplicationCommandOptionType.Boolean,
-			name: 'ephemeral',
-			description: 'Whether to reply ephemerally',
+			name: 'hide',
+			description: 'Hide command output',
 			required: false,
 		},
 	],
