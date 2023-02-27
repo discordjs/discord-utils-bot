@@ -10,3 +10,7 @@ services:
       - ./.env
     ports:
       - '49200:49666'
+    volumes:
+      - type: bind
+        source: ./tags
+        target: /usr/slash-utils/tags
