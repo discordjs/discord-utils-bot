@@ -1134,5 +1134,5 @@ Responding to interactions:
 • `#deferReply/Update` respond later *(up to 15 minutes)*
 • `#followUp` post an additional message
 
-*The initial response has to happen within 3s of receiving it!*
+*The initial response has to happen within 3s of receiving the interaction!*
 """
