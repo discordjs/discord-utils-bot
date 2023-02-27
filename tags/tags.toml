@@ -1117,7 +1117,7 @@ discord.js includes multiple sub-packages, installing these separately can mess 
 """
 
 [changelog]
-keywords = ["changelog"]
+keywords = ["changelog", "releases"]
 content = """
 discord.js changelogs:
 • [all releases](<https://github.com/discordjs/discord.js/releases>)
