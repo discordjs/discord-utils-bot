@@ -1085,7 +1085,7 @@ Managers return results from cache, if available, before hitting the API. If you
 [util-functions]
 keywords = ["util-functions", "functions", "utils"]
 content = """
-The `Util` class has been removed. Associated functions are not available as top-level imports:
+The `Util` class has been removed. Associated functions are now available as top-level imports:
 ```diff
 - const { Util } = require('discord.js');
 - Util.escapeMarkdown('`string`');
