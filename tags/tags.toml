@@ -781,7 +781,7 @@ keywords = ["embed-files"]
 content = """
 Files in embeds should be attached via the message option object and referenced in the embed:
 ```js
-const attachment = new AttachmentBuilder('./image.png', 'image1.png');
+const attachment = new AttachmentBuilder('./image.png', { name: 'image1.png' });
 const embed = new EmbedBuilder()
   .setTitle('Attachments')
   .setImage(`attachment://${attachment.name}`);
