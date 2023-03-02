@@ -779,19 +779,17 @@ The timeout option has been removed from the [Message#delete](<https://discord.j
 [embed-files]
 keywords = ["embed-files"]
 content = """
-`MessageEmbed#attachFiles` has been removed. Files should be attached via the message option object instead:
-```diff
-  const attachment = new MessageAttachment('./image.png', 'image1.png');
-  const embed = new MessageEmbed()
--   .attachFiles([attachment])
-    .setTitle('Attachments')
-    .setImage(`attachment://${attachment.name}`);
+Files in embeds should be attached via the message option object and referenced in the embed:
+```js
+const attachment = new AttachmentBuilder('./image.png', { name: 'image1.png' });
+const embed = new EmbedBuilder()
+  .setTitle('Attachments')
+  .setImage(`attachment://${attachment.name}`);
 
-- channel.send(embed)
-+ channel.send({
-+   embeds: [embed],
-+   files: [attachment]
-+ });
+channel.send({
+  embeds: [embed],
+  files: [attachment]
+});
 ```
 """
 
@@ -1073,4 +1071,74 @@ keywords = ["interaction-buttons-in-webhooks", "no-button"]
 content = """
 Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
 • Creating webhooks with discord.js: [learn more](<https://discordjs.guide/popular-topics/webhooks.html#creating-webhooks-with-discord-js>)
+"""
+
+[force-fetch]
+keywords = ["force-fetch", "manager-force"]
+content = """
+Managers return results from cache, if available, before hitting the API. If you want to ensure that data is retrieved directly from the API, you need to specify the `force` option.
+• `structure.fetch()`
+• `manager.fetch(..., { ..., force: true })`
+• For concrete usage, check the documentation for the specific structure or manager.
+"""
+
+[util-functions]
+keywords = ["util-functions", "functions", "utils"]
+content = """
+The `Util` class has been removed. Associated functions are now available as top-level imports:
+```diff
+- const { Util } = require('discord.js');
+- Util.escapeMarkdown('`string`');
++ const { escapeMarkdown } = require('discord.js');
++ escapeMarkdown('`string`');
+```
+"""
+
+[unknown-interaction]
+keywords = ["unknown-interaction", "DiscordAPIError[10062]:-Unknown-interaction", "10062"]
+content = """
+Common causes of `DiscordAPIError[10062]: Unknown interaction`:
+• Initial response took more than 3 seconds ➞ defer the response \\*.
+• Wrong interaction object inside a collector.
+\\* *Note: you cannot defer modal or autocomplete value responses*
+"""
+
+[unknown-webhook]
+keywords = ["unknown-webhook", "DiscordAPIError[10015]:-Unknown-webhook", "10015"]
+content = """
+Common causes of `DiscordAPIError[10015]: Unknown webhook`:
+• Application command followup/edit more than 15 minutes after the first acknowledgement.
+• Using a saved webhook token to initialize a new InteractionWebhook.
+"""
+
+[subpackages]
+keywords = ["subpackages", "included-packages", "obsolete-dependencies"]
+content = """
+discord.js includes multiple sub-packages, installing these separately can mess with internal code:
+```ansi
+\u001B[0;31mnpm \u001B[0;0muninstall discord-api-types @discordjs/rest @discordjs/builders
+\u001B[0;34myarn \u001B[0;0mremove discord-api-types @discordjs/rest @discordjs/builders
+\u001B[0;33mpnpm \u001B[0;0mremove discord-api-types @discordjs/rest @discordjs/builders
+```
+"""
+
+[changelog]
+keywords = ["changelog", "releases"]
+content = """
+discord.js changelogs:
+• [all releases](<https://github.com/discordjs/discord.js/releases>)
+• [latest](<https://github.com/discordjs/discord.js/releases/latest>)
+"""
+
+[interaction-replies]
+keywords = ["interaction-replies"]
+content = """
+Responding to interactions:
+• `#reply` immediately respond with a message
+• `#update` immediately update the original message *(buttons, select menus)*
+• `#showModal` immediately show a modal *(cannot be deferred)*
+• `#deferReply/Update` respond later *(up to 15 minutes)*
+• `#followUp` post an additional message
+
+*The initial response has to happen within 3s of receiving the interaction!*
 """
