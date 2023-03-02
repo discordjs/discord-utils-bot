@@ -1099,10 +1099,16 @@ keywords = ["unknown-interaction", "DiscordAPIError[10062]:-Unknown-interaction"
 content = """
 Common causes of `DiscordAPIError[10062]: Unknown interaction`:
 • Initial response took more than 3 seconds ➞ defer the response \\*.
-• Followup/Edit more than 15 minutes after the first acknowledgement.
 • Wrong interaction object inside a collector.
-• Using a saved webhook token to initialize a new InteractionWebhook.
 \\* *Note: you cannot defer modal or autocomplete value responses*
+"""
+
+[unknown-webhook]
+keywords = ["unknown-webhook", "DiscordAPIError[10015]:-Unknown-webhook", "10015"]
+content = """
+Common causes of `DiscordAPIError[10015]: Unknown webhook`:
+• Application command followup/edit more than 15 minutes after the first acknowledgement.
+• Using a saved webhook token to initialize a new InteractionWebhook.
 """
 
 [subpackages]
