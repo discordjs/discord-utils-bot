@@ -12,7 +12,9 @@ function getVersionFromRaw(raw: string): string {
 	return raw.split('/').pop()!.split('.').slice(0, 3).join('.');
 }
 
-export async function loadLatestNpmVersion(customSources: Map<CustomSourcesString, string>): Promise<void> {
+export async function loadLatestNpmVersion(
+	customSources: Map<CustomSourcesString, string>,
+): Promise<PartialNpmAPIResponse> {
 	const response = await request('https://registry.npmjs.org/discord.js');
 	if (response.statusCode !== 200) {
 		throw new Error('Failed to fetch latest npm version');
@@ -42,6 +44,8 @@ export async function loadLatestNpmVersion(customSources: Map<CustomSourcesStrin
 		'v13-lts': customSources.get('v13-lts'),
 		latest: customSources.get('latest'),
 	});
+
+	return json;
 }
 
 export async function reloadNpmVersions(res: Response, customSources: Map<CustomSourcesString, string>) {
@@ -50,22 +54,22 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 		latest: customSources.get('latest')!,
 	};
 	try {
-		await loadLatestNpmVersion(customSources);
+		const result = await loadLatestNpmVersion(customSources);
 
 		const newVersions = {
 			v13: customSources.get('v13-lts')!,
 			latest: customSources.get('latest')!,
 		};
 
-		prepareResponse(
-			res,
-			`${PREFIX_SUCCESS} **Npm versions updated!**\n\n• v13-lts: \`${getVersionFromRaw(
-				prev.v13,
-			)}\` 🠚 \`${getVersionFromRaw(newVersions.v13)}\`\n• Latest: \`${getVersionFromRaw(
-				prev.latest,
-			)}\` 🠚 \`${getVersionFromRaw(newVersions.latest)}\``,
-			true,
-		);
+		const content = [
+			`${PREFIX_SUCCESS} **Discord.js npm versions updated!**`,
+			'',
+			`• v13-lts: \`${getVersionFromRaw(prev.v13)}\` 🠚 \`${getVersionFromRaw(newVersions.v13)}\``,
+			`• Latest: \`${getVersionFromRaw(prev.latest)}\` 🠚 \`${getVersionFromRaw(newVersions.latest)}\``,
+			`• Dev: \`${result['dist-tags'].dev}\``,
+		];
+
+		prepareResponse(res, content.join('\n'), true);
 	} catch (error) {
 		logger.error(error as Error);
 		prepareErrorResponse(
