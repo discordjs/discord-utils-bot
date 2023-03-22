@@ -1146,5 +1146,5 @@ Responding to interactions:
 [shared-hosting]
 keywords = ["shared-hosting", "replit"]
 content = """
-Replit and many other shared hosting services are highly discouraged; using such hosts means you will share the same IP with many other projects that send a large number of API requests. That means your bot is very likely to have its IP address banned and/or rate limited. [Learn more](https://en.wikipedia.org/wiki/Shared_web_hosting_service)
+Replit and many other shared hosting services are highly discouraged; using such hosts means you will share the same IP with many other projects that send a large number of API requests. That means your bot is very likely to have its IP address banned and/or rate limited. [Learn more](<https://en.wikipedia.org/wiki/Shared_web_hosting_service> "Wikipedia: Shared web hosting service")
 """
