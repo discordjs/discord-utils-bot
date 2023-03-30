@@ -1142,3 +1142,15 @@ Responding to interactions:
 
 *The initial response has to happen within 3s of receiving the interaction!*
 """
+
+[unauthorized-action]
+keywords = ["unauthorized-action", "unauthorized", "DiscordAPIError[20012]", "20012"]
+content = """
+DiscordAPIError[20012]: You are not authorized to perform this action on this application
+
+The client id and token you're trying to use are not associated with same application:
+• Go to the [Discord Developer Portal](<https://discord.com/developers/applications>) and select the application you want to use
+• Scroll down and make sure the id under "application id" matches the one in your code
+• Go to the "bot" tab on the left and click "reset token", then copy and paste the token into your code
+"""
+
