@@ -1153,4 +1153,3 @@ The client id and token you're trying to use are not associated with same applic
 • Scroll down and make sure the id under "application id" matches the one in your code
 • Go to the "bot" tab on the left and click "reset token", then copy and paste the token into your code
 """
-
