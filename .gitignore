@@ -7,5 +7,6 @@ node_modules/
 
 # miscellaneous
 .DS_Store
-.yarn
+.yarn/*
 !.yarn/releases
+!.yarn/patches
