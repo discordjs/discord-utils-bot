@@ -1111,6 +1111,14 @@ Common causes of `DiscordAPIError[10015]: Unknown webhook`:
 • Using a saved webhook token to initialize a new InteractionWebhook.
 """
 
+[unauthorized-action]
+keywords = ["unauthorized-action", "unauthorised-action", "DiscordAPIError[20012]:-You-are-not-authorized", "20012"]
+content="""
+DiscordAPIError[20012]: `You are not authorized to perform this action on this application`:
+• The supplied client id and token do not belong to the same application.
+• Usually encountered when trying to deploy application commands.
+"""
+
 [subpackages]
 keywords = ["subpackages", "included-packages", "obsolete-dependencies"]
 content = """
@@ -1141,4 +1149,12 @@ Responding to interactions:
 • `#followUp` post an additional message
 
 *The initial response has to happen within 3s of receiving the interaction!*
+"""
+
+[shared-hosting]
+keywords = ["shared-hosting", "shared-ip", "shared-ratelimits", "shared-rl"]
+content = """
+Rate limits are determined based on the IP address of the sender.
+• If your bot shares its IP with other bots it will share their rate limits.
+• This is a common caveat with [shared hosting](<https://en.wikipedia.org/wiki/Shared_web_hosting_service>) providers and free plans!
 """
