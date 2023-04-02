@@ -43,7 +43,7 @@ export function findTag(tagCache: Collection<string, Tag>, query: string, target
 	return suggestionString('tag', tag.content, target);
 }
 
-export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {
+export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = true) {
 	const prev = tagCache.size;
 	tagCache.clear();
 	try {
