@@ -67,10 +67,7 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 		prepareResponse(res, content.join('\n'), true);
 	} catch (error) {
 		logger.error(error as Error);
-		prepareErrorResponse(
-			res,
-			`Something went wrong while updating npm-versions, reverting!\n\`${(error as Error).message}\``,
-		);
+		prepareErrorResponse(res, `Something went wrong while updating npm-versions, reverting!`);
 		customSources.set('v13-lts', prev.v13);
 		customSources.set('latest', prev.latest);
 	}
