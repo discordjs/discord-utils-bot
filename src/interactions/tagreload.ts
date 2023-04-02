@@ -11,4 +11,5 @@ export const TagReloadCommand = {
 			required: false,
 		},
 	],
+	default_member_permissions: '0',
 } as const;

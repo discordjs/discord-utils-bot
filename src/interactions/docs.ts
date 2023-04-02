@@ -11,8 +11,34 @@ export const DocsCommand = {
 	options: [
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: 'discord-js',
-			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js`,
+			name: 'discord-js-v13',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@v13-lts`,
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: 'query',
+					description: QUERY_DESCRIPTION,
+					required: true,
+					autocomplete: true,
+				},
+				{
+					type: ApplicationCommandOptionType.User,
+					name: 'target',
+					description: TARGET_DESCRIPTION,
+					required: false,
+				},
+				{
+					type: ApplicationCommandOptionType.Boolean,
+					name: 'hide',
+					description: EPHEMERAL_DESCRIPTION,
+					required: false,
+				},
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: 'discord-js-v14',
+			description: `${SUBCOMMAND_DESCRIPTION_PREFIX} discord.js@latest`,
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
@@ -51,12 +77,6 @@ export const DocsCommand = {
 					type: ApplicationCommandOptionType.User,
 					name: 'target',
 					description: TARGET_DESCRIPTION,
-					required: false,
-				},
-				{
-					type: ApplicationCommandOptionType.Boolean,
-					name: 'hide',
-					description: EPHEMERAL_DESCRIPTION,
 					required: false,
 				},
 			],

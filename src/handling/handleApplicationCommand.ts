@@ -8,6 +8,7 @@ import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docs
 import { djsDocs } from '../functions/docs';
 import { mdnSearch } from '../functions/mdn';
 import { nodeSearch } from '../functions/node';
+import { reloadNpmVersions } from '../functions/npm';
 import { showTag, reloadTags, Tag } from '../functions/tag';
 import { DiscordDocsCommand } from '../interactions/discorddocs';
 import { GuideCommand } from '../interactions/guide';
@@ -15,6 +16,7 @@ import { MdnCommand } from '../interactions/mdn';
 import { NodeCommand } from '../interactions/node';
 import { TagCommand } from '../interactions/tag';
 import { TagReloadCommand } from '../interactions/tagreload';
+import { CustomSourcesString } from '../types/discordjs-docs-parser';
 import {
 	transformInteraction,
 	ArgumentsOf,
@@ -24,12 +26,13 @@ import {
 	prepareResponse,
 } from '../util';
 
-type CommandName = 'discorddocs' | 'docs' | 'guide' | 'invite' | 'mdn' | 'node' | 'tag' | 'tagreload';
+type CommandName = 'discorddocs' | 'docs' | 'guide' | 'invite' | 'mdn' | 'node' | 'tag' | 'tagreload' | 'npmreload';
 
 export async function handleApplicationCommand(
 	res: Response,
 	message: APIApplicationCommandInteraction,
 	tagCache: Collection<string, Tag>,
+	customSources: Map<CustomSourcesString, string>,
 ) {
 	const data = message.data;
 	if (data.type === ApplicationCommandType.ChatInput) {
@@ -43,7 +46,7 @@ export async function handleApplicationCommand(
 				await algoliaResponse(
 					res,
 					process.env.DDOCS_ALGOLIA_APP!,
-					process.env.DDOCS_ALOGLIA_KEY!,
+					process.env.DDOCS_ALGOLIA_KEY!,
 					'discord',
 					castArgs.query,
 					EMOJI_ID_CLYDE_BLURPLE,
@@ -62,6 +65,7 @@ export async function handleApplicationCommand(
 				}
 
 				const { source, query, target, ephemeral } = resolved;
+				// @ts-expect-error: This implements custom sources
 				const doc = await Doc.fetch(source, { force: true });
 				(await djsDocs(res, doc, source, query, target, ephemeral)).end();
 				break;
@@ -113,7 +117,11 @@ export async function handleApplicationCommand(
 			}
 			case 'tagreload': {
 				const castArgs = args as ArgumentsOf<typeof TagReloadCommand>;
-				await reloadTags(res, tagCache, castArgs.remote);
+				await reloadTags(res, tagCache, castArgs.remote ?? false);
+				break;
+			}
+			case 'npmreload': {
+				await reloadNpmVersions(res, customSources);
 				break;
 			}
 		}

@@ -43,16 +43,17 @@ export function findTag(tagCache: Collection<string, Tag>, query: string, target
 	return suggestionString('tag', tag.content, target);
 }
 
-export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = false) {
+export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = true) {
 	const prev = tagCache.size;
 	tagCache.clear();
 	try {
 		await loadTags(tagCache, remote);
 		prepareResponse(
 			res,
-			`${PREFIX_SUCCESS} Tags have fully reloaded ${
-				remote ? '(remote)' : '(local)'
-			}! Tag cache size has changed from ${prev} to ${tagCache.size}.`,
+			[
+				`${PREFIX_SUCCESS} **Tags have fully reloaded ${remote ? '(remote)' : '(local)'}!**`,
+				`Tag cache size has changed from ${prev} to ${tagCache.size}.`,
+			].join('\n'),
 			true,
 		);
 	} catch (error) {
@@ -65,7 +66,13 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 	return res;
 }
 
-export function showTag(res: Response, query: string, tagCache: Collection<string, Tag>, target?: string, ephemeral?: boolean): Response {
+export function showTag(
+	res: Response,
+	query: string,
+	tagCache: Collection<string, Tag>,
+	target?: string,
+	ephemeral?: boolean,
+): Response {
 	query = query.trim().toLowerCase();
 	const content = findTag(tagCache, query, target);
 	if (content) {
