@@ -3,6 +3,6 @@ import { TagReloadCommand } from '../interactions/tagreload';
 import { deploy } from './deploy';
 
 void deploy(
-	[NpmReloadCommand, TagReloadCommand].map((t) => ({ ...t, description: `[alpha] ${t.description}` })),
+	[NpmReloadCommand, TagReloadCommand].map((t) => ({ ...t, description: `🛠️ ${t.description}` })),
 	true,
 );
