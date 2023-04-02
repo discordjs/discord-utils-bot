@@ -46,7 +46,7 @@ export async function handleApplicationCommand(
 				await algoliaResponse(
 					res,
 					process.env.DDOCS_ALGOLIA_APP!,
-					process.env.DDOCS_ALOGLIA_KEY!,
+					process.env.DDOCS_ALGOLIA_KEY!,
 					'discord',
 					castArgs.query,
 					EMOJI_ID_CLYDE_BLURPLE,

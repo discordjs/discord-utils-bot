@@ -48,7 +48,7 @@ export async function handleApplicationCommandAutocomplete(
 				res,
 				args.query,
 				process.env.DDOCS_ALGOLIA_APP!,
-				process.env.DDOCS_ALOGLIA_KEY!,
+				process.env.DDOCS_ALGOLIA_KEY!,
 				'discord',
 			);
 			break;
