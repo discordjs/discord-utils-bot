@@ -58,10 +58,9 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 
 		const content = [
 			`${PREFIX_SUCCESS} **Discord.js npm versions updated!**`,
-			'',
-			`• v13-lts: \`${getVersionFromRaw(prev.v13)}\` 🠚 \`${result['dist-tags']['v13-lts']}\``,
-			`• Latest: \`${getVersionFromRaw(prev.latest)}\` 🠚 \`${result['dist-tags'].latest}\``,
-			`• Dev: \`${result['dist-tags'].dev}\``,
+			`• \`v13-lts\`: \`${getVersionFromRaw(prev.v13)}\` 🠚 \`${result['dist-tags']['v13-lts']}\``,
+			`• \`latest\`: \`${getVersionFromRaw(prev.latest)}\` 🠚 \`${result['dist-tags'].latest}\``,
+			`• \`@dev\`: \`${result['dist-tags'].dev}\``,
 		];
 
 		prepareResponse(res, content.join('\n'), true);
