@@ -21,7 +21,7 @@ const BASE_OPTIONS = [
 		description: 'Hide command output',
 		required: false,
 	},
-]
+] as const;
 
 export const DocsCommand = {
 	name: 'docs',
