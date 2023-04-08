@@ -246,7 +246,7 @@ content = """
 keywords = ["typescript", "ts", "type-script", "typings"]
 content = """
 TypeScript (TS) is a typed superset of JavaScript that compiles to plain JavaScript
-• [website](https://www.typescriptlang.org/index.html) | [GitHub](https://github.com/microsoft/TypeScript) | [book](https://basarat.gitbooks.io/typescript/)
+• [website](https://www.typescriptlang.org/index.html) | [GitHub](https://github.com/microsoft/TypeScript) | [book](https://basarat.gitbook.io/typescript)
 """
 
 [devmode]
@@ -394,7 +394,7 @@ content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
 • PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](http://www.postgresqltutorial.com)
 • MariaDB: [learn more](https://mariadb.org/)
-• MongoDB: [learn more](https://www.mongodb.com) | [tutorials](https://docs.mongodb.com/manual/tutorial)
+• MongoDB: [learn more](https://www.mongodb.com) | [tutorials](https://www.mongodb.com/docs/manual/tutorial/)
 • SQLite: [learn more](https://www.sqlite.org/index.html) | [tutorial](https://www.sqlitetutorial.net/)
 """
 
