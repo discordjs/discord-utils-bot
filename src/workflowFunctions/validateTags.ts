@@ -11,7 +11,6 @@ enum ConflictType {
 	HeaderInKeywords,
 	NonEmptyKeyword,
 	NonEmptyBody,
-	EscapeLinks,
 	NoWhiteSpace,
 	Status404Link,
 }
@@ -45,22 +44,17 @@ export async function validateTags(runResponseValidation: boolean) {
 	for (const [key, value] of Object.entries(data)) {
 		const v = value as unknown as Tag;
 		const codeBlockRegex = /(`{1,3}).+?\1/gs;
-		const markDownLinkRegex = /\[[^\[\]]+?\]\((?<startbracket><)?(?<link>[^\(\)]+?)(?<endbracket>>)?\)/g;
+		const markDownLinkRegex = /\[[^\[\]]+?\]\(<?(?<link>[^\(\)]+?)>?\)/g;
 		const cleanedContent = v.content.replace(codeBlockRegex, '');
 
-		const unescapedLinks: string[] = [];
 		const invalidLinks: string[] = [];
 
-		let result: RegExpExecArray | null;
-		while ((result = markDownLinkRegex.exec(cleanedContent)) !== null) {
-			const groups = result.groups;
+		if (runResponseValidation) {
+			let result: RegExpExecArray | null;
+			while ((result = markDownLinkRegex.exec(cleanedContent)) !== null) {
+				const groups = result.groups;
 
-			if (groups?.link) {
-				if (!(groups.startbracket && groups.endbracket)) {
-					unescapedLinks.push(result[0]);
-				}
-
-				if (runResponseValidation) {
+				if (groups?.link) {
 					process.stdout.write(`\n[ ] Testing link: ${groups.link}`);
 					const res = await request(groups.link, {
 						maxRedirections: 1,
@@ -83,23 +77,15 @@ export async function validateTags(runResponseValidation: boolean) {
 					}
 				}
 			}
-		}
-		if (unescapedLinks.length) {
-			conflicts.push({
-				firstName: key,
-				secondName: '',
-				conflictKeyWords: unescapedLinks,
-				type: ConflictType.EscapeLinks,
-			});
-		}
 
-		if (invalidLinks.length) {
-			conflicts.push({
-				firstName: key,
-				secondName: '',
-				conflictKeyWords: invalidLinks,
-				type: ConflictType.Status404Link,
-			});
+			if (invalidLinks.length) {
+				conflicts.push({
+					firstName: key,
+					secondName: '',
+					conflictKeyWords: invalidLinks,
+					type: ConflictType.Status404Link,
+				});
+			}
 		}
 
 		if (v.hoisted) {
@@ -169,7 +155,6 @@ export async function validateTags(runResponseValidation: boolean) {
 			headerConflicts,
 			emptyKeywordConflicts,
 			emptyBodyConflicts,
-			unescapedMarkdownLinkConflicts,
 			noWhiteSpaceConflicts,
 			status404LinkConflicts,
 		} = conflicts.reduce(
@@ -187,9 +172,6 @@ export async function validateTags(runResponseValidation: boolean) {
 					case ConflictType.NonEmptyBody:
 						a.emptyBodyConflicts.push(c);
 						break;
-					case ConflictType.EscapeLinks:
-						a.unescapedMarkdownLinkConflicts.push(c);
-						break;
 					case ConflictType.NoWhiteSpace:
 						a.noWhiteSpaceConflicts.push(c);
 						break;
@@ -204,7 +186,6 @@ export async function validateTags(runResponseValidation: boolean) {
 				emptyKeywordConflicts: [] as Conflict[],
 				emptyBodyConflicts: [] as Conflict[],
 				noWhiteSpaceConflicts: [] as Conflict[],
-				unescapedMarkdownLinkConflicts: [] as Conflict[],
 				status404LinkConflicts: [] as Conflict[],
 			},
 		);
@@ -243,14 +224,6 @@ export async function validateTags(runResponseValidation: boolean) {
 		if (noWhiteSpaceConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag names and keywords cannot include whitespace (use - instead):\n${noWhiteSpaceConflicts
-					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
-					.join('\n')}`,
-			);
-		}
-
-		if (unescapedMarkdownLinkConflicts.length) {
-			parts.push(
-				`Tag validation error: Masked links need to be escaped as [label](<link>):\n${unescapedMarkdownLinkConflicts
 					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
 					.join('\n')}`,
 			);

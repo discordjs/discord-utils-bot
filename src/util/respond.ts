@@ -19,7 +19,7 @@ export function prepareResponse(
 		JSON.stringify({
 			data: {
 				content,
-				flags: ephemeral ? MessageFlags.Ephemeral : 0,
+				flags: ephemeral ? MessageFlags.Ephemeral | MessageFlags.SuppressEmbeds : MessageFlags.SuppressEmbeds,
 				allowed_mentions: { parse, users },
 				components: [],
 			},
