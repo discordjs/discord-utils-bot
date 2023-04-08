@@ -28,5 +28,5 @@ Put your tag content here!
 - Backslashes have to be escaped! `\\`
 - Code blocks work and newlines are respected
 - The application uses slash command interactions only, you can use emojis from the Discord server (please do not use global emojis from other servers, as we can't control them being deleted at any point)
-- You can use masked link syntax `[discord.js](<https://discord.js.org> 'discord.js website')` (the `<>` wrapping is required to suppress embeds in interaction responses).
+- You can use masked link syntax `[discord.js](https://discord.js.org 'discord.js website')` (links do not need to be escaped because of the message flag set on all responses).
 - The repository includes vscode code-snippets for tags, masked links, "learn more" links, a bullet point and arrow character
