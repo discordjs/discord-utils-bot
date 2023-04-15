@@ -1158,3 +1158,10 @@ Rate limits are determined based on the IP address of the sender.
 • If your bot shares its IP with other bots it will share their rate limits.
 • This is a common caveat with [shared hosting](https://en.wikipedia.org/wiki/Shared_web_hosting_service) providers and free plans!
 """
+
+[application-command-permissions]
+keywords = ["application-command-permissions", "command-permissions", "permissions"]
+content = """
+You can set only default member permissions and DM permission for application commands in your code. To set user, role or channel permissions you need to use the Discord client. Go to Server Settings > Integrations > Choose the bot. There you can see Command Permissions section where you can manage any permissions you need.
+• Slash command permissions: [learn more](https://discordjs.guide/slash-commands/permissions.html#member-permissions)
+"""
