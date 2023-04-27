@@ -359,7 +359,7 @@ Oauth is about giving access to your stuff without sharing your identity
 [masked-links]
 keywords = ["masked-links", "embed-links", "embedlinks", "inline-links"]
 content = """
-You can use markdown syntax to display clickable links in embeds, webhook messages and interaction responses without showing the url:
+You can use markdown syntax to display clickable links without showing the url:
 ```markdown
 "[text](url)"
 '[text](url "optional hovertext")'
