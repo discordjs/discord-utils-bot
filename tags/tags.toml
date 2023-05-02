@@ -444,11 +444,11 @@ keywords = ["matching-parameters", "params", "matching-params", "parameters"]
 content = """
 The order of function parameters must match between definition and function call.
 ```js
-function execute(client, message, args) { ... };
-execute(message, client, args);
+function execute(client, interaction) { ... };
+execute(interaction, client);
 ```
-• mismatch! you pass a Message where the client is expected
-• mismatch! you pass the Client where a Message is expected
+• mismatch! you pass an interaction where the client is expected
+• mismatch! you pass the client where an interaction is expected
 """
 
 [mass-dm]
