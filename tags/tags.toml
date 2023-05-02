@@ -824,8 +824,8 @@ keywords = ["filter"]
 content = """
 The filter for collectors has moved into the options:
 ```diff
-- const collector = message.createReactionCollector(filter, { ...options });
-+ const collector = message.createReactionCollector({ filter, ...options });
+- const collector = message.createReactionCollector(collectorFilter, { ...options });
++ const collector = message.createReactionCollector({ filter: collectorFilter, ...options });
 ```
 """
 
