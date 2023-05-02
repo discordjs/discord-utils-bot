@@ -447,8 +447,8 @@ The order of function parameters must match between definition and function call
 function execute(client, interaction) { ... };
 execute(interaction, client);
 ```
-• mismatch! you pass an Interaction where the Client is expected
-• mismatch! you pass the Client where an Interaction is expected
+• mismatch! you pass an interaction where the client is expected
+• mismatch! you pass the client where an interaction is expected
 """
 
 [mass-dm]
