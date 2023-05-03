@@ -625,7 +625,7 @@ Despite sounding similar there is a distinct difference between users and member
 • [User](https://old.discordjs.dev/#/docs/discord.js/14.10.2/class/User): global Discord user data (global avatar, username, tag, id) 
 • [GuildMember](https://old.discordjs.dev/#/docs/discord.js/14.10.2/class/GuildMember): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
 • Conversion: [User ➞ GuildMember](https://old.discordjs.dev/#/docs/discord.js/14.10.2/class/GuildMemberManager?scrollTo=fetch) | [GuildMember ➞ User](https://old.discordjs.dev/#/docs/discord.js/14.10.2/class/GuildMember?scrollTo=user)
-* Events received in cached guilds will often have both the member and user available, eg. `interaction.user` and `interaction.member`
+\\* *Note: Events received in cached guilds will often have both the member and user available, eg. `interaction.user` and `interaction.member`*
 """
 
 [linter]
