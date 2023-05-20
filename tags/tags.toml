@@ -1115,7 +1115,7 @@ Common causes of `DiscordAPIError[10015]: Unknown webhook`:
 [unauthorized-action]
 keywords = ["unauthorized-action", "unauthorised-action", "DiscordAPIError[20012]:-You-are-not-authorized", "20012"]
 content="""
-DiscordAPIError[20012]: `You are not authorized to perform this action on this application`:
+`DiscordAPIError[20012]: You are not authorized to perform this action on this application`:
 • The supplied client id and token do not belong to the same application.
 • Usually encountered when trying to deploy application commands.
 """
