@@ -108,7 +108,7 @@ export function djsDocs(
 	source: CustomSourcesStringUnion,
 	query: string,
 	target?: string,
-	ephemeral?: boolean
+	ephemeral?: boolean,
 ): Response {
 	query = query.trim();
 

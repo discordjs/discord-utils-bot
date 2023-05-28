@@ -1,5 +1,9 @@
 import { userMention } from '@discordjs/builders';
 
+function stripLinkEscapes(text: string) {
+	return text.replace(/<<(.+?)>>/gi, '$1');
+}
+
 export function suggestionString(suggestionType: string, guaranteed?: string, target?: string): string {
 	const [first, ...rest] = suggestionType;
 	const messageParts = [];
@@ -11,5 +15,5 @@ export function suggestionString(suggestionType: string, guaranteed?: string, ta
 		messageParts.push(guaranteed);
 	}
 
-	return messageParts.join('');
+	return stripLinkEscapes(messageParts.join(''));
 }
