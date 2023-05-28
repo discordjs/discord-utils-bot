@@ -11,6 +11,7 @@ enum ConflictType {
 	NonEmptyKeyword,
 	NonEmptyBody,
 	NoWhiteSpace,
+	NameNotInKeywords,
 	Status404Link,
 }
 
@@ -106,6 +107,15 @@ export async function validateTags(
 			hoisted++;
 		}
 
+		if (v.keywords.includes(key)) {
+			conflicts.push({
+				firstName: key,
+				secondName: '',
+				conflictKeyWords: [],
+				type: ConflictType.NameNotInKeywords,
+			});
+		}
+
 		if (v.keywords.some((k) => !k.replace(/\s+/g, '').length)) {
 			conflicts.push({
 				firstName: key,
@@ -162,9 +172,13 @@ export async function validateTags(
 			emptyBodyConflicts,
 			noWhiteSpaceConflicts,
 			status404LinkConflicts,
+			nameNotInKeywordsConflicts,
 		} = conflicts.reduce(
 			(a, c) => {
 				switch (c.type) {
+					case ConflictType.NameNotInKeywords:
+						a.nameNotInKeywordsConflicts.push(c);
+						break;
 					case ConflictType.UniqueKeywords:
 						a.uniqueConflicts.push(c);
 						break;
@@ -183,6 +197,7 @@ export async function validateTags(
 				return a;
 			},
 			{
+				nameNotInKeywordsConflicts: [] as Conflict[],
 				uniqueConflicts: [] as Conflict[],
 				emptyKeywordConflicts: [] as Conflict[],
 				emptyBodyConflicts: [] as Conflict[],
@@ -190,6 +205,14 @@ export async function validateTags(
 				status404LinkConflicts: [] as Conflict[],
 			},
 		);
+
+		if (nameNotInKeywordsConflicts.length) {
+			parts.push(
+				`Tag validation error: Tag name should not be included in keywords:\n${nameNotInKeywordsConflicts
+					.map((c, i) => red(`${i}. [${c.firstName}]`))
+					.join('\n')}`,
+			);
+		}
 
 		if (uniqueConflicts.length) {
 			parts.push(

@@ -51,7 +51,7 @@ Limits for select menus:
 """
 
 [filesystem]
-keywords = ["fs", "files-system", "filesystem", "writefile", "readfile", "write-file", "read-file"]
+keywords = ["fs", "files-system", "writefile", "readfile", "write-file", "read-file"]
 content = """
 Reading from and writing to files with nodes fs module: [learn more](https://nodejs.org/api/fs.html#fs_file_system)
 """
@@ -995,7 +995,7 @@ Instead of using method-based type guard functions, you can narrow channel types
 """
 
 [member-fetch-timeout]
-keywords = ["member-timeout", "member-fetch-timeout"]
+keywords = ["member-timeout"]
 content = """
 Fetching members can time out on large guilds, as they arrive in chunks through the WebSocket connections.
 • You can specify the `time` option in `FetchMembersOptions` to specify how long you want to wait.
