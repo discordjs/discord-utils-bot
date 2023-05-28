@@ -1,4 +1,4 @@
-FROM node:17-alpine
+FROM node:18-alpine
 LABEL name "slash-utils"
 LABEL version "0.0.0"
 LABEL maintainer "almostSouji <https://github.com/almostSouji>"
