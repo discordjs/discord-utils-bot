@@ -26,17 +26,7 @@ function hex2bin(hex: string) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-const PUBKEY = subtle.importKey(
-	'raw',
-	hex2bin(process.env.DISCORD_PUBKEY!),
-	{
-		name: 'NODE-ED25519',
-		namedCurve: 'NODE-ED25519',
-		public: true,
-	},
-	true,
-	['verify'],
-);
+const PUBKEY = subtle.importKey('raw', hex2bin(process.env.DISCORD_PUBKEY!), 'Ed25519', true, ['verify']);
 const PORT = parseInt(process.env.PORT!, 10);
 
 async function verify(req: Request, res: Response, next: NextHandler) {
@@ -55,12 +45,7 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 	const hexSignature = hex2bin(signature);
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-	const isValid = await subtle.verify(
-		'NODE-ED25519',
-		await PUBKEY,
-		hexSignature,
-		encoder.encode(timestamp + req.rawBody),
-	);
+	const isValid = await subtle.verify('Ed25519', await PUBKEY, hexSignature, encoder.encode(timestamp + req.rawBody));
 
 	if (!isValid) {
 		res.statusCode = 401;
@@ -126,7 +111,8 @@ process.on('uncaughtException', (err, origin) => {
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-	logger.error(`Unhandled Rejection at: ${String(promise)}\nreason: ${String(reason)}`);
+	// eslint-disable-next-line no-console
+	console.log('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
 void start();
