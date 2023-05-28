@@ -34,9 +34,24 @@ function printWarnings(warnings: Warning[], stream: NodeJS.WriteStream) {
 	stream.write('\n');
 }
 
-export async function validateTags(runResponseValidation: boolean) {
+export function parseSingleTag(tag: string) {
+	return TOML.parse(tag, 1.0, '\n');
+}
+
+interface ValidationResult {
+	warnings: Warning[];
+	errors: string[];
+}
+
+export async function validateTags(
+	runResponseValidation: boolean,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	_additionalTagData?: string,
+): Promise<ValidationResult> {
 	const file = readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'));
-	const data = TOML.parse(file, 1.0, '\n');
+
+	const mergedData = _additionalTagData ? `${file.toString()}\n\n${_additionalTagData}` : file;
+	const data = TOML.parse(mergedData, 1.0, '\n');
 	const conflicts: Conflict[] = [];
 	const warnings: Warning[] = [];
 
@@ -149,7 +164,7 @@ export async function validateTags(runResponseValidation: boolean) {
 	}
 
 	if (conflicts.length || hoisted > AUTOCOMPLETE_MAX_ITEMS) {
-		const parts = [];
+		const parts: string[] = [];
 		const {
 			uniqueConflicts,
 			headerConflicts,
@@ -241,21 +256,37 @@ export async function validateTags(runResponseValidation: boolean) {
 			parts.push(`Amount of hoisted tags exceeds ${AUTOCOMPLETE_MAX_ITEMS} (is ${hoisted})`);
 		}
 
-		process.stderr.write('\n');
-		process.stderr.write(parts.join('\n\n'));
-		process.stderr.write('\n');
-
 		if (warnings.length) {
 			printWarnings(warnings, process.stderr);
 		}
 
+		return {
+			warnings: [],
+			errors: parts,
+		};
+	}
+	return {
+		warnings,
+		errors: [],
+	};
+}
+
+export function processResults(result: ValidationResult) {
+	if (result.warnings.length) {
+		printWarnings(result.warnings, process.stderr);
+	}
+	if (result.errors.length) {
+		process.stderr.write('\n');
+		process.stderr.write(result.errors.join('\n\n'));
+		process.stderr.write('\n');
 		process.stderr.write(red('\n\nTag validation failed\n\n'));
 		process.exit(1);
 	}
-
-	if (warnings.length) {
-		printWarnings(warnings, process.stdout);
-	}
-	process.stdout.write(green(`\n\nTag validation passed with ${warnings.length} warnings 🎉\n\n`));
+	process.stdout.write(green(`\n\nTag validation passed with ${result.warnings.length} warnings 🎉\n\n`));
 	process.exit(0);
+}
+
+export async function validateTagsScript(runResponseValidation: boolean) {
+	const result = await validateTags(runResponseValidation);
+	processResults(result);
 }

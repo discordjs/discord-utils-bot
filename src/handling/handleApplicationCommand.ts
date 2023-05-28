@@ -25,8 +25,20 @@ import {
 	EMOJI_ID_GUIDE,
 	prepareResponse,
 } from '../util';
+import { testTag } from '../functions/testtag';
+import { TestTagCommand } from '../interactions/testtag';
 
-type CommandName = 'discorddocs' | 'docs' | 'guide' | 'invite' | 'mdn' | 'node' | 'tag' | 'tagreload' | 'npmreload';
+type CommandName =
+	| 'discorddocs'
+	| 'docs'
+	| 'guide'
+	| 'invite'
+	| 'mdn'
+	| 'node'
+	| 'tag'
+	| 'testtag'
+	| 'tagreload'
+	| 'npmreload';
 
 export async function handleApplicationCommand(
 	res: Response,
@@ -113,6 +125,11 @@ export async function handleApplicationCommand(
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
 				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.hide);
+				break;
+			}
+			case 'testtag': {
+				const castArgs = args as ArgumentsOf<typeof TestTagCommand>;
+				await testTag(res, castArgs.hide ?? true);
 				break;
 			}
 			case 'tagreload': {

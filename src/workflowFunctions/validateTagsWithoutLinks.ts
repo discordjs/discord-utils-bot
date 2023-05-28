@@ -1,3 +1,3 @@
-import { validateTags } from './validateTags';
+import { validateTagsScript } from './validateTags';
 
-void validateTags(false);
+void validateTagsScript(false);

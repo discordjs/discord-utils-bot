@@ -10,6 +10,7 @@ import { handleApplicationCommandAutocomplete } from './handling/handleApplicati
 import { MDNIndexEntry } from './types/mdn';
 import { loadLatestNpmVersion } from './functions/npm';
 import { CustomSourcesString } from './types/discordjs-docs-parser';
+import { handleModalSubmit } from './handling/handleModalSubmit';
 
 // @ts-expect-error
 const { subtle } = webcrypto;
@@ -101,6 +102,9 @@ export async function start() {
 						break;
 					case InteractionType.ApplicationCommandAutocomplete:
 						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache, customSources);
+						break;
+					case InteractionType.ModalSubmit:
+						await handleModalSubmit(res, message);
 						break;
 					default:
 						logger.warn(`Received interaction of type ${message.type}`);
