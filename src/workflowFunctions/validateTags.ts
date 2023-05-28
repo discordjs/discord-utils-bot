@@ -8,7 +8,6 @@ import { request } from 'undici';
 
 enum ConflictType {
 	UniqueKeywords,
-	HeaderInKeywords,
 	NonEmptyKeyword,
 	NonEmptyBody,
 	NoWhiteSpace,
@@ -107,15 +106,6 @@ export async function validateTags(
 			hoisted++;
 		}
 
-		if (!v.keywords.includes(key)) {
-			conflicts.push({
-				firstName: key,
-				secondName: '',
-				conflictKeyWords: [],
-				type: ConflictType.HeaderInKeywords,
-			});
-		}
-
 		if (v.keywords.some((k) => !k.replace(/\s+/g, '').length)) {
 			conflicts.push({
 				firstName: key,
@@ -147,7 +137,8 @@ export async function validateTags(
 		for (const [otherKey, otherValue] of Object.entries(data)) {
 			const oV = otherValue as unknown as Tag;
 			if (key !== otherKey) {
-				const conflictKeyWords = v.keywords.filter((k) => oV.keywords.includes(k));
+				const conflictKeyWords = v.keywords.filter((k) => oV.keywords.includes(k) || otherKey === k);
+
 				if (
 					conflictKeyWords.length &&
 					!conflicts.some((c) => [c.firstName, c.secondName].every((e) => [key, otherKey].includes(e)))
@@ -167,7 +158,6 @@ export async function validateTags(
 		const parts: string[] = [];
 		const {
 			uniqueConflicts,
-			headerConflicts,
 			emptyKeywordConflicts,
 			emptyBodyConflicts,
 			noWhiteSpaceConflicts,
@@ -177,9 +167,6 @@ export async function validateTags(
 				switch (c.type) {
 					case ConflictType.UniqueKeywords:
 						a.uniqueConflicts.push(c);
-						break;
-					case ConflictType.HeaderInKeywords:
-						a.headerConflicts.push(c);
 						break;
 					case ConflictType.NonEmptyKeyword:
 						a.emptyKeywordConflicts.push(c);
@@ -197,7 +184,6 @@ export async function validateTags(
 			},
 			{
 				uniqueConflicts: [] as Conflict[],
-				headerConflicts: [] as Conflict[],
 				emptyKeywordConflicts: [] as Conflict[],
 				emptyBodyConflicts: [] as Conflict[],
 				noWhiteSpaceConflicts: [] as Conflict[],
@@ -207,15 +193,10 @@ export async function validateTags(
 
 		if (uniqueConflicts.length) {
 			parts.push(
-				`Tag validation error: Keywords have to be unique:\n${uniqueConflicts
-					.map((c, i) => red(`${i}. [${c.firstName}] <> [${c.secondName}]: keywords: ${c.conflictKeyWords.join(', ')}`))
-					.join('\n')}`,
-			);
-		}
-		if (headerConflicts.length) {
-			parts.push(
-				`Tag validation error: Tag header must be part of keywords:\n${headerConflicts
-					.map((c, i) => red(`${i}. [${c.firstName}]`))
+				`Tag validation error: Tag names and keywords have to be unique:\n${uniqueConflicts
+					.map((c, i) =>
+						red(`${i}. [${c.firstName}] <> [${c.secondName}]: conflicts: ${c.conflictKeyWords.join(', ')}`),
+					)
 					.join('\n')}`,
 			);
 		}

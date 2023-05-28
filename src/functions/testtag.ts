@@ -4,7 +4,7 @@ import { ComponentType, InteractionResponseType } from 'discord-api-types/v10';
 
 const PLACEHOLDER = [
 	'[tagname]',
-	'keywords = ["tagname", "alias"]',
+	'keywords = ["keyword", "another-keyword"]',
 	'content = """',
 	'Put your tag content here!',
 	'"""',

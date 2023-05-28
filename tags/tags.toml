@@ -1,5 +1,5 @@
 [botception]
-keywords = ["botception"]
+keywords = ["ignore-bots"]
 content = """
 It's good practice to make your bots ignore other bots, including itself. This can be done through a single line of code:
 ```js
@@ -9,27 +9,27 @@ if (<message>.author.bot) return;
 """
 
 [bot-about-me]
-keywords = ["bot-about-me", "bam"]
+keywords = ["bam"]
 content = """
 To add text to the `About Me` section of your bot's profile, head [here](https://discord.com/developers/applications), click on your bot's application, and fill in the `Description`. The description supports full markdown as well (bold, underline, etc.).
 https://imgur.com/zqsWi2d.jpg
 """
 
 [api-docs]
-keywords = ["api-docs", "apidocs"]
+keywords = ["apidocs"]
 content = """
 The official Discord API documentation: [click](https://discord.com/developers/docs/intro)
 """
 
 [api-down]
-keywords = ["api-down", "apisucc", "api-succe", "apidown", "api-status", "apin't", "outage"]
+keywords = ["apisucc", "api-succe", "apidown", "api-status", "apin't", "outage"]
 content = """
 Guilds not online, bot login not resolving, can't send messages?
 Discord might be having API issues! Check the [Discord API status](https://discordstatus.com) for more information.
 """
 
 [markdown]
-keywords = ["markdown", "md"]
+keywords = ["md"]
 content = """
 Using markdown in Discord to spice up your messages:
 • [Discord support article](https://support.discord.com/hc/articles/210298617) 
@@ -37,39 +37,39 @@ Using markdown in Discord to spice up your messages:
 """
 
 [quotes]
-keywords = ["quotes", ">", ">-quote", ">>>-quote"]
+keywords = [">", ">-quote", ">>>-quote"]
 content = """
 • `> text`: single line blockquote
 • `>>> text`: quote until the end of the message 
 """
 
 [selectmenu-limits]
-keywords = ["selectmenu-limits", "sm-limits", "select-menu-limits"]
+keywords = ["sm-limits", "select-menu-limits"]
 content = """
 Limits for select menus:
 • [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menus)
 """
 
 [filesystem]
-keywords = ["filesystem", "fs", "files-system", "filesystem", "writefile", "readfile", "write-file", "read-file"]
+keywords = ["fs", "files-system", "filesystem", "writefile", "readfile", "write-file", "read-file"]
 content = """
 Reading from and writing to files with nodes fs module: [learn more](https://nodejs.org/api/fs.html#fs_file_system)
 """
 
 [message-formatting]
-keywords = ["message-formatting", "messageformatting", "message-formats", "formats", "emoji-format", "timestamp-format", "date-format"]
+keywords = ["messageformatting", "message-formats", "formats", "emoji-format", "timestamp-format", "date-format"]
 content = """
 Message formatting (mentions, timestamps, emoji, etc.): [learn more](https://discord.com/developers/docs/reference#message-formatting)
 """
 
 [pm2]
-keywords = ["pm2", "restart"]
+keywords = ["restart"]
 content = """
 Manage your application state with pm2 so you can restart, stop and delete processes dynamically: [learn more](https://discordjs.guide/improving-dev-environment/pm2.html)
 """
 
 [node-opus]
-keywords = ["node-opus", "discordjs/opus", "opus-windows"]
+keywords = ["discordjs/opus", "opus-windows"]
 content = """
     **__Installing @discordjs/opus on Windows__**
     `@discordjs/opus` requires Node v12+, Python 3+, and Microsoft Build Tools 2017+
@@ -80,7 +80,7 @@ content = """
 """
 
 [hierarchy]
-keywords = ["hierarchy", "roleorder"]
+keywords = ["roleorder"]
 content = """
 • Bots cannot moderate (kick/ban/nickname/...) a target with a higher or equally high highest role or the guild owner.
 • Bots cannot modify (edit/add/remove) roles that are higher or equally high compared to the bot's highest role.
@@ -88,14 +88,14 @@ content = """
 """
 
 [edit-channel]
-keywords = ["edit-channel", "editchannel", "channel-topic", "channel-name", "channel-limits"]
+keywords = ["editchannel", "channel-topic", "channel-name", "channel-limits"]
 content = """
 Channel name and topic changes are limited to roughly 2 times per 10 minutes.
 If your channel changes are not going through, this might be why.
 """
 
 [token-regen]
-keywords = ["token-regen", "token-refresh"]
+keywords = ["token-refresh"]
 content = """
 > All my bot tokens are refreshing non stop!
 Discord does not actually store any tokens in their database. Whenever you visit the page it will generate a new token for you.
@@ -103,14 +103,14 @@ Unless you press the "generate new token" button all of these tokens are valid.
 """
 
 [faq]
-keywords = ["faq", "frequently-asked-questions", "guide-faq", "guidefaq"]
+keywords = ["frequently-asked-questions", "guide-faq", "guidefaq"]
 content = """
 **F**requently **A**sked **Q**uestions: [learn more](https://discordjs.guide/popular-topics/faq)
 """
 hoisted = true
 
 [avatars]
-keywords = ["avatars", "avatar-methods", "avatarmethods"]
+keywords = ["avatar-methods", "avatarmethods"]
 content = """
 • `User#avatarURL()` global custom avatar, if set
 • `User#defaultAvatarURL` default avatar (clyde with colored background)
@@ -119,21 +119,21 @@ content = """
 """
 
 [node-events]
-keywords = ["node-events", "nodeevents", "events"]
+keywords = ["nodeevents", "events"]
 content = """
 • Node event API: [learn more](https://nodejs.org/api/events.html#events_events)
 • Node event loop: [learn more](https://nodejs.org/uk/docs/guides/event-loop-timers-and-nexttick)
 """
 
 [spoiler]
-keywords = ["spoiler", "spoilers", "image-spoilers", "spoodler"]
+keywords = ["spoilers", "image-spoilers", "spoodler"]
 content = """
 • Text: `|| spoiler text ||` ➞ || spoiler text ||
 • Image: add `SPOILER_` to the beginning of the filename
 """
 
 [beautify]
-keywords = ["beautify", "beautifyer", "indents"]
+keywords = ["beautifyer", "indents"]
 content = """
 To make your code more readable (and easier for us to help you with) consider using a beautifier.
 • Quick online tool: [beautifier.io](https://beautifier.io)
@@ -141,7 +141,7 @@ To make your code more readable (and easier for us to help you with) consider us
 """
 
 [docs]
-keywords = ["docs", "djsdocs", "thedocs", "documentation"]
+keywords = ["djsdocs", "thedocs", "documentation"]
 content = """
 discord.js documentation:
 • stable release: [learn more](https://old.discordjs.dev/#/docs/discord.js/14.11.0/general/welcome)
@@ -149,7 +149,7 @@ discord.js documentation:
 """
 
 [snipe]
-keywords = ["snipe", "snipe-command", "snipe-commands", "snipecommands"]
+keywords = ["snipe-command", "snipe-commands", "snipecommands"]
 content = """
 Snipe commands are widely considered a violation of user privacy. If a message is deleted it should stay that way.
 • Logs for moderation purposes are fine
@@ -157,7 +157,7 @@ Snipe commands are widely considered a violation of user privacy. If a message i
 """
 
 [specific-channel]
-keywords = ["specific-channel", "specificchannel", "pick-channel"]
+keywords = ["specificchannel", "pick-channel"]
 content = """
 ```js
 const channel = client.channels.cache.get("222086648706498562");
@@ -168,7 +168,7 @@ const channel = guild.channels.cache.find(channel => channel.name === "general")
 """
 
 [node-version]
-keywords = ["node-version", "nv", "flat", "fields-flat", "catch-{", "update-node", "abortcontroller"]
+keywords = ["nv", "flat", "fields-flat", "catch-{", "update-node", "abortcontroller"]
 content = """
 Please update Node.js to version 16.9.0 or newer!
 • [Download](https://nodejs.org/en/download)
@@ -176,7 +176,7 @@ Please update Node.js to version 16.9.0 or newer!
 """
 
 [bug]
-keywords = ["bug", "🪲", "🐞", "🐛", "bugs", "report-bugs", "djs-bug", "discord.js-bug"]
+keywords = ["🪲", "🐞", "🐛", "bugs", "report-bugs", "djs-bug", "discord.js-bug"]
 content = """
 Found a bug in discord.js?
 • Please discuss your bug in support channels first, if you are unsure about it
@@ -185,7 +185,7 @@ Found a bug in discord.js?
 """
 
 [logit]
-keywords = ["logit", "log-it", "debuglogs", "debug-log", "console.log", "consolelog", "console-log", "clog", "no-error", "noerror", "no-errors", "clg"]
+keywords = ["log-it", "debuglogs", "debug-log", "console.log", "consolelog", "console-log", "clog", "no-error", "noerror", "no-errors", "clg"]
 content = """
 If you aren't getting any errors, try to place `console.log` checkpoints throughout your code to find out where execution stops.
 • Once you do, log relevant values and if-conditions
@@ -194,21 +194,21 @@ If you aren't getting any errors, try to place `console.log` checkpoints through
 hoisted = true
 
 [rpc-bot]
-keywords = ["rpc-bot", "rich-presence-bot", "rpb", "bot-rpc"]
+keywords = ["rich-presence-bot", "rpb", "bot-rpc"]
 content = """
 • "Can I use Rich Presence for my bot?" - No.
 • "Will I ever be able to use Rich Presence for my Bot?" - Ask Discord.
 """
 
 [buildtools]
-keywords = ["buildtools", "windows-build-tools", "build-tools", "node-gyp", "gyp", "wbt"]
+keywords = ["windows-build-tools", "build-tools", "node-gyp", "gyp", "wbt"]
 content = """
 • Run `npm i windows-build-tools --production --vs2015 --add-python-to-PATH --global` as admin.
 • Restart your terminal or machine (if terminal is not sufficient).
 """
 
 [get-undefined]
-keywords = ["get-undefined"]
+keywords = ["get-of-undefined"]
 content = """
 • The provided id is incorrect (copy role ids from context menus, not message mentions)
 • The client does not have this structure cached (try fetching instead)
@@ -216,7 +216,7 @@ content = """
 """
 
 [invalid-interaction]
-keywords = ["invalid-interaction", "invalid-command", "invalid-interaction-command", "inv-command"]
+keywords = ["invalid-command", "invalid-interaction-command", "inv-command"]
 content = """
 `Invalid interaction application command`:
 • After updating a global command Discord prevents you from receiving stale data until the update rolled out
@@ -224,7 +224,7 @@ content = """
 """
 
 [canary]
-keywords = ["canary", "discord-canary"]
+keywords = ["discord-canary"]
 content = """
 The "canary" client is Discord's public test build.
 • Install: [win](https://discord.com/api/downloads/distributions/app/installers/latest?platform=win&channel=canary&arch=x86) | [osx](https://discord.com/api/download/canary?platform=osx) | linux ([deb](https://discord.com/api/download/canary?platform=linux&format=deb) | [tar.gz](https://discord.com/api/download/canary?platform=linux&format=tar.gz)) 
@@ -232,7 +232,7 @@ The "canary" client is Discord's public test build.
 """
 
 [snowflake]
-keywords = ["snowflake", "❄", "discord-snowflake", "discord-id", "snowflakes"]
+keywords = ["❄", "discord-snowflake", "discord-id", "snowflakes"]
 content = """
 • Discord ids follow the snowflake format: [learn more](https://discord.com/developers/docs/reference#snowflakes)
 • Discord ids must be represented as strings as they are larger than `Number.MAX_SAFE_INTEGER`, the largest integer that can be represented in JavaScript
@@ -243,21 +243,21 @@ content = """
 """
 
 [typescript]
-keywords = ["typescript", "ts", "type-script", "typings"]
+keywords = ["ts", "type-script", "typings"]
 content = """
 TypeScript (TS) is a typed superset of JavaScript that compiles to plain JavaScript
 • [website](https://www.typescriptlang.org/index.html) | [GitHub](https://github.com/microsoft/TypeScript) | [book](https://basarat.gitbook.io/typescript)
 """
 
 [devmode]
-keywords = ["devmode", "developermode", "developer-mode", "copy-id", "get-id", "role-id"]
+keywords = ["developermode", "developer-mode", "copy-id", "get-id", "role-id"]
 content = """
 Enable developer mode to gain access to the "copy id" context menu: [learn more](https://support.discord.com/hc/articles/206346498)
 • copy role ids from context menus (guild settings, user profiles) not message mentions!
 """
 
 [token-reset]
-keywords = ["token-reset", "tokenreset", "reset-token", "token-danger", "token-compromised", "regen-token", "token-leak", "tokenleak"]
+keywords = ["tokenreset", "reset-token", "token-danger", "token-compromised", "regen-token", "token-leak", "tokenleak"]
 content = """
 • Visit the [Discord developer application dashboard](https://discord.com/developers/applications) and select the corresponding application
 • Click on "Bot" on the left side
@@ -265,7 +265,7 @@ content = """
 """
 
 [allowed-mentions]
-keywords = ["allowed-mentions", "enable-mentions", "disable-mentions", "allow-mentions"]
+keywords = ["enable-mentions", "disable-mentions", "allow-mentions"]
 content = """
 You can control which entities receive notifications via the `allowedMentions` option. You can:
 • Set a [default on the client](https://old.discordjs.dev/#/docs/discord.js/14.11.0/typedef/ClientOptions)
@@ -277,7 +277,7 @@ You can control which entities receive notifications via the `allowedMentions` o
 """
 
 [escape-emojis]
-keywords = ["escape-emojis", "emoji-id"]
+keywords = ["emoji-id"]
 content = """
 • Custom emojis: `\\:name:` ➞ `<a:name:id>`
 • Twemojis: `\\:name:` ➞ unicode representation
@@ -286,20 +286,20 @@ content = """
 """
 
 [dev-tos]
-keywords = ["dev-tos", "devtos", "developer-terms-of-service"]
+keywords = ["devtos", "developer-terms-of-service"]
 content = """
 • Discord developer ToS: [learn more](https://discord.com/developers/docs/legal)
 • ToS Q&A summary: [learn more](https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e)
 """
 
 [notation]
-keywords = ["notation", "<>", "understanding-notation", "notation-guide"]
+keywords = ["<>", "understanding-notation", "notation-guide"]
 content = """
 Explaining `<Class>` and `Class#method` notation: [learn more](https://discordjs.guide/additional-info/notation.html)
 """
 
 [collection]
-keywords = ["collection", "collections", "collection-methods"]
+keywords = ["collections", "collection-methods"]
 content = """
 discord.js uses [Collection](https://discord.js.org/docs/packages/collection/stable), an extension of the JS native [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
 • Guide: [learn more](https://discordjs.guide/additional-info/collections.html) [🍪](https://gist.github.com/almostSouji/71a33e5f8e84a0960b4ed3a1609915f5)
@@ -307,7 +307,7 @@ discord.js uses [Collection](https://discord.js.org/docs/packages/collection/sta
 hoisted = true
 
 [ffmpeg]
-keywords = ["ffmpeg"]
+keywords = ["ffmpeg-static"]
 content = """
 • npm: `npm install ffmpeg-static`
 • Install: [Download](https://www.ffmpeg.org) | [chocolatey](https://chocolatey.org) | [homebrew](https://brew.sh) | your distributions package manager
@@ -316,7 +316,7 @@ content = """
 """
 
 [joinroles]
-keywords = ["joinroles", "join-roles", "autoroles", "auto-role"]
+keywords = ["join-roles", "autoroles", "auto-role"]
 content = """
 Join roles have often unwanted side effects!
 • Assigning a role bypasses verification and security features on Discord
@@ -326,7 +326,7 @@ The `@everyone` role is much better suited for announcements
 """
 
 [fetch]
-keywords = ["fetch", "undici", "node-fetch", "http-requests", "call-rest-apis"]
+keywords = ["undici", "node-fetch", "http-requests", "call-rest-apis"]
 content = """
 Making HTTP requests (for example to call rest APIs)
 • Node: [learn more](https://www.npmjs.com/package/undici)
@@ -334,7 +334,7 @@ Making HTTP requests (for example to call rest APIs)
 """
 
 [opus]
-keywords = ["opus", "opus-machine"]
+keywords = ["opus-machine"]
 content = """
 `Error: Couldn't find an Opus engine.`
 • Opus: `npm i @discordjs/opus` *(requires build tools: compiler collection and python 2.x)*
@@ -342,7 +342,7 @@ content = """
 """
 
 [undefined]
-keywords = ["undefined", "not-defined", "of-null", "of-undefined", "ofnull", "ofundefined"]
+keywords = ["not-defined", "of-null", "of-undefined", "ofnull", "ofundefined"]
 content = """
 • `ReferenceError: "x" is not defined`: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined)
 • `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cant_access_property)
@@ -350,14 +350,14 @@ content = """
 hoisted = true
 
 [oauth]
-keywords = ["oauth", "oauth2", "oa", "oa2"]
+keywords = ["oauth2", "oa", "oa2"]
 content = """
 Oauth is about giving access to your stuff without sharing your identity
 • [oauth.net](https://oauth.net/code/nodejs) | [Discord API](https://discord.com/developers/docs/topics/oauth2) | [guide example](https://discordjs.guide/oauth2)
 """
 
 [masked-links]
-keywords = ["masked-links", "embed-links", "embedlinks", "inline-links"]
+keywords = ["embed-links", "embedlinks", "inline-links"]
 content = """
 You can use markdown syntax to display clickable links in embeds, webhook messages and interaction responses without showing the url:
 ```markdown
@@ -369,7 +369,7 @@ You can use markdown syntax to display clickable links in embeds, webhook messag
 """
 
 [no-dm]
-keywords = ["no-dm", "cannot-send", "can't-send"]
+keywords = ["cannot-send", "can't-send"]
 content = """
 `DiscordAPIError: Cannot send messages to this user`
 Your bot is trying to send a DM to a user, but failed to do so:
@@ -380,7 +380,7 @@ Note: You cannot check if you can send a DM beforehand but have to handle the [r
 """
 
 [path]
-keywords = ["path", "paths", "relative-path", "absolute-path", "path-types", "file-path", "filepath"]
+keywords = ["paths", "relative-path", "absolute-path", "path-types", "file-path", "filepath"]
 content = """
 • File paths explained in detail: [learn more](https://desktop.arcgis.com/en/arcmap/10.3/tools/supplement/pathnames-explained-absolute-relative-unc-and-url.htm)
 • `.` refers to the current directory
@@ -389,7 +389,7 @@ content = """
 """
 
 [database]
-keywords = ["database", "databases", "postgres", "maria", "mysql", "sql", "nosql", "mongo", "db"]
+keywords = ["databases", "postgres", "maria", "mysql", "sql", "nosql", "mongo", "db"]
 content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
 • PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](http://www.postgresqltutorial.com)
@@ -399,7 +399,7 @@ Persisting data through restarts requires a database. Check out the resources be
 """
 
 [wait]
-keywords = ["wait", "delay", "sleep", "setTimeout"]
+keywords = ["delay", "sleep", "setTimeout"]
 content = """
 ```js
 const { setTimeout } = require('timers/promises');
@@ -412,7 +412,7 @@ setTimeout(5000).then(() => { ... });
 """
 
 [sharding]
-keywords = ["sharding", "sharding-types", "when-to-shard", "wts"]
+keywords = ["sharding-types", "when-to-shard", "wts"]
 content = """
 • Necessary at 2,500 guilds (Discord will not let your bot connect)
 • Internal sharding:
@@ -424,7 +424,7 @@ const client = new Discord.Client({ shards: [0, 1] }); // specific shards
 """
 
 [2fa]
-keywords = ["2fa", "2-factor-auth", "two-factor-auth", "2-factor-authentication"]
+keywords = ["2-factor-auth", "two-factor-auth", "2-factor-authentication"]
 content = """
 `DiscordAPIError: Two factor is required for this operation`
 Elevated permissions are required to execute this action. You need to activate 2FA on your developer account in order to do this with the bot.
@@ -433,14 +433,14 @@ Elevated permissions are required to execute this action. You need to activate 2
 """
 
 [embed-limits]
-keywords = ["embed-limits", "embedlimits"]
+keywords = ["embedlimits"]
 content = """
 Limits for embed structures:
 • [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-limits)
 """
 
 [matching-parameters]
-keywords = ["matching-parameters", "params", "matching-params", "parameters"]
+keywords = ["params", "matching-params", "parameters"]
 content = """
 The order of function parameters must match between definition and function call.
 ```js
@@ -452,7 +452,7 @@ execute(interaction, client);
 """
 
 [mass-dm]
-keywords = ["mass-dm", "massdm", "dmall", "dmal-all"]
+keywords = ["massdm", "dmall", "dmal-all"]
 content = """
 Mass DMing users is not allowed as per developer ToS, considered spam and can get you and your bot banned.
 • Mention `@everyone` to inform all your users at once instead
@@ -460,7 +460,7 @@ Mass DMing users is not allowed as per developer ToS, considered spam and can ge
 """
 
 [send]
-keywords = ["send", "v13send", "v13-send"]
+keywords = ["v13send", "v13-send"]
 content = """
 Sending and editing now takes only a single object parameter!
 ```diff
@@ -474,7 +474,7 @@ Sending and editing now takes only a single object parameter!
 """
 
 [codeblock]
-keywords = ["codeblock", "code-block", "code-blocks", "cb", "code-box", "codebox"]
+keywords = ["code-block", "code-blocks", "cb", "code-box", "codebox"]
 content = """
 **Codeblocks:**
 \\`\\`\\`js
@@ -491,7 +491,7 @@ const Discord = require("discord.js");
 """
 
 [node-modules]
-keywords = ["node-modules", "modules", "nodemodules"]
+keywords = ["modules", "nodemodules"]
 content = """
 Managing modular code made easy:
 • Node.js at scale: [learn more](https://blog.risingstack.com/node-js-at-scale-module-system-commonjs-require/)
@@ -499,7 +499,7 @@ Managing modular code made easy:
 """
 
 [bot-invite]
-keywords = ["bot-invite", "botinvite", "invitelink"]
+keywords = ["botinvite", "invitelink"]
 content = """
 Bot invite structure:
 ```prolog
@@ -512,7 +512,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 """
 
 [version]
-keywords = ["version", "discord.js-version", "provide-version", "find-version"]
+keywords = ["discord.js-version", "provide-version", "find-version"]
 content = """
 Determining your discord.js version:
 • `npm list discord.js`
@@ -520,7 +520,7 @@ Determining your discord.js version:
 """
 
 [token]
-keywords = ["token", "client-secret", "invalid-token", "secret", "incorrect-login-details", "incorrect-login"]
+keywords = ["client-secret", "invalid-token", "secret", "incorrect-login-details", "incorrect-login"]
 content = """
 Finding your bot token:
 • Visit the [application dashboard](https://discord.com/developers/applications/me) and select your application
@@ -530,7 +530,7 @@ Note: Remember to change the token in your application after you reset it
 """
 
 [promise]
-keywords = ["promise", "promises", "async/await", "await", "async", "await-is-only-valid-in-async-function"]
+keywords = ["promises", "async/await", "await", "async", "await-is-only-valid-in-async-function"]
 content = """
 Resources to understand Promise:
 • MDN: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
@@ -540,7 +540,7 @@ Resources to understand Promise:
 hoisted = true
 
 [embed-mentions]
-keywords = ["embed-mentions", "embedmentions"]
+keywords = ["embedmentions"]
 content = """
 Some parts of an embed will **not** properly resolve mentions (leave them in the `<@348607796335607817>` format):
 • Author name
@@ -550,7 +550,7 @@ Some parts of an embed will **not** properly resolve mentions (leave them in the
 """
 
 [not-discord]
-keywords = ["not-discord", "trustandsafety", "contact", "billing", "discord", "tns", "support"]
+keywords = ["trustandsafety", "contact", "billing", "discord", "tns", "support"]
 content = """
 We are not Discord, just some nerds who develop Discord bots!
 • [/report](https://dis.gd/report) reports (harassment/hacking/spam/abuse) and appeals
@@ -560,7 +560,7 @@ We are not Discord, just some nerds who develop Discord bots!
 """
 
 [docgen]
-keywords = ["docgen", "doc-gen", "djs-docs"]
+keywords = ["doc-gen", "djs-docs"]
 content = """
 How we generate our documentation:
 • (1) Source code is run through the [docgen](https://github.com/discordjs/discord.js/tree/main/packages/docgen) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
@@ -570,14 +570,14 @@ How we generate our documentation:
 """
 
 [slash-limits]
-keywords = ["slash-limits", "/limits", "slash-command-limits"]
+keywords = ["/limits", "slash-command-limits"]
 content = """
 Slash command limits:
 • [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#registering-a-command) 
 """
 
 [equals]
-keywords = ["equals", "=", "==", "===", "equaltypes", "equal-types"]
+keywords = ["=", "==", "===", "equaltypes", "equal-types"]
 content = """
 In JavaScript, = is used for assignment, == for loose equality, and === for strict equality checks. 
 ```js
@@ -589,26 +589,26 @@ x = 1; // assigning x to a value
 """
 
 [timers]
-keywords = ["timers", "settimouet", "set-timeout", "interval", "set-interval", "immediate", "set-immediate", "node-timers"]
+keywords = ["settimouet", "set-timeout", "interval", "set-interval", "immediate", "set-immediate", "node-timers"]
 content = """
 Controlling the flow of time in Node.js:
 • Guide on base Node.js timers: [learn more](https://nodejs.org/en/docs/guides/timers-in-node/)
 """
 
 [paste-code]
-keywords = ["paste-code", "bins", "code-bins", "codepaste", "bin"]
+keywords = ["bins", "code-bins", "codepaste", "bin"]
 content = """
 To share long code snippets use a service like [gist](https://gist.github.com), [sourcebin](https://sourceb.in), [starbin](https://starb.in), or similar instead of posting them as large code blocks.
 """
 
 [frameworks]
-keywords = ["frameworks", "framework", "discord.js-framework", "djs-framework", "djs-frameworks"]
+keywords = ["framework", "discord.js-framework", "djs-framework", "djs-frameworks"]
 content = """
 Currently the only actively maintained and updated framework is [Sapphire](https://github.com/sapphiredev/framework)
 """
 
 [inequality]
-keywords = ["inequality", "!==", "!="]
+keywords = ["!==", "!="]
 content = """
 Checking for things to not be equal in JavaScript:
 ```diff
@@ -619,7 +619,7 @@ Checking for things to not be equal in JavaScript:
 """
 
 [member-user]
-keywords = ["member-user", "memberuser", "user-member", "usermember"]
+keywords = ["memberuser", "user-member", "usermember"]
 content = """
 Despite sounding similar there is a distinct difference between users and members in Discord:
 • [User](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User): global Discord user data (global avatar, username, tag, id) 
@@ -629,14 +629,14 @@ Despite sounding similar there is a distinct difference between users and member
 """
 
 [linter]
-keywords = ["linter", "lint", "eslint", "jslint"]
+keywords = ["lint", "eslint", "jslint"]
 content = """
 "Lint, or a linter, is a tool that analyzes source code to flag programming errors, bugs, stylistic errors, and suspicious constructs." 
 • Set up a linter in your development environment: [learn more](https://discordjs.guide/preparations/setting-up-a-linter.html)
 """
 
 [voice-timeout]
-keywords = ["voice-timeout", "voice-connection-timeout", "vct"]
+keywords = ["voice-connection-timeout", "vct"]
 content = """
 `Error [VoiceConnectionTimeout]: Connection not established within 15 seconds.`
 Make sure you have provided the `GuildVoiceStates` intent to the client:
@@ -649,7 +649,7 @@ const client = new Client({
 """
 
 [third-party-libraries]
-keywords = ["third-party-libraries", "discord-buttons", "discordbuttons", "discord-modals", "discordmodals"]
+keywords = ["discord-buttons", "discordbuttons", "discord-modals", "discordmodals"]
 content = """
 **We do not provide any help with third party libraries**
 Buttons and Modals are supported natively.
@@ -658,7 +658,7 @@ Buttons and Modals are supported natively.
 """
 
 [find-id]
-keywords = ["find-id", "find-by-id", "id-find", "fbi"]
+keywords = ["find-by-id", "id-find", "fbi"]
 content = """
 Don't use the find method to query a [Collection](https://discord.js.org/docs/packages/collection/stable) by key (mostly the associated id)
 ```diff
@@ -668,7 +668,7 @@ Don't use the find method to query a [Collection](https://discord.js.org/docs/pa
 """
 
 [no-work]
-keywords = ["no-work", "doesn't-work", "not-working", "no-context", "3w", "dnw"]
+keywords = ["doesn't-work", "not-working", "no-context", "3w", "dnw"]
 content = """
 To help you we need more information:
 • What are you trying to do?
@@ -678,7 +678,7 @@ To help you we need more information:
 hoisted = true
 
 [regex]
-keywords = ["regex", "regexp", "regular-expressions", "regularexpressions"]
+keywords = ["regexp", "regular-expressions", "regularexpressions"]
 content = """
 Regular expressions can make parsing and validating strings effortless:
 • Beginner guide: [learn more](https://blog.bitsrc.io/9c58feb27eb4)
@@ -687,7 +687,7 @@ Regular expressions can make parsing and validating strings effortless:
 """
 
 [debug]
-keywords = ["debug", "debug-listeners"]
+keywords = ["debug-listeners"]
 content = """
 Please add the following code to your code base outside of any other event listeners and provide the full log output relevant to your issue.
 ```js
@@ -701,7 +701,7 @@ client
 hoisted = true
 
 [install]
-keywords = ["install", "discord.js-stable", "install-stable", "djs-stable", "install-djs"]
+keywords = ["discord.js-stable", "install-stable", "djs-stable", "install-djs"]
 content = """
 To install run: `npm install discord.js`
 • Documentation: [learn more](https://old.discordjs.dev/#/docs/discord.js/14.11.0/general/welcome)
@@ -710,13 +710,13 @@ To install run: `npm install discord.js`
 hoisted = true
 
 [token-anatomy]
-keywords = ["token-anatomy", "token-parts", "tokenparts", "tokenformat", "token-breakdown", "tokenbreakdown"]
+keywords = ["token-parts", "tokenparts", "tokenformat", "token-breakdown", "tokenbreakdown"]
 content = """
 https://i.imgur.com/7WdehGn.png
 """
 
 [tag-username]
-keywords = ["tag-username", "tagusername", "tag-username-difference"]
+keywords = ["tagusername", "tag-username-difference"]
 content = """
 [user.username](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=username) ➞ `d.js docs`
 [user.discriminator](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=discriminator) ➞ `1083`
@@ -724,7 +724,7 @@ content = """
 """
 
 [boost-event]
-keywords = ["boost-event", "boost", "boostevent"]
+keywords = ["boost", "boostevent"]
 content = """
 The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/Client?scrollTo=e-guildMemberUpdate) event:
 ```js
@@ -738,7 +738,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
 """
 
 [self-invite]
-keywords = ["self-invite", "selfinvite", "backdoor"]
+keywords = ["selfinvite", "backdoor"]
 content = """
 Discord does not condone bots creating invites without the expressed consent of the guild owner/admins. [source (Discord Developer Policy)](https://discord.com/developers/docs/policy)
 > *You may not use the APIs in any way to [...] process Discord Data in a way that surprises or violates Discord users' expectations.*
@@ -746,28 +746,28 @@ Discord does not condone bots creating invites without the expressed consent of 
 """
 
 [selfbots]
-keywords = ["selfbots", "selfbot", "userbot", "userbots"]
+keywords = ["selfbot", "userbot", "userbots"]
 content = """
 > **Do not use self-bots or user-bots**. Each account must be associated with a human, not a bot. Self-bots put strain on Discord's infrastructure and our ability to run our services. For more information, you can read our Developer Policies [here](https://discord.com/developers/docs/policy).
 • [source](https://discord.com/guidelines)
 """
 
 [parse-emojis]
-keywords = ["parse-emojis", "emoji-regex", "em-regex", "regexemoji", "regex-emoji"]
+keywords = ["emoji-regex", "em-regex", "regexemoji", "regex-emoji"]
 content = """
 • For unicode emojis (twemoji): [learn more](https://github.com/twitter/twemoji/blob/v12.0.1/2/twemoji.js#L228)
 • Custom emojis: `/<?(a)?:?(\\w{2,32}):(\\d{17,19})>?/`  [learn more](https://discordapp.com/developers/docs/reference#message-formatting)
 """
 
 [hacktober]
-keywords = ["hacktober", "doshirt", "wantshirt", "dotree", "🌳", "🎃"]
+keywords = ["doshirt", "wantshirt", "dotree", "🌳", "🎃"]
 content = """
 "Hacktober" contribute to open source, get a shirt or plant a tree: [learn more](https://hacktoberfest.digitalocean.com)
 • low-effort PRs will be invalidated, as will PR-farm repositories
 """
 
 [delete-timeout]
-keywords = ["delete-timeout", "deletetimeout", "delete", "message#delete"]
+keywords = ["deletetimeout", "delete", "message#delete"]
 content = """
 The timeout option has been removed from the [Message#delete](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/Message?scrollTo=delete) method.
 ```diff
@@ -778,7 +778,7 @@ The timeout option has been removed from the [Message#delete](https://old.discor
 """
 
 [embed-files]
-keywords = ["embed-files"]
+keywords = ["embed-attachments", "embed-attach"]
 content = """
 Files in embeds should be attached via the message option object and referenced in the embed:
 ```js
@@ -795,7 +795,7 @@ channel.send({
 """
 
 [api-spam]
-keywords = ["api-spam", "api-abuse", "rainbow-roles", "rainbowroles", "spam"]
+keywords = ["api-abuse", "rainbow-roles", "rainbowroles", "spam"]
 content = """
 Ratelimits are dynamically assigned by the API based on current load and may change at any point.
 • The scale from okay to API-spam is sliding and depends heavily on the action you are taking
@@ -803,7 +803,7 @@ Ratelimits are dynamically assigned by the API based on current load and may cha
 """
 
 [abort]
-keywords = ["abort", "abort-error"]
+keywords = ["abort-error"]
 content = """
 `AbortError: The user aborted a request.`
 A request took longer than the specified [restRequestTimeout](https://old.discordjs.dev/#/docs/discord.js/14.11.0/typedef/ClientOptions) (15 seconds default), and was aborted to not lock up the request handler.
@@ -812,7 +812,7 @@ A request took longer than the specified [restRequestTimeout](https://old.discor
 """
 
 [v14-changes]
-keywords = ["v14-changes", "changes", "v14", "14"]
+keywords = ["changes", "v14", "14"]
 content = """
 Version 14 has released! Please update at your earliest convenience.
 • Update: `npm rm discord.js` `npm i discord.js`
@@ -821,7 +821,7 @@ Version 14 has released! Please update at your earliest convenience.
 hoisted = true
 
 [filter]
-keywords = ["filter"]
+keywords = ["collector-filter"]
 content = """
 The filter for collectors has moved into the options:
 ```diff
@@ -831,7 +831,7 @@ The filter for collectors has moved into the options:
 """
 
 [event-removal]
-keywords = ["event-removal", "messageCreate", "interactionCreate"]
+keywords = ["messageCreate", "interactionCreate"]
 content = """
 The `message` and `interaction` events were renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
 
@@ -844,14 +844,14 @@ The `message` and `interaction` events were renamed to `messageCreate` and `inte
 """
 
 [intents]
-keywords = ["intents", "no-members"]
+keywords = ["no-members"]
 content = """
 • Websocket intents limit events and decrease memory usage: [learn more](https://discordjs.guide/popular-topics/intents.html)
 • See what intents you need [here](https://discord.com/developers/docs/topics/gateway#list-of-intents)
 """
 
 [privileged-intents]
-keywords = ["privileged-intents", "privileged", "p-intents", "whitelisted-intents"]
+keywords = ["privileged", "p-intents", "whitelisted-intents"]
 content = """
 `Error [DisallowedIntents]: Privileged intent provided is not enabled or whitelisted.`
 
@@ -860,7 +860,7 @@ If you are using the `GuildMembers`, `GuildPresences`, or `MessageContent` inten
 """
 
 [collection-array]
-keywords = ["collection-array", "cta", "collection-to-array"]
+keywords = ["cta", "collection-to-array"]
 content = """
 **Converting a Collection to an array**
 You only need to convert it to an array if you need the index of an entry:
@@ -870,7 +870,7 @@ You only need to convert it to an array if you need the index of an entry:
 """
 
 [member-count]
-keywords = ["member-count", "user-count", "uc"]
+keywords = ["user-count", "uc"]
 content = """
 **Getting your bot's member count**
 • `client.users.cache.size` is unreliable because it will only return *cached* users
@@ -881,7 +881,7 @@ client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 """
 
 [add-to-server-button]
-keywords = ["add-to-server-button", "add-to-server", "ats", "profile-invite", "authorization-link", "auth-link"]
+keywords = ["add-to-server", "ats", "profile-invite", "authorization-link", "auth-link"]
 content = """
 **"Add to Server" button**
 • [Developer Portal](https://discord.com/developers/applications) > Your app > OAuth2 (General) > Default Authorization Link
@@ -892,7 +892,7 @@ Image: https://i.imgur.com/taMHw7o.png
 """
 
 [author-footer]
-keywords = ["author-footer", "footer", "author", "setFooter", "setAuthor"]
+keywords = ["footer", "author", "setFooter", "setAuthor"]
 content = """
 `v13` `<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
 ```diff
@@ -905,7 +905,7 @@ content = """
 """
 
 [already-acknowledged]
-keywords = ["already-acknowledged", "interaction-acknowledged", "already-replied"]
+keywords = ["interaction-acknowledged", "already-replied"]
 content = """
 • `DiscordAPIError: Interaction has already been acknowledged`
 • `[InteractionAlreadyReplied]: The reply to this interaction has already been sent or deferred.`
@@ -917,7 +917,7 @@ You have already replied to the interaction.
 """
 
 [djs-sponsor]
-keywords = ["djs-sponsor", "sponsor", "sponsor-role"]
+keywords = ["sponsor", "sponsor-role"]
 content = """
 Like what we do and want to put some money behind it? Donate to discord.js and rep your support with a role on our support server:
 • [OpenCollective](https://opencollective.com/discordjs): Use </claim-sponsor:1046604458991300619> and provide your OC slug *(Settings > Info > URL slug)*
@@ -929,7 +929,7 @@ Like what we do and want to put some money behind it? Donate to discord.js and r
 """
 
 [duplicate-commands]
-keywords = ["duplicate-commands", "double-commands", "guild-command", "global-command"]
+keywords = ["double-commands", "guild-command", "global-command"]
 content = """
 If you have duplicate commands on your server, you registered both global and guild commands. 
 
@@ -939,7 +939,7 @@ You can remove the duplicates by resetting either the global or guild commands
 """
 
 [no-content]
-keywords = ["no-content", "nocontent", "message-content", "messagecontent"]
+keywords = ["nocontent", "message-content", "messagecontent"]
 content = """
 If you aren't getting content, embeds or attachments of a message, make sure you have the `MessageContent` intent [enabled in the Developer Portal](https://discord.com/developers/applications) and provide it to your client:
 
@@ -952,7 +952,7 @@ const client = new Client({
 """
 
 [case]
-keywords = ["case", "snaketopascal", "change-case", "changecase"]
+keywords = ["snaketopascal", "change-case", "changecase"]
 content = """
 `RangeError [BitFieldInvalid]: Invalid bitfield flag or number: undefined`
 • All `SCREAMING_SNAKE_CASE` enums have been changed to `PascalCase`
@@ -961,7 +961,7 @@ content = """
 """
 
 [dm-messages]
-keywords = ["dm-messages", "receive-dms", "not-getting-dms", "not-getting-dms"]
+keywords = ["receive-dms", "not-getting-dms", "not-getting-dms"]
 content = """
 To receive direct message events on `"messageCreate"` with your bot, you will need:
 • The `DirectMessages` [gateway intent](https://discordjs.guide/popular-topics/intents)
@@ -969,7 +969,7 @@ To receive direct message events on `"messageCreate"` with your bot, you will ne
 """
 
 [all-intents]
-keywords = ["all-intents", "98303", "32767", "magic-intents", "magic-all-intent"]
+keywords = ["98303", "32767", "magic-intents", "magic-all-intent"]
 content = """
 We highly recommend only specifying the [intents](https://discordjs.guide/popular-topics/intents) you actually need.
 • Note, that `98303`, `32767` or whatever other magic number you read that represents "all intents", gets outdated as soon as new intents are introduced.
@@ -977,7 +977,7 @@ We highly recommend only specifying the [intents](https://discordjs.guide/popula
 """
 
 [manager-functions]
-keywords = ["manager-functions", "structureless-actions", "no-need-to-fetch", "no-fetch"]
+keywords = ["structureless-actions", "no-need-to-fetch", "no-fetch"]
 content = """
 If you only have the id for a structure you can often avoid fetching it before taking an action on it
 • Managers have functions to directly target the API while providing the id
@@ -985,7 +985,7 @@ If you only have the id for a structure you can often avoid fetching it before t
 """
 
 [channel-typeguards]
-keywords = ["channel-typeguards", "narrow-channel-types", "narrow-types"]
+keywords = ["narrow-channel-types", "narrow-types"]
 content = """
 Instead of using method-based type guard functions, you can narrow channel types with the `.type` property
 ```diff
@@ -995,7 +995,7 @@ Instead of using method-based type guard functions, you can narrow channel types
 """
 
 [member-fetch-timeout]
-keywords = ["member-fetch-timeout", "member-timeout", "member-fetch-timeout"]
+keywords = ["member-timeout", "member-fetch-timeout"]
 content = """
 Fetching members can time out on large guilds, as they arrive in chunks through the WebSocket connections.
 • You can specify the `time` option in `FetchMembersOptions` to specify how long you want to wait.
@@ -1003,14 +1003,14 @@ Fetching members can time out on large guilds, as they arrive in chunks through 
 """
 
 [custom-client-properties]
-keywords = ["custom-client-properties", "custom-properties-on-client"]
+keywords = ["custom-properties-on-client"]
 content = """
 We highly recommend you extend the `Client` structure properly instead of just attaching custom properties like `.commands` to the regular discord.js `Client` instance.
 • Using typescript, you might want to consider [casting](https://www.typescripttutorial.net/typescript-tutorial/type-casting/) or [augmenting the module type](https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules)
 """
 
 [components-per-message]
-keywords = ["components-per-message", "message-component-collector", "collecting-on-message"]
+keywords = ["message-component-collector", "collecting-on-message"]
 content = """
 If you are waiting for button or select menu input from a specific message, don't create the collector on the channel.
 • Channel collectors return component interactions for any component within that channel.
@@ -1021,7 +1021,7 @@ If you are waiting for button or select menu input from a specific message, don'
 """
 
 [generic-actionrow]
-keywords = ["generic-actionrow", "generic-builder", "component-builder", "generic-actionrowbuilder"]
+keywords = ["generic-builder", "component-builder", "generic-actionrowbuilder"]
 content = """
 In TypeScript the `ActionRowBuilder` class has a generic type parameter that specifies the type of component the action row holds:
 ```ts
@@ -1032,7 +1032,7 @@ const row = new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
 """
 
 [builder]
-keywords = ["builder", "components", "embeds", "from"]
+keywords = ["components", "embeds", "from"]
 content = """
 Structures from the API cannot be edited directly. To do so, you can create a new structure (a builder) using the `.from()` method
 ```js
@@ -1042,7 +1042,7 @@ const newRow = ActionRowBuilder.from(row).addComponents(component)
 """
 
 [voice-debug]
-keywords = ["voice-debug", "voice-debugging", "voice"]
+keywords = ["voice-debugging", "voice"]
 content = """
 To debug your voice connection and player:
 • Use `debug: true` when creating your `VoiceConnection` and `AudioPlayer`
@@ -1062,20 +1062,20 @@ To debug your voice connection and player:
 """
 
 [http-interactions-bot]
-keywords = ["http-interactions-bot", "no-status"]
+keywords = ["no-status"]
 content = """
 HTTP-only applications receive interactions through HTTP webhooks instead of the Discord Gateway. Bots that are not connected to the Gateway, but use HTTP interactions appear as online without a status. Discord.js does not support HTTP interactions. Use [discord-interactions](https://www.npmjs.com/package/discord-interactions) instead.
 """
 
 [interaction-buttons-in-webhooks]
-keywords = ["interaction-buttons-in-webhooks", "no-button"]
+keywords = ["no-button"]
 content = """
 Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
 • Creating webhooks with discord.js: [learn more](https://discordjs.guide/popular-topics/webhooks.html#creating-webhooks-with-discord-js)
 """
 
 [force-fetch]
-keywords = ["force-fetch", "manager-force"]
+keywords = ["manager-force"]
 content = """
 Managers return results from cache, if available, before hitting the API. If you want to ensure that data is retrieved directly from the API, you need to specify the `force` option.
 • `structure.fetch()`
@@ -1084,7 +1084,7 @@ Managers return results from cache, if available, before hitting the API. If you
 """
 
 [util-functions]
-keywords = ["util-functions", "functions", "utils"]
+keywords = ["functions", "utils"]
 content = """
 The `Util` class has been removed. Associated functions are now available as top-level imports:
 ```diff
@@ -1096,7 +1096,7 @@ The `Util` class has been removed. Associated functions are now available as top
 """
 
 [unknown-interaction]
-keywords = ["unknown-interaction", "DiscordAPIError[10062]:-Unknown-interaction", "10062"]
+keywords = ["DiscordAPIError[10062]:-Unknown-interaction", "10062"]
 content = """
 Common causes of `DiscordAPIError[10062]: Unknown interaction`:
 • Initial response took more than 3 seconds ➞ defer the response \\*.
@@ -1105,7 +1105,7 @@ Common causes of `DiscordAPIError[10062]: Unknown interaction`:
 """
 
 [unknown-webhook]
-keywords = ["unknown-webhook", "DiscordAPIError[10015]:-Unknown-webhook", "10015"]
+keywords = ["DiscordAPIError[10015]:-Unknown-webhook", "10015"]
 content = """
 Common causes of `DiscordAPIError[10015]: Unknown webhook`:
 • Application command followup/edit more than 15 minutes after the first acknowledgement.
@@ -1113,7 +1113,7 @@ Common causes of `DiscordAPIError[10015]: Unknown webhook`:
 """
 
 [unauthorized-action]
-keywords = ["unauthorized-action", "unauthorised-action", "DiscordAPIError[20012]:-You-are-not-authorized", "20012"]
+keywords = ["unauthorised-action", "DiscordAPIError[20012]:-You-are-not-authorized", "20012"]
 content="""
 `DiscordAPIError[20012]: You are not authorized to perform this action on this application`:
 • The supplied client id and token do not belong to the same application.
@@ -1121,7 +1121,7 @@ content="""
 """
 
 [subpackages]
-keywords = ["subpackages", "included-packages", "obsolete-dependencies"]
+keywords = ["included-packages", "obsolete-dependencies"]
 content = """
 discord.js includes multiple sub-packages, installing these separately can mess with internal code:
 ```ansi
@@ -1132,7 +1132,7 @@ discord.js includes multiple sub-packages, installing these separately can mess 
 """
 
 [changelog]
-keywords = ["changelog", "releases"]
+keywords = ["releases"]
 content = """
 discord.js changelogs:
 • [all releases](https://github.com/discordjs/discord.js/releases)
@@ -1140,7 +1140,7 @@ discord.js changelogs:
 """
 
 [interaction-replies]
-keywords = ["interaction-replies"]
+keywords = ["interaction-response"]
 content = """
 Responding to interactions:
 • `#reply` immediately respond with a message
@@ -1153,7 +1153,7 @@ Responding to interactions:
 """
 
 [shared-hosting]
-keywords = ["shared-hosting", "shared-ip", "shared-ratelimits", "shared-rl"]
+keywords = ["shared-ip", "shared-ratelimits", "shared-rl"]
 content = """
 Rate limits are determined based on the IP address of the sender.
 • If your bot shares its IP with other bots it will share their rate limits.

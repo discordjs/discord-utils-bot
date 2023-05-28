@@ -17,7 +17,7 @@ Add new tags in `./tags/tags.toml` in the following format:
 
 ```toml
 [tag-name]
-keywords = ["tag-name", "alias", "another-alias"]
+keywords = ["keyword", "another-keyword"]
 content = """
 Put your tag content here!
 """
