@@ -72,7 +72,7 @@ const cache: Map<string, NodeDocs> = new Map();
 export async function nodeSearch(
 	res: Response,
 	query: string,
-	version = 'latest-v16.x',
+	version = 'latest-v18.x',
 	target?: string,
 	ephemeral?: boolean,
 ): Promise<Response> {
