@@ -29,5 +29,5 @@ Put your tag content here!
 - Code blocks work and newlines are respected
 - The application uses slash command interactions only, you can use emojis from the Discord server (please do not use global emojis from other servers, as we can't control them being deleted at any point)
 - You can use masked link syntax `[discord.js](https://discord.js.org 'discord.js website')` (links do not need to be escaped because of the message flag set on all responses).
-- The repository includes vscode code-snippets for tags, "learn more" links, a bullet point and arrow character
+- The repository includes vscode code-snippets for tags, "learn more" links, and an arrow character..
 - You can test tags through the bot (for example in our [discord server](https://discord.gg/djs)) with `/testtag`.

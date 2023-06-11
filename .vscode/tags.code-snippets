@@ -15,14 +15,6 @@
 			""
 		]
 	},
-	"bullet": {
-		"prefix": [
-			"bullet",
-			"b"
-		],
-		"description": "Just a bullet point •",
-		"body": "•"
-	},
 	"arrow": {
 		"prefix": [
 			"arrow",
