@@ -6,3 +6,5 @@ export * from './logger';
 export * from './respond';
 export * from './suggestionString';
 export * from './truncate';
+export * from './compactAlgoliaId';
+export * from './dedupe';

@@ -2,7 +2,7 @@ import { hideLinkEmbed, hyperlink, userMention, italic, bold } from '@discordjs/
 import { fetch } from 'undici';
 import { Response } from 'polka';
 import { AlgoliaHit } from '../types/algolia';
-import { API_BASE_ALGOLIA, prepareErrorResponse, prepareResponse, truncate } from '../util';
+import { API_BASE_ALGOLIA, prepareErrorResponse, prepareResponse, truncate, expandAlgoliaObjectId } from '../util';
 import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete';
 import { decode } from 'he';
 
@@ -18,7 +18,7 @@ export async function algoliaResponse(
 	ephemeral?: boolean,
 ): Promise<Response> {
 	const full = `http://${algoliaAppId}.${API_BASE_ALGOLIA}/1/indexes/${algoliaIndex}/${encodeURIComponent(
-		algoliaObjectId,
+		expandAlgoliaObjectId(algoliaObjectId),
 	)}`;
 	try {
 		const hit = (await fetch(full, {

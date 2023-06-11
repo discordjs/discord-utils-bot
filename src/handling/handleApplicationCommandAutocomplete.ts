@@ -10,8 +10,9 @@ import { transformInteraction } from '../util';
 import { Response } from 'polka';
 import { MDNIndexEntry } from '../types/mdn';
 import { CustomSourcesString } from '../types/discordjs-docs-parser';
+import { DTypesCommand } from '../interactions/discordtypes';
 
-type CommandAutoCompleteName = 'docs' | 'tag' | 'mdn' | 'guide' | 'discorddocs';
+type CommandAutoCompleteName = 'docs' | 'tag' | 'mdn' | 'guide' | 'discorddocs' | 'dtypes';
 
 export async function handleApplicationCommandAutocomplete(
 	res: Response,
@@ -55,6 +56,26 @@ export async function handleApplicationCommandAutocomplete(
 		}
 		case 'mdn': {
 			await mdnAutoComplete(res, data.options, mdnIndexCache);
+			break;
+		}
+		case 'dtypes': {
+			const args = transformInteraction<typeof DTypesCommand>(data.options);
+
+			if (args.query === '') {
+				res.end(JSON.stringify({ choices: [] }));
+				return;
+			}
+
+			const prefix = (args.version ?? 'no-filter') === 'no-filter' ? '' : args.version!;
+			const query = `${prefix} ${args.query}`.trim();
+
+			await algoliaAutoComplete(
+				res,
+				query,
+				process.env.DTYPES_ALGOLIA_APP!,
+				process.env.DTYPES_ALGOLIA_KEY!,
+				'discord-api-types',
+			);
 			break;
 		}
 	}
