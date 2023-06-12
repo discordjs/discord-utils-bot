@@ -719,8 +719,8 @@ https://i.imgur.com/7WdehGn.png
 keywords = ["tagusername", "tag-username-difference"]
 content = """
 [user.username](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=username) ➞ `d.js docs`
-[user.discriminator](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=discriminator) ➞ `1083`
-[user.tag](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=tag) ➞ `d.js docs#1083`
+[user.discriminator](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=discriminator) ➞ `0` | `1083` (legacy username system)
+[user.tag](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=tag) (deprecated, use user.username) ➞ `d.js docs` | `d.js docs#1083` (legacy username system)
 """
 
 [boost-event]
