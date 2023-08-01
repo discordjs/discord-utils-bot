@@ -170,7 +170,7 @@ const channel = guild.channels.cache.find(channel => channel.name === "general")
 [node-version]
 keywords = ["nv", "flat", "fields-flat", "catch-{", "update-node", "abortcontroller"]
 content = """
-Please update Node.js to version 16.9.0 or newer!
+Please update Node.js to version 16.11.0 or newer!
 - [Download](https://nodejs.org/en/download)
 - [Linux (nodesource)](https://github.com/nodesource/distributions)
 """
