@@ -667,16 +667,6 @@ Don't use the find method to query a [Collection](https://discord.js.org/docs/pa
 ```
 """
 
-[no-work]
-keywords = ["doesn't-work", "not-working", "no-context", "3w", "dnw"]
-content = """
-To help you we need more information:
-- What are you trying to do?
-- What is your code?
-- What errors and debug logs do you have?
-"""
-hoisted = true
-
 [regex]
 keywords = ["regexp", "regular-expressions", "regularexpressions"]
 content = """
