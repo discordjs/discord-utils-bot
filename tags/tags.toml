@@ -553,6 +553,8 @@ Some parts of an embed will **not** properly resolve mentions (leave them in the
 keywords = ["trustandsafety", "contact", "billing", "discord", "tns", "support"]
 content = """
 We are not Discord, just some nerds who develop Discord bots!
+- [/report](https://dis.gd/report) appeals and age updates
+- [/howtoreport](https://dis.gd/howtoreport) reports (harassment/hacking/spam/abuse)
 - [/support](https://dis.gd/support) anything Discord related
 - [/billing](https://dis.gd/billing) payment/nitro
 - [/feedback](https://dis.gd/feedback) feedback/feature requests
