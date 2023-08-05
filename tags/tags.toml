@@ -719,8 +719,10 @@ https://i.imgur.com/7WdehGn.png
 keywords = ["tagusername", "tag-username-difference"]
 content = """
 [user.username](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=username) ➞ `d.js docs`
-[user.discriminator](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=discriminator) ➞ `1083`
-[user.tag](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=tag) ➞ `d.js docs#1083`
+[user.globalName](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=globalName) global display name (users only)
+[user.discriminator](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=discriminator) ➞ `0` | `1083` \\*
+[user.tag](https://old.discordjs.dev/#/docs/discord.js/14.11.0/class/User?scrollTo=tag) ➞ `d.js docs` | `d.js docs#1083` \\*
+\\* *Note: The discriminator approach is mostly relevant to bots now, which are not currently transferred to the unique username system!*
 """
 
 [boost-event]
@@ -1100,6 +1102,7 @@ content = """
 Common causes of `DiscordAPIError[10062]: Unknown interaction`:
 - Initial response took more than 3 seconds ➞ defer the response \\*.
 - Wrong interaction object inside a collector.
+- Two processes handling the same command (the first consumes the interaction, so it won't be valid for the other instance)
 \\* *Note: you cannot defer modal or autocomplete value responses*
 """
 
@@ -1157,4 +1160,18 @@ content = """
 Rate limits are determined based on the IP address of the sender.
 - If your bot shares its IP with other bots it will share their rate limits.
 - This is a common caveat with [shared hosting](https://en.wikipedia.org/wiki/Shared_web_hosting_service) providers and free plans!
+"""
+
+[application-command-permissions]
+keywords = ["command-permissions", "slash-permissions"]
+content = """
+- You can only set default permissions (member and DM) in your code. [learn more](https://discordjs.guide/slash-commands/permissions.html#member-permissions)
+- Be aware that server staff can overwrite all of the suggested permissions to their liking in Server Settings > Integrations.
+"""
+
+[multi-image-embed]
+keywords = ["images-in-embed", "embed-tiles", "image-tiles"]
+content = """
+To get multiple images to display within one embed, use multiple embeds within the same message that use the same URL `.setURL(x)`/`url: x`.
+*Note that this is meant for discord-side embeds and may break without notice.*
 """
