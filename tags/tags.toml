@@ -1166,3 +1166,15 @@ content = """
 To get multiple images to display within one embed, use multiple embeds within the same message that use the same URL `.setURL(x)`/`url: x`.
 *Note that this is meant for discord-side embeds and may break without notice.*
 """
+
+[limits]
+keywords = ["buttonlimits", "button-limits", "embedlimits", "embed-limits", "modallimits", "modal-limits", "selectmenulimits", "sm-limits", "select-menu-limits", "slashcommandlimits", "/limits", "slash-command-limits", "textinputlimits", "text-input-limits", "character-limits"]
+content = """
+Limits for Discord structures:
+- Slash Command Limits: [Slash Command Structure](<https://discord.com/developers/docs/interactions/application-commands#registering-a-command>)
+- Button Limits: [Button Structure](<https://discord.com/developers/docs/interactions/message-components#button-object>)
+- Select Menu Limits: [Select Menu Structure](<https://discord.com/developers/docs/interactions/message-components#select-menu-object>)
+- Modal Limits: [Modal Structure](<https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal>)
+- Text Input Limits: [Text Input Structure](<https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure>)
+- Embed Limits: [Embed Structure](<https://discord.com/developers/docs/resources/channel#embed-object-embed-limits>)
+"""
