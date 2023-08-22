@@ -43,12 +43,7 @@ content = """
 - `>>> text`: quote until the end of the message 
 """
 
-[selectmenu-limits]
-keywords = ["sm-limits", "select-menu-limits"]
-content = """
-Limits for select menus:
-- [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menus)
-"""
+
 
 [filesystem]
 keywords = ["fs", "files-system", "writefile", "readfile", "write-file", "read-file"]
@@ -432,12 +427,6 @@ Elevated permissions are required to execute this action. You need to activate 2
 - Setting up 2FA: [learn more](https://support.discord.com/hc/articles/219576828)
 """
 
-[embed-limits]
-keywords = ["embedlimits"]
-content = """
-Limits for embed structures:
-- [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-limits)
-"""
 
 [matching-parameters]
 keywords = ["params", "matching-params", "parameters"]
@@ -570,12 +559,7 @@ How we generate our documentation:
 - (4) The website downloads the JSON file from the docs branch for the selected tag/branch, then parses and displays it
 """
 
-[slash-limits]
-keywords = ["/limits", "slash-command-limits"]
-content = """
-Slash command limits:
-- [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#registering-a-command) 
-"""
+
 
 [equals]
 keywords = ["=", "==", "===", "equaltypes", "equal-types"]
