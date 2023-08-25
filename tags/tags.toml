@@ -599,7 +599,7 @@ Controlling the flow of time in Node.js:
 [paste-code]
 keywords = ["bins", "code-bins", "codepaste", "bin"]
 content = """
-To share long code snippets use a service like [gist](https://gist.github.com), [sourcebin](https://sourceb.in), [starbin](https://starb.in), or similar instead of posting them as large code blocks.
+To share long code snippets, use a service like [gist](https://gist.github.com), [sourcebin](https://sourceb.in), [starbin](https://starb.in), or similar instead of posting them as large code blocks or files.
 """
 
 [frameworks]
