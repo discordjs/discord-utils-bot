@@ -799,7 +799,7 @@ Ratelimits are dynamically assigned by the API based on current load and may cha
 keywords = ["abort-error"]
 content = """
 `AbortError: The user aborted a request.`
-A request took longer than the specified [timeout](https://discordjs.dev/docs/packages/rest/2.0.1/RESTOptions:Interface#timeout) (15 seconds default), and was aborted to not lock up the request handler.
+A request took longer than the specified [timeout](https://discordjs.dev/docs/packages/rest/stable/RESTOptions:Interface#timeout) (15 seconds default), and was aborted to not lock up the request handler.
 - This can be caused by an internal server error on Discord's side, or just a slow connection.
 - In case of a slow connection, the `timeout` option in [RESTOptions](https://discordjs.dev/docs/packages/rest/2.0.1/RESTOptions:Interface#timeout) can be increased to prevent future AbortErrors.
 """
