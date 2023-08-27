@@ -8,6 +8,7 @@ import {
 	Routes,
 } from 'discord-api-types/v10';
 import {
+	EMOJI_ID_NO_TEST,
 	VALIDATION_FAIL_COLOR,
 	VALIDATION_SUCCESS_COLOR,
 	VALIDATION_WARNING_COLOR,
@@ -63,7 +64,16 @@ export async function testTagModalSubmit(res: Response, message: APIModalSubmitI
 		const hasErrors = result.errors.length;
 		const hasWarnings = result.warnings.length;
 		const attachments: RawFile[] = [];
-		const buttons: APIButtonComponent[] = [];
+		const buttons: APIButtonComponent[] = [
+			{
+				type: ComponentType.Button,
+				style: ButtonStyle.Secondary,
+				emoji: {
+					id: EMOJI_ID_NO_TEST,
+				},
+				custom_id: 'testtag-clear',
+			},
+		];
 
 		if (hasErrors) {
 			attachments.push({

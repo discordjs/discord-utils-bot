@@ -45,7 +45,6 @@ interface ValidationResult {
 
 export async function validateTags(
 	runResponseValidation: boolean,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	_additionalTagData?: string,
 ): Promise<ValidationResult> {
 	const file = readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'));

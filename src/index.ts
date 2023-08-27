@@ -11,6 +11,7 @@ import { MDNIndexEntry } from './types/mdn';
 import { loadLatestNpmVersion } from './functions/npm';
 import { CustomSourcesString } from './types/discordjs-docs-parser';
 import { handleModalSubmit } from './handling/handleModalSubmit';
+import { handleComponent } from './handling/handleComponents';
 
 // @ts-expect-error
 const { subtle } = webcrypto;
@@ -91,8 +92,11 @@ export async function start() {
 					case InteractionType.ModalSubmit:
 						await handleModalSubmit(res, message);
 						break;
+					case InteractionType.MessageComponent:
+						handleComponent(res, message);
+						break;
+
 					default:
-						logger.warn(`Received interaction of type ${message.type}`);
 						prepareResponse(res, `${PREFIX_TEAPOT} This shouldn't be here...`, true);
 				}
 			} catch (error) {

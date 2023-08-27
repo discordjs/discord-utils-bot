@@ -5,7 +5,7 @@ import { stringify } from 'node:querystring';
 import { decode } from 'html-entities';
 
 import { AlgoliaHit, AlgoliaSearchResult } from '../../types/algolia';
-import { API_BASE_ALGOLIA, AUTOCOMPLETE_MAX_ITEMS, truncate } from '../../util';
+import { API_BASE_ALGOLIA, AUTOCOMPLETE_MAX_ITEMS, prepareHeader, truncate } from '../../util';
 
 export function resolveHitToNamestring(hit: AlgoliaHit) {
 	const { hierarchy } = hit;
@@ -48,7 +48,7 @@ export async function algoliaAutoComplete(
 		},
 	}).then((res) => res.json())) as AlgoliaSearchResult;
 
-	res.setHeader('Content-Type', 'application/json');
+	prepareHeader(res);
 	res.write(
 		JSON.stringify({
 			data: {

@@ -20,6 +20,7 @@ export const EMOJI_ID_EVENT_DEV = '874573950796066816' as const;
 export const EMOJI_ID_ENUM_DEV = '874573867572662273' as const;
 export const EMOJI_ID_INTERFACE_DEV = '874573940956217415' as const;
 export const EMOJI_ID_CLYDE_BLURPLE = '876041770423701554' as const;
+export const EMOJI_ID_NO_TEST = '1145295017464840192' as const;
 export const API_BASE_MDN = 'https://developer.mozilla.org' as const;
 export const API_BASE_NODE = 'https://nodejs.org' as const;
 export const API_BASE_ALGOLIA = 'algolia.net' as const;
