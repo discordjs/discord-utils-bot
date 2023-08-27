@@ -12,6 +12,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import * as TOML from '@ltd/j-toml';
 import { fetch } from 'undici';
+import readdirp from 'readdirp';
 
 export interface Tag {
 	keywords: string[];
@@ -26,11 +27,26 @@ export interface TagSimilarityEntry {
 }
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
-	const file = remote
-		? await fetch(REMOTE_TAG_URL).then((r) => r.text())
-		: readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'), { encoding: 'utf8' });
+	const tagFileNames = readdirp(join(__dirname, '..', '..', 'tags'), {
+		fileFilter: '*.toml',
+	});
 
-	const data = TOML.parse(file, 1.0, '\n');
+	const parts: string[] = [];
+
+	for await (const dir of tagFileNames) {
+		const file = remote
+			? await fetch(`${REMOTE_TAG_URL}/${dir.basename}`)
+					.then((r) => r.text())
+					.catch((_error) => {
+						const error = _error as Error;
+						logger.error(error, error.message);
+						return `# ${error.message}`;
+					})
+			: readFileSync(dir.fullPath, { encoding: 'utf8' });
+		parts.push(file);
+	}
+
+	const data = TOML.parse(parts.join('\n\n'), 1.0, '\n');
 	for (const [key, value] of Object.entries(data)) {
 		tagCache.set(key, value as unknown as Tag);
 	}

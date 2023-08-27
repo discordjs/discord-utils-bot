@@ -27,8 +27,7 @@ export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
 export const AUTOCOMPLETE_MAX_ITEMS = 20;
 export const MAX_MESSAGE_LENGTH = 4096;
-export const REMOTE_TAG_URL =
-	'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags/tags.toml' as const;
+export const REMOTE_TAG_URL = 'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags' as const;
 export const DEFAULT_DOCS_BRANCH = 'stable' as const;
 export const VALIDATION_FAIL_COLOR = 0xed4245 as const;
 export const VALIDATION_SUCCESS_COLOR = 0x3ba55d as const;
