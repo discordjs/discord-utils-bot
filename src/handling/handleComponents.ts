@@ -16,6 +16,7 @@ export function handleComponent(res: Response, message: APIMessageComponentInter
 					break;
 				}
 			}
+			break;
 		}
 		default:
 			logger.info(data, `Received unknown component`);

@@ -10,6 +10,7 @@ export function testTagButton(res: Response) {
 			data: {
 				components: [],
 				embeds: [],
+				attachments: [],
 			},
 		}),
 	);
