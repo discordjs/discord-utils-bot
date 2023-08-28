@@ -654,7 +654,7 @@ keywords = ["discord-buttons", "discordbuttons", "discord-modals", "discordmodal
 content = """
 **We do not provide any help with third party libraries**
 Buttons and Modals are supported natively.
-- Buttons: [learn more](https://discordjs.guide/interactions/buttons.html)
+- Buttons: [learn more](https://discordjs.guide/message-components/buttons.html)
 - Modals: [learn more](https://discordjs.guide/interactions/modals.html)
 """
 
@@ -906,7 +906,7 @@ content = """
 You have already replied to the interaction.
 - Use `<Interaction>.followUp()` to send a new message
 - If you deferred reply it's better to use `<Interaction>.editReply()`
-- Responding to [slash commands](https://discordjs.guide/slash-commands/response-methods.html) / [buttons](https://discordjs.guide/interactions/buttons.html#responding-to-buttons) / [select menus](https://discordjs.guide/interactions/select-menus.html#responding-to-select-menus)
+- Responding to [slash commands](https://discordjs.guide/slash-commands/response-methods.html) / [message components](https://discordjs.guide/message-components/interactions.html#responding-to-component-interactions)
 """
 
 [djs-sponsor]
