@@ -1,4 +1,5 @@
 import { DiscordDocsCommand } from '../interactions/discorddocs';
+import { DTypesCommand } from '../interactions/discordtypes';
 import { DocsCommand } from '../interactions/docs';
 import { GuideCommand } from '../interactions/guide';
 import { InviteCommand } from '../interactions/invite';
@@ -17,4 +18,5 @@ void deploy([
 	NodeCommand,
 	TagCommand,
 	TestTagCommand,
+	DTypesCommand,
 ]);

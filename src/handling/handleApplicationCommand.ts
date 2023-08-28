@@ -24,12 +24,15 @@ import {
 	prepareErrorResponse,
 	EMOJI_ID_GUIDE,
 	prepareResponse,
+	EMOJI_ID_DTYPES,
 } from '../util';
+import { DTypesCommand } from '../interactions/discordtypes';
 import { testTag } from '../functions/testtag';
 import { TestTagCommand } from '../interactions/testtag';
 
 type CommandName =
 	| 'discorddocs'
+	| 'dtypes'
 	| 'docs'
 	| 'guide'
 	| 'invite'
@@ -66,6 +69,24 @@ export async function handleApplicationCommand(
 					castArgs.target,
 					castArgs.hide,
 				);
+				break;
+			}
+
+			case 'dtypes': {
+				const castArgs = args as ArgumentsOf<typeof DTypesCommand>;
+
+				await algoliaResponse(
+					res,
+					process.env.DTYPES_ALGOLIA_APP!,
+					process.env.DTYPES_ALGOLIA_KEY!,
+					'discord-api-types',
+					castArgs.query,
+					EMOJI_ID_DTYPES,
+					'dtypes',
+					castArgs.target,
+					castArgs.hide,
+				);
+
 				break;
 			}
 
