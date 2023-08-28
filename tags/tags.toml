@@ -382,7 +382,7 @@ Note: You cannot check if you can send a DM beforehand but have to handle the [r
 [path]
 keywords = ["paths", "relative-path", "absolute-path", "path-types", "file-path", "filepath"]
 content = """
-- File paths explained in detail: [learn more](https://desktop.arcgis.com/en/arcmap/10.3/tools/supplement/pathnames-explained-absolute-relative-unc-and-url.htm)
+- File paths explained in detail: [learn more](https://www.redhat.com/sysadmin/linux-path-absolute-relative)
 - `.` refers to the current directory
 - `..` refers to the parent directory
 - Node path module: [learn more](https://nodejs.org/api/path.html#path_path_join_paths)
