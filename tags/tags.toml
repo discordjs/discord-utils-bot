@@ -672,9 +672,9 @@ Don't use the find method to query a [Collection](https://discord.js.org/docs/pa
 keywords = ["regexp", "regular-expressions", "regularexpressions"]
 content = """
 Regular expressions can make parsing and validating strings effortless:
-- Beginner guide: [learn more](https://blog.bitsrc.io/9c58feb27eb4)
+- Interactive Guide: [regexone](https://regexone.com) | [regexlearn](https://regexlearn.com/learn/regex101)
+- Advanced Guide: [learn more](https://www.regular-expressions.info/tutorial.html)
 - Online Tester/Debugger: [regex101](https://regex101.com) | [regexr](http://regexr.com) | [debuggex](https://www.debuggex.com)
-- Interactive Guide: [learn more](https://regexone.com)
 """
 
 [debug]
