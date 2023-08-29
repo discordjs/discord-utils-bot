@@ -4,10 +4,12 @@ import type Collection from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';
+import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
+import { djsDocsDev } from '../functions/docsdev.js';
 import { mdnSearch } from '../functions/mdn.js';
 import { nodeSearch } from '../functions/node.js';
 import { reloadNpmVersions } from '../functions/npm.js';
@@ -23,6 +25,7 @@ import type { TagCommand } from '../interactions/tag.js';
 import type { TagReloadCommand } from '../interactions/tagreload.js';
 import type { TestTagCommand } from '../interactions/testtag.js';
 import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
+import type { Database } from '../types/djs-db.js';
 import type { ArgumentsOf } from '../util/argumentsOf.js';
 import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
 import { transformInteraction } from '../util/interactionOptions.js';
@@ -31,6 +34,7 @@ import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 type CommandName =
 	| 'discorddocs'
 	| 'docs'
+	| 'docsdev'
 	| 'dtypes'
 	| 'guide'
 	| 'invite'
@@ -42,6 +46,7 @@ type CommandName =
 	| 'testtag';
 
 export async function handleApplicationCommand(
+	db: Kysely<Database>,
 	res: Response,
 	message: APIApplicationCommandInteraction,
 	tagCache: Collection<string, Tag>,
@@ -54,6 +59,18 @@ export async function handleApplicationCommand(
 		const args = transformInteraction(options);
 
 		switch (name) {
+			case 'docsdev': {
+				const resolved = resolveOptionsToDocsAutoComplete(options);
+				if (!resolved) {
+					prepareErrorResponse(res, `Payload looks different than expected`);
+					break;
+				}
+
+				const { query, target, ephemeral } = resolved;
+				await djsDocsDev(db, res, query, target, ephemeral);
+				break;
+			}
+
 			case 'discorddocs': {
 				const castArgs = args as ArgumentsOf<typeof DiscordDocsCommand>;
 				await algoliaResponse(

@@ -28,6 +28,18 @@ export function prepareResponse(
 	);
 }
 
+export function prepareDeferResponse(response: Response, ephemeral = false) {
+	prepareHeader(response);
+	response.write(
+		JSON.stringify({
+			type: InteractionResponseType.DeferredChannelMessageWithSource,
+			data: {
+				flags: ephemeral ? MessageFlags.Ephemeral | MessageFlags.SuppressEmbeds : MessageFlags.SuppressEmbeds,
+			},
+		}),
+	);
+}
+
 export function prepareErrorResponse(response: Response, content: string): void {
 	prepareResponse(response, `${PREFIX_FAIL} ${content}`, true);
 }
