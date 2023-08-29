@@ -46,8 +46,37 @@ content = """
 [selectmenu-limits]
 keywords = ["sm-limits", "select-menu-limits"]
 content = """
-Limits for select menus:
-- [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menus)
+Learn more about select menu limits at the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menus)
+"""
+
+[slash-limits]
+keywords = ["/limits", "slash-command-limits"]
+content = """
+Learn more about slash command limits at the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#registering-a-command) 
+"""
+
+[embed-limits]
+keywords = ["embedlimits"]
+content = """
+Learn more about embed limits at the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-limits)
+"""
+
+[button-limits]
+keywords = ["buttonlimits"]
+content = """
+Learn more about button limits at the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#button-object)
+"""
+
+[modal-limits]
+keywords = ["modallimits"]
+content = """
+Learn more about modal limits at the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal)
+"""
+
+[textinput-limits]
+keywords = ["textinputlimits"]
+content = """
+Learn more about text input limits at the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure)
 """
 
 [filesystem]
@@ -394,7 +423,7 @@ content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
 - PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](http://www.postgresqltutorial.com)
 - MariaDB: [learn more](https://mariadb.org/)
-- MongoDB: [learn more](https://www.mongodb.com) | [tutorials](https://www.mongodb.com/docs/manual/tutorial/)
+- MongoDB: [learn more](https://www.mongodb.com) | [tutorials ](https://www.mongodb.com/docs/manual/tutorial/)
 - SQLite: [learn more](https://www.sqlite.org/index.html) | [tutorial](https://www.sqlitetutorial.net/)
 """
 
@@ -430,13 +459,6 @@ content = """
 Elevated permissions are required to execute this action. You need to activate 2FA on your developer account in order to do this with the bot.
 - Elevated permissions: [learn more](https://discordjs.guide/popular-topics/permissions-extended.html#elevated-permissions)
 - Setting up 2FA: [learn more](https://support.discord.com/hc/articles/219576828)
-"""
-
-[embed-limits]
-keywords = ["embedlimits"]
-content = """
-Limits for embed structures:
-- [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-limits)
 """
 
 [matching-parameters]
@@ -568,13 +590,6 @@ How we generate our documentation:
 - (2) The output JSON file is named by the branch or tag name and committed to the docs branch of its corresponding repository
 - (3) The [website](https://github.com/discordjs/website) pulls a list of branches and tags from GitHub, with the repo being specified in a [DataSource](https://github.com/discordjs/website/tree/main/src/data)
 - (4) The website downloads the JSON file from the docs branch for the selected tag/branch, then parses and displays it
-"""
-
-[slash-limits]
-keywords = ["/limits", "slash-command-limits"]
-content = """
-Slash command limits:
-- [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#registering-a-command) 
 """
 
 [equals]
