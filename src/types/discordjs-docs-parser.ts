@@ -1,13 +1,13 @@
-export type CustomSourcesString = 'v13-lts' | 'latest';
+export type CustomSourcesString = 'latest' | 'v13-lts';
 export type CustomSourcesStringUnion =
 	| CustomSourcesString
-	| 'stable'
-	| 'main'
-	| 'rpc'
-	| 'collection'
 	| 'builders'
-	| 'voice'
-	| 'rest';
+	| 'collection'
+	| 'main'
+	| 'rest'
+	| 'rpc'
+	| 'stable'
+	| 'voice';
 
 declare module 'discordjs-docs-parser' {
 	export type SourcesStringUnion = CustomSourcesStringUnion;

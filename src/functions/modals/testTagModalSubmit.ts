@@ -1,28 +1,22 @@
-import {
-	APIButtonComponent,
-	APIModalSubmitInteraction,
-	ButtonStyle,
-	ComponentType,
-	InteractionResponseType,
-	MessageFlags,
-	Routes,
-} from 'discord-api-types/v10';
+import { Buffer } from 'node:buffer';
+import process from 'node:process';
+import type { RawFile } from '@discordjs/rest';
+import { REST } from '@discordjs/rest';
+import * as TOML from '@ltd/j-toml';
+import type { APIButtonComponent, APIModalSubmitInteraction } from 'discord-api-types/v10';
+import { ButtonStyle, ComponentType, InteractionResponseType, MessageFlags, Routes } from 'discord-api-types/v10';
+import type { Response } from 'polka';
 import {
 	EMOJI_ID_NO_TEST,
 	VALIDATION_FAIL_COLOR,
-	VALIDATION_SUCCESS_COLOR,
 	VALIDATION_WARNING_COLOR,
-	prepareErrorResponse,
-	prepareHeader,
-} from '../../util';
-import { Response } from 'polka';
-import { validateTags } from '../../workflowFunctions/validateTags';
-import * as TOML from '@ltd/j-toml';
-import { REST, RawFile } from '@discordjs/rest';
-import process from 'node:process';
+	VALIDATION_SUCCESS_COLOR,
+} from '../../util/constants.js';
+import { prepareErrorResponse, prepareHeader } from '../../util/respond.js';
+import { validateTags } from '../../workflowFunctions/validateTags.js';
 
 function parseTagShape(data: string) {
-	const toml = TOML.parse(data, 1.0, '\n');
+	const toml = TOML.parse(data, 1, '\n');
 	const tag: [string, any | null] = Object.entries(toml)[0];
 	const name = tag[0];
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -36,6 +30,7 @@ function parseTagShape(data: string) {
 	if (!tagBody?.keywords?.length || !Array.isArray(tagBody.keywords)) {
 		throw new Error('Unexpected tag shape. Needs keywords (string[]).');
 	}
+
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 	if (!tagBody?.content?.length || typeof tagBody.content !== 'string') {
 		throw new Error('Unexpected tag shape. Needs content (string).');

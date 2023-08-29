@@ -3,35 +3,38 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
-import { fetch } from 'undici';
-import { Response } from 'polka';
+import type { Response } from 'polka';
 import TurndownService from 'turndown';
-import type { NodeDocs } from '../types/NodeDocs';
-import { API_BASE_NODE, EMOJI_ID_NODE, logger, prepareErrorResponse, prepareResponse } from '../util';
+import { fetch } from 'undici';
+import type { NodeDocs } from '../types/NodeDocs.js';
+import { API_BASE_NODE, EMOJI_ID_NODE } from '../util/constants.js';
+import { logger } from '../util/logger.js';
+import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
 const td = new TurndownService({ codeBlockStyle: 'fenced' });
 
-type QueryType = 'class' | 'classMethod' | 'method' | 'event' | 'module' | 'global' | 'misc';
+type QueryType = 'class' | 'classMethod' | 'event' | 'global' | 'method' | 'misc' | 'module';
 
 function urlReplacer(_: string, label: string, link: string, version: string) {
-	link = link.startsWith('http') ? link : `${API_BASE_NODE}/docs/${version}/api/${link}`;
-	return hyperlink(label, hideLinkEmbed(link));
+	const resolvedLink = link.startsWith('http') ? link : `${API_BASE_NODE}/docs/${version}/api/${link}`;
+	return hyperlink(label, hideLinkEmbed(resolvedLink));
 }
 
-function findRec(o: any, name: string, type: QueryType, module?: string, source?: string): any {
-	name = name.toLowerCase();
-	if (!module) module = o?.type === 'module' ? o?.name.toLowerCase() : undefined;
-	if (o?.name?.toLowerCase() === name && o?.type === type) {
-		o.module = module;
-		return o;
+function findRec(object: any, name: string, type: QueryType, module?: string, source?: string): any {
+	const lowerName = name.toLowerCase();
+	const resolvedModule = module ?? object?.type === 'module' ? object?.name.toLowerCase() : undefined;
+	if (object?.name?.toLowerCase() === lowerName && object?.type === type) {
+		object.module = resolvedModule;
+		return object;
 	}
-	o._source = source;
-	for (const prop of Object.keys(o)) {
-		if (Array.isArray(o[prop])) {
-			for (const entry of o[prop]) {
-				const res = findRec(entry, name, type, module, o.source ?? o._source);
+
+	object._source = source;
+	for (const prop of Object.keys(object)) {
+		if (Array.isArray(object[prop])) {
+			for (const entry of object[prop]) {
+				const res = findRec(entry, name, type, module, object.source ?? object._source);
 				if (res) {
-					o.module = module;
+					object.module = module;
 					return res;
 				}
 			}
@@ -42,8 +45,8 @@ function findRec(o: any, name: string, type: QueryType, module?: string, source?
 function formatForURL(text: string): string {
 	return text
 		.toLowerCase()
-		.replace(/ |`|\[|\]|\)/g, '')
-		.replace(/\.|\(|,|:/g, '_');
+		.replaceAll(/[ )[]`]/g, '')
+		.replaceAll(/[(,.:]/g, '_');
 }
 
 function formatAnchor(text: string, module: string): string {
@@ -76,14 +79,14 @@ export async function nodeSearch(
 	target?: string,
 	ephemeral?: boolean,
 ): Promise<Response> {
-	query = query.trim();
+	const trimmedQuery = query.trim();
 	try {
 		const url = `${API_BASE_NODE}/dist/${version}/docs/api/all.json`;
 		let allNodeData = cache.get(url);
 
 		if (!allNodeData) {
 			// Get the data for this version
-			const data = (await fetch(url).then((r) => r.json())) as NodeDocs;
+			const data = (await fetch(url).then(async (response) => response.json())) as NodeDocs;
 
 			// Set it to the map for caching
 			cache.set(url, data);
@@ -92,12 +95,12 @@ export async function nodeSearch(
 			allNodeData = data;
 		}
 
-		const queryParts = query.split(/#|\.|\s/);
+		const queryParts = trimmedQuery.split(/[\s#.]/);
 		const altQuery = queryParts[queryParts.length - 1];
-		const result = findResult(allNodeData, query) ?? findResult(allNodeData, altQuery);
+		const result = findResult(allNodeData, trimmedQuery) ?? findResult(allNodeData, altQuery);
 
 		if (!result) {
-			prepareErrorResponse(res, `No result found for query ${inlineCode(query)}.`);
+			prepareErrorResponse(res, `No result found for query ${inlineCode(trimmedQuery)}.`);
 			return res;
 		}
 
@@ -108,17 +111,17 @@ export async function nodeSearch(
 		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
 		const fullURL = `${moduleURL}.html${anchor}`;
 		const parts = [
-			`<:node:${EMOJI_ID_NODE}> \ ${underscore(bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))))}`,
+			`<:node:${EMOJI_ID_NODE}>  ${underscore(bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))))}`,
 		];
 
 		const intro = td.turndown(result.desc ?? '').split('\n\n')[0];
-		const linkReplaceRegex = /\[(.+?)\]\((.+?)\)/g;
+		const linkReplaceRegex = /\[(.+?)]\((.+?)\)/g;
 		const boldCodeBlockRegex = /`\*\*(.*)\*\*`/g;
 
 		parts.push(
 			intro
-				.replace(linkReplaceRegex, (_, label, link) => urlReplacer(_, label, link, version))
-				.replace(boldCodeBlockRegex, bold(inlineCode('$1'))),
+				.replaceAll(linkReplaceRegex, (_, label, link) => urlReplacer(_, label, link, version))
+				.replaceAll(boldCodeBlockRegex, bold(inlineCode('$1'))),
 		);
 		prepareResponse(
 			res,

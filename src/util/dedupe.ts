@@ -1,4 +1,4 @@
-import { AlgoliaHit } from '../types/algolia';
+import type { AlgoliaHit } from '../types/algolia.js';
 
 export function dedupeAlgoliaHits(): (hit: AlgoliaHit) => boolean {
 	const dedupe = new Set<string>();

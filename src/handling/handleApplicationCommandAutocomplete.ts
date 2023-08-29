@@ -1,18 +1,19 @@
-import Collection from '@discordjs/collection';
-import { APIApplicationCommandAutocompleteInteraction } from 'discord-api-types/v10';
-import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete';
-import { djsDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete';
-import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete';
-import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete';
-import { Tag } from '../functions/tag';
-import { GuideCommand } from '../interactions/guide';
-import { transformInteraction } from '../util';
-import { Response } from 'polka';
-import { MDNIndexEntry } from '../types/mdn';
-import { CustomSourcesString } from '../types/discordjs-docs-parser';
-import { DTypesCommand } from '../interactions/discordtypes';
+import process from 'node:process';
+import type Collection from '@discordjs/collection';
+import type { APIApplicationCommandAutocompleteInteraction } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';
+import { djsDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
+import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
+import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
+import type { Tag } from '../functions/tag.js';
+import type { DTypesCommand } from '../interactions/discordtypes.js';
+import type { GuideCommand } from '../interactions/guide.js';
+import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
+import type { MDNIndexEntry } from '../types/mdn.js';
+import { transformInteraction } from '../util/interactionOptions.js';
 
-type CommandAutoCompleteName = 'docs' | 'tag' | 'mdn' | 'guide' | 'discorddocs' | 'dtypes';
+type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'tag';
 
 export async function handleApplicationCommandAutocomplete(
 	res: Response,
@@ -28,10 +29,12 @@ export async function handleApplicationCommandAutocomplete(
 			await djsDocsAutoComplete(res, data.options, customSources);
 			break;
 		}
+
 		case 'tag': {
-			await tagAutoComplete(res, data.options, tagCache);
+			tagAutoComplete(res, data.options, tagCache);
 			break;
 		}
+
 		case 'guide': {
 			const args = transformInteraction<typeof GuideCommand>(data.options);
 			await algoliaAutoComplete(
@@ -43,6 +46,7 @@ export async function handleApplicationCommandAutocomplete(
 			);
 			break;
 		}
+
 		case 'discorddocs': {
 			const args = transformInteraction<typeof GuideCommand>(data.options);
 			await algoliaAutoComplete(
@@ -54,10 +58,12 @@ export async function handleApplicationCommandAutocomplete(
 			);
 			break;
 		}
+
 		case 'mdn': {
-			await mdnAutoComplete(res, data.options, mdnIndexCache);
+			mdnAutoComplete(res, data.options, mdnIndexCache);
 			break;
 		}
+
 		case 'dtypes': {
 			const args = transformInteraction<typeof DTypesCommand>(data.options);
 

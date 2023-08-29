@@ -1,13 +1,13 @@
-import { DiscordDocsCommand } from '../interactions/discorddocs';
-import { DTypesCommand } from '../interactions/discordtypes';
-import { DocsCommand } from '../interactions/docs';
-import { GuideCommand } from '../interactions/guide';
-import { InviteCommand } from '../interactions/invite';
-import { MdnCommand } from '../interactions/mdn';
-import { NodeCommand } from '../interactions/node';
-import { TagCommand } from '../interactions/tag';
-import { TestTagCommand } from '../interactions/testtag';
-import { deploy } from './deploy';
+import { DiscordDocsCommand } from '../interactions/discorddocs.js';
+import { DTypesCommand } from '../interactions/discordtypes.js';
+import { DocsCommand } from '../interactions/docs.js';
+import { GuideCommand } from '../interactions/guide.js';
+import { InviteCommand } from '../interactions/invite.js';
+import { MdnCommand } from '../interactions/mdn.js';
+import { NodeCommand } from '../interactions/node.js';
+import { TagCommand } from '../interactions/tag.js';
+import { TestTagCommand } from '../interactions/testtag.js';
+import { deploy } from './deploy.js';
 
 void deploy([
 	DiscordDocsCommand,

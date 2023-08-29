@@ -1,22 +1,25 @@
 import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
+import type { Response } from 'polka';
 import { fetch } from 'undici';
-import { Response } from 'polka';
-import { API_BASE_MDN, EMOJI_ID_MDN, logger, prepareErrorResponse, prepareResponse } from '../util';
+import { API_BASE_MDN, EMOJI_ID_MDN } from '../util/constants.js';
+import { logger } from '../util/logger.js';
+import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
 const cache = new Map<string, Document>();
 
 function escape(text: string) {
-	return text.replace(/\|\|/g, '|\u200B|').replace(/\*/g, '\\*');
+	return text.replaceAll('||', '|\u200B|').replaceAll('*', '\\*');
 }
 
 export async function mdnSearch(res: Response, query: string, target?: string, ephemeral?: boolean): Promise<Response> {
-	query = query.trim();
+	const trimmedQuery = query.trim();
 	try {
-		const qString = `${API_BASE_MDN}/${query}/index.json`;
+		const qString = `${API_BASE_MDN}/${trimmedQuery}/index.json`;
+		// eslint-disable-next-line sonarjs/no-empty-collection
 		let hit = cache.get(qString);
 		if (!hit) {
 			try {
-				const result = (await fetch(qString).then((r) => r.json())) as APIResult;
+				const result = (await fetch(qString).then(async (response) => response.json())) as APIResult;
 				hit = result.doc;
 			} catch {
 				prepareErrorResponse(res, 'Invalid result. Make sure to select an entry from the autocomplete.');
@@ -26,15 +29,15 @@ export async function mdnSearch(res: Response, query: string, target?: string, e
 
 		const url = API_BASE_MDN + hit.mdn_url;
 
-		const linkReplaceRegex = /\[(.+?)\]\((.+?)\)/g;
+		const linkReplaceRegex = /\[(.+?)]\((.+?)\)/g;
 		const boldCodeBlockRegex = /`\*\*(.*)\*\*`/g;
 		const intro = escape(hit.summary)
-			.replace(/\s+/g, ' ')
-			.replace(linkReplaceRegex, hyperlink('$1', hideLinkEmbed(`${API_BASE_MDN}$2`)))
-			.replace(boldCodeBlockRegex, bold(inlineCode('$1')));
+			.replaceAll(/\s+/g, ' ')
+			.replaceAll(linkReplaceRegex, hyperlink('$1', hideLinkEmbed(`${API_BASE_MDN}$2`)))
+			.replaceAll(boldCodeBlockRegex, bold(inlineCode('$1')));
 
 		const parts = [
-			`<:mdn:${EMOJI_ID_MDN}> \ ${underscore(bold(hyperlink(escape(hit.title), hideLinkEmbed(url))))}`,
+			`<:mdn:${EMOJI_ID_MDN}>  ${underscore(bold(hyperlink(escape(hit.title), hideLinkEmbed(url))))}`,
 			intro,
 		];
 
@@ -53,23 +56,23 @@ export async function mdnSearch(res: Response, query: string, target?: string, e
 	}
 }
 
-interface APIResult {
+type APIResult = {
 	doc: Document;
-}
+};
 
-interface Document {
-	mdn_url: string;
-	score: number;
-	title: string;
-	locale: string;
-	slug: string;
-	popularity: number;
+type Document = {
 	archived: boolean;
-	summary: string;
 	highlight: Highlight;
-}
+	locale: string;
+	mdn_url: string;
+	popularity: number;
+	score: number;
+	slug: string;
+	summary: string;
+	title: string;
+};
 
-interface Highlight {
+type Highlight = {
 	body: string[];
 	title: string[];
-}
+};

@@ -2,11 +2,13 @@ import { badRequest, badData } from '@hapi/boom';
 import type { Request, Response, NextHandler, Middleware } from 'polka';
 
 declare module 'polka' {
+	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 	export interface Request {
 		rawBody: string;
 	}
 }
 
+// eslint-disable-next-line unicorn/consistent-function-scoping
 export const jsonParser = (): Middleware => async (req: Request, _: Response, next: NextHandler) => {
 	if (!req.headers['content-type']?.startsWith('application/json')) return next(badRequest('Unexpected content type'));
 	req.setEncoding('utf8');
@@ -18,8 +20,8 @@ export const jsonParser = (): Middleware => async (req: Request, _: Response, ne
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		req.body = JSON.parse(data);
 
-		await next();
-	} catch (e) {
-		void next(badData((e as Error).message));
+		return void next();
+	} catch (error) {
+		return next(badData((error as Error).message));
 	}
 };

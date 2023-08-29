@@ -1,10 +1,12 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import * as TOML from '@ltd/j-toml';
-import { Tag } from '../functions/tag';
-import { red, green, yellow } from 'kleur';
-import { AUTOCOMPLETE_MAX_ITEMS } from '../util';
+import kleur from 'kleur';
 import { request } from 'undici';
+import type { Tag } from '../functions/tag';
+import { AUTOCOMPLETE_MAX_ITEMS } from '../util/constants.js';
 
 enum ConflictType {
 	UniqueKeywords,
@@ -15,51 +17,53 @@ enum ConflictType {
 	Status404Link,
 }
 
-interface Conflict {
+type Conflict = {
+	conflictKeyWords: string[];
 	firstName: string;
 	secondName: string;
-	conflictKeyWords: string[];
 	type: ConflictType;
-}
+};
 
-interface Warning {
-	name: string;
+type Warning = {
 	description: string;
-}
+	name: string;
+};
 
 function printWarnings(warnings: Warning[], stream: NodeJS.WriteStream) {
 	stream.write('\n\n');
 	stream.write('Tag validation warnings:\n');
-	stream.write(warnings.map((w, i) => yellow(`${i}. ${w.name}: ${w.description}`)).join('\n'));
+	stream.write(
+		warnings.map((warning, index) => kleur.yellow(`${index}. ${warning.name}: ${warning.description}`)).join('\n'),
+	);
 	stream.write('\n');
 }
 
 export function parseSingleTag(tag: string) {
-	return TOML.parse(tag, 1.0, '\n');
+	return TOML.parse(tag, 1, '\n');
 }
 
-interface ValidationResult {
-	warnings: Warning[];
+type ValidationResult = {
 	errors: string[];
-}
+	warnings: Warning[];
+};
 
 export async function validateTags(
 	runResponseValidation: boolean,
 	_additionalTagData?: string,
 ): Promise<ValidationResult> {
-	const file = readFileSync(join(__dirname, '..', '..', 'tags', 'tags.toml'));
+	const file = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'tags', 'tags.toml'));
 
 	const mergedData = _additionalTagData ? `${file.toString()}\n\n${_additionalTagData}` : file;
-	const data = TOML.parse(mergedData, 1.0, '\n');
+	const data = TOML.parse(mergedData, 1, '\n');
 	const conflicts: Conflict[] = [];
 	const warnings: Warning[] = [];
 
 	let hoisted = 0;
 	for (const [key, value] of Object.entries(data)) {
-		const v = value as unknown as Tag;
+		const tag = value as unknown as Tag;
 		const codeBlockRegex = /(`{1,3}).+?\1/gs;
-		const markDownLinkRegex = /\[[^\[\]]+?\]\(<?(?<link>[^\(\)]+?)>?\)/g;
-		const cleanedContent = v.content.replace(codeBlockRegex, '');
+		const markDownLinkRegex = /\[[^[\]]+?]\(<?(?<link>[^()]+?)>?\)/g;
+		const cleanedContent = tag.content.replaceAll(codeBlockRegex, '');
 
 		const invalidLinks: string[] = [];
 
@@ -76,18 +80,20 @@ export async function validateTags(
 							'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0',
 						},
 					}).catch(() => null);
-					process.stdout.write('\r\x1b[K');
+					process.stdout.write('\r\u001B[K');
 					if (!res || res.statusCode === 404) {
 						invalidLinks.push(`${groups.link} (${res?.statusCode ?? 'request failed'})`);
-						process.stdout.write(`[${red('✖')}] ${groups.link} (${red(res?.statusCode ?? 'request failed')})`);
+						process.stdout.write(
+							`[${kleur.red('✖')}] ${groups.link} (${kleur.red(res?.statusCode ?? 'request failed')})`,
+						);
 					} else if (res.statusCode === 200) {
-						process.stdout.write(`[${green('✔')}] ${groups.link} (${green(res.statusCode)})`);
+						process.stdout.write(`[${kleur.green('✔')}] ${groups.link} (${kleur.green(res.statusCode)})`);
 					} else {
 						warnings.push({
 							name: key,
 							description: `Non-200 statuscode response on: ${groups.link} (${res.statusCode})`,
 						});
-						process.stdout.write(`[${yellow('✔')}] ${groups.link} (${yellow(res.statusCode)})`);
+						process.stdout.write(`[${kleur.yellow('✔')}] ${groups.link} (${kleur.yellow(res.statusCode)})`);
 					}
 				}
 			}
@@ -102,11 +108,11 @@ export async function validateTags(
 			}
 		}
 
-		if (v.hoisted) {
+		if (tag.hoisted) {
 			hoisted++;
 		}
 
-		if (v.keywords.includes(key)) {
+		if (tag.keywords.includes(key)) {
 			conflicts.push({
 				firstName: key,
 				secondName: '',
@@ -115,7 +121,7 @@ export async function validateTags(
 			});
 		}
 
-		if (v.keywords.some((k) => !k.replace(/\s+/g, '').length)) {
+		if (tag.keywords.some((keyword) => !keyword.replaceAll(/\s+/g, '').length)) {
 			conflicts.push({
 				firstName: key,
 				secondName: '',
@@ -124,7 +130,7 @@ export async function validateTags(
 			});
 		}
 
-		if (!v.content.replace(/[\s\r\n]+/g, '').length) {
+		if (!tag.content.replaceAll(/\s+/g, '').length) {
 			conflicts.push({
 				firstName: key,
 				secondName: '',
@@ -133,7 +139,7 @@ export async function validateTags(
 			});
 		}
 
-		const whiteSpaceKeywords = v.keywords.filter((k) => /\s/.exec(k));
+		const whiteSpaceKeywords = tag.keywords.filter((keyword) => /\s/.exec(keyword));
 		if (whiteSpaceKeywords.length) {
 			conflicts.push({
 				firstName: key,
@@ -146,11 +152,15 @@ export async function validateTags(
 		for (const [otherKey, otherValue] of Object.entries(data)) {
 			const oV = otherValue as unknown as Tag;
 			if (key !== otherKey) {
-				const conflictKeyWords = v.keywords.filter((k) => oV.keywords.includes(k) || otherKey === k);
+				const conflictKeyWords = tag.keywords.filter(
+					(keyword) => oV.keywords.includes(keyword) || otherKey === keyword,
+				);
 
 				if (
 					conflictKeyWords.length &&
-					!conflicts.some((c) => [c.firstName, c.secondName].every((e) => [key, otherKey].includes(e)))
+					!conflicts.some((conflict) =>
+						[conflict.firstName, conflict.secondName].every((element) => [key, otherKey].includes(element)),
+					)
 				) {
 					conflicts.push({
 						firstName: key,
@@ -173,26 +183,27 @@ export async function validateTags(
 			status404LinkConflicts,
 			nameNotInKeywordsConflicts,
 		} = conflicts.reduce(
-			(a, c) => {
-				switch (c.type) {
+			(a, conflict) => {
+				switch (conflict.type) {
 					case ConflictType.NameNotInKeywords:
-						a.nameNotInKeywordsConflicts.push(c);
+						a.nameNotInKeywordsConflicts.push(conflict);
 						break;
 					case ConflictType.UniqueKeywords:
-						a.uniqueConflicts.push(c);
+						a.uniqueConflicts.push(conflict);
 						break;
 					case ConflictType.NonEmptyKeyword:
-						a.emptyKeywordConflicts.push(c);
+						a.emptyKeywordConflicts.push(conflict);
 						break;
 					case ConflictType.NonEmptyBody:
-						a.emptyBodyConflicts.push(c);
+						a.emptyBodyConflicts.push(conflict);
 						break;
 					case ConflictType.NoWhiteSpace:
-						a.noWhiteSpaceConflicts.push(c);
+						a.noWhiteSpaceConflicts.push(conflict);
 						break;
 					case ConflictType.Status404Link:
-						a.status404LinkConflicts.push(c);
+						a.status404LinkConflicts.push(conflict);
 				}
+
 				return a;
 			},
 			{
@@ -208,7 +219,7 @@ export async function validateTags(
 		if (nameNotInKeywordsConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag name should not be included in keywords:\n${nameNotInKeywordsConflicts
-					.map((c, i) => red(`${i}. [${c.firstName}]`))
+					.map((conflict, index) => kleur.red(`${index}. [${conflict.firstName}]`))
 					.join('\n')}`,
 			);
 		}
@@ -216,8 +227,12 @@ export async function validateTags(
 		if (uniqueConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag names and keywords have to be unique:\n${uniqueConflicts
-					.map((c, i) =>
-						red(`${i}. [${c.firstName}] <> [${c.secondName}]: conflicts: ${c.conflictKeyWords.join(', ')}`),
+					.map((conflict, index) =>
+						kleur.red(
+							`${index}. [${conflict.firstName}] <> [${
+								conflict.secondName
+							}]: conflicts: ${conflict.conflictKeyWords.join(', ')}`,
+						),
 					)
 					.join('\n')}`,
 			);
@@ -226,7 +241,7 @@ export async function validateTags(
 		if (emptyBodyConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag body cannot be empty:\n${emptyBodyConflicts
-					.map((c, i) => red(`${i}. [${c.firstName}]`))
+					.map((conflict, index) => kleur.red(`${index}. [${conflict.firstName}]`))
 					.join('\n')}`,
 			);
 		}
@@ -234,7 +249,7 @@ export async function validateTags(
 		if (emptyKeywordConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag keywords cannot be empty:\n${emptyKeywordConflicts
-					.map((c, i) => red(`${i}. [${c.firstName}]`))
+					.map((conflict, index) => kleur.red(`${index}. [${conflict.firstName}]`))
 					.join('\n')}`,
 			);
 		}
@@ -242,7 +257,9 @@ export async function validateTags(
 		if (noWhiteSpaceConflicts.length) {
 			parts.push(
 				`Tag validation error: Tag names and keywords cannot include whitespace (use - instead):\n${noWhiteSpaceConflicts
-					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
+					.map((conflict, index) =>
+						kleur.red(`${index}. tag: ${conflict.firstName}: ${conflict.conflictKeyWords.join(', ')}`),
+					)
 					.join('\n')}`,
 			);
 		}
@@ -250,7 +267,9 @@ export async function validateTags(
 		if (status404LinkConflicts.length) {
 			parts.push(
 				`Tag validation error: Links returned a 404 status code:\n${status404LinkConflicts
-					.map((c, i) => red(`${i}. tag: ${c.firstName}: ${c.conflictKeyWords.join(', ')}`))
+					.map((conflict, index) =>
+						kleur.red(`${index}. tag: ${conflict.firstName}: ${conflict.conflictKeyWords.join(', ')}`),
+					)
 					.join('\n')}`,
 			);
 		}
@@ -268,6 +287,7 @@ export async function validateTags(
 			errors: parts,
 		};
 	}
+
 	return {
 		warnings,
 		errors: [],
@@ -278,14 +298,16 @@ export function processResults(result: ValidationResult) {
 	if (result.warnings.length) {
 		printWarnings(result.warnings, process.stderr);
 	}
+
 	if (result.errors.length) {
 		process.stderr.write('\n');
 		process.stderr.write(result.errors.join('\n\n'));
 		process.stderr.write('\n');
-		process.stderr.write(red('\n\nTag validation failed\n\n'));
+		process.stderr.write(kleur.red('\n\nTag validation failed\n\n'));
 		process.exit(1);
 	}
-	process.stdout.write(green(`\n\nTag validation passed with ${result.warnings.length} warnings 🎉\n\n`));
+
+	process.stdout.write(kleur.green(`\n\nTag validation passed with ${result.warnings.length} warnings 🎉\n\n`));
 	process.exit(0);
 }
 

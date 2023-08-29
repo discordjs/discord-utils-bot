@@ -1,37 +1,37 @@
-import { ApplicationCommandOptionType } from 'discord-api-types/v10';
+import type { ApplicationCommandOptionType } from 'discord-api-types/v10';
 
 export type Command = Readonly<{
-	name: string;
 	description: string;
+	name: string;
 	options?: readonly Option[];
 }>;
 
 type Option = Readonly<
 	{
-		name: string;
 		description: string;
+		name: string;
 		required?: boolean;
 	} & (
 		| {
-				type: ApplicationCommandOptionType.Subcommand | ApplicationCommandOptionType.SubcommandGroup;
-				options?: readonly Option[];
-		  }
-		| {
-				type: ApplicationCommandOptionType.String;
-				choices?: readonly Readonly<{ name: string; value: string }>[];
-		  }
-		| {
-				type: ApplicationCommandOptionType.Integer | ApplicationCommandOptionType.Number;
 				choices?: readonly Readonly<{ name: string; value: number }>[];
+				type: ApplicationCommandOptionType.Integer | ApplicationCommandOptionType.Number;
+		  }
+		| {
+				choices?: readonly Readonly<{ name: string; value: string }>[];
+				type: ApplicationCommandOptionType.String;
+		  }
+		| {
+				options?: readonly Option[];
+				type: ApplicationCommandOptionType.Subcommand | ApplicationCommandOptionType.SubcommandGroup;
 		  }
 		| {
 				type:
+					| ApplicationCommandOptionType.Attachment
 					| ApplicationCommandOptionType.Boolean
-					| ApplicationCommandOptionType.User
 					| ApplicationCommandOptionType.Channel
-					| ApplicationCommandOptionType.Role
 					| ApplicationCommandOptionType.Mentionable
-					| ApplicationCommandOptionType.Attachment;
+					| ApplicationCommandOptionType.Role
+					| ApplicationCommandOptionType.User;
 		  }
 	)
 >;
@@ -64,11 +64,11 @@ type TypeIdToType<T, O, C> = T extends ApplicationCommandOptionType.Subcommand
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type OptionToObject<O> = O extends {
-	name: infer K;
-	type: infer T;
-	required?: infer R;
-	options?: infer O;
 	choices?: infer C;
+	name: infer K;
+	options?: infer O;
+	required?: infer R;
+	type: infer T;
 }
 	? K extends string
 		? R extends true

@@ -1,6 +1,6 @@
-import { Response } from 'polka';
-import { prepareHeader } from '../../util';
 import { InteractionResponseType } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import { prepareHeader } from '../../util/respond.js';
 
 export function testTagButton(res: Response) {
 	prepareHeader(res);

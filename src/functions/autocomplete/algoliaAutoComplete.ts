@@ -1,18 +1,14 @@
-import { InteractionResponseType } from 'discord-api-types/v10';
-import { Response } from 'polka';
-import { fetch } from 'undici';
 import { stringify } from 'node:querystring';
+import { InteractionResponseType } from 'discord-api-types/v10';
 import { decode } from 'html-entities';
-
-import { AlgoliaHit, AlgoliaSearchResult } from '../../types/algolia';
-import {
-	API_BASE_ALGOLIA,
-	AUTOCOMPLETE_MAX_ITEMS,
-	truncate,
-	compactAlgoliaObjectId,
-	dedupeAlgoliaHits,
-	prepareHeader,
-} from '../../util';
+import type { Response } from 'polka';
+import { fetch } from 'undici';
+import type { AlgoliaHit, AlgoliaSearchResult } from '../../types/algolia.js';
+import { compactAlgoliaObjectId } from '../../util/compactAlgoliaId.js';
+import { API_BASE_ALGOLIA, AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { dedupeAlgoliaHits } from '../../util/dedupe.js';
+import { prepareHeader } from '../../util/respond.js';
+import { truncate } from '../../util/truncate.js';
 
 function removeDtypesPrefix(str: string | null) {
 	return (str ?? '').replace('discord-api-types/', '');
@@ -31,6 +27,7 @@ export function resolveHitToNamestring(hit: AlgoliaHit) {
 	if (hierarchy.lvl2) {
 		value += ` - ${hierarchy.lvl2}`;
 	}
+
 	if (hierarchy.lvl3) {
 		value += ` > ${hierarchy.lvl3}`;
 	}
@@ -40,12 +37,10 @@ export function resolveHitToNamestring(hit: AlgoliaHit) {
 
 function autoCompleteMap(elements: AlgoliaHit[]) {
 	const uniqueElements = elements.filter(dedupeAlgoliaHits());
-	const mappedElements = uniqueElements.map((element) => ({
+	return uniqueElements.map((element) => ({
 		name: truncate(resolveHitToNamestring(element), 90, ''),
 		value: compactAlgoliaObjectId(element.objectID),
 	}));
-
-	return mappedElements;
 }
 
 export async function algoliaAutoComplete(
@@ -68,7 +63,7 @@ export async function algoliaAutoComplete(
 			'X-Algolia-API-Key': algoliaApiKey,
 			'X-Algolia-Application-Id': algoliaAppId,
 		},
-	}).then((res) => res.json())) as AlgoliaSearchResult;
+	}).then(async (res) => res.json())) as AlgoliaSearchResult;
 
 	prepareHeader(res);
 	res.write(

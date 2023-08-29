@@ -1,3 +1,3 @@
-import { validateTagsScript } from './validateTags';
+import { validateTagsScript } from './validateTags.js';
 
 void validateTagsScript(false);

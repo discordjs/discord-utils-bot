@@ -1,16 +1,18 @@
-import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
-import { Response } from 'polka';
-import { MdnCommand } from '../../interactions/mdn';
-import { MDNIndexEntry } from '../../types/mdn';
-import { AUTOCOMPLETE_MAX_ITEMS, transformInteraction } from '../../util';
+import type { APIApplicationCommandInteractionDataOption } from 'discord-api-types/v10';
+import { InteractionResponseType } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import type { MdnCommand } from '../../interactions/mdn.js';
+import type { MDNIndexEntry } from '../../types/mdn.js';
+import { AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { transformInteraction } from '../../util/interactionOptions.js';
 
-interface MDNCandidate {
+type MDNCandidate = {
 	entry: MDNIndexEntry;
 	matches: string[];
-}
+};
 
 function autoCompleteMap(elements: MDNCandidate[]) {
-	return elements.map((e) => ({ name: e.entry.title, value: e.entry.url }));
+	return elements.map((element) => ({ name: element.entry.title, value: element.entry.url }));
 }
 
 export function mdnAutoComplete(
@@ -20,7 +22,7 @@ export function mdnAutoComplete(
 ): Response {
 	const { query } = transformInteraction<typeof MdnCommand>(options);
 
-	const parts = query.split(/\.|#/).map((p) => p.toLowerCase());
+	const parts = query.split(/\.|#/).map((part) => part.toLowerCase());
 	const candidates = [];
 
 	for (const entry of cache) {
@@ -34,12 +36,13 @@ export function mdnAutoComplete(
 		}
 	}
 
-	const sortedCandidates = candidates.sort((a, b) => {
-		if (a.matches.length !== b.matches.length) {
-			return b.matches.length - a.matches.length;
+	const sortedCandidates = candidates.sort((one, other) => {
+		if (one.matches.length !== other.matches.length) {
+			return other.matches.length - one.matches.length;
 		}
-		const aMatches = a.matches.join('').length;
-		const bMatches = b.matches.join('').length;
+
+		const aMatches = one.matches.join('').length;
+		const bMatches = other.matches.join('').length;
 		return bMatches - aMatches;
 	});
 

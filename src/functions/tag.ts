@@ -1,33 +1,30 @@
-import { Response } from 'polka';
-import Collection from '@discordjs/collection';
-import {
-	PREFIX_SUCCESS,
-	REMOTE_TAG_URL,
-	prepareErrorResponse,
-	prepareResponse,
-	logger,
-	suggestionString,
-} from '../util';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type Collection from '@discordjs/collection';
 import * as TOML from '@ltd/j-toml';
-import { fetch } from 'undici';
+import type { Response } from 'polka';
 import readdirp from 'readdirp';
+import { fetch } from 'undici';
+import { REMOTE_TAG_URL, PREFIX_SUCCESS } from '../util/constants.js';
+import { logger } from '../util/logger.js';
+import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
+import { suggestionString } from '../util/suggestionString.js';
 
-export interface Tag {
-	keywords: string[];
+export type Tag = {
 	content: string;
 	hoisted: boolean;
-}
+	keywords: string[];
+};
 
-export interface TagSimilarityEntry {
-	word: string;
-	name: string;
+export type TagSimilarityEntry = {
 	lev: number;
-}
+	name: string;
+	word: string;
+};
 
 export async function loadTags(tagCache: Collection<string, Tag>, remote = false) {
-	const tagFileNames = readdirp(join(__dirname, '..', '..', 'tags'), {
+	const tagFileNames = readdirp(join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'tags'), {
 		fileFilter: '*.toml',
 	});
 
@@ -36,7 +33,7 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 	for await (const dir of tagFileNames) {
 		const file = remote
 			? await fetch(`${REMOTE_TAG_URL}/${dir.basename}`)
-					.then((r) => r.text())
+					.then(async (response) => response.text())
 					.catch((_error) => {
 						const error = _error as Error;
 						logger.error(error, error.message);
@@ -46,15 +43,15 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 		parts.push(file);
 	}
 
-	const data = TOML.parse(parts.join('\n\n'), 1.0, '\n');
+	const data = TOML.parse(parts.join('\n\n'), 1, '\n');
 	for (const [key, value] of Object.entries(data)) {
 		tagCache.set(key, value as unknown as Tag);
 	}
 }
 
 export function findTag(tagCache: Collection<string, Tag>, query: string, target?: string): string | null {
-	query = query.replace(/\s+/g, '-');
-	const tag = tagCache.get(query) ?? tagCache.find((v) => v.keywords.includes(query));
+	const cleanQuery = query.replaceAll(/\s+/g, '-');
+	const tag = tagCache.get(cleanQuery) ?? tagCache.find((tag) => tag.keywords.includes(cleanQuery));
 	if (!tag) return null;
 	return suggestionString('tag', tag.content, target);
 }
@@ -79,6 +76,7 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 			`Something went wrong while loading tags ${remote ? '(remote)' : '(local)'}\n\`${(error as Error).message}\``,
 		);
 	}
+
 	return res;
 }
 
@@ -89,12 +87,13 @@ export function showTag(
 	target?: string,
 	ephemeral?: boolean,
 ): Response {
-	query = query.trim().toLowerCase();
-	const content = findTag(tagCache, query, target);
+	const trimmedQuery = query.trim().toLowerCase();
+	const content = findTag(tagCache, trimmedQuery, target);
 	if (content) {
 		prepareResponse(res, content, ephemeral ?? false, target ? [target] : []);
 	} else {
-		prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${query}\`.`);
+		prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${trimmedQuery}\`.`);
 	}
+
 	return res;
 }

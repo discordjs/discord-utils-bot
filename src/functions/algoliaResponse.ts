@@ -1,10 +1,15 @@
 import { hideLinkEmbed, hyperlink, userMention, italic, bold } from '@discordjs/builders';
+import pkg from 'he';
+import type { Response } from 'polka';
 import { fetch } from 'undici';
-import { Response } from 'polka';
-import { AlgoliaHit } from '../types/algolia';
-import { API_BASE_ALGOLIA, prepareErrorResponse, prepareResponse, truncate, expandAlgoliaObjectId } from '../util';
-import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete';
-import { decode } from 'he';
+import type { AlgoliaHit } from '../types/algolia.js';
+import { expandAlgoliaObjectId } from '../util/compactAlgoliaId.js';
+import { API_BASE_ALGOLIA } from '../util/constants.js';
+import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
+import { truncate } from '../util/truncate.js';
+import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete.js';
+
+const { decode } = pkg;
 
 export async function algoliaResponse(
 	res: Response,
@@ -28,7 +33,7 @@ export async function algoliaResponse(
 				'X-Algolia-API-Key': algoliaApiKey,
 				'X-Algolia-Application-Id': algoliaAppId,
 			},
-		}).then((res) => res.json())) as AlgoliaHit;
+		}).then(async (res) => res.json())) as AlgoliaHit;
 
 		prepareResponse(
 			res,
@@ -44,5 +49,6 @@ export async function algoliaResponse(
 	} catch {
 		prepareErrorResponse(res, 'Invalid result. Make sure to select an entry from the autocomplete.');
 	}
+
 	return res;
 }

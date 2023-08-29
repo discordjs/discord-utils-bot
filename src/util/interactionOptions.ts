@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { ApplicationCommandOptionType, APIApplicationCommandInteractionDataOption } from 'discord-api-types/v10';
-import { Command, ArgumentsOf } from './argumentsOf';
+import type { APIApplicationCommandInteractionDataOption } from 'discord-api-types/v10';
+import { ApplicationCommandOptionType } from 'discord-api-types/v10';
+import type { Command, ArgumentsOf } from './argumentsOf.js';
 
 export function transformInteraction<T extends Command>(
 	options: readonly APIApplicationCommandInteractionDataOption[],

@@ -1,6 +1,6 @@
-import { APIModalSubmitInteraction } from 'discord-api-types/v10';
-import { Response } from 'polka';
-import { testTagModalSubmit } from '../functions/modals/testTagModalSubmit';
+import type { APIModalSubmitInteraction } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import { testTagModalSubmit } from '../functions/modals/testTagModalSubmit.js';
 
 type ModalSubmitName = 'testtag-hide' | 'testtag-show';
 

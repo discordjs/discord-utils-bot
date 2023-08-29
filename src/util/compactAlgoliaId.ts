@@ -5,17 +5,19 @@ const replacements = {
 };
 
 export function compactAlgoliaObjectId(url: string): string {
+	let res = url;
 	for (const [key, value] of Object.entries(replacements)) {
-		url = url.replace(key, value);
+		res = res.replace(key, value);
 	}
 
-	return url;
+	return res;
 }
 
 export function expandAlgoliaObjectId(url: string): string {
+	let res = url;
 	for (const [key, value] of Object.entries(replacements)) {
-		url = url.replace(value, key);
+		res = res.replace(value, key);
 	}
 
-	return url;
+	return res;
 }

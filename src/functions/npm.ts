@@ -1,8 +1,10 @@
 import type { Response } from 'polka';
 import { request } from 'undici';
-import { CustomSourcesString } from '../types/discordjs-docs-parser';
-import { PartialNpmAPIResponse } from '../types/npm';
-import { logger, PREFIX_SUCCESS, prepareErrorResponse, prepareResponse } from '../util';
+import type { CustomSourcesString } from '../types/discordjs-docs-parser';
+import type { PartialNpmAPIResponse } from '../types/npm';
+import { PREFIX_SUCCESS } from '../util/constants.js';
+import { logger } from '../util/logger.js';
+import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
 
 function formatVersionToRaw(version: string): string {
 	return `https://raw.githubusercontent.com/discordjs/docs/main/discord.js/${version}.json`;
@@ -19,6 +21,7 @@ export async function loadLatestNpmVersion(
 	if (response.statusCode !== 200) {
 		throw new Error('Failed to fetch latest npm version');
 	}
+
 	const json = (await response.body.json()) as PartialNpmAPIResponse;
 	logger.info({
 		versions: json['dist-tags'],
@@ -30,11 +33,11 @@ export async function loadLatestNpmVersion(
 
 	const responses = await Promise.all(
 		Array.from(customSources.values())
-			.map((url) => request(url))
-			.map((r) => r.catch(() => undefined)),
+			.map(async (url) => request(url))
+			.map(async (data) => data.catch(() => undefined)),
 	);
 
-	const failed = responses.filter((r) => r?.statusCode !== 200);
+	const failed = responses.filter((data) => data?.statusCode !== 200);
 	if (failed.length) {
 		throw new Error(`Failed to fetch ${failed.join(', ')} versions`);
 	}
@@ -70,5 +73,6 @@ export async function reloadNpmVersions(res: Response, customSources: Map<Custom
 		customSources.set('v13-lts', prev.v13);
 		customSources.set('latest', prev.latest);
 	}
+
 	return res;
 }

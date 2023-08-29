@@ -1,17 +1,15 @@
 {
-	"include": ["./src"],
 	"compilerOptions": {
 		"outDir": "dist",
 		"strict": true,
 		"moduleResolution": "node",
 		"alwaysStrict": true,
 		"esModuleInterop": true,
-		"module": "commonjs",
-		"target": "es2019",
+		"module": "ESNext",
+		"target": "ES2022",
 		"sourceMap": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"pretty": true,
 		"resolveJsonModule": true
 	}
 }

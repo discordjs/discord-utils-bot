@@ -1,9 +1,11 @@
-import Collection from '@discordjs/collection';
-import { APIApplicationCommandInteractionDataOption, InteractionResponseType } from 'discord-api-types/v10';
-import { Response } from 'polka';
-import { TagCommand } from '../../interactions/tag';
-import { AUTOCOMPLETE_MAX_ITEMS, transformInteraction } from '../../util';
-import { Tag } from '../tag';
+import type Collection from '@discordjs/collection';
+import type { APIApplicationCommandInteractionDataOption } from 'discord-api-types/v10';
+import { InteractionResponseType } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import type { TagCommand } from '../../interactions/tag.js';
+import { AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { transformInteraction } from '../../util/interactionOptions.js';
+import type { Tag } from '../tag.js';
 
 export function tagAutoComplete(
 	res: Response,
@@ -17,13 +19,13 @@ export function tagAutoComplete(
 		const keywordMatches: { name: string; value: string }[] = [];
 		const contentMatches: { name: string; value: string }[] = [];
 		const exactKeywords: { name: string; value: string }[] = [];
-		const cleanedQuery = query.toLowerCase().replace(/\s+/g, '-');
+		const cleanedQuery = query.toLowerCase().replaceAll(/\s+/g, '-');
 
 		for (const [key, tag] of tagCache.entries()) {
 			const exactKeyword =
-				Boolean(tag.keywords.find((s) => s.toLowerCase() === cleanedQuery)) || key.toLowerCase() === cleanedQuery;
+				tag.keywords.some((text) => text.toLowerCase() === cleanedQuery) || key.toLowerCase() === cleanedQuery;
 			const includesKeyword =
-				Boolean(tag.keywords.find((s) => s.toLowerCase().includes(cleanedQuery))) ||
+				tag.keywords.some((text) => text.toLowerCase().includes(cleanedQuery)) ||
 				key.toLowerCase().includes(cleanedQuery);
 			const isContentMatch = tag.content.toLowerCase().includes(cleanedQuery);
 			if (exactKeyword) {
@@ -43,11 +45,12 @@ export function tagAutoComplete(
 				});
 			}
 		}
+
 		results.push(...exactKeywords, ...keywordMatches, ...contentMatches);
 	} else {
 		results.push(
 			...tagCache
-				.filter((t) => t.hoisted)
+				.filter((tag) => tag.hoisted)
 				.map((_, key) => ({
 					name: `📌 ${key}`,
 					value: key,

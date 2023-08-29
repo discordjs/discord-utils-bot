@@ -1,6 +1,6 @@
-import { Response } from 'polka';
-import { prepareHeader } from '../util';
 import { ComponentType, InteractionResponseType } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import { prepareHeader } from '../util/respond.js';
 
 const PLACEHOLDER = [
 	'[tagname]',
@@ -27,7 +27,7 @@ export function testTag(res: Response, hide: boolean): Response {
 								label: 'Tag data',
 								style: 2,
 								min_length: 1,
-								max_length: 4000,
+								max_length: 4_000,
 								placeholder: PLACEHOLDER,
 								value: PLACEHOLDER,
 								required: true,

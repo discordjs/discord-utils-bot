@@ -1,6 +1,6 @@
 import { InteractionResponseType, MessageFlags } from 'discord-api-types/v10';
-import { Response } from 'polka';
-import { PREFIX_FAIL } from './constants';
+import type { Response } from 'polka';
+import { PREFIX_FAIL } from './constants.js';
 
 export function prepareHeader(response: Response) {
 	response.setHeader('Content-Type', 'application/json');

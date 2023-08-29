@@ -1,47 +1,45 @@
+import process from 'node:process';
 import { hideLinkEmbed, hyperlink } from '@discordjs/builders';
-import Collection from '@discordjs/collection';
-import { APIApplicationCommandInteraction, ApplicationCommandType } from 'discord-api-types/v10';
+import type Collection from '@discordjs/collection';
+import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
+import { ApplicationCommandType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';
-import { Response } from 'polka';
-import { algoliaResponse } from '../functions/algoliaResponse';
-import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete';
-import { djsDocs } from '../functions/docs';
-import { mdnSearch } from '../functions/mdn';
-import { nodeSearch } from '../functions/node';
-import { reloadNpmVersions } from '../functions/npm';
-import { showTag, reloadTags, Tag } from '../functions/tag';
-import { DiscordDocsCommand } from '../interactions/discorddocs';
-import { GuideCommand } from '../interactions/guide';
-import { MdnCommand } from '../interactions/mdn';
-import { NodeCommand } from '../interactions/node';
-import { TagCommand } from '../interactions/tag';
-import { TagReloadCommand } from '../interactions/tagreload';
-import { CustomSourcesString } from '../types/discordjs-docs-parser';
-import {
-	transformInteraction,
-	ArgumentsOf,
-	EMOJI_ID_CLYDE_BLURPLE,
-	prepareErrorResponse,
-	EMOJI_ID_GUIDE,
-	prepareResponse,
-	EMOJI_ID_DTYPES,
-} from '../util';
-import { DTypesCommand } from '../interactions/discordtypes';
-import { testTag } from '../functions/testtag';
-import { TestTagCommand } from '../interactions/testtag';
+import type { Response } from 'polka';
+import { algoliaResponse } from '../functions/algoliaResponse.js';
+import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
+import { djsDocs } from '../functions/docs.js';
+import { mdnSearch } from '../functions/mdn.js';
+import { nodeSearch } from '../functions/node.js';
+import { reloadNpmVersions } from '../functions/npm.js';
+import type { Tag } from '../functions/tag.js';
+import { showTag, reloadTags } from '../functions/tag.js';
+import { testTag } from '../functions/testtag.js';
+import type { DiscordDocsCommand } from '../interactions/discorddocs.js';
+import type { DTypesCommand } from '../interactions/discordtypes.js';
+import type { GuideCommand } from '../interactions/guide.js';
+import type { MdnCommand } from '../interactions/mdn.js';
+import type { NodeCommand } from '../interactions/node.js';
+import type { TagCommand } from '../interactions/tag.js';
+import type { TagReloadCommand } from '../interactions/tagreload.js';
+import type { TestTagCommand } from '../interactions/testtag.js';
+import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
+import type { ArgumentsOf } from '../util/argumentsOf.js';
+import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
+import { transformInteraction } from '../util/interactionOptions.js';
+import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
 type CommandName =
 	| 'discorddocs'
-	| 'dtypes'
 	| 'docs'
+	| 'dtypes'
 	| 'guide'
 	| 'invite'
 	| 'mdn'
 	| 'node'
+	| 'npmreload'
 	| 'tag'
-	| 'testtag'
 	| 'tagreload'
-	| 'npmreload';
+	| 'testtag';
 
 export async function handleApplicationCommand(
 	res: Response,
@@ -100,7 +98,7 @@ export async function handleApplicationCommand(
 				const { source, query, target, ephemeral } = resolved;
 				// @ts-expect-error: This implements custom sources
 				const doc = await Doc.fetch(source, { force: true });
-				(await djsDocs(res, doc, source, query, target, ephemeral)).end();
+				djsDocs(res, doc, source, query, target, ephemeral).end();
 				break;
 			}
 
@@ -119,6 +117,7 @@ export async function handleApplicationCommand(
 				);
 				break;
 			}
+
 			case 'invite': {
 				prepareResponse(
 					res,
@@ -133,31 +132,37 @@ export async function handleApplicationCommand(
 				);
 				break;
 			}
+
 			case 'mdn': {
 				const castArgs = args as ArgumentsOf<typeof MdnCommand>;
 				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.hide);
 				break;
 			}
+
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
 				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.hide);
 				break;
 			}
+
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				await showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.hide);
+				showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.hide);
 				break;
 			}
+
 			case 'testtag': {
 				const castArgs = args as ArgumentsOf<typeof TestTagCommand>;
-				await testTag(res, castArgs.hide ?? true);
+				testTag(res, castArgs.hide ?? true);
 				break;
 			}
+
 			case 'tagreload': {
 				const castArgs = args as ArgumentsOf<typeof TagReloadCommand>;
 				await reloadTags(res, tagCache, castArgs.remote ?? false);
 				break;
 			}
+
 			case 'npmreload': {
 				await reloadNpmVersions(res, customSources);
 				break;

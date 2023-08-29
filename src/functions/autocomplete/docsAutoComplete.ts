@@ -1,20 +1,21 @@
-import {
+import type {
 	APIApplicationCommandInteractionDataOption,
 	APIApplicationCommandInteractionDataSubcommandOption,
-	ApplicationCommandOptionType,
-	InteractionResponseType,
 } from 'discord-api-types/v10';
-import { Doc, DocElement, DocTypes, sources } from 'discordjs-docs-parser';
-import { Response } from 'polka';
-import { CustomSourcesString, CustomSourcesStringUnion } from '../../types/discordjs-docs-parser';
-import { AUTOCOMPLETE_MAX_ITEMS, DEFAULT_DOCS_BRANCH, prepareErrorResponse } from '../../util';
+import { ApplicationCommandOptionType, InteractionResponseType } from 'discord-api-types/v10';
+import type { DocElement } from 'discordjs-docs-parser';
+import { Doc, DocTypes, sources } from 'discordjs-docs-parser';
+import type { Response } from 'polka';
+import type { CustomSourcesString, CustomSourcesStringUnion } from '../../types/discordjs-docs-parser.js';
+import { DEFAULT_DOCS_BRANCH, AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { prepareErrorResponse } from '../../util/respond.js';
 
 function autoCompleteMap(elements: DocElement[]) {
-	return elements.map((e) => ({ name: e.formattedName, value: e.formattedName }));
+	return elements.map((element) => ({ name: element.formattedName, value: element.formattedName }));
 }
 
-export function toSourceString(s: string): CustomSourcesStringUnion {
-	switch (s) {
+export function toSourceString(text: string): CustomSourcesStringUnion {
+	switch (text) {
 		case 'discord-js-v13':
 			return 'v13-lts';
 		case 'discord-js-v14':
@@ -24,18 +25,18 @@ export function toSourceString(s: string): CustomSourcesStringUnion {
 		case 'collection':
 		case 'voice':
 		case 'builders':
-			return s;
+			return text;
 	}
 
 	return DEFAULT_DOCS_BRANCH;
 }
 
-interface DocsAutoCompleteData {
-	source: CustomSourcesStringUnion;
-	query: string;
-	target?: string;
+type DocsAutoCompleteData = {
 	ephemeral?: boolean;
-}
+	query: string;
+	source: CustomSourcesStringUnion;
+	target?: string;
+};
 
 export function resolveOptionsToDocsAutoComplete(
 	options: APIApplicationCommandInteractionDataOption[],
@@ -61,10 +62,8 @@ export function resolveOptionsToDocsAutoComplete(
 			if (opt.name === 'target') {
 				target = opt.value;
 			}
-		} else if (opt.type === ApplicationCommandOptionType.Boolean) {
-			if (opt.name === 'hide') {
-				ephemeral = opt.value;
-			}
+		} else if (opt.type === ApplicationCommandOptionType.Boolean && opt.name === 'hide') {
+			ephemeral = opt.value;
 		}
 	}
 

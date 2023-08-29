@@ -1,7 +1,7 @@
 import { userMention } from '@discordjs/builders';
 
 function stripLinkEscapes(text: string) {
-	return text.replace(/<<(.+?)>>/gi, '$1');
+	return text.replaceAll(/<<(.+?)>>/gi, '$1');
 }
 
 export function suggestionString(suggestionType: string, guaranteed?: string, target?: string): string {

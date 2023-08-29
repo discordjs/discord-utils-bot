@@ -1,40 +1,49 @@
-import polka, { Middleware, NextHandler, Request, Response } from 'polka';
-import { logger, jsonParser, prepareAck, prepareResponse, API_BASE_MDN, PREFIX_BUG, PREFIX_TEAPOT } from './util';
-import { loadTags, Tag } from './functions/tag';
-import Collection from '@discordjs/collection';
-import { Doc } from 'discordjs-docs-parser';
-import { InteractionType, APIInteraction } from 'discord-api-types/v10';
 import { webcrypto } from 'node:crypto';
-import { handleApplicationCommand } from './handling/handleApplicationCommand';
-import { handleApplicationCommandAutocomplete } from './handling/handleApplicationCommandAutocomplete';
-import { MDNIndexEntry } from './types/mdn';
-import { loadLatestNpmVersion } from './functions/npm';
-import { CustomSourcesString } from './types/discordjs-docs-parser';
-import { handleModalSubmit } from './handling/handleModalSubmit';
-import { handleComponent } from './handling/handleComponents';
+import process from 'node:process';
+import { TextEncoder } from 'node:util';
+import Collection from '@discordjs/collection';
+import type { APIInteraction } from 'discord-api-types/v10';
+import { InteractionType } from 'discord-api-types/v10';
+import { Doc } from 'discordjs-docs-parser';
+import type { Middleware, NextHandler, Request, Response } from 'polka';
+import polka from 'polka';
+import { loadLatestNpmVersion } from './functions/npm.js';
+import { loadTags } from './functions/tag.js';
+import type { Tag } from './functions/tag.js';
+import { handleApplicationCommand } from './handling/handleApplicationCommand.js';
+import { handleApplicationCommandAutocomplete } from './handling/handleApplicationCommandAutocomplete.js';
+import { handleComponent } from './handling/handleComponents.js';
+import { handleModalSubmit } from './handling/handleModalSubmit.js';
+import type { CustomSourcesString } from './types/discordjs-docs-parser.js';
+import type { MDNIndexEntry } from './types/mdn.js';
+import { API_BASE_MDN, PREFIX_TEAPOT, PREFIX_BUG } from './util/constants.js';
+import { jsonParser } from './util/jsonParser.js';
+import { logger } from './util/logger.js';
+import { prepareAck, prepareResponse } from './util/respond.js';
 
-// @ts-expect-error
 const { subtle } = webcrypto;
 
 const encoder = new TextEncoder();
 
 function hex2bin(hex: string) {
 	const buf = new Uint8Array(Math.ceil(hex.length / 2));
-	for (let i = 0; i < buf.length; i++) {
-		buf[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+	for (let index = 0; index < buf.length; index++) {
+		buf[index] = Number.parseInt(hex.slice(index * 2, index * 2 + 2), 16);
 	}
+
 	return buf;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-const PUBKEY = subtle.importKey('raw', hex2bin(process.env.DISCORD_PUBKEY!), 'Ed25519', true, ['verify']);
-const PORT = parseInt(process.env.PORT!, 10);
+const PUBKEY = await subtle.importKey('raw', hex2bin(process.env.DISCORD_PUBKEY!), 'Ed25519', true, ['verify']);
+
+const PORT = Number.parseInt(process.env.PORT!, 10);
 
 async function verify(req: Request, res: Response, next: NextHandler) {
 	if (!req.headers['x-signature-ed25519']) {
 		res.writeHead(401);
 		return res.end();
 	}
+
 	const signature = req.headers['x-signature-ed25519'] as string;
 	const timestamp = req.headers['x-signature-timestamp'] as string;
 
@@ -44,21 +53,20 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 	}
 
 	const hexSignature = hex2bin(signature);
-
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-	const isValid = await subtle.verify('Ed25519', await PUBKEY, hexSignature, encoder.encode(timestamp + req.rawBody));
+	const isValid = await subtle.verify('Ed25519', PUBKEY, hexSignature, encoder.encode(timestamp + req.rawBody));
 
 	if (!isValid) {
 		res.statusCode = 401;
 		return res.end();
 	}
-	void next();
+
+	return next();
 }
 
 const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
 const customSources = new Map<CustomSourcesString, string>();
-void loadTags(tagCache);
+await loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
 void loadLatestNpmVersion(customSources);
 
@@ -68,10 +76,10 @@ Doc.setGlobalOptions({
 
 export async function start() {
 	const mdnData = (await fetch(`${API_BASE_MDN}/en-US/search-index.json`)
-		.then((r) => r.json())
+		.then(async (response) => response.json())
 		.catch(() => undefined)) as MDNIndexEntry[] | undefined;
 	if (mdnData) {
-		mdnIndexCache.push(...mdnData.map((r) => ({ title: r.title, url: r.url })));
+		mdnIndexCache.push(...mdnData.map((entry) => ({ title: entry.title, url: entry.url })));
 	}
 
 	polka()

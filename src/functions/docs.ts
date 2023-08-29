@@ -1,24 +1,24 @@
 import { bold, hideLinkEmbed, hyperlink, underscore } from '@discordjs/builders';
-import { Doc, DocElement, DocTypes } from 'discordjs-docs-parser';
-import { Response } from 'polka';
-import { CustomSourcesStringUnion } from '../types/discordjs-docs-parser';
+import type { Doc, DocElement } from 'discordjs-docs-parser';
+import { DocTypes } from 'discordjs-docs-parser';
+import type { Response } from 'polka';
+import type { CustomSourcesStringUnion } from '../types/discordjs-docs-parser';
 import {
-	EMOJI_ID_CLASS,
-	EMOJI_ID_CLASS_DEV,
-	EMOJI_ID_DJS,
-	EMOJI_ID_DJS_DEV,
-	EMOJI_ID_EVENT,
-	EMOJI_ID_EVENT_DEV,
-	EMOJI_ID_FIELD,
-	EMOJI_ID_FIELD_DEV,
-	EMOJI_ID_INTERFACE,
 	EMOJI_ID_INTERFACE_DEV,
-	EMOJI_ID_METHOD,
+	EMOJI_ID_INTERFACE,
+	EMOJI_ID_FIELD_DEV,
+	EMOJI_ID_FIELD,
+	EMOJI_ID_CLASS_DEV,
+	EMOJI_ID_CLASS,
 	EMOJI_ID_METHOD_DEV,
-	prepareErrorResponse,
-	prepareResponse,
-	suggestionString,
-} from '../util';
+	EMOJI_ID_METHOD,
+	EMOJI_ID_EVENT_DEV,
+	EMOJI_ID_EVENT,
+	EMOJI_ID_DJS_DEV,
+	EMOJI_ID_DJS,
+} from '../util/constants.js';
+import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
+import { suggestionString } from '../util/suggestionString.js';
 
 function docTypeEmojiId(docType: DocTypes | null, dev = false): string {
 	switch (docType) {
@@ -83,8 +83,11 @@ export function resolveElementString(element: DocElement, doc: Doc): string {
 	if (element.access === 'private') parts.push(` ${bold('PRIVATE')}`);
 	if (element.deprecated) parts.push(` ${bold('DEPRECATED')}`);
 
-	const s = ((element.formattedDescription || element.description) ?? '').split('\n');
-	const description = s.length > 1 ? `${s[0]} ${hyperlink('(more...)', hideLinkEmbed(element.url ?? ''))}` : s[0];
+	const elementString = ((element.formattedDescription || element.description) ?? '').split('\n');
+	const description =
+		elementString.length > 1
+			? `${elementString[0]} ${hyperlink('(more...)', hideLinkEmbed(element.url ?? ''))}`
+			: elementString[0];
 
 	return `${parts.join('')}\n${description}`;
 }
@@ -110,9 +113,9 @@ export function djsDocs(
 	target?: string,
 	ephemeral?: boolean,
 ): Response {
-	query = query.trim();
+	const trimmedQuery = query.trim();
 
-	const singleResult = fetchDocResult(source, doc, query, target);
+	const singleResult = fetchDocResult(source, doc, trimmedQuery, target);
 	if (singleResult) {
 		prepareResponse(res, singleResult, ephemeral ?? false, target ? [target] : [], [], 4);
 		return res;

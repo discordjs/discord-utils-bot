@@ -1,7 +1,7 @@
-export interface PartialNpmAPIResponse {
+export type PartialNpmAPIResponse = {
 	['dist-tags']: {
-		latest: string;
 		dev: string;
+		latest: string;
 		'v13-lts': string;
 	};
-}
+};

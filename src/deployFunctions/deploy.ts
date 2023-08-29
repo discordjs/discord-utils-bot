@@ -1,8 +1,12 @@
+import { resolve, dirname } from 'node:path';
+import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import { config } from 'dotenv';
-import { resolve } from 'path';
 import { fetch } from 'undici';
-import { logger, API_BASE_DISCORD } from '../util';
-config({ path: resolve(__dirname, '../../.env') });
+import { API_BASE_DISCORD } from '../util/constants.js';
+import { logger } from '../util/logger.js';
+
+config({ path: resolve(dirname(fileURLToPath(import.meta.url)), '../../.env') });
 
 export async function deploy(data: any, dev = false) {
 	const midRoute = dev ? `/guilds/${process.env.DISCORD_DEVGUILD_ID!}` : '';
@@ -17,7 +21,7 @@ export async function deploy(data: any, dev = false) {
 			},
 			method: 'put',
 			body: JSON.stringify(data),
-		}).then((r) => r.json());
+		}).then(async (response) => response.json());
 		logger.info(res as string);
 		logger.info('Update completed');
 	} catch (error) {
