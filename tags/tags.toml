@@ -348,7 +348,6 @@ content = """
 keywords = ["join-roles", "autoroles", "auto-role"]
 content = """
 Join roles have often unwanted side effects!
-- Assigning a role bypasses verification and security features on Discord
 - Can quickly become API spam and hit rate limits rapidly
 - The server depends on the bot being online and the API to be functional
 The `@everyone` role is much better suited for announcements
