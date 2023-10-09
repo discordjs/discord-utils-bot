@@ -22,7 +22,7 @@ function urlReplacer(_: string, label: string, link: string, version: string) {
 
 function findRec(object: any, name: string, type: QueryType, module?: string, source?: string): any {
 	const lowerName = name.toLowerCase();
-	const resolvedModule = module ?? object?.type === 'module' ? object?.name.toLowerCase() : undefined;
+	const resolvedModule = object?.type === 'module' ? object?.name.toLowerCase() : module ?? undefined;
 	if (object?.name?.toLowerCase() === lowerName && object?.type === type) {
 		object.module = resolvedModule;
 		return object;
@@ -32,32 +32,14 @@ function findRec(object: any, name: string, type: QueryType, module?: string, so
 	for (const prop of Object.keys(object)) {
 		if (Array.isArray(object[prop])) {
 			for (const entry of object[prop]) {
-				const res = findRec(entry, name, type, module, object.source ?? object._source);
+				const res = findRec(entry, name, type, resolvedModule, object.source ?? object._source);
 				if (res) {
-					object.module = module;
+					object.module = resolvedModule;
 					return res;
 				}
 			}
 		}
 	}
-}
-
-function formatForURL(text: string): string {
-	return text
-		.toLowerCase()
-		.replaceAll(/[ )[]`]/g, '')
-		.replaceAll(/[(,.:]/g, '_');
-}
-
-function formatAnchor(text: string, module: string): string {
-	return `#${formatForURL(module)}_${formatForURL(text)}`;
-}
-
-function parseNameFromSource(source?: string): string | null {
-	if (!source) return null;
-	const reg = /.+\/api\/(.+)\..*/g;
-	const match = reg.exec(source);
-	return match?.[1] ?? null;
 }
 
 function findResult(data: any, query: string) {
@@ -68,6 +50,10 @@ function findResult(data: any, query: string) {
 			return res;
 		}
 	}
+}
+
+function docsUrl(version: string, module: string, type: string, name: string) {
+	return `${API_BASE_NODE}/docs/${version}/api/${module}.html#${type}-${name.toLowerCase()}`;
 }
 
 const cache: Map<string, NodeDocs> = new Map();
@@ -104,14 +90,11 @@ export async function nodeSearch(
 			return res;
 		}
 
-		const moduleName = result.module ?? result.name.toLowerCase();
-		const moduleURL = `${API_BASE_NODE}/docs/${version}/api/${
-			parseNameFromSource(result.source ?? result._source) ?? formatForURL(moduleName as string)
-		}`;
-		const anchor = ['module', 'misc'].includes(result.type) ? '' : formatAnchor(result.textRaw, moduleName as string);
-		const fullURL = `${moduleURL}.html${anchor}`;
 		const parts = [
-			`<:node:${EMOJI_ID_NODE}>  ${underscore(bold(hyperlink(result.textRaw as string, hideLinkEmbed(fullURL))))}`,
+			`<:node:${EMOJI_ID_NODE}> ${hyperlink(
+				result.textRaw,
+				docsUrl(version, result.module, result.type, result.name),
+			)}`,
 		];
 
 		const intro = td.turndown(result.desc ?? '').split('\n\n')[0];
@@ -123,6 +106,7 @@ export async function nodeSearch(
 				.replaceAll(linkReplaceRegex, (_, label, link) => urlReplacer(_, label, link, version))
 				.replaceAll(boldCodeBlockRegex, bold(inlineCode('$1'))),
 		);
+
 		prepareResponse(
 			res,
 			`${target ? `${italic(`Documentation suggestion for ${userMention(target)}:`)}\n` : ''}${parts.join('\n')}`,
