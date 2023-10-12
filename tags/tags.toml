@@ -1181,3 +1181,12 @@ content = """
 To get multiple images to display within one embed, use multiple embeds within the same message that use the same URL `.setURL(x)`/`url: x`.
 *Note that this is meant for discord-side embeds and may break without notice.*
 """
+[invite-tracker]
+keywords = ["track-invite", "used-invite", "invite-used"]
+content = """ 
+Discord does not provide the invite which a member used to join. To get the invite you would have to create an invite tracking system yourself.
+These are more often than not unreliable and we do not recommend it. 
+The current recommended way is to check __manually__ by using the members tab.  
+This feature is not yet documented for bots. 
+""" 
+=======
