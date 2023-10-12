@@ -1187,5 +1187,5 @@ content = """
 Discord does not provide the invite which a member used to join. To get the invite you would have to create an invite tracking system yourself.
 These are more often than not unreliable and we do not recommend it. 
 The current recommended way is to check __manually__ by using the members tab.  
-This feature is not yet documented for bots. 
+It is unsure whether this feature will ever be available to bots
 """ 
