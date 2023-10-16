@@ -47,7 +47,7 @@
 		"polka": "1.0.0-next.15",
 		"readdirp": "^3.6.0",
 		"turndown": "^7.1.2",
-		"undici": "^5.23.0"
+		"undici": "^5.26.2"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.7.1",
