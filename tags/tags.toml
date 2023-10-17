@@ -1181,11 +1181,11 @@ content = """
 To get multiple images to display within one embed, use multiple embeds within the same message that use the same URL `.setURL(x)`/`url: x`.
 *Note that this is meant for discord-side embeds and may break without notice.*
 """
+
 [invite-tracker]
 keywords = ["tracking-invites", "used-invite", "who-invited-a-user"]
 content = """ 
-Discord does not provide the invite which a member used to join. To get the invite you would have to create an invite tracking system yourself.
-These are more often than not unreliable and we do not recommend it. 
-The current recommended way is to check __manually__ by using the members tab.  
-It is unsure whether this feature will ever be available to bots
+Discord does not provide the invite that a member used to join through the bot API.
+- Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
+- Discord has not shared any plans to make the members tab available for bots
 """ 
