@@ -478,7 +478,7 @@ keywords = ["massdm", "dmall", "dmal-all"]
 content = """
 Mass DMing users is not allowed as per developer ToS, considered spam and can get you and your bot banned.
 - Mention `@everyone` to inform all your users at once instead
-- Discord Developer Terms of Service: [learn more](https://discordapp.com/developers/docs/legal) | [FAQ summary](https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e)
+- Discord Developer Terms of Service: [learn more](https://discord.com/developers/docs/legal) | [FAQ summary](https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e)
 """
 
 [send]
@@ -764,7 +764,7 @@ content = """
 keywords = ["emoji-regex", "em-regex", "regexemoji", "regex-emoji"]
 content = """
 - For unicode emojis (twemoji): [learn more](https://github.com/twitter/twemoji/blob/v12.0.1/2/twemoji.js#L228)
-- Custom emojis: `/<?(a)?:?(\\w{2,32}):(\\d{17,19})>?/`  [learn more](https://discordapp.com/developers/docs/reference#message-formatting)
+- Custom emojis: `/<?(a)?:?(\\w{2,32}):(\\d{17,19})>?/`  [learn more](https://discord.com/developers/docs/reference#message-formatting)
 """
 
 [hacktober]
