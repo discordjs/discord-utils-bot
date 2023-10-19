@@ -80,13 +80,27 @@ Learn more about text input limits at the [Discord Developer Documentation](http
 """
 
 [filesystem]
-keywords = ["fs", "files-system", "writefile", "readfile", "write-file", "read-file"]
+keywords = [
+    "fs",
+    "files-system",
+    "writefile",
+    "readfile",
+    "write-file",
+    "read-file",
+]
 content = """
 Reading from and writing to files with nodes fs module: [learn more](https://nodejs.org/api/fs.html#fs_file_system)
 """
 
 [message-formatting]
-keywords = ["messageformatting", "message-formats", "formats", "emoji-format", "timestamp-format", "date-format"]
+keywords = [
+    "messageformatting",
+    "message-formats",
+    "formats",
+    "emoji-format",
+    "timestamp-format",
+    "date-format",
+]
 content = """
 Message formatting (mentions, timestamps, emoji, etc.): [learn more](https://discord.com/developers/docs/reference#message-formatting)
 """
@@ -197,7 +211,14 @@ const channel = guild.channels.cache.find(channel => channel.name === "general")
 """
 
 [node-version]
-keywords = ["nv", "flat", "fields-flat", "catch-{", "update-node", "abortcontroller"]
+keywords = [
+    "nv",
+    "flat",
+    "fields-flat",
+    "catch-{",
+    "update-node",
+    "abortcontroller",
+]
 content = """
 Please update Node.js to version 16.11.0 or newer!
 - [Download](https://nodejs.org/en/download)
@@ -214,7 +235,19 @@ Found a bug in discord.js?
 """
 
 [logit]
-keywords = ["log-it", "debuglogs", "debug-log", "console.log", "consolelog", "console-log", "clog", "no-error", "noerror", "no-errors", "clg"]
+keywords = [
+    "log-it",
+    "debuglogs",
+    "debug-log",
+    "console.log",
+    "consolelog",
+    "console-log",
+    "clog",
+    "no-error",
+    "noerror",
+    "no-errors",
+    "clg",
+]
 content = """
 If you aren't getting any errors, try to place `console.log` checkpoints throughout your code to find out where execution stops.
 - Once you do, log relevant values and if-conditions
@@ -286,7 +319,15 @@ Enable developer mode to gain access to the "copy id" context menu: [learn more]
 """
 
 [token-reset]
-keywords = ["tokenreset", "reset-token", "token-danger", "token-compromised", "regen-token", "token-leak", "tokenleak"]
+keywords = [
+    "tokenreset",
+    "reset-token",
+    "token-danger",
+    "token-compromised",
+    "regen-token",
+    "token-leak",
+    "tokenleak",
+]
 content = """
 - Visit the [Discord developer application dashboard](https://discord.com/developers/applications) and select the corresponding application
 - Click on "Bot" on the left side
@@ -409,7 +450,14 @@ Note: You cannot check if you can send a DM beforehand but have to handle the [r
 """
 
 [path]
-keywords = ["paths", "relative-path", "absolute-path", "path-types", "file-path", "filepath"]
+keywords = [
+    "paths",
+    "relative-path",
+    "absolute-path",
+    "path-types",
+    "file-path",
+    "filepath",
+]
 content = """
 - File paths explained in detail: [learn more](https://www.redhat.com/sysadmin/linux-path-absolute-relative)
 - `.` refers to the current directory
@@ -418,7 +466,16 @@ content = """
 """
 
 [database]
-keywords = ["databases", "postgres", "maria", "mysql", "sql", "nosql", "mongo", "db"]
+keywords = [
+    "databases",
+    "postgres",
+    "maria",
+    "mysql",
+    "sql",
+    "nosql",
+    "mongo",
+    "db",
+]
 content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
 - PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](http://www.postgresqltutorial.com)
@@ -542,7 +599,13 @@ Determining your discord.js version:
 """
 
 [token]
-keywords = ["client-secret", "invalid-token", "secret", "incorrect-login-details", "incorrect-login"]
+keywords = [
+    "client-secret",
+    "invalid-token",
+    "secret",
+    "incorrect-login-details",
+    "incorrect-login",
+]
 content = """
 Finding your bot token:
 - Visit the [application dashboard](https://discord.com/developers/applications/me) and select your application
@@ -552,7 +615,13 @@ Note: Remember to change the token in your application after you reset it
 """
 
 [promise]
-keywords = ["promises", "async/await", "await", "async", "await-is-only-valid-in-async-function"]
+keywords = [
+    "promises",
+    "async/await",
+    "await",
+    "async",
+    "await-is-only-valid-in-async-function",
+]
 content = """
 Resources to understand Promise:
 - MDN: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
@@ -605,7 +674,15 @@ x = 1; // assigning x to a value
 """
 
 [timers]
-keywords = ["settimouet", "set-timeout", "interval", "set-interval", "immediate", "set-immediate", "node-timers"]
+keywords = [
+    "settimouet",
+    "set-timeout",
+    "interval",
+    "set-interval",
+    "immediate",
+    "set-immediate",
+    "node-timers",
+]
 content = """
 Controlling the flow of time in Node.js:
 - Guide on base Node.js timers: [learn more](https://nodejs.org/en/docs/guides/timers-in-node/)
@@ -618,7 +695,12 @@ To share long code snippets, use a service like [gist](https://gist.github.com),
 """
 
 [frameworks]
-keywords = ["framework", "discord.js-framework", "djs-framework", "djs-frameworks"]
+keywords = [
+    "framework",
+    "discord.js-framework",
+    "djs-framework",
+    "djs-frameworks",
+]
 content = """
 Currently the only actively maintained and updated framework is [Sapphire](https://github.com/sapphiredev/framework)
 """
@@ -665,7 +747,12 @@ const client = new Client({
 """
 
 [third-party-libraries]
-keywords = ["discord-buttons", "discordbuttons", "discord-modals", "discordmodals"]
+keywords = [
+    "discord-buttons",
+    "discordbuttons",
+    "discord-modals",
+    "discordmodals",
+]
 content = """
 **We do not provide any help with third party libraries**
 Buttons and Modals are supported natively.
@@ -716,7 +803,13 @@ To install run: `npm install discord.js`
 hoisted = true
 
 [token-anatomy]
-keywords = ["token-parts", "tokenparts", "tokenformat", "token-breakdown", "tokenbreakdown"]
+keywords = [
+    "token-parts",
+    "tokenparts",
+    "tokenformat",
+    "token-breakdown",
+    "tokenbreakdown",
+]
 content = """
 https://i.imgur.com/7WdehGn.png
 """
@@ -889,7 +982,13 @@ client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 """
 
 [add-to-server-button]
-keywords = ["add-to-server", "ats", "profile-invite", "authorization-link", "auth-link"]
+keywords = [
+    "add-to-server",
+    "ats",
+    "profile-invite",
+    "authorization-link",
+    "auth-link",
+]
 content = """
 **"Add to Server" button**
 - [Developer Portal](https://discord.com/developers/applications) > Your app > OAuth2 (General) > Default Authorization Link
@@ -1121,8 +1220,12 @@ Common causes of `DiscordAPIError[10015]: Unknown webhook`:
 """
 
 [unauthorized-action]
-keywords = ["unauthorised-action", "DiscordAPIError[20012]:-You-are-not-authorized", "20012"]
-content="""
+keywords = [
+    "unauthorised-action",
+    "DiscordAPIError[20012]:-You-are-not-authorized",
+    "20012",
+]
+content = """
 `DiscordAPIError[20012]: You are not authorized to perform this action on this application`:
 - The supplied client id and token do not belong to the same application.
 - Usually encountered when trying to deploy application commands.
@@ -1180,4 +1283,12 @@ keywords = ["images-in-embed", "embed-tiles", "image-tiles"]
 content = """
 To get multiple images to display within one embed, use multiple embeds within the same message that use the same URL `.setURL(x)`/`url: x`.
 *Note that this is meant for discord-side embeds and may break without notice.*
+"""
+
+[invite-tracker]
+keywords = ["tracking-invites", "used-invite", "who-invited-a-user"]
+content = """ 
+Discord does not provide the invite that a member used to join through the bot API.
+- Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
+- Discord has not shared any plans to make the members tab available for bots.
 """
