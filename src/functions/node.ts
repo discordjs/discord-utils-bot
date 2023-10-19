@@ -53,7 +53,7 @@ function findResult(data: any, query: string) {
 }
 
 function formatAnchorText(anchorTextRaw: string) {
-	return anchorTextRaw.replaceAll(/\W/g, (match) => (match === ' ' ? '-' : ''));
+	return anchorTextRaw.replaceAll(/\W/g, (match) => (match === ' ' ? '-' : '')).toLowerCase();
 }
 
 function parsePageFromSource(source: string): string | null {
