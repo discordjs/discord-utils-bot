@@ -23,12 +23,12 @@ function urlReplacer(_: string, label: string, link: string, version: string) {
 function findRec(object: any, name: string, type: QueryType, module?: string, source?: string): any {
 	const lowerName = name.toLowerCase();
 	const resolvedModule = object?.type === 'module' ? object?.name.toLowerCase() : module ?? undefined;
+	object._source = source;
 	if (object?.name?.toLowerCase() === lowerName && object?.type === type) {
 		object.module = resolvedModule;
 		return object;
 	}
 
-	object._source = source;
 	for (const prop of Object.keys(object)) {
 		if (Array.isArray(object[prop])) {
 			for (const entry of object[prop]) {
@@ -52,8 +52,18 @@ function findResult(data: any, query: string) {
 	}
 }
 
-function docsUrl(version: string, module: string, type: string, name: string) {
-	return `${API_BASE_NODE}/docs/${version}/api/${module}.html#${type}-${name.toLowerCase()}`;
+function formatAnchorText(anchorTextRaw: string) {
+	return anchorTextRaw.replaceAll(/\W/g, (match) => (match === ' ' ? '-' : '')).toLowerCase();
+}
+
+function parsePageFromSource(source: string): string | null {
+	const reg = /.+\/api\/(.+)\..*/g;
+	const match = reg.exec(source);
+	return match?.[1] ?? null;
+}
+
+function docsUrl(version: string, source: string, anchorTextRaw: string) {
+	return `${API_BASE_NODE}/docs/${version}/api/${parsePageFromSource(source)}.html#${formatAnchorText(anchorTextRaw)}`;
 }
 
 const cache: Map<string, NodeDocs> = new Map();
@@ -93,7 +103,7 @@ export async function nodeSearch(
 		const parts = [
 			`<:node:${EMOJI_ID_NODE}> ${hyperlink(
 				result.textRaw,
-				docsUrl(version, result.module, result.type, result.name),
+				docsUrl(version, result.source ?? result._source, result.textRaw),
 			)}`,
 		];
 
