@@ -1292,3 +1292,9 @@ Discord does not provide the invite that a member used to join through the bot A
 - Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
 - Discord has not shared any plans to make the members tab available for bots.
 """
+
+[try]
+keywords = ["try-it", "try-it-and-see"]
+content = """ 
+https://tryitands.ee/
+"""
