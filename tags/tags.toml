@@ -220,7 +220,7 @@ keywords = [
     "abortcontroller",
 ]
 content = """
-Please update Node.js to the LTS version!
+Please update Node.js to the [current LTS](https://nodejs.org/) (long-term support) version!
 - [Download](https://nodejs.org/en/download)
 - [Linux (nodesource)](https://github.com/nodesource/distributions)
 """
