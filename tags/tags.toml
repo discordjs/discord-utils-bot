@@ -157,7 +157,7 @@ content = """
 keywords = ["nodeevents", "events"]
 content = """
 - Node event API: [learn more](https://nodejs.org/api/events.html#events_events)
-- Node event loop: [learn more](https://nodejs.org/uk/docs/guides/event-loop-timers-and-nexttick)
+- Node event loop: [learn more](https://nodejs.org/en/guides/event-loop-timers-and-nexttick)
 """
 
 [spoiler]
