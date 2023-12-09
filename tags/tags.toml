@@ -137,14 +137,6 @@ Channel name and topic changes are limited to roughly 2 times per 10 minutes.
 If your channel changes are not going through, this might be why.
 """
 
-[token-regen]
-keywords = ["token-refresh"]
-content = """
-> All my bot tokens are refreshing non stop!
-Discord does not actually store any tokens in their database. Whenever you visit the page it will generate a new token for you.
-Unless you press the "generate new token" button all of these tokens are valid.
-"""
-
 [faq]
 keywords = ["frequently-asked-questions", "guide-faq", "guidefaq"]
 content = """
@@ -385,16 +377,6 @@ content = """
 - ffmpeg-binaries is [deprecated](https://www.npmjs.com/package/ffmpeg-binaries), uninstall it with `npm rm ffmpeg-binaries`
 """
 
-[joinroles]
-keywords = ["join-roles", "autoroles", "auto-role"]
-content = """
-Join roles have often unwanted side effects!
-- Assigning a role bypasses verification and security features on Discord
-- Can quickly become API spam and hit rate limits rapidly
-- The server depends on the bot being online and the API to be functional
-The `@everyone` role is much better suited for announcements
-"""
-
 [fetch]
 keywords = ["undici", "node-fetch", "http-requests", "call-rest-apis"]
 content = """
@@ -538,20 +520,6 @@ Mass DMing users is not allowed as per developer ToS, considered spam and can ge
 - Discord Developer Terms of Service: [learn more](https://discord.com/developers/docs/legal) | [FAQ summary](https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e)
 """
 
-[send]
-keywords = ["v13send", "v13-send"]
-content = """
-Sending and editing now takes only a single object parameter!
-```diff
-- channel.send(embed);
-+ channel.send({ embeds: [embed, embed2] });
-- channel.send('Hello!', { embed });
-+ channel.send({ content: 'Hello!', embeds: [embed, embed2] });
-```
-- V12-v13 migration guide: [learn more](https://discordjs.guide/additional-info/changes-in-v13.html)
-- V13-v14 migration guide: [learn more](https://discordjs.guide/additional-info/changes-in-v14.html)
-"""
-
 [codeblock]
 keywords = ["code-block", "code-blocks", "cb", "code-box", "codebox"]
 content = """
@@ -649,16 +617,6 @@ We are not Discord, just some nerds who develop Discord bots!
 - [/support](https://dis.gd/support) anything Discord related
 - [/billing](https://dis.gd/billing) payment/nitro
 - [/feedback](https://dis.gd/feedback) feedback/feature requests
-"""
-
-[docgen]
-keywords = ["doc-gen", "djs-docs"]
-content = """
-How we generate our documentation:
-- (1) Source code is run through the [docgen](https://github.com/discordjs/discord.js/tree/main/packages/docgen) to parse JSDocs and Markdown files, generating a single JSON file with documentation data
-- (2) The output JSON file is named by the branch or tag name and committed to the docs branch of its corresponding repository
-- (3) The [website](https://github.com/discordjs/website) pulls a list of branches and tags from GitHub, with the repo being specified in a [DataSource](https://github.com/discordjs/website/tree/main/src/data)
-- (4) The website downloads the JSON file from the docs branch for the selected tag/branch, then parses and displays it
 """
 
 [equals]
@@ -802,18 +760,6 @@ To install run: `npm install discord.js`
 """
 hoisted = true
 
-[token-anatomy]
-keywords = [
-    "token-parts",
-    "tokenparts",
-    "tokenformat",
-    "token-breakdown",
-    "tokenbreakdown",
-]
-content = """
-https://i.imgur.com/7WdehGn.png
-"""
-
 [tag-username]
 keywords = ["tagusername", "tag-username-difference"]
 content = """
@@ -860,24 +806,6 @@ content = """
 - Custom emojis: `/<?(a)?:?(\\w{2,32}):(\\d{17,19})>?/`  [learn more](https://discord.com/developers/docs/reference#message-formatting)
 """
 
-[hacktober]
-keywords = ["doshirt", "wantshirt", "dotree", "🌳", "🎃"]
-content = """
-"Hacktober" contribute to open source, get a shirt or plant a tree: [learn more](https://hacktoberfest.digitalocean.com)
-- low-effort PRs will be invalidated, as will PR-farm repositories
-"""
-
-[delete-timeout]
-keywords = ["deletetimeout", "delete", "message#delete"]
-content = """
-The timeout option has been removed from the [Message#delete](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/Message?scrollTo=delete) method.
-```diff
-- message.delete(5000)
-- message.delete({ timeout: 5000 })
-+ setTimeout(() => { message.delete() }, 5000)
-```
-"""
-
 [embed-files]
 keywords = ["embed-attachments", "embed-attach"]
 content = """
@@ -920,29 +848,6 @@ Version 14 has released! Please update at your earliest convenience.
 - [Update guide](https://discordjs.guide/additional-info/changes-in-v14.html) (use `CTRL` + `F` to search for the old method or property)
 """
 hoisted = true
-
-[filter]
-keywords = ["collector-filter"]
-content = """
-The filter for collectors has moved into the options:
-```diff
-- const collector = message.createReactionCollector(collectorFilter, { ...options });
-+ const collector = message.createReactionCollector({ filter: collectorFilter, ...options });
-```
-"""
-
-[event-removal]
-keywords = ["messageCreate", "interactionCreate"]
-content = """
-The `message` and `interaction` events were renamed to `messageCreate` and `interactionCreate` respectively, to bring the library in line with Discord's naming conventions.
-
-```diff
-- client.on('message', message => { ... });
-+ client.on('messageCreate', message => { ... });
-- client.on('interaction', interaction => { ... });
-+ client.on('interactionCreate', interaction => { ... });
-```
-"""
 
 [intents]
 keywords = ["no-members"]
@@ -996,19 +901,6 @@ content = """
 - Check scopes `bot` and `applications.commands`
 
 Image: https://i.imgur.com/taMHw7o.png
-"""
-
-[author-footer]
-keywords = ["footer", "author", "setFooter", "setAuthor"]
-content = """
-`v13` `<MessageEmbed>.setFooter()` and `<MessageEmbed>.setAuthor()` now each take an object:
-```diff
-- embed.setAuthor('This is an example text', 'https://example.com/icon.png', 'https://websiteofauthor.com')
-+ embed.setAuthor({ name: 'This is an example text', url: 'https://websiteofauthor.com', iconURL: 'https://example.com/icon.png' })
-
-- embed.setFooter('This is an example text', 'https://example.com/icon.png')
-+ embed.setFooter({ text: 'This is an example text', iconURL: 'https://example.com/icon.png' })
-```
 """
 
 [already-acknowledged]
