@@ -1188,7 +1188,7 @@ Discord does not provide the invite that a member used to join through the bot A
 [guilds-cache]
 keywords = ["guilds-intent", "channel-cache", "cache-fetch"]
 content = """ 
-If you have the Guilds intent, the following items will guaranteed to always be cached and do not need to be fetched:
+If you have the Guilds intent, the following structures will guaranteed to always be cached and do not need to be fetched:
 - Guilds
 - Channels (both `<Guild>.channels` and `<Client>.channels`), apart from DMChannels and threads.
 - Roles 
