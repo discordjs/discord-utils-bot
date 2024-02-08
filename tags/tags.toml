@@ -1184,3 +1184,21 @@ Discord does not provide the invite that a member used to join through the bot A
 - Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
 - Discord has not shared any plans to make the members tab available for bots.
 """
+
+[guilds-cache]
+keywords = ["guilds-intent", "channel-cache", "cache-fetch"]
+content = """ 
+If you have the Guilds intent, the following items will guaranteed to always be cached and do not need to be fetched:
+- Guilds
+- Channels (both `<Guild>.channels` and `<Client>.channels`), apart from DMChannels and threads.
+- Roles 
+- Emotes
+
+For typescript users:
+You can specify the `"cached"` type parameter on the interaction, eg `ButtonInteraction<"cached">`, or use the `<Interaction>.inCachedGuild()` typeguard, to remove the possible null on `<Interaction>.guild`
+
+`<Guild>.members.cache` and `<Client>.users.cache` only contains members or users that interacted with your bot; you would have to fetch to be sure.
+Fetch checks the cache first and makes an api request if the structure is not cached.
+
+*Note: A guild will always remain in cache even if its unavailable*
+"""
