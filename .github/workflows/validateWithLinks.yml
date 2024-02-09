@@ -9,8 +9,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Node v20
-        uses: actions/setup-node@v3
+      - name: Install node20 runtime
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
