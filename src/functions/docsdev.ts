@@ -18,6 +18,10 @@ import {
 	EMOJI_ID_DJS,
 	MAX_MESSAGE_LENGTH,
 	DJS_DOCS_BASE,
+	EMOJI_ID_ENUM_DEV,
+	EMOJI_ID_ENUM,
+	EMOJI_ID_VARIABLE,
+	EMOJI_ID_VARIABLE_DEV,
 } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
@@ -68,21 +72,35 @@ export async function fetchDocItem(
 }
 
 function itemKindEmoji(itemKind: string, dev = false): [string, string] {
+	const lowerItemKind = itemKind.toLowerCase();
 	switch (itemKind) {
 		case 'Typedef':
+		case 'TypeAlias':
 		case 'Interface':
-			return [dev ? EMOJI_ID_INTERFACE_DEV : EMOJI_ID_INTERFACE, 'interface'];
+		case 'Model':
+			return [dev ? EMOJI_ID_INTERFACE_DEV : EMOJI_ID_INTERFACE, lowerItemKind];
+		case 'PropertySignature':
 		case 'Property':
-			return [dev ? EMOJI_ID_FIELD_DEV : EMOJI_ID_FIELD, 'property'];
+		case 'IndexSignature':
+			return [dev ? EMOJI_ID_FIELD_DEV : EMOJI_ID_FIELD, lowerItemKind];
 		case 'Class':
-			return [dev ? EMOJI_ID_CLASS_DEV : EMOJI_ID_CLASS, 'class'];
+		case 'Constructor':
+		case 'ConstructSignature':
+			return [dev ? EMOJI_ID_CLASS_DEV : EMOJI_ID_CLASS, lowerItemKind];
 		case 'Method':
+		case 'MethodSignature':
 		case 'Function':
-			return [dev ? EMOJI_ID_METHOD_DEV : EMOJI_ID_METHOD, 'method'];
+		case 'CallSignature':
+			return [dev ? EMOJI_ID_METHOD_DEV : EMOJI_ID_METHOD, lowerItemKind];
 		case 'Event':
-			return [dev ? EMOJI_ID_EVENT_DEV : EMOJI_ID_EVENT, 'event'];
+			return [dev ? EMOJI_ID_EVENT_DEV : EMOJI_ID_EVENT, lowerItemKind];
+		case 'Enum':
+		case 'EnumMember':
+			return [dev ? EMOJI_ID_ENUM_DEV : EMOJI_ID_ENUM, lowerItemKind];
+		case 'Variable':
+			return [dev ? EMOJI_ID_VARIABLE_DEV : EMOJI_ID_VARIABLE, lowerItemKind];
 		default:
-			return [dev ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS, 'djs'];
+			return [dev ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS, lowerItemKind];
 	}
 }
 
