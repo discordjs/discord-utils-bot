@@ -1,117 +1,218 @@
-import { ApiItemKind } from '@microsoft/api-extractor-model';
+import process from 'node:process';
+import { bold, codeBlock, hyperlink, inlineCode, strikethrough, underscore } from '@discordjs/builders';
 import { InteractionResponseType } from 'discord-api-types/v10';
-import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
-import type { Database } from '../types/djs-db';
+import { fetch } from 'undici';
 import {
+	EMOJI_ID_INTERFACE_DEV,
+	EMOJI_ID_INTERFACE,
+	EMOJI_ID_FIELD_DEV,
+	EMOJI_ID_FIELD,
 	EMOJI_ID_CLASS_DEV,
 	EMOJI_ID_CLASS,
 	EMOJI_ID_METHOD_DEV,
 	EMOJI_ID_METHOD,
-	EMOJI_ID_ENUM_DEV,
-	EMOJI_ID_ENUM,
-	EMOJI_ID_INTERFACE_DEV,
-	EMOJI_ID_INTERFACE,
-	EMOJI_ID_VARIABLE_DEV,
-	EMOJI_ID_Variable,
+	EMOJI_ID_EVENT_DEV,
+	EMOJI_ID_EVENT,
 	EMOJI_ID_DJS_DEV,
 	EMOJI_ID_DJS,
-	WEBSITE_URL_ROOT,
-	EMOJI_ID_FIELD_DEV,
-	EMOJI_ID_FIELD,
+	MAX_MESSAGE_LENGTH,
+	DJS_DOCS_BASE,
 } from '../util/constants.js';
+import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
-import { suggestionString } from '../util/suggestionString.js';
-import type { DocsElement } from './djsDocs.js';
-import { fetchVersions, generateElementIdentifier, parseDocsPath, fetchDocs } from './djsDocs.js';
+import { truncate } from '../util/truncate.js';
 
-function resolveEmoji(kind: ApiItemKind, dev = false) {
-	const lowerKind = kind.toLowerCase();
-	switch (kind) {
-		case ApiItemKind.Class:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_CLASS_DEV : EMOJI_ID_CLASS}>`;
-		case ApiItemKind.Function:
-		case ApiItemKind.Method:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_METHOD_DEV : EMOJI_ID_METHOD}>`;
-		case ApiItemKind.Enum:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_ENUM_DEV : EMOJI_ID_ENUM}>`;
-		case ApiItemKind.Interface:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_INTERFACE_DEV : EMOJI_ID_INTERFACE}>`;
-		case ApiItemKind.Variable:
-		case ApiItemKind.TypeAlias:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_VARIABLE_DEV : EMOJI_ID_Variable}>`;
-		case ApiItemKind.Property:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_FIELD_DEV : EMOJI_ID_FIELD}>`;
+/**
+ * Vercel blob store format
+ *
+ * Format: path/pkg/item
+ * Item: branch.itemName.itemKind.api.json
+ * Example: https://bpwrdvqzqnllsihg.public.blob.vercel-storage.com/rewrite/discord.js/main.actionrow.class.api.json
+ */
+
+type CacheEntry = {
+	timestamp: number;
+	value: any;
+};
+
+const docsCache = new Map<string, CacheEntry>();
+
+export async function fetchDocItem(
+	_package: string,
+	branch: string,
+	itemName: string,
+	itemKind: string,
+): Promise<any | null> {
+	try {
+		const key = `rewrite/${_package}/${branch}.${itemName}.${itemKind}`;
+		const hit = docsCache.get(key);
+
+		if (hit) {
+			return hit.value;
+		}
+
+		const resourceLink = `${process.env.DJS_BLOB_STORAGE_BASE!}/${key}.api.json`;
+		logger.debug(`Requesting documentation from vercel: ${resourceLink}`);
+		const value = await fetch(resourceLink).then(async (result) => result.json());
+
+		docsCache.set(key, {
+			timestamp: Date.now(),
+			value,
+		});
+
+		return value;
+	} catch {
+		return null;
+	}
+}
+
+function itemKindEmoji(itemKind: string, dev = false): [string, string] {
+	switch (itemKind) {
+		case 'Typedef':
+		case 'Interface':
+			return [dev ? EMOJI_ID_INTERFACE_DEV : EMOJI_ID_INTERFACE, 'interface'];
+		case 'Property':
+			return [dev ? EMOJI_ID_FIELD_DEV : EMOJI_ID_FIELD, 'property'];
+		case 'Class':
+			return [dev ? EMOJI_ID_CLASS_DEV : EMOJI_ID_CLASS, 'class'];
+		case 'Method':
+		case 'Function':
+			return [dev ? EMOJI_ID_METHOD_DEV : EMOJI_ID_METHOD, 'method'];
+		case 'Event':
+			return [dev ? EMOJI_ID_EVENT_DEV : EMOJI_ID_EVENT, 'event'];
 		default:
-			return `<:${lowerKind}:${dev ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS}>`;
+			return [dev ? EMOJI_ID_DJS_DEV : EMOJI_ID_DJS, 'djs'];
 	}
 }
 
-function elementLink(item: DocsElement, source: string, version: string, emphasis = false) {
-	const identifier = generateElementIdentifier(item);
-	const link = `[${identifier}](${WEBSITE_URL_ROOT}${item.path} "${identifier} at ${source}/${version}")`;
-	return emphasis ? `**__${link}__**` : link;
+function docsLink(item: any, _package: string, version: string, attribute?: string) {
+	return `${DJS_DOCS_BASE}/packages/${_package}/${version}/${item.displayName}:${item.kind}${
+		attribute ? `#${attribute}` : ''
+	}`;
 }
 
-function formatResult(item: DocsElement, source: string, version: string) {
-	const headlineParts = [resolveEmoji(item.kind, version === 'main'), elementLink(item, source, version, true)];
-
-	if (item.extendsFrom?.[0]) {
-		headlineParts.push(`(extends ${elementLink(item.extendsFrom[0], source, version)})`);
+function preparePotential(potential: any, member: any, topLevelDisplayName: string): any | null {
+	if (potential.displayName?.toLowerCase() === member.toLowerCase()) {
+		return {
+			...potential,
+			displayName: `${topLevelDisplayName}#${potential.displayName}`,
+		};
 	}
 
-	if (item.deprecated) {
-		headlineParts.push('**[DEPRECATED]**');
-	}
-
-	if (item.readonly) {
-		headlineParts.push('*{readonly}*');
-	}
-
-	headlineParts.push(`*\`${version}\`*`);
-
-	return [headlineParts.join(' '), item.summary].join('\n');
+	return null;
 }
 
-export async function djsDocsDev(
-	db: Kysely<Database>,
-	res: Response,
-	query: string,
-	target?: string,
-	ephemeral?: boolean,
-) {
-	// '/docs/packages/builders/main/EmbedBuilder:Class'
-	const parts = parseDocsPath(query);
-
-	if (!parts.class || !parts.item || !parts.package || !parts.version) {
-		prepareErrorResponse(res, 'Unexpected payload format');
-		return res;
+function effectiveItem(item: any, member?: string) {
+	if (!member) {
+		return item;
 	}
 
-	const docsItem = await fetchDocs(db, {
-		params: {
-			package: parts.package,
-			version: parts.version,
-			item: parts.item,
-		},
-	});
-
-	if (!docsItem) {
-		return;
+	const iterable = Array.isArray(item.members);
+	if (Array.isArray(item.members)) {
+		for (const potential of item.members) {
+			const hit = preparePotential(potential, member, item.displayName);
+			if (hit) {
+				return hit;
+			}
+		}
+	} else {
+		for (const category of Object.values(item.members)) {
+			for (const potential of category as any) {
+				const hit = preparePotential(potential, member, item.displayName);
+				if (hit) {
+					return hit;
+				}
+			}
+		}
 	}
 
-	const relevantItem = parts.method
-		? docsItem.members?.find((member) => member?.name === parts.method) ?? docsItem
-		: docsItem;
+	return item;
+}
 
-	prepareResponse(
-		res,
-		suggestionString('documentation', formatResult(relevantItem, parts.package, parts.version), target),
-		ephemeral ?? false,
-		target ? [target] : [],
-		[],
-		InteractionResponseType.ChannelMessageWithSource,
-	);
+function formatSummary(blocks: any[], _package: string, version: string) {
+	return blocks
+		.map((block) => {
+			if (block.kind === 'LinkTag') {
+				return hyperlink(block.text, `${DJS_DOCS_BASE}/packages/${_package}/${version}/${block.uri}`);
+			}
 
-	return res.end();
+			return block.text;
+		})
+		.join('');
+}
+
+function formatItem(_item: any, _package: string, version: string, member?: string) {
+	const itemLink = docsLink(_item, _package, version, member);
+	const item = effectiveItem(_item, member);
+	const sourceUrl = `${item.sourceURL}#L${item.sourceLine}`;
+
+	const [emojiId, emojiName] = itemKindEmoji(item.kind, version === 'main');
+
+	const parts: string[] = [];
+
+	if (item.kind === 'Event') {
+		parts.push(bold('(event)'));
+	}
+
+	if (item.isStatic) {
+		parts.push(bold('(static)'));
+	}
+
+	parts.push(underscore(bold(hyperlink(item.displayName, itemLink))));
+
+	if (item.extends) {
+		// TODO format extends
+	}
+
+	const head = `<:${emojiName}:${emojiId}>`;
+	const tail = `  ${hyperlink(inlineCode(`@${version}`), sourceUrl, 'source code')}`;
+	const middlePart = item.isDeprecated ? strikethrough(parts.join(' ')) : parts.join(' ');
+
+	const lines: string[] = [[head, middlePart, tail].join(' ')];
+
+	const summary = item.summary?.summarySection;
+	const deprecationNote = item.summary?.deprecatedBlock;
+	const example = item.summary?.exampleBlocks?.[0];
+
+	if (deprecationNote?.length) {
+		lines.push(`${bold('[DEPRECATED]')} ${formatSummary(deprecationNote, _package, version)}`);
+	} else {
+		if (summary?.length) {
+			lines.push(formatSummary(summary, _package, version));
+		}
+
+		if (example) {
+			lines.push(codeBlock(example.language, example.text));
+		}
+	}
+
+	return lines.join('\n');
+}
+
+export async function djsDocsDev(res: Response, query: string, ephemeral = false) {
+	const [_package, itemName, itemKind, member] = query.split('|');
+
+	try {
+		const item = await fetchDocItem(_package, 'main', itemName, itemKind.toLowerCase());
+		if (!item) {
+			prepareErrorResponse(res, `Could not fetch doc entry for query ${inlineCode(query)}.`);
+			return res.end();
+		}
+
+		prepareResponse(
+			res,
+			truncate(formatItem(item, _package, 'main', member), MAX_MESSAGE_LENGTH),
+			ephemeral,
+			[],
+			[],
+			InteractionResponseType.ChannelMessageWithSource,
+		);
+		return res.end();
+	} catch (_error) {
+		const error = _error as Error;
+		logger.error(error, error.message);
+		prepareErrorResponse(res, 'Something went wrong while executing the command.');
+		return res.end();
+	}
 }

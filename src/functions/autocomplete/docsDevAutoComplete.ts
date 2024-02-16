@@ -1,18 +1,14 @@
 import process from 'node:process';
-import { ApiItemKind } from '@microsoft/api-extractor-model';
 import type {
 	APIApplicationCommandInteractionDataOption,
 	APIApplicationCommandInteractionDataStringOption,
 	APIApplicationCommandInteractionDataSubcommandOption,
 } from 'discord-api-types/v10';
 import { InteractionResponseType } from 'discord-api-types/v10';
-import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
 import { fetch } from 'undici';
-import type { Database } from '../../types/djs-db.js';
+import { AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
 import { truncate } from '../../util/truncate.js';
-import type { DjsDocsSearchResult } from '../djsDocs.js';
-import { fetchVersions } from '../djsDocs.js';
 
 const BASE_SEARCH = `https://search.discordjs.dev/`;
 
@@ -26,26 +22,26 @@ function parseDocsPath(path: string) {
 	// /docs/packages/builders/main/EmbedImageData:Interface#proxyURL
 
 	const parts = path.trim().split('/').filter(Boolean);
-	const item = parts.at(4);
-	const itemParts = item?.split('#');
+	const query = parts.at(4);
+	const queryParts = query?.split('#');
 
-	const firstItemParts = itemParts?.at(0)?.split(':');
-	const itemClass = firstItemParts?.at(0);
+	const [item, kind] = queryParts?.at(0)?.split(':') ?? [];
+	const method = queryParts?.at(1);
+
 	const _package = parts.at(2);
 	const version = parts.at(3);
-	const method = itemParts?.at(1);
 
 	return {
 		package: _package,
 		version,
+		query,
 		item,
-		class: itemClass,
+		kind,
 		method,
 	};
 }
 
 export async function djsDocsDevAutoComplete(
-	db: Kysely<Database>,
 	res: Response,
 	options: APIApplicationCommandInteractionDataOption[],
 ): Promise<Response> {
@@ -58,54 +54,16 @@ export async function djsDocsDevAutoComplete(
 		| APIApplicationCommandInteractionDataStringOption
 		| undefined;
 
-	const versions = await fetchVersions(db, option.name);
-	const latest = versions.at(-2)?.version;
-
 	res.setHeader('Content-Type', 'application/json');
-
-	if (versionOptionData?.focused) {
-		const relevantVersions: { name: string; version: string }[] = [];
-
-		versions.reverse();
-
-		for (const version of versions) {
-			if (version.version.includes('.')) {
-				const [major, minor] = version.version.split('.');
-				if (!relevantVersions.some((version) => version.version.startsWith(`${major}.${minor}`))) {
-					relevantVersions.push(version);
-				}
-			} else {
-				relevantVersions.push(version);
-			}
-		}
-
-		res.write(
-			JSON.stringify({
-				data: {
-					choices: relevantVersions.slice(0, 25).map((version) => ({
-						name: `${version.name} ${version.version}`,
-						value: version.version,
-					})),
-				},
-				type: InteractionResponseType.ApplicationCommandAutocompleteResult,
-			}),
-		);
-
-		return res;
-	}
 
 	if (!queryOptionData) {
 		throw new Error('expected query option, none received');
 	}
 
-	if (!latest) {
-		throw new Error('stable version could not be determined');
-	}
-
-	const searchRes = await fetch(searchURL(option.name, versionOptionData?.value ?? latest), {
+	const searchRes = await fetch(searchURL(option.name, versionOptionData?.value ?? 'main'), {
 		method: 'post',
 		body: JSON.stringify({
-			limit: 25,
+			limit: 100,
 			// eslint-disable-next-line id-length
 			q: queryOptionData.value,
 		}),
@@ -115,22 +73,43 @@ export async function djsDocsDevAutoComplete(
 		},
 	});
 
-	const docsResult = (await searchRes.json()) as DjsDocsSearchResult;
-	const { hits } = docsResult;
+	const docsResult = (await searchRes.json()) as any;
+	docsResult.hits.sort((one: any, other: any) => {
+		const oneScore = one.kind === 'Class' ? 1 : 0;
+		const otherScore = other.kind === 'Class' ? 1 : 0;
 
-	const choices =
-		hits?.map((hit) => {
-			const parts = parseDocsPath(hit.path);
-			const identifier =
-				hit.kind === ApiItemKind.Method || hit.kind === ApiItemKind.Property
-					? `${parts.class}#${hit.name}${hit.kind === ApiItemKind.Method ? '()' : ''}`
-					: hit.name;
+		return otherScore - oneScore;
+	});
 
-			return {
-				name: truncate(`${identifier}${hit.summary ? ` - ${hit.summary}` : ''}`, 100),
-				value: hit.path,
-			};
-		}) ?? [];
+	const choices = [];
+
+	for (const hit of docsResult.hits) {
+		if (choices.length >= AUTOCOMPLETE_MAX_ITEMS) {
+			break;
+		}
+
+		const parsed = parseDocsPath(hit.path);
+
+		let name = '';
+		const isMember = ['Property', 'Method', 'Event', 'PropertySignature', 'EnumMember'].includes(hit.kind);
+		if (isMember) {
+			name += `${parsed.item}#${hit.name}${hit.kind === 'Method' ? '()' : ''}`;
+		} else {
+			name += hit.name;
+		}
+
+		const itemKind = isMember ? 'Class' : hit.kind;
+		const parts = [parsed.package, parsed.item.toLocaleLowerCase(), parsed.kind];
+
+		if (isMember) {
+			parts.push(hit.name);
+		}
+
+		choices.push({
+			name: truncate(`${name}${hit.summary ? ` - ${hit.summary}` : ''}`, 100, ' '),
+			value: parts.join('|'),
+		});
+	}
 
 	res.write(
 		JSON.stringify({

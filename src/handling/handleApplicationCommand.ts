@@ -4,7 +4,6 @@ import type Collection from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';
-import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
@@ -25,7 +24,6 @@ import type { TagCommand } from '../interactions/tag.js';
 import type { TagReloadCommand } from '../interactions/tagreload.js';
 import type { TestTagCommand } from '../interactions/testtag.js';
 import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
-import type { Database } from '../types/djs-db.js';
 import type { ArgumentsOf } from '../util/argumentsOf.js';
 import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
 import { transformInteraction } from '../util/interactionOptions.js';
@@ -46,7 +44,6 @@ type CommandName =
 	| 'testtag';
 
 export async function handleApplicationCommand(
-	db: Kysely<Database>,
 	res: Response,
 	message: APIApplicationCommandInteraction,
 	tagCache: Collection<string, Tag>,
@@ -67,7 +64,7 @@ export async function handleApplicationCommand(
 				}
 
 				const { query, target, ephemeral } = resolved;
-				await djsDocsDev(db, res, query, target, ephemeral);
+				await djsDocsDev(res, query, ephemeral);
 				break;
 			}
 

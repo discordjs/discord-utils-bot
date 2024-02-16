@@ -1,7 +1,6 @@
 import process from 'node:process';
 import type Collection from '@discordjs/collection';
 import type { APIApplicationCommandAutocompleteInteraction } from 'discord-api-types/v10';
-import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
 import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';
 import { djsDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
@@ -12,14 +11,12 @@ import type { Tag } from '../functions/tag.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
 import type { GuideCommand } from '../interactions/guide.js';
 import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
-import type { Database } from '../types/djs-db.js';
 import type { MDNIndexEntry } from '../types/mdn.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 
 type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'docsdev' | 'dtypes' | 'guide' | 'mdn' | 'tag';
 
 export async function handleApplicationCommandAutocomplete(
-	db: Kysely<Database>,
 	res: Response,
 	message: APIApplicationCommandAutocompleteInteraction,
 	tagCache: Collection<string, Tag>,
@@ -30,7 +27,7 @@ export async function handleApplicationCommandAutocomplete(
 	const name = data.name as CommandAutoCompleteName;
 	switch (name) {
 		case 'docsdev': {
-			await djsDocsDevAutoComplete(db, res, data.options);
+			await djsDocsDevAutoComplete(res, data.options);
 			break;
 		}
 

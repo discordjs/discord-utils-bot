@@ -5,8 +5,6 @@ import Collection from '@discordjs/collection';
 import type { APIInteraction } from 'discord-api-types/v10';
 import { InteractionType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';
-import { Kysely } from 'kysely';
-import { PlanetScaleDialect } from 'kysely-planetscale';
 import type { Middleware, NextHandler, Request, Response } from 'polka';
 import polka from 'polka';
 import { loadLatestNpmVersion } from './functions/npm.js';
@@ -17,7 +15,6 @@ import { handleApplicationCommandAutocomplete } from './handling/handleApplicati
 import { handleComponent } from './handling/handleComponents.js';
 import { handleModalSubmit } from './handling/handleModalSubmit.js';
 import type { CustomSourcesString } from './types/discordjs-docs-parser.js';
-import type { Database } from './types/djs-db.js';
 import type { MDNIndexEntry } from './types/mdn.js';
 import { API_BASE_MDN, PREFIX_TEAPOT, PREFIX_BUG } from './util/constants.js';
 import { jsonParser } from './util/jsonParser.js';
@@ -66,11 +63,6 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 	return next();
 }
 
-const db = new Kysely<Database>({
-	dialect: new PlanetScaleDialect({
-		url: process.env.DATABASE_URL,
-	}),
-});
 const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
 const customSources = new Map<CustomSourcesString, string>();
@@ -100,10 +92,10 @@ export async function start() {
 						prepareAck(res);
 						break;
 					case InteractionType.ApplicationCommand:
-						await handleApplicationCommand(db, res, message, tagCache, customSources);
+						await handleApplicationCommand(res, message, tagCache, customSources);
 						break;
 					case InteractionType.ApplicationCommandAutocomplete:
-						await handleApplicationCommandAutocomplete(db, res, message, tagCache, mdnIndexCache, customSources);
+						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache, customSources);
 						break;
 					case InteractionType.ModalSubmit:
 						await handleModalSubmit(res, message);
