@@ -1,7 +1,7 @@
 import { webcrypto } from 'node:crypto';
 import process from 'node:process';
 import { TextEncoder } from 'node:util';
-import Collection from '@discordjs/collection';
+import { Collection } from '@discordjs/collection';
 import type { APIInteraction } from 'discord-api-types/v10';
 import { InteractionType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';

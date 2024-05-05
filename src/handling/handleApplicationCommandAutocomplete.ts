@@ -1,5 +1,5 @@
 import process from 'node:process';
-import type Collection from '@discordjs/collection';
+import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandAutocompleteInteraction } from 'discord-api-types/v10';
 import type { Response } from 'polka';
 import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';

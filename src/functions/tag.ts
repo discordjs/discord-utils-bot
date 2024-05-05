@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type Collection from '@discordjs/collection';
+import type { Collection } from '@discordjs/collection';
 import * as TOML from '@ltd/j-toml';
 import type { Response } from 'polka';
 import readdirp from 'readdirp';

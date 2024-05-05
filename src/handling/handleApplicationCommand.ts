@@ -1,6 +1,6 @@
 import process from 'node:process';
 import { hideLinkEmbed, hyperlink } from '@discordjs/builders';
-import type Collection from '@discordjs/collection';
+import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import { Doc } from 'discordjs-docs-parser';
