@@ -57,5 +57,4 @@ export const DocsCommand = {
 	name: 'docs',
 	description: 'Display discord.js documentation',
 	options: versions.packages.map((name) => buildSubCommand(name)),
-	default_member_permissions: '0',
 } as const;
