@@ -1,9 +1,10 @@
 import process from 'node:process';
-import { hideLinkEmbed, hyperlink } from '@discordjs/builders';
+import { hideLinkEmbed, hyperlink, inlineCode } from '@discordjs/builders';
 import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
+import { container } from 'tsyringe';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
@@ -22,6 +23,7 @@ import type { TagReloadCommand } from '../interactions/tagreload.js';
 import type { TestTagCommand } from '../interactions/testtag.js';
 import type { ArgumentsOf } from '../util/argumentsOf.js';
 import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
+import { fetchDjsVersions, kDjsVersions } from '../util/djsdocs.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
@@ -33,7 +35,7 @@ type CommandName =
 	| 'invite'
 	| 'mdn'
 	| 'node'
-	| 'npmreload'
+	| 'reloadversions'
 	| 'tag'
 	| 'tagreload'
 	| 'testtag';
@@ -157,8 +159,11 @@ export async function handleApplicationCommand(
 				break;
 			}
 
-			case 'npmreload': {
-				// TODO: replace with other reload
+			case 'reloadversions': {
+				const versions = await fetchDjsVersions();
+				container.register(kDjsVersions, { useValue: res });
+
+				prepareResponse(res, `Reloaded versions for all ${inlineCode('@discordjs')} packages.`, true);
 				break;
 			}
 		}
