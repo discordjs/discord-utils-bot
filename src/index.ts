@@ -1,25 +1,29 @@
+import 'reflect-metadata';
 import { webcrypto } from 'node:crypto';
 import process from 'node:process';
 import { TextEncoder } from 'node:util';
 import { Collection } from '@discordjs/collection';
 import type { APIInteraction } from 'discord-api-types/v10';
 import { InteractionType } from 'discord-api-types/v10';
-import { Doc } from 'discordjs-docs-parser';
 import type { Middleware, NextHandler, Request, Response } from 'polka';
 import polka from 'polka';
-import { loadLatestNpmVersion } from './functions/npm.js';
 import { loadTags } from './functions/tag.js';
 import type { Tag } from './functions/tag.js';
 import { handleApplicationCommand } from './handling/handleApplicationCommand.js';
 import { handleApplicationCommandAutocomplete } from './handling/handleApplicationCommandAutocomplete.js';
 import { handleComponent } from './handling/handleComponents.js';
 import { handleModalSubmit } from './handling/handleModalSubmit.js';
-import type { CustomSourcesString } from './types/discordjs-docs-parser.js';
 import type { MDNIndexEntry } from './types/mdn.js';
 import { API_BASE_MDN, PREFIX_TEAPOT, PREFIX_BUG } from './util/constants.js';
+import { prepareDjsVersions } from './util/djsdocs.js';
 import { jsonParser } from './util/jsonParser.js';
 import { logger } from './util/logger.js';
 import { prepareAck, prepareResponse } from './util/respond.js';
+
+if (process.env.ENVIRONMENT === 'debug') {
+	logger.level = 'debug';
+	logger.debug('=== DEBUG LOGGING ENABLED ===');
+}
 
 const { subtle } = webcrypto;
 
@@ -65,14 +69,9 @@ async function verify(req: Request, res: Response, next: NextHandler) {
 
 const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
-const customSources = new Map<CustomSourcesString, string>();
 await loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
-void loadLatestNpmVersion(customSources);
-
-Doc.setGlobalOptions({
-	escapeMarkdownLinks: true,
-});
+await prepareDjsVersions();
 
 export async function start() {
 	const mdnData = (await fetch(`${API_BASE_MDN}/en-US/search-index.json`)
@@ -92,10 +91,10 @@ export async function start() {
 						prepareAck(res);
 						break;
 					case InteractionType.ApplicationCommand:
-						await handleApplicationCommand(res, message, tagCache, customSources);
+						await handleApplicationCommand(res, message, tagCache);
 						break;
 					case InteractionType.ApplicationCommandAutocomplete:
-						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache, customSources);
+						await handleApplicationCommandAutocomplete(res, message, tagCache, mdnIndexCache);
 						break;
 					case InteractionType.ModalSubmit:
 						await handleModalSubmit(res, message);
@@ -124,7 +123,7 @@ process.on('uncaughtException', (err, origin) => {
 
 process.on('unhandledRejection', (reason, promise) => {
 	// eslint-disable-next-line no-console
-	console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+	logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
 void start();

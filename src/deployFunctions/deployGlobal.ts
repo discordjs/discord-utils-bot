@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { DiscordDocsCommand } from '../interactions/discorddocs.js';
 import { DTypesCommand } from '../interactions/discordtypes.js';
 import { DocsCommand } from '../interactions/docs.js';
