@@ -32,7 +32,6 @@ type CommandName =
 	| 'docs'
 	| 'dtypes'
 	| 'guide'
-	| 'invite'
 	| 'mdn'
 	| 'node'
 	| 'reloadversions'
@@ -110,21 +109,6 @@ export async function handleApplicationCommand(
 					'guide',
 					castArgs.target,
 					castArgs.hide,
-				);
-				break;
-			}
-
-			case 'invite': {
-				prepareResponse(
-					res,
-					`${hyperlink(
-						'(click here)',
-						hideLinkEmbed(
-							`https://discord.com/api/oauth2/authorize?client_id=${process.env
-								.DISCORD_CLIENT_ID!}&scope=applications.commands`,
-						),
-					)}`,
-					true,
 				);
 				break;
 			}
