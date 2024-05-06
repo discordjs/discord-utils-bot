@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Collection } from '@discordjs/collection';
@@ -39,7 +39,7 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 						logger.error(error, error.message);
 						return `# ${error.message}`;
 					})
-			: readFileSync(dir.fullPath, { encoding: 'utf8' });
+			: await readFile(dir.fullPath, { encoding: 'utf8' });
 		parts.push(file);
 	}
 
