@@ -179,8 +179,8 @@ To make your code more readable (and easier for us to help you with) consider us
 keywords = ["djsdocs", "thedocs", "documentation"]
 content = """
 discord.js documentation:
-- stable release: [learn more](https://old.discordjs.dev/#/docs/discord.js/14.14.1/general/welcome)
-- developer release: [learn more](https://old.discordjs.dev/#/docs/discord.js/main/general/welcome)
+- stable release: [learn more](https://discord.js.org/docs/packages/discord.js/stable)
+- developer release: [learn more](https://discord.js.org/docs/packages/discord.js/main)
 """
 
 [snipe]
@@ -330,9 +330,9 @@ content = """
 keywords = ["enable-mentions", "disable-mentions", "allow-mentions"]
 content = """
 You can control which entities receive notifications via the `allowedMentions` option. You can:
-- Set a [default on the client](https://old.discordjs.dev/#/docs/discord.js/14.14.1/typedef/ClientOptions)
-- Set for a [specific message](https://old.discordjs.dev/#/docs/discord.js/14.14.1/typedef/MessageMentionOptions)
-- Use the `repliedUser` key to disable [in-line reply mentions](https://old.discordjs.dev/#/docs/discord.js/14.14.1/typedef/MessageMentionOptions)
+- Set a [default on the client](https://discord.js.org/docs/packages/discord.js/stable/ClientOptions:Interface)
+- Set for a [specific message](https://discord.js.org/docs/packages/discord.js/stable/MessageMentionOptions:Interface)
+- Use the `repliedUser` key to disable [in-line reply mentions](https://discord.js.org/docs/packages/discord.js/stable/MessageMentionOptions:Interface)
 ```js
 { ..., allowedMentions: { parse: ["users", "roles"] } }
 ```
@@ -488,7 +488,7 @@ content = """
 const client = new Discord.Client({ shards: 'auto' }); // auto shards
 const client = new Discord.Client({ shards: [0, 1] }); // specific shards
 ```
-- Sharding manager: [learn more](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/ShardingManager)
+- Sharding manager: [learn more](https://discord.js.org/docs/packages/discord.js/stable/ShardingManager:Class)
 """
 
 [2fa]
@@ -555,7 +555,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 - `CLIENT_ID` needs to be replaced with your bot id
 - Permission calculator: [learn more](https://finitereality.github.io/permissions-calculator)
 - `bot` scope includes `applications.commands`. If you don't need the bot, use `applications.commands` instead
-- You can use #generateInvite instead: [learn more](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/Client?scrollTo=generateInvite)
+- You can use #generateInvite instead: [learn more](https://discord.js.org/docs/packages/discord.js/stable/Client:Class#generateInvite)
 """
 
 [version]
@@ -563,7 +563,7 @@ keywords = ["discord.js-version", "provide-version", "find-version"]
 content = """
 Determining your discord.js version:
 - `npm list discord.js`
-- Make sure you use the right [documentation](https://old.discordjs.dev/#/docs) for your installed version (selector on the left)
+- Make sure you use the right [documentation](https://discord.js.org/docs/packages/discord.js/stable) for your installed version (selector on the left)
 """
 
 [token]
@@ -678,9 +678,9 @@ Checking for things to not be equal in JavaScript:
 keywords = ["memberuser", "user-member", "usermember"]
 content = """
 Despite sounding similar there is a distinct difference between users and members in Discord:
-- [User](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/User): global Discord user data (global avatar, username, tag, id) 
-- [GuildMember](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/GuildMember): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
-- Conversion: [User ➞ GuildMember](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/GuildMemberManager?scrollTo=fetch) | [GuildMember ➞ User](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/GuildMember?scrollTo=user)
+- [User](https://discord.js.org/docs/packages/discord.js/stable/User:Class): global Discord user data (global avatar, username, tag, id) 
+- [GuildMember](https://discord.js.org/docs/packages/discord.js/stable/GuildMember:Class): user data associated to a guild (guild, nickname, roles, voice, guild avatar, etc.)
+- Conversion: [User ➞ GuildMember](https://discord.js.org/docs/packages/discord.js/stable/GuildMemberManager:Class#fetch) | [GuildMember ➞ User](https://discord.js.org/docs/packages/discord.js/stable/GuildMember:Class#user)
 \\* *Note: Events received in cached guilds will often have both the member and user available, eg. `interaction.user` and `interaction.member`*
 """
 
@@ -755,7 +755,7 @@ hoisted = true
 keywords = ["discord.js-stable", "install-stable", "djs-stable", "install-djs"]
 content = """
 To install run: `npm install discord.js`
-- Documentation: [learn more](https://old.discordjs.dev/#/docs/discord.js/14.14.1/general/welcome)
+- Documentation: [learn more](https://discord.js.org/docs/packages/discord.js/stable)
 - Guide: [learn more](https://discordjs.guide)
 """
 hoisted = true
@@ -763,17 +763,17 @@ hoisted = true
 [tag-username]
 keywords = ["tagusername", "tag-username-difference"]
 content = """
-[user.username](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/User?scrollTo=username) ➞ `d.js docs`
-[user.globalName](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/User?scrollTo=globalName) global display name (users only)
-[user.discriminator](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/User?scrollTo=discriminator) ➞ `0` | `1083` \\*
-[user.tag](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/User?scrollTo=tag) ➞ `d.js docs` | `d.js docs#1083` \\*
+[user.username](https://discord.js.org/docs/packages/discord.js/stable/User:Class#username) ➞ `d.js docs`
+[user.globalName](https://discord.js.org/docs/packages/discord.js/stable/User:Class#globalName) global display name (users only)
+[user.discriminator](https://discord.js.org/docs/packages/discord.js/stable/User:Class#discriminator) ➞ `0` | `1083` \\*
+[user.tag](https://discord.js.org/docs/packages/discord.js/stable/User:Class#tag) ➞ `d.js docs` | `d.js docs#1083` \\*
 \\* *Note: The discriminator approach is mostly relevant to bots now, which are not currently transferred to the unique username system!*
 """
 
 [boost-event]
 keywords = ["boost", "boostevent"]
 content = """
-The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](https://old.discordjs.dev/#/docs/discord.js/14.14.1/class/Client?scrollTo=e-guildMemberUpdate) event:
+The Discord API does not provide a dedicated event for guild boosts, but you can check for it in the [guildMemberUpdate](https://discord.js.org/docs/packages/discord.js/stable/Client:Class#guildMemberUpdate) event:
 ```js
 client.on("guildMemberUpdate", (oldMember, newMember) => {
     // Check if the member wasn't boosting before, but is now.
@@ -835,9 +835,9 @@ Ratelimits are dynamically assigned by the API based on current load and may cha
 keywords = ["abort-error"]
 content = """
 `AbortError: The user aborted a request.`
-A request took longer than the specified [timeout](https://discordjs.dev/docs/packages/rest/stable/RESTOptions:Interface#timeout) (15 seconds default), and was aborted to not lock up the request handler.
+A request took longer than the specified [timeout](https://discord.js.org/docs/packages/rest/stable/RESTOptions:Interface#timeout) (15 seconds default), and was aborted to not lock up the request handler.
 - This can be caused by an internal server error on Discord's side, or just a slow connection.
-- In case of a slow connection, the `timeout` option in [RESTOptions](https://discordjs.dev/docs/packages/rest/stable/RESTOptions:Interface#timeout) can be increased to prevent future AbortErrors.
+- In case of a slow connection, the `timeout` option in [RESTOptions](https://discord.js.org/docs/packages/rest/stable/RESTOptions:Interface#timeout) can be increased to prevent future AbortErrors.
 """
 
 [v14-changes]
