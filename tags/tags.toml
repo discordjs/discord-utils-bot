@@ -11,7 +11,7 @@ if (<message>.author.bot) return;
 [bot-about-me]
 keywords = ["bam"]
 content = """
-To add text to the `About Me` section of your bot's profile, head [here](https://discord.com/developers/applications), click on your bot's application, and fill in the `Description`. The description supports full markdown as well (bold, underline, etc.).
+To give your application an "About Me", head [here](https://discord.com/developers/applications), "Your Application" > "General Information" > "Description". The description supports full markdown as well (bold, underline, etc.).
 https://imgur.com/zqsWi2d.jpg
 """
 
@@ -649,7 +649,7 @@ Controlling the flow of time in Node.js:
 [paste-code]
 keywords = ["bins", "code-bins", "codepaste", "bin"]
 content = """
-To share long code snippets, use a service like [gist](https://gist.github.com), [sourcebin](https://sourceb.in), [starbin](https://starb.in), or similar instead of posting them as large code blocks or files.
+To share long code snippets, use a service like [gist](https://gist.github.com), [sourcebin](https://sourceb.in), [pastebin](https://pastebin.com), or similar instead of posting them as large code blocks or files.
 """
 
 [frameworks]
@@ -713,7 +713,8 @@ keywords = [
 ]
 content = """
 **We do not provide any help with third party libraries**
-Buttons and Modals are supported natively.
+discord.js supports message components natively.
+- Select Menus: [learn more](https://discordjs.guide/message-components/select-menus.html)
 - Buttons: [learn more](https://discordjs.guide/message-components/buttons.html)
 - Modals: [learn more](https://discordjs.guide/interactions/modals.html)
 """
@@ -888,6 +889,7 @@ client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 
 [add-to-server-button]
 keywords = [
+    "add-app",
     "add-to-server",
     "ats",
     "profile-invite",
@@ -895,12 +897,13 @@ keywords = [
     "auth-link",
 ]
 content = """
-**"Add to Server" button**
-- [Developer Portal](https://discord.com/developers/applications) > Your app > OAuth2 (General) > Default Authorization Link
-- Set authorization method to "In-app Authorization"
-- Check scopes `bot` and `applications.commands`
+**"Add App" button**
+- [Developer Portal](https://discord.com/developers/applications) > Your app > Installation
+- Choose "Guild Install" for installing in a server or "User Install" for personal use
+- "Install Link" > "Discord Provided Link"
+- Check the `bot` scope and choose any permissions that your app *needs* under "Default Install Settings"
 
-Image: https://i.imgur.com/taMHw7o.png
+Image: https://i.imgur.com/14pMHvK.png
 """
 
 [already-acknowledged]
