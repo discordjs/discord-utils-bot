@@ -1,10 +1,10 @@
-import { DocsDevCommand } from '../interactions/docsdev.js';
-import { NpmReloadCommand } from '../interactions/npmreload.js';
+import 'reflect-metadata';
+import { DjsVersionReloadCommand } from '../interactions/reloadVersioncache.js';
 import { TagReloadCommand } from '../interactions/tagreload.js';
 import { deploy } from './deploy.js';
 
 void deploy(
-	[NpmReloadCommand, TagReloadCommand, DocsDevCommand].map((interaction) => ({
+	[DjsVersionReloadCommand, TagReloadCommand].map((interaction) => ({
 		...interaction,
 		description: `🛠️ ${interaction.description}`,
 	})),

@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -51,7 +51,7 @@ export async function validateTags(
 	runResponseValidation: boolean,
 	_additionalTagData?: string,
 ): Promise<ValidationResult> {
-	const file = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'tags', 'tags.toml'));
+	const file = await readFile(join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'tags', 'tags.toml'));
 
 	const mergedData = _additionalTagData ? `${file.toString()}\n\n${_additionalTagData}` : file;
 	const data = TOML.parse(mergedData, 1, '\n');

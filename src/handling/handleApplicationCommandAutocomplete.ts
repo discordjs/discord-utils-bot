@@ -1,41 +1,30 @@
 import process from 'node:process';
-import type Collection from '@discordjs/collection';
+import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandAutocompleteInteraction } from 'discord-api-types/v10';
-import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
 import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';
-import { djsDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
-import { djsDocsDevAutoComplete } from '../functions/autocomplete/docsDevAutoComplete.js';
+import { djsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
 import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
 import type { Tag } from '../functions/tag.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
 import type { GuideCommand } from '../interactions/guide.js';
-import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
-import type { Database } from '../types/djs-db.js';
 import type { MDNIndexEntry } from '../types/mdn.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 
-type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'docsdev' | 'dtypes' | 'guide' | 'mdn' | 'tag';
+type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'tag';
 
 export async function handleApplicationCommandAutocomplete(
-	db: Kysely<Database>,
 	res: Response,
 	message: APIApplicationCommandAutocompleteInteraction,
 	tagCache: Collection<string, Tag>,
 	mdnIndexCache: MDNIndexEntry[],
-	customSources: Map<CustomSourcesString, string>,
 ) {
 	const data = message.data;
 	const name = data.name as CommandAutoCompleteName;
 	switch (name) {
-		case 'docsdev': {
-			await djsDocsDevAutoComplete(db, res, data.options);
-			break;
-		}
-
 		case 'docs': {
-			await djsDocsAutoComplete(res, data.options, customSources);
+			await djsAutoComplete(res, data.options);
 			break;
 		}
 

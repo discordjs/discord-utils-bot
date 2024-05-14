@@ -1,4 +1,4 @@
-import type Collection from '@discordjs/collection';
+import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandInteractionDataOption } from 'discord-api-types/v10';
 import { InteractionResponseType } from 'discord-api-types/v10';
 import type { Response } from 'polka';

@@ -1,18 +1,15 @@
 import process from 'node:process';
-import { hideLinkEmbed, hyperlink } from '@discordjs/builders';
-import type Collection from '@discordjs/collection';
+import { hideLinkEmbed, hyperlink, inlineCode } from '@discordjs/builders';
+import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
-import { Doc } from 'discordjs-docs-parser';
-import type { Kysely } from 'kysely';
 import type { Response } from 'polka';
+import { container } from 'tsyringe';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
-import { djsDocsDev } from '../functions/docsdev.js';
 import { mdnSearch } from '../functions/mdn.js';
 import { nodeSearch } from '../functions/node.js';
-import { reloadNpmVersions } from '../functions/npm.js';
 import type { Tag } from '../functions/tag.js';
 import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
@@ -24,33 +21,28 @@ import type { NodeCommand } from '../interactions/node.js';
 import type { TagCommand } from '../interactions/tag.js';
 import type { TagReloadCommand } from '../interactions/tagreload.js';
 import type { TestTagCommand } from '../interactions/testtag.js';
-import type { CustomSourcesString } from '../types/discordjs-docs-parser.js';
-import type { Database } from '../types/djs-db.js';
 import type { ArgumentsOf } from '../util/argumentsOf.js';
 import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
+import { fetchDjsVersions, kDjsVersions } from '../util/djsdocs.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
 type CommandName =
 	| 'discorddocs'
 	| 'docs'
-	| 'docsdev'
 	| 'dtypes'
 	| 'guide'
-	| 'invite'
 	| 'mdn'
 	| 'node'
-	| 'npmreload'
+	| 'reloadversions'
 	| 'tag'
 	| 'tagreload'
 	| 'testtag';
 
 export async function handleApplicationCommand(
-	db: Kysely<Database>,
 	res: Response,
 	message: APIApplicationCommandInteraction,
 	tagCache: Collection<string, Tag>,
-	customSources: Map<CustomSourcesString, string>,
 ) {
 	const data = message.data;
 	if (data.type === ApplicationCommandType.ChatInput) {
@@ -59,15 +51,15 @@ export async function handleApplicationCommand(
 		const args = transformInteraction(options);
 
 		switch (name) {
-			case 'docsdev': {
+			case 'docs': {
 				const resolved = resolveOptionsToDocsAutoComplete(options);
 				if (!resolved) {
 					prepareErrorResponse(res, `Payload looks different than expected`);
 					break;
 				}
 
-				const { query, target, ephemeral } = resolved;
-				await djsDocsDev(db, res, query, target, ephemeral);
+				const { query, version, ephemeral } = resolved;
+				await djsDocs(res, version, query, ephemeral);
 				break;
 			}
 
@@ -105,20 +97,6 @@ export async function handleApplicationCommand(
 				break;
 			}
 
-			case 'docs': {
-				const resolved = resolveOptionsToDocsAutoComplete(options);
-				if (!resolved) {
-					prepareErrorResponse(res, `Payload looks different than expected`);
-					break;
-				}
-
-				const { source, query, target, ephemeral } = resolved;
-				// @ts-expect-error: This implements custom sources
-				const doc = await Doc.fetch(source, { force: true });
-				djsDocs(res, doc, source, query, target, ephemeral).end();
-				break;
-			}
-
 			case 'guide': {
 				const castArgs = args as ArgumentsOf<typeof GuideCommand>;
 				await algoliaResponse(
@@ -131,21 +109,6 @@ export async function handleApplicationCommand(
 					'guide',
 					castArgs.target,
 					castArgs.hide,
-				);
-				break;
-			}
-
-			case 'invite': {
-				prepareResponse(
-					res,
-					`${hyperlink(
-						'(click here)',
-						hideLinkEmbed(
-							`https://discord.com/api/oauth2/authorize?client_id=${process.env
-								.DISCORD_CLIENT_ID!}&scope=applications.commands`,
-						),
-					)}`,
-					true,
 				);
 				break;
 			}
@@ -180,8 +143,11 @@ export async function handleApplicationCommand(
 				break;
 			}
 
-			case 'npmreload': {
-				await reloadNpmVersions(res, customSources);
+			case 'reloadversions': {
+				const versions = await fetchDjsVersions();
+				container.register(kDjsVersions, { useValue: res });
+
+				prepareResponse(res, `Reloaded versions for all ${inlineCode('@discordjs')} packages.`, true);
 				break;
 			}
 		}
