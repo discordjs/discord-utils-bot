@@ -11,7 +11,7 @@ if (<message>.author.bot) return;
 [bot-about-me]
 keywords = ["bam"]
 content = """
-To give your application an "About Me", head [here](https://discord.com/developers/applications), click on your application, and fill in the `Description` next to "General Information". The description supports full markdown as well (bold, underline, etc.).
+To give your application an "About Me", head [here](https://discord.com/developers/applications), "Your Application" > "General Information" > "Description". The description supports full markdown as well (bold, underline, etc.).
 https://imgur.com/zqsWi2d.jpg
 """
 
@@ -714,7 +714,6 @@ keywords = [
 content = """
 **We do not provide any help with third party libraries**
 discord.js supports message components natively.
-
 - Select Menus: [learn more](https://discordjs.guide/message-components/select-menus.html)
 - Buttons: [learn more](https://discordjs.guide/message-components/buttons.html)
 - Modals: [learn more](https://discordjs.guide/interactions/modals.html)
@@ -900,9 +899,9 @@ keywords = [
 content = """
 **"Add App" button**
 - [Developer Portal](https://discord.com/developers/applications) > Your app > Installation
-- Choose "User Install" or "Guild Install"
-- Choose "Discord Provided Link" under "Install Link"
-- Check scopes `bot` and choose permissions that your app *needs* under "Default Install Settings"
+- Choose "Guild Install" for installing in a server or "User Install" for personal use
+- "Install Link" > "Discord Provided Link"
+- Check the `bot` scope and choose any permissions that your app *needs* under "Default Install Settings"
 
 Image: https://i.imgur.com/14pMHvK.png
 """
