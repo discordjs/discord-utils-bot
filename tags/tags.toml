@@ -890,7 +890,7 @@ client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
 
 [add-to-server-button]
 keywords = [
-    "add-app"
+    "add-app",
     "add-to-server",
     "ats",
     "profile-invite",
