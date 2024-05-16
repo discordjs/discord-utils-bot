@@ -4,7 +4,7 @@ export function toMdFilename(name: string) {
 	return name
 		.split('-')
 		.map((part) => `${part.at(0)?.toUpperCase()}${part.slice(1).toLowerCase()}`)
-		.join('');
+		.join('_');
 }
 
 export function resolveResourceFromDocsURL(link: string) {
@@ -34,17 +34,19 @@ type Heading = {
 };
 
 function parseHeadline(text: string): Heading | null {
-	const match = /#{1,7} (?<label>.*) % (?<verb>\w{3,6}) (?<route>.*)/g.exec(text);
-	if (!match) {
+	const match = /#{1,7} (?<label>.+) % (?<verb>\w{3,6}) (?<route>.*)|#{1,7} (?<onlylabel>.+)/g.exec(text);
+	if (!match?.groups) {
 		return null;
 	}
 
 	const { groups } = match;
+	const label = groups.label ?? groups.onlylabel;
+
 	return {
-		docs_anchor: `#${groups!.label.replaceAll(' ', '-').toLowerCase()}`,
-		label: groups!.label,
-		verb: groups!.verb,
-		route: groups!.route,
+		docs_anchor: `#${label.replaceAll(' ', '-').toLowerCase()}`,
+		label,
+		verb: groups.verb,
+		route: groups.route,
 	};
 }
 
@@ -108,7 +110,7 @@ export function parseSections(content: string): ParsedSection[] {
 export function findRelevantDocsSection(query: string, docsMd: string) {
 	const sections = parseSections(docsMd);
 	for (const section of sections) {
-		if (section.heading?.docs_anchor === query) {
+		if (section.heading?.docs_anchor.startsWith(query)) {
 			return section;
 		}
 	}

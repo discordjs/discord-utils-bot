@@ -37,7 +37,10 @@ export async function algoliaResponse(
 		}).then(async (res) => res.json())) as AlgoliaHit;
 
 		const docsBody = hit.url.includes('discord.com') ? await fetchDocsBody(hit.url) : null;
-		const headlineSuffix = docsBody?.heading ? inlineCode(`${docsBody.heading.verb} ${docsBody.heading.route}`) : null;
+		const headlineSuffix =
+			docsBody?.heading?.verb && docsBody?.heading.route
+				? inlineCode(`${docsBody.heading.verb} ${docsBody.heading.route}`)
+				: null;
 
 		const contentParts = [
 			target ? `${italic(`Suggestion for ${userMention(target)}:`)}` : null,
