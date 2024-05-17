@@ -73,7 +73,6 @@ export async function handleApplicationCommand(
 					castArgs.query,
 					EMOJI_ID_CLYDE_BLURPLE,
 					'discord',
-					castArgs.target,
 					castArgs.hide,
 				);
 				break;
@@ -90,7 +89,6 @@ export async function handleApplicationCommand(
 					castArgs.query,
 					EMOJI_ID_DTYPES,
 					'dtypes',
-					castArgs.target,
 					castArgs.hide,
 				);
 
@@ -107,7 +105,6 @@ export async function handleApplicationCommand(
 					castArgs.query,
 					EMOJI_ID_GUIDE,
 					'guide',
-					castArgs.target,
 					castArgs.hide,
 				);
 				break;
@@ -115,19 +112,19 @@ export async function handleApplicationCommand(
 
 			case 'mdn': {
 				const castArgs = args as ArgumentsOf<typeof MdnCommand>;
-				await mdnSearch(res, castArgs.query, castArgs.target, castArgs.hide);
+				await mdnSearch(res, castArgs.query, castArgs.hide);
 				break;
 			}
 
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.target, castArgs.hide);
+				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.hide);
 				break;
 			}
 
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				showTag(res, castArgs.query, tagCache, castArgs.target, castArgs.hide);
+				showTag(res, castArgs.query, tagCache, castArgs.hide);
 				break;
 			}
 

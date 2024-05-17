@@ -31,12 +31,6 @@ export const NodeCommand = {
 			],
 		},
 		{
-			type: ApplicationCommandOptionType.User,
-			name: 'target',
-			description: 'User to mention',
-			required: false,
-		},
-		{
 			type: ApplicationCommandOptionType.Boolean,
 			name: 'hide',
 			description: 'Hide command output',

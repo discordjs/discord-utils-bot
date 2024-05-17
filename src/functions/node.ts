@@ -72,7 +72,6 @@ export async function nodeSearch(
 	res: Response,
 	query: string,
 	version = 'latest-v18.x',
-	target?: string,
 	ephemeral?: boolean,
 ): Promise<Response> {
 	const trimmedQuery = query.trim();
@@ -117,12 +116,7 @@ export async function nodeSearch(
 				.replaceAll(boldCodeBlockRegex, bold(inlineCode('$1'))),
 		);
 
-		prepareResponse(
-			res,
-			`${target ? `${italic(`Documentation suggestion for ${userMention(target)}:`)}\n` : ''}${parts.join('\n')}`,
-			ephemeral ?? false,
-			target ? [target] : [],
-		);
+		prepareResponse(res, parts.join('\n'), ephemeral ?? false);
 
 		return res;
 	} catch (error) {

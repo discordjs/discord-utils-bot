@@ -11,7 +11,7 @@ function escape(text: string) {
 	return text.replaceAll('||', '|\u200B|').replaceAll('*', '\\*');
 }
 
-export async function mdnSearch(res: Response, query: string, target?: string, ephemeral?: boolean): Promise<Response> {
+export async function mdnSearch(res: Response, query: string, ephemeral?: boolean): Promise<Response> {
 	const trimmedQuery = query.trim();
 	try {
 		const qString = `${API_BASE_MDN}/${trimmedQuery}/index.json`;
@@ -41,12 +41,7 @@ export async function mdnSearch(res: Response, query: string, target?: string, e
 			intro,
 		];
 
-		prepareResponse(
-			res,
-			`${target ? `${italic(`Documentation suggestion for ${userMention(target)}:`)}\n` : ''}${parts.join('\n')}`,
-			ephemeral ?? false,
-			target ? [target] : [],
-		);
+		prepareResponse(res, parts.join('\n'), ephemeral ?? false);
 
 		return res;
 	} catch (error) {

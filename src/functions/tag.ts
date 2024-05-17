@@ -9,7 +9,6 @@ import { fetch } from 'undici';
 import { REMOTE_TAG_URL, PREFIX_SUCCESS } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
-import { suggestionString } from '../util/suggestionString.js';
 
 export type Tag = {
 	content: string;
@@ -49,11 +48,11 @@ export async function loadTags(tagCache: Collection<string, Tag>, remote = false
 	}
 }
 
-export function findTag(tagCache: Collection<string, Tag>, query: string, target?: string): string | null {
+export function findTag(tagCache: Collection<string, Tag>, query: string): string | null {
 	const cleanQuery = query.replaceAll(/\s+/g, '-');
 	const tag = tagCache.get(cleanQuery) ?? tagCache.find((tag) => tag.keywords.includes(cleanQuery));
 	if (!tag) return null;
-	return suggestionString('tag', tag.content, target);
+	return tag.content;
 }
 
 export async function reloadTags(res: Response, tagCache: Collection<string, Tag>, remote = true) {
@@ -84,13 +83,12 @@ export function showTag(
 	res: Response,
 	query: string,
 	tagCache: Collection<string, Tag>,
-	target?: string,
 	ephemeral?: boolean,
 ): Response {
 	const trimmedQuery = query.trim().toLowerCase();
-	const content = findTag(tagCache, trimmedQuery, target);
+	const content = findTag(tagCache, trimmedQuery);
 	if (content) {
-		prepareResponse(res, content, ephemeral ?? false, target ? [target] : []);
+		prepareResponse(res, content, ephemeral ?? false);
 	} else {
 		prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${trimmedQuery}\`.`);
 	}

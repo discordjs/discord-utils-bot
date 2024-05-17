@@ -20,7 +20,6 @@ export async function algoliaResponse(
 	algoliaObjectId: string,
 	emojiId: string,
 	emojiName: string,
-	target?: string,
 	ephemeral?: boolean,
 ): Promise<Response> {
 	const full = `http://${algoliaAppId}.${API_BASE_ALGOLIA}/1/indexes/${algoliaIndex}/${encodeURIComponent(
@@ -43,14 +42,13 @@ export async function algoliaResponse(
 				: null;
 
 		const contentParts = [
-			target ? `${italic(`Suggestion for ${userMention(target)}:`)}` : null,
 			`<:${emojiName}:${emojiId}>  ${bold(resolveHitToNamestring(hit))}${headlineSuffix ? ` ${headlineSuffix}` : ''}`,
 			hit.content?.length ? `${truncate(decode(hit.content), 300)}` : null,
 			docsBody?.lines.length ? docsBody.lines.at(0) : null,
 			`${hyperlink('read more', hideLinkEmbed(hit.url))}`,
 		].filter(Boolean) as string[];
 
-		prepareResponse(res, contentParts.join('\n'), ephemeral ?? false, target ? [target] : []);
+		prepareResponse(res, contentParts.join('\n'), ephemeral ?? false);
 	} catch {
 		prepareErrorResponse(res, 'Invalid result. Make sure to select an entry from the autocomplete.');
 	}
