@@ -142,7 +142,7 @@ export async function handleApplicationCommand(
 
 			case 'reloadversions': {
 				const versions = await fetchDjsVersions();
-				container.register(kDjsVersions, { useValue: res });
+				container.register(kDjsVersions, { useValue: versions });
 
 				prepareResponse(res, `Reloaded versions for all ${inlineCode('@discordjs')} packages.`, true);
 				break;

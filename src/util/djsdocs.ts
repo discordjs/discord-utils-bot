@@ -17,6 +17,7 @@ export type DjsVersions = {
 
 export async function fetchDjsVersions(): Promise<DjsVersions> {
 	if (process.env.IS_LOCAL_DEV) {
+		logger.debug('NOTE: Only main is returned in a local development environment');
 		const devEnvVersions = new Map<string, string[]>();
 		devEnvVersions.set('discord.js', ['main']);
 
