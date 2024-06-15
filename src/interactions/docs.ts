@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types/v10';
-import { prepareDjsVersions } from '../util/djsdocs.js';
+import { reloadDjsVersions } from '../util/djsdocs.js';
 
-const versions = await prepareDjsVersions();
+const versions = await reloadDjsVersions();
 if (!versions.packages.length) {
 	throw new Error('Error while loading versions');
 }

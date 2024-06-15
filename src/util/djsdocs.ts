@@ -62,9 +62,9 @@ export async function fetchDjsVersions(): Promise<DjsVersions> {
 	}
 }
 
-export async function prepareDjsVersions() {
+export async function reloadDjsVersions() {
 	const res = await fetchDjsVersions();
-	container.register(kDjsVersions, { useValue: res });
+	container.register<DjsVersions>(kDjsVersions, { useValue: res });
 	logger.debug({ res }, 'Registered container after fetching versions');
 
 	return res;

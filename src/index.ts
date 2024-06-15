@@ -15,7 +15,7 @@ import { handleComponent } from './handling/handleComponents.js';
 import { handleModalSubmit } from './handling/handleModalSubmit.js';
 import type { MDNIndexEntry } from './types/mdn.js';
 import { API_BASE_MDN, PREFIX_TEAPOT, PREFIX_BUG } from './util/constants.js';
-import { prepareDjsVersions } from './util/djsdocs.js';
+import { reloadDjsVersions } from './util/djsdocs.js';
 import { jsonParser } from './util/jsonParser.js';
 import { logger } from './util/logger.js';
 import { prepareAck, prepareResponse } from './util/respond.js';
@@ -71,7 +71,7 @@ const tagCache = new Collection<string, Tag>();
 const mdnIndexCache: MDNIndexEntry[] = [];
 await loadTags(tagCache);
 logger.info(`Tag cache loaded with ${tagCache.size} entries.`);
-await prepareDjsVersions();
+await reloadDjsVersions();
 
 export async function start() {
 	const mdnData = (await fetch(`${API_BASE_MDN}/en-US/search-index.json`)
