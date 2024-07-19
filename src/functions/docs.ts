@@ -152,7 +152,8 @@ function formatSummary(blocks: any[], _package: string, version: string) {
 	return blocks
 		.map((block) => {
 			if (block.kind === 'LinkTag') {
-				const link = `${DJS_DOCS_BASE}/packages/${_package}/${version}/${block.uri}`;
+				const isFullLink = block.uri.startsWith('http');
+				const link = isFullLink ? block.uri : `${DJS_DOCS_BASE}/packages/${_package}/${version}/${block.uri}`;
 				return hyperlink(block.members ? `${block.text}${block.members}` : block.text, link);
 			}
 
