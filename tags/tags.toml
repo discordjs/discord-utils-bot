@@ -1187,3 +1187,10 @@ Discord does not provide the invite that a member used to join through the bot A
 - Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
 - Discord has not shared any plans to make the members tab available for bots.
 """
+[network]
+keywords = ["network-issues", "connection-reset", "socket-error"]
+content = """ 
+Errors such as `ECONNRESET`, `ConnectTimeoutError`, `SocketError: other side closed` indicate a network issue
+* Free or shared hosting providers often come with significant limitations and challenges, making them more prone to these issues
+* Another indication of these issues are 'Unknown Interaction' errors.   
+"""
