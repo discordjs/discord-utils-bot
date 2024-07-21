@@ -68,12 +68,6 @@ export async function queryDocs(query: string, pack: string, version: string) {
 	});
 
 	const docsResult = (await searchRes.json()) as any;
-	docsResult.hits.sort((one: any, other: any) => {
-		const oneScore = one.kind === 'Class' ? 1 : 0;
-		const otherScore = other.kind === 'Class' ? 1 : 0;
-
-		return otherScore - oneScore;
-	});
 
 	return {
 		...docsResult,
