@@ -49,6 +49,10 @@ function searchURL(pack: string, version: string) {
 	return `${BASE_SEARCH}indexes/${pack}-${version.replaceAll('.', '-')}/search`;
 }
 
+function sanitizeText(name: string) {
+	return name.replaceAll('*', '');
+}
+
 export async function queryDocs(query: string, pack: string, version: string) {
 	const searchRes = await fetch(searchURL(pack, version), {
 		method: 'post',
@@ -92,7 +96,7 @@ export async function queryDocs(query: string, pack: string, version: string) {
 
 			return {
 				...hit,
-				autoCompleteName: truncate(`${name}${hit.summary ? ` - ${hit.summary}` : ''}`, 100, ' '),
+				autoCompleteName: truncate(`${name}${hit.summary ? ` - ${sanitizeText(hit.summary)}` : ''}`, 100, ' '),
 				autoCompleteValue: parts.join('|'),
 				isMember,
 			};
