@@ -1187,3 +1187,11 @@ Discord does not provide the invite that a member used to join through the bot A
 - Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
 - Discord has not shared any plans to make the members tab available for bots.
 """
+
+[relative-paths-base]
+keywords = ["require", "node-fs", "relative-paths", "base-path"]
+content = """
+Relative paths base:
+- [`require`](https://nodejs.org/api/modules.html#requireid) resolves relative paths based on the file's location.
+- [`fs`](https://nodejs.org/api/fs.html) methods (e.g. [`fs.readFile`](https://nodejs.org/api/fs.html#fspromisesreadfilepath-options)) resolve paths based on the current working directory.
+"""
