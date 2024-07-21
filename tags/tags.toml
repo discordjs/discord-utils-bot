@@ -796,7 +796,7 @@ Discord does not condone bots creating invites without the expressed consent of 
 [selfbots]
 keywords = ["selfbot", "userbot", "userbots"]
 content = """
-> **Do not use self-bots or user-bots**. Each account must be associated with a human, not a bot. Self-bots put strain on Discord's infrastructure and our ability to run our services. For more information, you can read our Developer Policies [here](https://discord.com/developers/docs/policy).
+> 14. Do not use self-bots or user-bots. Each account must be associated with a human, not a bot. (See our [Platform Manipulation Policy Explainer](https://discord.com/safety/platform-manipulation-policy-explainer) for more.)
 - [source](https://discord.com/guidelines)
 """
 
