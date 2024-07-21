@@ -57,8 +57,8 @@ export async function handleApplicationCommand(
 					break;
 				}
 
-				const { query, version, ephemeral } = resolved;
-				await djsDocs(res, version, query, ephemeral);
+				const { query, version, ephemeral, source } = resolved;
+				await djsDocs(res, version, query, source, ephemeral);
 				break;
 			}
 

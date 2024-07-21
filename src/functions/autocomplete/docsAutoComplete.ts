@@ -6,19 +6,12 @@ import type {
 } from 'discord-api-types/v10';
 import { ApplicationCommandOptionType, InteractionResponseType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
-import { fetch } from 'undici';
 import { AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
 import { getDjsVersions } from '../../util/djsdocs.js';
 import { logger } from '../../util/logger.js';
-import { truncate } from '../../util/truncate.js';
+import { queryDocs } from '../docs.js';
 
-const BASE_SEARCH = `https://search.discordjs.dev/`;
-
-function searchURL(pack: string, version: string) {
-	return `${BASE_SEARCH}indexes/${pack}-${version.replaceAll('.', '-')}/search`;
-}
-
-function parseDocsPath(path: string) {
+export function parseDocsPath(path: string) {
 	// /0   /1       /2       /3   /4
 	// /docs/packages/builders/main/EmbedBuilder:Class
 	// /docs/packages/builders/main/EmbedImageData:Interface#proxyURL
@@ -64,28 +57,7 @@ export async function djsAutoComplete(
 	}
 
 	const version = versionOptionData?.value ?? versions.versions.get(option.name)?.at(1) ?? 'main';
-
-	const searchRes = await fetch(searchURL(option.name, version), {
-		method: 'post',
-		body: JSON.stringify({
-			limit: 100,
-			// eslint-disable-next-line id-length
-			q: queryOptionData.value,
-		}),
-		headers: {
-			Authorization: `Bearer ${process.env.DJS_DOCS_BEARER!}`,
-			'Content-Type': 'application/json',
-		},
-	});
-
-	const docsResult = (await searchRes.json()) as any;
-	docsResult.hits.sort((one: any, other: any) => {
-		const oneScore = one.kind === 'Class' ? 1 : 0;
-		const otherScore = other.kind === 'Class' ? 1 : 0;
-
-		return otherScore - oneScore;
-	});
-
+	const docsResult = await queryDocs(queryOptionData.value, option.name, version);
 	const choices = [];
 
 	for (const hit of docsResult.hits) {
@@ -93,26 +65,9 @@ export async function djsAutoComplete(
 			break;
 		}
 
-		const parsed = parseDocsPath(hit.path);
-
-		let name = '';
-		const isMember = ['Property', 'Method', 'Event', 'PropertySignature', 'EnumMember'].includes(hit.kind);
-		if (isMember) {
-			name += `${parsed.item}#${hit.name}${hit.kind === 'Method' ? '()' : ''}`;
-		} else {
-			name += hit.name;
-		}
-
-		const itemKind = isMember ? 'Class' : hit.kind;
-		const parts = [parsed.package, parsed.item.toLocaleLowerCase(), parsed.kind];
-
-		if (isMember) {
-			parts.push(hit.name);
-		}
-
 		choices.push({
-			name: truncate(`${name}${hit.summary ? ` - ${hit.summary}` : ''}`, 100, ' '),
-			value: parts.join('|'),
+			name: hit.autoCompleteName,
+			value: hit.autoCompleteValue,
 		});
 	}
 
