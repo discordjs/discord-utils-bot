@@ -796,7 +796,7 @@ Discord does not condone bots creating invites without the expressed consent of 
 [selfbots]
 keywords = ["selfbot", "userbot", "userbots"]
 content = """
-> **Do not use self-bots or user-bots**. Each account must be associated with a human, not a bot. Self-bots put strain on Discord's infrastructure and our ability to run our services. For more information, you can read our Developer Policies [here](https://discord.com/developers/docs/policy).
+> 14. Do not use self-bots or user-bots. Each account must be associated with a human, not a bot. (See our [Platform Manipulation Policy Explainer](https://discord.com/safety/platform-manipulation-policy-explainer) for more.)
 - [source](https://discord.com/guidelines)
 """
 
@@ -1187,10 +1187,11 @@ Discord does not provide the invite that a member used to join through the bot A
 - Tracking the uses of invites through the `inviteCreate` and `guildMemberAdd` events is unreliable and we recommend against it.
 - Discord has not shared any plans to make the members tab available for bots.
 """
-[network]
-keywords = ["network-issues", "connection-reset", "socket-error"]
-content = """ 
-Errors such as `ECONNRESET`, `ConnectTimeoutError`, `SocketError: other side closed` indicate a network issue
-* Free or shared hosting providers often come with significant limitations and challenges, making them more prone to these issues
-* Another indication of these issues are 'Unknown Interaction' errors.   
+
+[relative-paths-base]
+keywords = ["require", "node-fs", "relative-paths", "base-path"]
+content = """
+Relative paths base:
+- [`require`](https://nodejs.org/api/modules.html#requireid) resolves relative paths based on the file's location.
+- [`fs`](https://nodejs.org/api/fs.html) methods (e.g. [`fs.readFile`](https://nodejs.org/api/fs.html#fspromisesreadfilepath-options)) resolve paths based on the current working directory.
 """

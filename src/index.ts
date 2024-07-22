@@ -122,7 +122,6 @@ process.on('uncaughtException', (err, origin) => {
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-	// eslint-disable-next-line no-console
 	logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 

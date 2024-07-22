@@ -8,7 +8,7 @@ import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
 import { mdnSearch } from '../functions/mdn.js';
-import { nodeSearch } from '../functions/node.js';
+import { nodeAutoCompleteResolve } from '../functions/node.js';
 import type { Tag } from '../functions/tag.js';
 import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
@@ -57,8 +57,8 @@ export async function handleApplicationCommand(
 					break;
 				}
 
-				const { query, version, ephemeral } = resolved;
-				await djsDocs(res, version, query, ephemeral);
+				const { query, version, ephemeral, source } = resolved;
+				await djsDocs(res, version, query, source, ephemeral);
 				break;
 			}
 
@@ -117,7 +117,7 @@ export async function handleApplicationCommand(
 
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-				await nodeSearch(res, castArgs.query, castArgs.version, castArgs.hide);
+				await nodeAutoCompleteResolve(res, castArgs.query, castArgs.hide);
 				break;
 			}
 

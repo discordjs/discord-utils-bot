@@ -2,7 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+import { URL } from 'node:url';
 import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
+import * as cheerio from 'cheerio';
 import type { Response } from 'polka';
 import TurndownService from 'turndown';
 import { fetch } from 'undici';
@@ -10,6 +12,8 @@ import type { NodeDocs } from '../types/NodeDocs.js';
 import { API_BASE_NODE, EMOJI_ID_NODE } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
+import { truncate } from '../util/truncate.js';
+import { urlOption } from '../util/url.js';
 
 const td = new TurndownService({ codeBlockStyle: 'fenced' });
 
@@ -66,27 +70,68 @@ function docsUrl(version: string, source: string, anchorTextRaw: string) {
 	return `${API_BASE_NODE}/docs/${version}/api/${parsePageFromSource(source)}.html#${formatAnchorText(anchorTextRaw)}`;
 }
 
-const cache: Map<string, NodeDocs> = new Map();
+const jsonCache: Map<string, NodeDocs> = new Map();
+const docsCache: Map<string, string> = new Map();
+
+export async function nodeAutoCompleteResolve(res: Response, query: string, ephemeral?: boolean) {
+	const url = urlOption(`${API_BASE_NODE}/${query}`);
+
+	if (!url || !query.startsWith('docs')) {
+		return nodeSearch(res, query, undefined, ephemeral);
+	}
+
+	const key = `${url.origin}${url.pathname}`;
+	let html = docsCache.get(key);
+
+	if (!html) {
+		const data = await fetch(url.toString()).then(async (response) => response.text());
+		docsCache.set(key, data);
+		html = data;
+	}
+
+	const $ = cheerio.load(html);
+
+	const possible = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+	const headingBaseSelectorParts = possible.map((prefix) => `${prefix}:has(${url.hash})`);
+	const heaidngSelector = headingBaseSelectorParts.join(', ');
+	const headingCodeSelector = headingBaseSelectorParts.map((part) => `${part} > code`).join(', ');
+	const paragraphSelector = headingBaseSelectorParts.join(', ');
+
+	const heading = $(heaidngSelector).text().replaceAll('#', '');
+	const headingCode = $(headingCodeSelector).text();
+	const paragraph = $(paragraphSelector).nextUntil('h4', 'p');
+
+	const text = paragraph.text();
+	const fullSentence = text.split('. ')?.[0];
+	const partSentence = text.split('.')?.[0];
+
+	prepareResponse(
+		res,
+		[
+			`<:node:${EMOJI_ID_NODE}> ${hyperlink(inlineCode(headingCode.length ? headingCode : heading), url.toString())}`,
+			`${fullSentence ?? partSentence ?? `${truncate(text, 20, '')}..`}.`,
+		].join('\n'),
+		ephemeral ?? false,
+	);
+
+	return res;
+}
 
 export async function nodeSearch(
 	res: Response,
 	query: string,
-	version = 'latest-v18.x',
+	version = 'latest-v20.x',
 	ephemeral?: boolean,
 ): Promise<Response> {
 	const trimmedQuery = query.trim();
 	try {
 		const url = `${API_BASE_NODE}/dist/${version}/docs/api/all.json`;
-		let allNodeData = cache.get(url);
+		let allNodeData = jsonCache.get(url);
 
 		if (!allNodeData) {
-			// Get the data for this version
 			const data = (await fetch(url).then(async (response) => response.json())) as NodeDocs;
-
-			// Set it to the map for caching
-			cache.set(url, data);
-
-			// Set the local parameter for further processing
+			jsonCache.set(url, data);
 			allNodeData = data;
 		}
 
