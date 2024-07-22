@@ -5,14 +5,16 @@ import type { Response } from 'polka';
 import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';
 import { djsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
+import { nodeAutoComplete } from '../functions/autocomplete/nodeAutoComplete.js';
 import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
 import type { Tag } from '../functions/tag.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
 import type { GuideCommand } from '../interactions/guide.js';
+import type { NodeCommand } from '../interactions/node.js';
 import type { MDNIndexEntry } from '../types/mdn.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 
-type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'tag';
+type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'node' | 'tag';
 
 export async function handleApplicationCommandAutocomplete(
 	res: Response,
@@ -23,6 +25,12 @@ export async function handleApplicationCommandAutocomplete(
 	const data = message.data;
 	const name = data.name as CommandAutoCompleteName;
 	switch (name) {
+		case 'node': {
+			const args = transformInteraction<typeof NodeCommand>(data.options);
+			await nodeAutoComplete(res, args.query);
+			break;
+		}
+
 		case 'docs': {
 			await djsAutoComplete(res, data.options);
 			break;
