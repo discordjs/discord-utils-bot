@@ -218,6 +218,20 @@ function formatSummary(blocks: any[], _package: string, version: string) {
 		.join('');
 }
 
+function formatExample(blocks: any[]) {
+	const comments: string[] = [];
+	for (const block of blocks) {
+		if (block.kind === 'PlainText' && block.text.length) {
+			comments.push(`// ${block.text}`);
+			continue;
+		}
+
+		if (block.kind === 'FencedCode') {
+			return codeBlock(block.language, `${comments.join('\n')}\n${block.text}`);
+		}
+	}
+}
+
 function formatItem(_item: any, _package: string, version: string, member?: string) {
 	const itemLink = docsLink(_item, _package, version, member);
 	const item = effectiveItem(_item, member);
@@ -249,7 +263,7 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 
 	const summary = item.summary?.summarySection;
 	const deprecationNote = item.summary?.deprecatedBlock;
-	const example = item.summary?.exampleBlocks?.[0];
+	const example = formatExample(item.summary?.exampleBlocks);
 
 	if (deprecationNote?.length) {
 		lines.push(`${bold('[DEPRECATED]')} ${formatSummary(deprecationNote, _package, version)}`);
@@ -259,7 +273,7 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 		}
 
 		if (example) {
-			lines.push(codeBlock(example.language, example.text));
+			lines.push(example);
 		}
 	}
 
