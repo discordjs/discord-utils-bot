@@ -102,18 +102,22 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, user
 	const headingCode = $(headingCodeSelector).text();
 	const paragraph = $(paragraphSelector).nextUntil('h4', 'p');
 
-	const text = paragraph.text();
-	const fullSentence = text.split('. ')?.[0];
-	const partSentence = text.split('.')?.[0];
+	const text = paragraph.text().split('\n').join(' ');
+	const sentence = text.split(/[!.?](\s|$)/)?.[0];
+	const effectiveSentence = (sentence ?? truncate(text, 100, '')).trim();
 
-	prepareResponse(
-		res,
-		[
-			`<:node:${EMOJI_ID_NODE}> ${hyperlink(inlineCode(headingCode.length ? headingCode : heading), url.toString())}`,
-			`${fullSentence ?? partSentence ?? `${truncate(text, 20, '')}..`}.`,
-		].join('\n'),
-		{ ephemeral, suggestion: user ? { userId: user, kind: 'documentation' } : undefined },
-	);
+	const contentParts = [
+		`<:node:${EMOJI_ID_NODE}> ${hyperlink(inlineCode(headingCode.length ? headingCode : heading), url.toString())}`,
+	];
+
+	if (effectiveSentence.length) {
+		contentParts.push(`${effectiveSentence}.`);
+	}
+
+	prepareResponse(res, contentParts.join('\n'), {
+		ephemeral,
+		suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+	});
 
 	return res;
 }
