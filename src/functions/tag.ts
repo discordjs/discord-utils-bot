@@ -66,7 +66,7 @@ export async function reloadTags(res: Response, tagCache: Collection<string, Tag
 				`${PREFIX_SUCCESS} **Tags have fully reloaded ${remote ? '(remote)' : '(local)'}!**`,
 				`Tag cache size has changed from ${prev} to ${tagCache.size}.`,
 			].join('\n'),
-			true,
+			{ ephemeral: true },
 		);
 	} catch (error) {
 		logger.error(error as Error);
@@ -83,12 +83,14 @@ export function showTag(
 	res: Response,
 	query: string,
 	tagCache: Collection<string, Tag>,
+	user?: string,
 	ephemeral?: boolean,
 ): Response {
 	const trimmedQuery = query.trim().toLowerCase();
 	const content = findTag(tagCache, trimmedQuery);
+
 	if (content) {
-		prepareResponse(res, content, ephemeral ?? false);
+		prepareResponse(res, content, { ephemeral, suggestion: user ? { userId: user, kind: 'tag' } : undefined });
 	} else {
 		prepareErrorResponse(res, `Could not find a tag with name or alias similar to \`${trimmedQuery}\`.`);
 	}

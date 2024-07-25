@@ -17,5 +17,11 @@ export const GuideCommand = {
 			description: 'Hide command output',
 			required: false,
 		},
+		{
+			type: ApplicationCommandOptionType.User,
+			name: 'mention',
+			description: 'User to mention',
+			required: false,
+		},
 	],
 } as const;

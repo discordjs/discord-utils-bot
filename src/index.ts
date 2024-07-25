@@ -104,11 +104,13 @@ export async function start() {
 						break;
 
 					default:
-						prepareResponse(res, `${PREFIX_TEAPOT} This shouldn't be here...`, true);
+						prepareResponse(res, `${PREFIX_TEAPOT} This shouldn't be here...`, { ephemeral: true });
 				}
 			} catch (error) {
 				logger.error(error as Error);
-				prepareResponse(res, `${PREFIX_BUG} Looks like something went wrong here, please try again later!`, true);
+				prepareResponse(res, `${PREFIX_BUG} Looks like something went wrong here, please try again later!`, {
+					ephemeral: true,
+				});
 			}
 
 			res.end();

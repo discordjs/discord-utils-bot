@@ -45,5 +45,11 @@ export const DTypesCommand = {
 			description: EPHEMERAL_DESCRIPTION,
 			required: false,
 		},
+		{
+			type: ApplicationCommandOptionType.User,
+			name: 'mention',
+			description: 'User to mention',
+			required: false,
+		},
 	],
 } as const;

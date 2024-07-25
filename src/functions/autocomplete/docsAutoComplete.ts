@@ -85,6 +85,7 @@ export async function djsAutoComplete(
 
 type DocsAutoCompleteData = {
 	ephemeral?: boolean;
+	mention?: string;
 	query: string;
 	source: string;
 	version: string;
@@ -107,6 +108,7 @@ export function resolveOptionsToDocsAutoComplete(
 	let query = 'Client';
 	let version = versions?.at(1) ?? 'main';
 	let ephemeral;
+	let mention;
 
 	logger.debug(
 		{
@@ -115,6 +117,7 @@ export function resolveOptionsToDocsAutoComplete(
 				versions,
 				version,
 				ephemeral,
+				mention,
 				source,
 			},
 		},
@@ -132,6 +135,8 @@ export function resolveOptionsToDocsAutoComplete(
 			}
 		} else if (opt.type === ApplicationCommandOptionType.Boolean && opt.name === 'hide') {
 			ephemeral = opt.value;
+		} else if (opt.type === ApplicationCommandOptionType.User && opt.name === 'mention') {
+			mention = opt.value;
 		}
 	}
 
@@ -140,5 +145,6 @@ export function resolveOptionsToDocsAutoComplete(
 		source,
 		ephemeral,
 		version,
+		mention,
 	};
 }

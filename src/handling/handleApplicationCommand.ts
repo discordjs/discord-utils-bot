@@ -57,8 +57,8 @@ export async function handleApplicationCommand(
 					break;
 				}
 
-				const { query, version, ephemeral, source } = resolved;
-				await djsDocs(res, version, query, source, ephemeral);
+				const { query, version, ephemeral, source, mention } = resolved;
+				await djsDocs(res, version, query, source, mention, ephemeral);
 				break;
 			}
 
@@ -72,6 +72,7 @@ export async function handleApplicationCommand(
 					castArgs.query,
 					EMOJI_ID_CLYDE_BLURPLE,
 					'discord',
+					castArgs.mention,
 					castArgs.hide,
 				);
 				break;
@@ -88,6 +89,7 @@ export async function handleApplicationCommand(
 					castArgs.query,
 					EMOJI_ID_DTYPES,
 					'dtypes',
+					castArgs.mention,
 					castArgs.hide,
 				);
 
@@ -104,6 +106,7 @@ export async function handleApplicationCommand(
 					castArgs.query,
 					EMOJI_ID_GUIDE,
 					'guide',
+					castArgs.mention,
 					castArgs.hide,
 				);
 				break;
@@ -111,19 +114,19 @@ export async function handleApplicationCommand(
 
 			case 'mdn': {
 				const castArgs = args as ArgumentsOf<typeof MdnCommand>;
-				await mdnSearch(res, castArgs.query, castArgs.hide);
+				await mdnSearch(res, castArgs.query, castArgs.mention, castArgs.hide);
 				break;
 			}
 
 			case 'node': {
 				const castArgs = args as ArgumentsOf<typeof NodeCommand>;
-				await nodeAutoCompleteResolve(res, castArgs.query, castArgs.hide);
+				await nodeAutoCompleteResolve(res, castArgs.query, castArgs.mention, castArgs.hide);
 				break;
 			}
 
 			case 'tag': {
 				const castArgs = args as ArgumentsOf<typeof TagCommand>;
-				showTag(res, castArgs.query, tagCache, castArgs.hide);
+				showTag(res, castArgs.query, tagCache, castArgs.mention, castArgs.hide);
 				break;
 			}
 
@@ -141,7 +144,7 @@ export async function handleApplicationCommand(
 
 			case 'reloadversions': {
 				await reloadDjsVersions();
-				prepareResponse(res, `Reloaded versions for all ${inlineCode('@discordjs')} packages.`, true);
+				prepareResponse(res, `Reloaded versions for all ${inlineCode('@discordjs')} packages.`, { ephemeral: true });
 				break;
 			}
 		}

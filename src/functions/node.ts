@@ -73,11 +73,11 @@ function docsUrl(version: string, source: string, anchorTextRaw: string) {
 const jsonCache: Map<string, NodeDocs> = new Map();
 const docsCache: Map<string, string> = new Map();
 
-export async function nodeAutoCompleteResolve(res: Response, query: string, ephemeral?: boolean) {
+export async function nodeAutoCompleteResolve(res: Response, query: string, user?: string, ephemeral?: boolean) {
 	const url = urlOption(`${API_BASE_NODE}/${query}`);
 
 	if (!url || !query.startsWith('docs')) {
-		return nodeSearch(res, query, undefined, ephemeral);
+		return nodeSearch(res, query, undefined, user, ephemeral);
 	}
 
 	const key = `${url.origin}${url.pathname}`;
@@ -112,7 +112,7 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, ephe
 			`<:node:${EMOJI_ID_NODE}> ${hyperlink(inlineCode(headingCode.length ? headingCode : heading), url.toString())}`,
 			`${fullSentence ?? partSentence ?? `${truncate(text, 20, '')}..`}.`,
 		].join('\n'),
-		ephemeral ?? false,
+		{ ephemeral, suggestion: user ? { userId: user, kind: 'documentation' } : undefined },
 	);
 
 	return res;
@@ -122,6 +122,7 @@ export async function nodeSearch(
 	res: Response,
 	query: string,
 	version = 'latest-v20.x',
+	user?: string,
 	ephemeral?: boolean,
 ): Promise<Response> {
 	const trimmedQuery = query.trim();
@@ -161,7 +162,10 @@ export async function nodeSearch(
 				.replaceAll(boldCodeBlockRegex, bold(inlineCode('$1'))),
 		);
 
-		prepareResponse(res, parts.join('\n'), ephemeral ?? false);
+		prepareResponse(res, parts.join('\n'), {
+			ephemeral,
+			suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+		});
 
 		return res;
 	} catch (error) {

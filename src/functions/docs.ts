@@ -294,7 +294,14 @@ async function resolveDjsDocsQuery(query: string, source: string, branch: string
 	}
 }
 
-export async function djsDocs(res: Response, branch: string, _query: string, source: string, ephemeral = false) {
+export async function djsDocs(
+	res: Response,
+	branch: string,
+	_query: string,
+	source: string,
+	user?: string,
+	ephemeral?: boolean,
+) {
 	try {
 		const query = await resolveDjsDocsQuery(_query, source, branch);
 		if (!query) {
@@ -309,14 +316,10 @@ export async function djsDocs(res: Response, branch: string, _query: string, sou
 			return res.end();
 		}
 
-		prepareResponse(
-			res,
-			truncate(formatItem(item, _package, branch, member), MAX_MESSAGE_LENGTH),
+		prepareResponse(res, truncate(formatItem(item, _package, branch, member), MAX_MESSAGE_LENGTH), {
 			ephemeral,
-			[],
-			[],
-			InteractionResponseType.ChannelMessageWithSource,
-		);
+			suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+		});
 		return res.end();
 	} catch (_error) {
 		const error = _error as Error;
