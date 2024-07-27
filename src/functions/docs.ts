@@ -57,9 +57,11 @@ export async function queryDocs(query: string, pack: string, version: string) {
 	const searchRes = await fetch(searchURL(pack, version), {
 		method: 'post',
 		body: JSON.stringify({
-			limit: 100,
+			limit: 25,
 			// eslint-disable-next-line id-length
 			q: query,
+			attributesToSearchOn: ['name'],
+			sort: ['type:asc'],
 		}),
 		headers: {
 			Authorization: `Bearer ${process.env.DJS_DOCS_BEARER!}`,
