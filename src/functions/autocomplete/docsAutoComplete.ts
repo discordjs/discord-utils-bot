@@ -36,6 +36,10 @@ export function parseDocsPath(path: string) {
 	};
 }
 
+function convertToDottedName(dashed: string) {
+	return dashed.replaceAll('-', '.');
+}
+
 export async function djsAutoComplete(
 	res: Response,
 	options: APIApplicationCommandInteractionDataOption[],
@@ -56,7 +60,7 @@ export async function djsAutoComplete(
 		throw new Error('expected query option, none received');
 	}
 
-	const version = versionOptionData?.value ?? versions.versions.get(option.name)?.at(1) ?? 'main';
+	const version = versionOptionData?.value ?? versions.versions.get(convertToDottedName(option.name))?.at(1) ?? 'main';
 	const docsResult = await queryDocs(queryOptionData.value, option.name, version);
 	const choices = [];
 
@@ -103,7 +107,7 @@ export function resolveOptionsToDocsAutoComplete(
 		return undefined;
 	}
 
-	const versions = allversions.versions.get(source.replaceAll('-', '.'));
+	const versions = allversions.versions.get(convertToDottedName(source));
 
 	let query = 'Client';
 	let version = versions?.at(1) ?? 'main';
