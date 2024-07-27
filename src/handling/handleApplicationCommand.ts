@@ -80,7 +80,6 @@ export async function handleApplicationCommand(
 
 			case 'dtypes': {
 				const castArgs = args as ArgumentsOf<typeof DTypesCommand>;
-
 				await algoliaResponse(
 					res,
 					process.env.DTYPES_ALGOLIA_APP!,
@@ -108,6 +107,7 @@ export async function handleApplicationCommand(
 					'guide',
 					castArgs.mention,
 					castArgs.hide,
+					'guide',
 				);
 				break;
 			}

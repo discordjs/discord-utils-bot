@@ -22,6 +22,7 @@ export async function algoliaResponse(
 	emojiName: string,
 	user?: string,
 	ephemeral?: boolean,
+	type = 'documentation',
 ): Promise<Response> {
 	const full = `http://${algoliaAppId}.${API_BASE_ALGOLIA}/1/indexes/${algoliaIndex}/${encodeURIComponent(
 		expandAlgoliaObjectId(algoliaObjectId),
@@ -51,7 +52,7 @@ export async function algoliaResponse(
 
 		prepareResponse(res, contentParts.join('\n'), {
 			ephemeral,
-			suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+			suggestion: user ? { userId: user, kind: type } : undefined,
 		});
 	} catch {
 		prepareErrorResponse(res, 'Invalid result. Make sure to select an entry from the autocomplete.');
