@@ -1008,7 +1008,7 @@ Fetching members can time out on large guilds, as they arrive in chunks through 
 keywords = ["custom-properties-on-client"]
 content = """
 We highly recommend you extend the `Client` structure properly instead of just attaching custom properties like `.commands` to the regular discord.js `Client` instance.
-- Using typescript, you might want to consider [casting](https://www.typescripttutorial.net/typescript-tutorial/type-casting/) or [augmenting the module type](https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules)
+- Using typescript, you might want to consider [casting](https://www.typescripttutorial.net/typescript-tutorial/type-casting/) or [augmenting the module type](https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules)
 """
 
 [components-per-message]
