@@ -58,7 +58,7 @@ Learn more about slash command limits at the [Discord Developer Documentation](h
 [embed-limits]
 keywords = ["embedlimits"]
 content = """
-Learn more about embed limits at the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-limits)
+Learn more about embed limits at the [Discord Developer Documentation](https://discord.com/developers/docs/resources/message#embed-object-embed-limits)
 """
 
 [button-limits]
