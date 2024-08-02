@@ -624,7 +624,7 @@ keywords = ["=", "==", "===", "equaltypes", "equal-types"]
 content = """
 In JavaScript, = is used for assignment, == for loose equality, and === for strict equality checks. 
 ```js
-x = 1; // assigning x to a value
+x = 1; // assigning a value to x
 '1' == 1 // true
 '1' === 1 // false
 ```
