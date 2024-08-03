@@ -11,7 +11,7 @@
 		"cmd:glob": "env-cmd node dist/deployFunctions/deployGlobal.js",
 		"cmd:dev": "env-cmd node dist/deployFunctions/deployDev.js",
 		"validate-tags": "node dist/workflowFunctions/validateTagsWithoutLinks.js",
-		"validate-tags:withlinks": "snode dist/workflowFunctions/validateTagsWithLinks.js",
+		"validate-tags:withlinks": "node dist/workflowFunctions/validateTagsWithLinks.js",
 		"prepare": "is-ci || husky install"
 	},
 	"type": "module",
