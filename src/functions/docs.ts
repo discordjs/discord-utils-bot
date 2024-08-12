@@ -220,7 +220,7 @@ function formatSummary(blocks: any[], _package: string, version: string) {
 		.join('');
 }
 
-function formatExample(blocks: any[]) {
+function formatExample(blocks: any[] = []) {
 	const comments: string[] = [];
 	for (const block of blocks) {
 		if (block.kind === 'PlainText' && block.text.length) {
