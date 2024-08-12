@@ -58,7 +58,7 @@ Learn more about slash command limits at the [Discord Developer Documentation](h
 [embed-limits]
 keywords = ["embedlimits"]
 content = """
-Learn more about embed limits at the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-limits)
+Learn more about embed limits at the [Discord Developer Documentation](https://discord.com/developers/docs/resources/message#embed-object-embed-limits)
 """
 
 [button-limits]
@@ -210,6 +210,8 @@ keywords = [
     "catch-{",
     "update-node",
     "abortcontroller",
+    "readablestream",
+    "??="
 ]
 content = """
 Please update Node.js to the [current LTS](https://nodejs.org/) (long-term support) version!
@@ -624,7 +626,7 @@ keywords = ["=", "==", "===", "equaltypes", "equal-types"]
 content = """
 In JavaScript, = is used for assignment, == for loose equality, and === for strict equality checks. 
 ```js
-x = 1; // assigning x to a value
+x = 1; // assigning a value to x
 '1' == 1 // true
 '1' === 1 // false
 ```
@@ -1200,6 +1202,6 @@ Relative paths base:
 keywords = ["network-issues", "connection-reset", "socket-error"]
 content = """ 
 Errors such as `ECONNRESET`, `ConnectTimeoutError`, `SocketError: other side closed` indicate a network issue
-* Free or shared hosting providers often come with significant limitation
+* Free or shared hosting providers often come with significant limitations
 * Another indication of these issues are 'Unknown Interaction' errors.   
 """
