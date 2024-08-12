@@ -76,23 +76,16 @@ export async function queryDocs(query: string, pack: string, version: string) {
 		hits: docsResult.hits.map((hit: any) => {
 			const parsed = parseDocsPath(hit.path);
 
-			let name = '';
 			const isMember = ['Property', 'Method', 'Event', 'PropertySignature', 'EnumMember'].includes(hit.kind);
-			if (isMember) {
-				name += `${parsed.item}#${hit.name}${hit.kind === 'Method' ? '()' : ''}`;
-			} else {
-				name += hit.name;
-			}
-
 			const parts = [parsed.package, parsed.item.toLocaleLowerCase(), parsed.kind];
 
-			if (isMember) {
-				parts.push(hit.name);
+			if (isMember && parsed.method) {
+				parts.push(parsed.method);
 			}
 
 			return {
 				...hit,
-				autoCompleteName: truncate(`${name}${hit.summary ? ` - ${sanitizeText(hit.summary)}` : ''}`, 100, ' '),
+				autoCompleteName: truncate(`${hit.name}${hit.summary ? ` - ${sanitizeText(hit.summary)}` : ''}`, 100, ' '),
 				autoCompleteValue: parts.join('|'),
 				isMember,
 			};
@@ -169,10 +162,11 @@ function docsLink(item: any, _package: string, version: string, attribute?: stri
 }
 
 function preparePotential(potential: any, member: any, topLevelDisplayName: string): any | null {
+	const isMethod = potential.kind === 'Method';
 	if (potential.displayName?.toLowerCase() === member.toLowerCase()) {
 		return {
 			...potential,
-			displayName: `${topLevelDisplayName}#${potential.displayName}`,
+			displayName: `${topLevelDisplayName}#${potential.displayName}${isMethod ? '()' : ''}`,
 		};
 	}
 
@@ -220,8 +214,13 @@ function formatSummary(blocks: any[], _package: string, version: string) {
 		.join('');
 }
 
-function formatExample(blocks: any[] = []) {
+function formatExample(blocks?: any[]) {
 	const comments: string[] = [];
+
+	if (!blocks) {
+		return;
+	}
+
 	for (const block of blocks) {
 		if (block.kind === 'PlainText' && block.text.length) {
 			comments.push(`// ${block.text}`);
