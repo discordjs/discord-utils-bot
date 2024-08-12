@@ -252,10 +252,6 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 
 	parts.push(underline(bold(hyperlink(item.displayName, itemLink))));
 
-	if (item.extends) {
-		// TODO format extends
-	}
-
 	const head = `<:${emojiName}:${emojiId}>`;
 	const tail = `  ${hyperlink(inlineCode(`@${version}`), sourceUrl, 'source code')}`;
 	const middlePart = item.isDeprecated ? strikethrough(parts.join(' ')) : parts.join(' ');
