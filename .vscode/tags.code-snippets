@@ -29,7 +29,7 @@
 			"l"
 		],
 		"description": "Markdown link",
-		"body": "[$1](<$2>)"
+		"body": "[$1]($2)"
 	},
 	"learnmore": {
 		"prefix": [
@@ -37,6 +37,6 @@
 			"external"
 		],
 		"description": "Markdown link for extended resources",
-		"body": "[learn more](<$2>)"
+		"body": "[learn more]($2)"
 	}
 }
