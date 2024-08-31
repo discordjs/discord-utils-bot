@@ -14,22 +14,32 @@ function removeDtypesPrefix(str: string | null) {
 	return (str ?? '').replace('discord-api-types/', '');
 }
 
+function compressHeading(heading: string) {
+	return heading.toLowerCase().replaceAll(/[ ,.=_-]/g, '');
+}
+
+function headingIsSimilar(one: string, other: string) {
+	const one_ = compressHeading(one);
+	const other_ = compressHeading(other);
+
+	return one_.startsWith(other_) || other_.startsWith(one_);
+}
+
 export function resolveHitToNamestring(hit: AlgoliaHit) {
 	const { hierarchy } = hit;
 
-	const hierarchyOneExtendsZero = (hierarchy.lvl1 ?? '').startsWith(hierarchy.lvl0 ?? '');
+	const [lvl0, lvl1, lvl2, lvl3] = [hierarchy.lvl0, hierarchy.lvl1, hierarchy.lvl2, hierarchy.lvl3].map((heading) =>
+		removeDtypesPrefix(heading),
+	);
 
-	const lvl0 = removeDtypesPrefix(hierarchy.lvl0);
-	const lvl1 = removeDtypesPrefix(hierarchy.lvl1);
+	let value = headingIsSimilar(lvl0, lvl1) ? lvl1 : `${lvl0}${lvl1 ? `: ${lvl1}` : ''}`;
 
-	let value = hierarchyOneExtendsZero ? lvl1 : `${lvl0}${lvl1 ? `: ${lvl1}` : ''}`;
-
-	if (hierarchy.lvl2) {
-		value += ` - ${hierarchy.lvl2}`;
+	if (lvl2.length) {
+		value += ` - ${lvl2}`;
 	}
 
-	if (hierarchy.lvl3) {
-		value += ` > ${hierarchy.lvl3}`;
+	if (lvl3.length) {
+		value += ` > ${lvl3}`;
 	}
 
 	return decode(value)!;
