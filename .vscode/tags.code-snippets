@@ -7,7 +7,7 @@
 		"description": "A new tag",
 		"body": [
 			"[$1]",
-			"keywords = [\"$1\", \"$2\"]",
+			"keywords = [\"$2\"]",
 			"content = \"\"\"",
 			"$3",
 			"\"\"\"",
