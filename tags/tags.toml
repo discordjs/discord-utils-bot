@@ -1207,7 +1207,7 @@ Errors such as `ECONNRESET`, `ConnectTimeoutError`, `SocketError: other side clo
 """
 
 [undocumented]
-keywords = ["new-features"]
+keywords = ["voice-channel-status", "new-features"]
 content = """ 
 discord.js does not support features until they are officially documented. 
 While there might be a way for these features to work, it can change at any time without any notice 
