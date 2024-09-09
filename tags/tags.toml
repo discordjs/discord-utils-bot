@@ -1212,3 +1212,12 @@ content = """
 discord.js does not support features until they are officially documented. 
 While there might be a way for these features to work, it can change at any time without any notice 
 """
+
+[partial-group-dm]
+keywords = ["group-dm", "send-does-not-exist"]
+content = """ 
+Bots cannot send messages in partial group dm channels.
+Use `if ('send' in channel)` or compare `channel.type` to mitigate this.
+A fix will be implemented in 14.16.2, where you can use `channel.isSendable()`
+"""
+
