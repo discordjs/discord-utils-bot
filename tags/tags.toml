@@ -1218,6 +1218,6 @@ keywords = ["group-dm", "send-does-not-exist"]
 content = """ 
 Bots cannot send messages in partial group dm channels.
 Use `if ('send' in channel)` or compare `channel.type` to mitigate this.
-A fix will be implemented in 14.16.2
+A fix will be implemented in 14.16.2, where you can use `channel.isSendable()`
 """
 
