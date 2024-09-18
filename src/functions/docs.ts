@@ -1,6 +1,5 @@
 import process from 'node:process';
 import { bold, codeBlock, hyperlink, inlineCode, strikethrough, underline } from '@discordjs/builders';
-import { InteractionResponseType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
 import { fetch } from 'undici';
 import {
@@ -203,7 +202,7 @@ function effectiveItem(item: any, member?: string) {
 function formatSummary(blocks: any[], _package: string, version: string) {
 	return blocks
 		.map((block) => {
-			if (block.kind === 'LinkTag') {
+			if (block.kind === 'LinkTag' && block.uri) {
 				const isFullLink = block.uri.startsWith('http');
 				const link = isFullLink ? block.uri : `${DJS_DOCS_BASE}/packages/${_package}/${version}/${block.uri}`;
 				return hyperlink(block.members ? `${block.text}${block.members}` : block.text, link);
