@@ -45,8 +45,7 @@ export async function algoliaResponse(
 
 		const contentParts = [
 			`<:${emojiName}:${emojiId}>  ${bold(resolveHitToNamestring(hit))}${headlineSuffix ? ` ${headlineSuffix}` : ''}`,
-			hit.content?.length ? `${truncate(decode(hit.content), 300)}` : null,
-			docsBody?.lines.length ? docsBody.lines.at(0) : null,
+			hit.content?.length ? `${truncate(decode(hit.content), 300)}` : docsBody?.lines.at(0),
 			`${hyperlink('read more', hideLinkEmbed(hit.url))}`,
 		].filter(Boolean) as string[];
 
