@@ -28,21 +28,22 @@ function headingIsSimilar(one: string, other: string) {
 export function resolveHitToNamestring(hit: AlgoliaHit) {
 	const { hierarchy } = hit;
 
-	const [lvl0, lvl1, lvl2, lvl3] = [hierarchy.lvl0, hierarchy.lvl1, hierarchy.lvl2, hierarchy.lvl3].map((heading) =>
-		removeDtypesPrefix(heading),
-	);
+	const [lvl0, lvl1, ...restLevels] = Object.values(hierarchy).map((heading) => removeDtypesPrefix(heading));
 
-	let value = headingIsSimilar(lvl0, lvl1) ? lvl1 : `${lvl0}${lvl1 ? `: ${lvl1}` : ''}`;
+	const headingParts = [];
 
-	if (lvl2.length) {
-		value += ` - ${lvl2}`;
+	if (headingIsSimilar(lvl0, lvl1)) {
+		headingParts.push(lvl1);
+	} else {
+		headingParts.push(`${lvl0}:`, lvl1);
 	}
 
-	if (lvl3.length) {
-		value += ` > ${lvl3}`;
+	const mostSpecific = restLevels.filter(Boolean).at(-1);
+	if (mostSpecific?.length && !headingIsSimilar(lvl0, mostSpecific) && !headingIsSimilar(lvl1, mostSpecific)) {
+		headingParts.push(`- ${mostSpecific}`);
 	}
 
-	return decode(value)!;
+	return decode(headingParts.join(' '))!;
 }
 
 function autoCompleteMap(elements: AlgoliaHit[]) {
