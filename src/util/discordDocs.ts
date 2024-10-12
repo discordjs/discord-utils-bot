@@ -66,6 +66,8 @@ function cleanLine(line: string) {
 		.trim();
 }
 
+const IGNORE_LINE_PREFIXES = ['>', '---', '|'];
+
 export function parseSections(content: string): ParsedSection[] {
 	const res = [];
 	const section: ParsedSection = {
@@ -74,10 +76,23 @@ export function parseSections(content: string): ParsedSection[] {
 		headline: '',
 	};
 
+	let withinPreamble = false;
+	let index = 0;
 	for (const line of content.split('\n')) {
 		const cleanedLine = cleanLine(line);
 
-		if (line.startsWith('>')) {
+		if (line.startsWith('---')) {
+			if (index === 0) {
+				withinPreamble = true;
+			} else if (withinPreamble) {
+				withinPreamble = false;
+			}
+		}
+
+		index++;
+
+		const startsWithIgnorePrefix = IGNORE_LINE_PREFIXES.some((prefix) => line.startsWith(prefix));
+		if (withinPreamble || startsWithIgnorePrefix) {
 			continue;
 		}
 
