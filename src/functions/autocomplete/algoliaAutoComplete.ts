@@ -28,7 +28,9 @@ function headingIsSimilar(one: string, other: string) {
 export function resolveHitToNamestring(hit: AlgoliaHit) {
 	const { hierarchy } = hit;
 
-	const [lvl0, lvl1, ...restLevels] = Object.values(hierarchy).map((heading) => removeDtypesPrefix(heading));
+	const [lvl0, lvl1, ...restLevels] = Object.values(hierarchy)
+		.filter(Boolean)
+		.map((heading) => removeDtypesPrefix(heading));
 
 	const headingParts = [];
 
@@ -38,8 +40,8 @@ export function resolveHitToNamestring(hit: AlgoliaHit) {
 		headingParts.push(`${lvl0}:`, lvl1);
 	}
 
-	const mostSpecific = restLevels.filter(Boolean).at(-1);
-	if (mostSpecific?.length && !headingIsSimilar(lvl0, mostSpecific) && !headingIsSimilar(lvl1, mostSpecific)) {
+	const mostSpecific = restLevels.at(-1);
+	if (mostSpecific?.length && mostSpecific !== lvl0 && mostSpecific !== lvl1) {
 		headingParts.push(`- ${mostSpecific}`);
 	}
 
@@ -48,10 +50,16 @@ export function resolveHitToNamestring(hit: AlgoliaHit) {
 
 function autoCompleteMap(elements: AlgoliaHit[]) {
 	const uniqueElements = elements.filter(dedupeAlgoliaHits());
-	return uniqueElements.map((element) => ({
-		name: truncate(resolveHitToNamestring(element), 90, ''),
-		value: compactAlgoliaObjectId(element.objectID),
-	}));
+	return uniqueElements
+		.filter((element) => {
+			const value = compactAlgoliaObjectId(element.objectID);
+			// API restriction. Cannot resolve from truncated, so filtering here.
+			return value.length <= 100;
+		})
+		.map((element) => ({
+			name: truncate(resolveHitToNamestring(element), 100, ''),
+			value: compactAlgoliaObjectId(element.objectID),
+		}));
 }
 
 export async function algoliaAutoComplete(
