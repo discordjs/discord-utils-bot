@@ -235,7 +235,7 @@ function formatExample(blocks?: any[]) {
 function formatItem(_item: any, _package: string, version: string, member?: string) {
 	const itemLink = docsLink(_item, _package, version, member);
 	const item = effectiveItem(_item, member);
-	const sourceUrl = `${item.sourceURL}#L${item.sourceLine}`;
+	const sourceUrl = item.sourceURL ? `${item.sourceURL}${item.sourceLine ? `#L${item.sourceLine}` : ''}` : null;
 
 	const [emojiId, emojiName] = itemKindEmoji(item.kind, version === 'main');
 
@@ -252,7 +252,8 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 	parts.push(underline(bold(hyperlink(item.displayName, itemLink))));
 
 	const head = `<:${emojiName}:${emojiId}>`;
-	const tail = `  ${hyperlink(inlineCode(`@${version}`), sourceUrl, 'source code')}`;
+	const versionString = inlineCode(`@${version}`);
+	const tail = sourceUrl ? `  ${hyperlink(versionString, sourceUrl, 'source code')}` : versionString;
 	const middlePart = item.isDeprecated ? strikethrough(parts.join(' ')) : parts.join(' ');
 
 	const lines: string[] = [[head, middlePart, tail].join(' ')];
