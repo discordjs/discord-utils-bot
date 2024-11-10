@@ -259,8 +259,10 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 	const lines: string[] = [[head, middlePart, tail].join(' ')];
 
 	const summary = item.summary?.summarySection;
+	const defaultValueBlock = item.summary?.defaultValueBlock;
 	const deprecationNote = item.summary?.deprecatedBlock;
 	const example = formatExample(item.summary?.exampleBlocks);
+	const defaultValue = defaultValueBlock ? formatSummary(defaultValueBlock, _package, version) : null;
 
 	if (deprecationNote?.length) {
 		lines.push(`${bold('[DEPRECATED]')} ${formatSummary(deprecationNote, _package, version)}`);
@@ -272,6 +274,10 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 		if (example) {
 			lines.push(example);
 		}
+	}
+
+	if (defaultValue?.length) {
+		lines.push(`Default value: ${inlineCode(defaultValue)}`);
 	}
 
 	return lines.join('\n');
