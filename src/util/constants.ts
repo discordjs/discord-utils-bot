@@ -38,3 +38,4 @@ export const DEFAULT_DOCS_BRANCH = 'stable' as const;
 export const VALIDATION_FAIL_COLOR = 0xed4245 as const;
 export const VALIDATION_SUCCESS_COLOR = 0x3ba55d as const;
 export const VALIDATION_WARNING_COLOR = 0xffdb5c as const;
+export const DJS_QUERY_SEPARATOR = '|' as const;

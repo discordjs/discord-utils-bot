@@ -6,8 +6,10 @@ if (!versions.packages.length) {
 	throw new Error('Error while loading versions');
 }
 
-function buildSubCommandOptions(name: string) {
-	return [
+export const DocsCommand = {
+	name: 'docs',
+	description: 'Display discord.js documentation',
+	options: [
 		{
 			type: ApplicationCommandOptionType.String,
 			name: 'query',
@@ -24,9 +26,9 @@ function buildSubCommandOptions(name: string) {
 		{
 			type: ApplicationCommandOptionType.String,
 			name: 'version',
-			description: 'Version of the package to use (default: Latest release)',
+			description: 'Version of discord.js to use (default: Latest release)',
 			choices: versions.versions
-				.get(name)
+				.get('discord.js')
 				?.slice(0, 25)
 				.map((version) => {
 					return {
@@ -47,21 +49,5 @@ function buildSubCommandOptions(name: string) {
 			description: 'User to mention',
 			required: false,
 		},
-	] as const;
-}
-
-function buildSubCommand(name: string) {
-	const cleanedName = name.replaceAll('.', '-');
-	return {
-		type: ApplicationCommandOptionType.Subcommand,
-		name: cleanedName,
-		description: `Search documentation for discordjs@${cleanedName}`,
-		options: buildSubCommandOptions(name),
-	};
-}
-
-export const DocsCommand = {
-	name: 'docs',
-	description: 'Display discord.js documentation',
-	options: versions.packages.map((name) => buildSubCommand(name)),
+	],
 } as const;

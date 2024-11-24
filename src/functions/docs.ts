@@ -21,11 +21,12 @@ import {
 	EMOJI_ID_ENUM,
 	EMOJI_ID_VARIABLE,
 	EMOJI_ID_VARIABLE_DEV,
+	DJS_QUERY_SEPARATOR,
 } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
-import { parseDocsPath } from './autocomplete/docsAutoComplete.js';
+import { djsDocsDependencies, djsMeiliSearch, meiliVersion, parseDocsPath } from './autocomplete/docsAutoComplete.js';
 
 const BASE_SEARCH = 'https://search.discordjs.dev/';
 
@@ -44,62 +45,14 @@ type CacheEntry = {
 
 const docsCache = new Map<string, CacheEntry>();
 
-function searchURL(pack: string, version: string) {
-	return `${BASE_SEARCH}indexes/${pack}-${version.replaceAll('.', '-')}/search`;
-}
-
-function sanitizeText(name: string) {
-	return name.replaceAll('*', '');
-}
-
-export async function queryDocs(query: string, pack: string, version: string) {
-	const searchRes = await fetch(searchURL(pack, version), {
-		method: 'post',
-		body: JSON.stringify({
-			limit: 25,
-			// eslint-disable-next-line id-length
-			q: query,
-			attributesToSearchOn: ['name'],
-			sort: ['type:asc'],
-		}),
-		headers: {
-			Authorization: `Bearer ${process.env.DJS_DOCS_BEARER!}`,
-			'Content-Type': 'application/json',
-		},
-	});
-
-	const docsResult = (await searchRes.json()) as any;
-
-	return {
-		...docsResult,
-		hits: docsResult.hits.map((hit: any) => {
-			const parsed = parseDocsPath(hit.path);
-
-			const isMember = ['Property', 'Method', 'Event', 'PropertySignature', 'EnumMember'].includes(hit.kind);
-			const parts = [parsed.package, parsed.item.toLocaleLowerCase(), parsed.kind];
-
-			if (isMember && parsed.method) {
-				parts.push(parsed.method);
-			}
-
-			return {
-				...hit,
-				autoCompleteName: truncate(`${hit.name}${hit.summary ? ` - ${sanitizeText(hit.summary)}` : ''}`, 100, ' '),
-				autoCompleteValue: parts.join('|'),
-				isMember,
-			};
-		}),
-	};
-}
-
 export async function fetchDocItem(
 	_package: string,
-	branch: string,
+	version: string,
 	itemName: string,
 	itemKind: string,
 ): Promise<any | null> {
 	try {
-		const key = `rewrite/${_package}/${branch}.${itemName}.${itemKind}`;
+		const key = `rewrite/${_package}/${version}.${itemName}.${itemKind}`;
 		const hit = docsCache.get(key);
 
 		if (hit) {
@@ -283,43 +236,21 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 	return lines.join('\n');
 }
 
-async function resolveDjsDocsQuery(query: string, source: string, branch: string) {
-	if (query.includes('|')) {
-		return query;
-	} else {
-		const searchResult = await queryDocs(query, source, branch);
-		const bestHit = searchResult.hits[0];
-		if (bestHit) {
-			return bestHit.autoCompleteValue;
-		}
-
-		return null;
-	}
-}
-
-export async function djsDocs(
-	res: Response,
-	branch: string,
-	_query: string,
-	source: string,
-	user?: string,
-	ephemeral?: boolean,
-) {
+export async function djsDocs(res: Response, version: string, query: string, user?: string, ephemeral?: boolean) {
 	try {
-		const query = await resolveDjsDocsQuery(_query, source, branch);
 		if (!query) {
 			prepareErrorResponse(res, 'Cannot find any hits for the provided query - consider using auto complete.');
 			return res.end();
 		}
 
 		const [_package, itemName, itemKind, member] = query.split('|');
-		const item = await fetchDocItem(_package, branch, itemName, itemKind.toLowerCase());
+		const item = await fetchDocItem(_package, version, itemName, itemKind.toLowerCase());
 		if (!item) {
 			prepareErrorResponse(res, `Could not fetch doc entry for query ${inlineCode(query)}.`);
 			return res.end();
 		}
 
-		prepareResponse(res, truncate(formatItem(item, _package, branch, member), MAX_MESSAGE_LENGTH), {
+		prepareResponse(res, truncate(formatItem(item, _package, version, member), MAX_MESSAGE_LENGTH), {
 			ephemeral,
 			suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
 		});

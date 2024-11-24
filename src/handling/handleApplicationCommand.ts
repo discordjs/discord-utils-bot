@@ -51,14 +51,14 @@ export async function handleApplicationCommand(
 
 		switch (name) {
 			case 'docs': {
-				const resolved = resolveOptionsToDocsAutoComplete(options);
+				const resolved = await resolveOptionsToDocsAutoComplete(options);
 				if (!resolved) {
 					prepareErrorResponse(res, `Payload looks different than expected`);
 					break;
 				}
 
-				const { query, version, ephemeral, source, mention } = resolved;
-				await djsDocs(res, version, query, source, mention, ephemeral);
+				const { query, version, ephemeral, mention } = resolved;
+				await djsDocs(res, version, query, mention, ephemeral);
 				break;
 			}
 

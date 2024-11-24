@@ -15,6 +15,12 @@ export type DjsVersions = {
 	versions: Map<string, string[]>;
 };
 
+/**
+ * Fetch, categorize, and cache package versions from the database
+ * Note: returns fallback data if running on local development
+ *
+ * @returns The fetched and categorized data
+ */
 export async function fetchDjsVersions(): Promise<DjsVersions> {
 	if (process.env.IS_LOCAL_DEV) {
 		logger.debug('NOTE: Only main is returned in a local development environment');
@@ -62,6 +68,12 @@ export async function fetchDjsVersions(): Promise<DjsVersions> {
 	}
 }
 
+/**
+ * Re-populate the local cache with data fetched from the database
+ *
+ * @returns The fetched and categorized data
+ */
+
 export async function reloadDjsVersions() {
 	const res = await fetchDjsVersions();
 	container.register<DjsVersions>(kDjsVersions, { useValue: res });
@@ -70,6 +82,11 @@ export async function reloadDjsVersions() {
 	return res;
 }
 
+/**
+ * Resolve package version data from the container (no DB query)
+ *
+ * @returns The cached data
+ */
 export function getDjsVersions() {
 	const versions = container.resolve<DjsVersions>(kDjsVersions);
 	logger.debug({ versions }, 'Retrieving versions from container');
@@ -82,4 +99,19 @@ export function getDjsVersions() {
 	}
 
 	return versions;
+}
+
+/**
+ * Resolve the latest version of the main page from the container (no DB query)
+ *
+ * @returns The current main package version
+ */
+export function getCurrentMainPackageVersion() {
+	const versions = container.resolve<DjsVersions>(kDjsVersions);
+	logger.debug({ versions }, 'Retrieving versions from container to fetch current main repo version');
+	if (!versions?.versions) {
+		return 'main';
+	}
+
+	return versions.versions.get('discord.js')?.[1] ?? 'main';
 }
