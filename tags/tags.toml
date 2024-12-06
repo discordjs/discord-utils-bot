@@ -862,8 +862,7 @@ content = """
 [privileged-intents]
 keywords = ["privileged", "p-intents", "whitelisted-intents"]
 content = """
-- `Error: Used disallowed intents`
-
+`Error: Used disallowed intents`
 If you are using the `GuildMembers`, `GuildPresences`, or `MessageContent` intents, you need to enable them via [Developer Portal](https://discord.com/developers/applications) > Your app > Bot > Privileged Gateway Intents
 """
 
