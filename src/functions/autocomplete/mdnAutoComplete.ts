@@ -3,8 +3,9 @@ import { InteractionResponseType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
 import type { MdnCommand } from '../../interactions/mdn.js';
 import type { MDNIndexEntry } from '../../types/mdn.js';
-import { AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { AUTOCOMPLETE_MAX_ITEMS, AUTOCOMPLETE_MAX_NAME_LENGTH } from '../../util/constants.js';
 import { transformInteraction } from '../../util/interactionOptions.js';
+import { truncate } from '../../util/truncate.js';
 
 type MDNCandidate = {
 	entry: MDNIndexEntry;
@@ -12,7 +13,10 @@ type MDNCandidate = {
 };
 
 function autoCompleteMap(elements: MDNCandidate[]) {
-	return elements.map((element) => ({ name: element.entry.title, value: element.entry.url }));
+	return elements.map((element) => ({
+		name: truncate(element.entry.title, AUTOCOMPLETE_MAX_NAME_LENGTH, ''),
+		value: element.entry.url,
+	}));
 }
 
 export function mdnAutoComplete(
