@@ -5,7 +5,7 @@ import type {
 } from 'discord-api-types/v10';
 import { ApplicationCommandOptionType, InteractionResponseType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
-import { AUTOCOMPLETE_MAX_ITEMS, DJS_QUERY_SEPARATOR } from '../../util/constants.js';
+import { AUTOCOMPLETE_MAX_ITEMS, AUTOCOMPLETE_MAX_NAME_LENGTH, DJS_QUERY_SEPARATOR } from '../../util/constants.js';
 import { getCurrentMainPackageVersion, getDjsVersions } from '../../util/djsdocs.js';
 import { truncate } from '../../util/truncate.js';
 
@@ -169,7 +169,7 @@ export async function djsMeiliSearch(query: string, version: string) {
 	});
 
 	const docsResult = (await searchResult.json()) as any;
-	const hits = docsResult.results.flatMap((res: any) => res.hits).sort((one: any, other: any) => one.id - other.id);
+	const hits = docsResult.results.flatMap((res: any) => res.hits);
 
 	return {
 		...docsResult,
@@ -184,7 +184,11 @@ export async function djsMeiliSearch(query: string, version: string) {
 
 			return {
 				...hit,
-				autoCompleteName: truncate(`${hit.name}${hit.summary ? ` - ${sanitizeText(hit.summary)}` : ''}`, 100, ' '),
+				autoCompleteName: truncate(
+					`${hit.name}${hit.summary ? ` - ${sanitizeText(hit.summary)}` : ''}`,
+					AUTOCOMPLETE_MAX_NAME_LENGTH,
+					' ',
+				),
 				autoCompleteValue: parts.join(DJS_QUERY_SEPARATOR),
 				isMember,
 			};

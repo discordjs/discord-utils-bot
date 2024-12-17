@@ -5,7 +5,7 @@ import type { Response } from 'polka';
 import { fetch } from 'undici';
 import type { AlgoliaHit, AlgoliaSearchResult } from '../../types/algolia.js';
 import { compactAlgoliaObjectId } from '../../util/compactAlgoliaId.js';
-import { API_BASE_ALGOLIA, AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { API_BASE_ALGOLIA, AUTOCOMPLETE_MAX_ITEMS, AUTOCOMPLETE_MAX_NAME_LENGTH } from '../../util/constants.js';
 import { dedupeAlgoliaHits } from '../../util/dedupe.js';
 import { prepareHeader } from '../../util/respond.js';
 import { truncate } from '../../util/truncate.js';
@@ -54,10 +54,10 @@ function autoCompleteMap(elements: AlgoliaHit[]) {
 		.filter((element) => {
 			const value = compactAlgoliaObjectId(element.objectID);
 			// API restriction. Cannot resolve from truncated, so filtering here.
-			return value.length <= 100;
+			return value.length <= AUTOCOMPLETE_MAX_NAME_LENGTH;
 		})
 		.map((element) => ({
-			name: truncate(resolveHitToNamestring(element), 100, ''),
+			name: truncate(resolveHitToNamestring(element), AUTOCOMPLETE_MAX_NAME_LENGTH, ''),
 			value: compactAlgoliaObjectId(element.objectID),
 		}));
 }

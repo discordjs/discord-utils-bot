@@ -30,6 +30,7 @@ export const API_BASE_ALGOLIA = 'algolia.net' as const;
 export const API_BASE_DISCORD = 'https://discord.com/api/v9' as const;
 export const API_BASE_ORAMA = 'https://cloud.orama.run/v1' as const;
 export const AUTOCOMPLETE_MAX_ITEMS = 25;
+export const AUTOCOMPLETE_MAX_NAME_LENGTH = 100;
 export const MAX_MESSAGE_LENGTH = 4_000;
 export const REMOTE_TAG_URL = 'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags' as const;
 export const WEBSITE_URL_ROOT = 'https://discordjs.dev';

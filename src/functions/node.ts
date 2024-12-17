@@ -9,7 +9,7 @@ import type { Response } from 'polka';
 import TurndownService from 'turndown';
 import { fetch } from 'undici';
 import type { NodeDocs } from '../types/NodeDocs.js';
-import { API_BASE_NODE, EMOJI_ID_NODE } from '../util/constants.js';
+import { API_BASE_NODE, AUTOCOMPLETE_MAX_NAME_LENGTH, EMOJI_ID_NODE } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
@@ -104,7 +104,7 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, user
 
 	const text = paragraph.text().split('\n').join(' ');
 	const sentence = text.split(/[!.?](\s|$)/)?.[0];
-	const effectiveSentence = (sentence ?? truncate(text, 100, '')).trim();
+	const effectiveSentence = (sentence ?? truncate(text, AUTOCOMPLETE_MAX_NAME_LENGTH, '')).trim();
 
 	const contentParts = [
 		`<:node:${EMOJI_ID_NODE}> ${hyperlink(inlineCode(headingCode.length ? headingCode : heading), url.toString())}`,

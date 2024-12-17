@@ -3,7 +3,7 @@ import { stringify } from 'node:querystring';
 import { InteractionResponseType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
 import { fetch } from 'undici';
-import { API_BASE_ORAMA, AUTOCOMPLETE_MAX_ITEMS } from '../../util/constants.js';
+import { API_BASE_ORAMA, AUTOCOMPLETE_MAX_ITEMS, AUTOCOMPLETE_MAX_NAME_LENGTH } from '../../util/constants.js';
 import { prepareHeader } from '../../util/respond.js';
 import { truncate } from '../../util/truncate.js';
 
@@ -32,9 +32,9 @@ function autoCompleteMap(elements: OramaDocument[]) {
 	return elements.map((element) => {
 		const cleanSectionTitle = element.pageSectionTitle.replaceAll('`', '');
 		const name = truncate(`${element.pageTitle} > ${cleanSectionTitle}`, 90, '');
-		if (element.path.length > 100) {
+		if (element.path.length > AUTOCOMPLETE_MAX_NAME_LENGTH) {
 			return {
-				name: truncate(`[path too long] ${element.pageTitle} > ${cleanSectionTitle}`, 100, ''),
+				name: truncate(`[path too long] ${element.pageTitle} > ${cleanSectionTitle}`, AUTOCOMPLETE_MAX_NAME_LENGTH, ''),
 				value: element.pageTitle,
 			};
 		}
