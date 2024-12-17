@@ -205,7 +205,7 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 	parts.push(underline(bold(hyperlink(item.displayName, itemLink))));
 
 	const head = `<:${emojiName}:${emojiId}>`;
-	const versionString = inlineCode(`@${version}`);
+	const versionString = inlineCode(`${_package}@${version}`);
 	const tail = sourceUrl ? `  ${hyperlink(versionString, sourceUrl, 'source code')}` : versionString;
 	const middlePart = item.isDeprecated ? strikethrough(parts.join(' ')) : parts.join(' ');
 
