@@ -41,26 +41,26 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 type TypeIdToType<T, O, C> = T extends ApplicationCommandOptionType.Subcommand
 	? ArgumentsOfRaw<O>
 	: T extends ApplicationCommandOptionType.SubcommandGroup
-	? ArgumentsOfRaw<O>
-	: T extends ApplicationCommandOptionType.String
-	? C extends readonly { value: string }[]
-		? C[number]['value']
-		: string
-	: T extends ApplicationCommandOptionType.Integer | ApplicationCommandOptionType.Number
-	? C extends readonly { value: number }[]
-		? C[number]['value']
-		: number
-	: T extends ApplicationCommandOptionType.Boolean
-	? boolean
-	: T extends ApplicationCommandOptionType.User
-	? string
-	: T extends ApplicationCommandOptionType.Channel
-	? string
-	: T extends ApplicationCommandOptionType.Role
-	? string
-	: T extends ApplicationCommandOptionType.Mentionable
-	? string
-	: never;
+		? ArgumentsOfRaw<O>
+		: T extends ApplicationCommandOptionType.String
+			? C extends readonly { value: string }[]
+				? C[number]['value']
+				: string
+			: T extends ApplicationCommandOptionType.Integer | ApplicationCommandOptionType.Number
+				? C extends readonly { value: number }[]
+					? C[number]['value']
+					: number
+				: T extends ApplicationCommandOptionType.Boolean
+					? boolean
+					: T extends ApplicationCommandOptionType.User
+						? string
+						: T extends ApplicationCommandOptionType.Channel
+							? string
+							: T extends ApplicationCommandOptionType.Role
+								? string
+								: T extends ApplicationCommandOptionType.Mentionable
+									? string
+									: never;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type OptionToObject<O> = O extends {
@@ -74,8 +74,8 @@ type OptionToObject<O> = O extends {
 		? R extends true
 			? { [k in K]: TypeIdToType<T, O, C> }
 			: T extends ApplicationCommandOptionType.Subcommand | ApplicationCommandOptionType.SubcommandGroup
-			? { [k in K]: TypeIdToType<T, O, C> }
-			: { [k in K]?: TypeIdToType<T, O, C> }
+				? { [k in K]: TypeIdToType<T, O, C> }
+				: { [k in K]?: TypeIdToType<T, O, C> }
 		: never
 	: never;
 

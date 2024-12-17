@@ -107,8 +107,8 @@ export async function testTagModalSubmit(res: Response, message: APIModalSubmitI
 							color: hasErrors
 								? VALIDATION_FAIL_COLOR
 								: hasWarnings
-								? VALIDATION_WARNING_COLOR
-								: VALIDATION_SUCCESS_COLOR,
+									? VALIDATION_WARNING_COLOR
+									: VALIDATION_SUCCESS_COLOR,
 							description: [
 								`**Name:** \`${parsedTag.name}\``,
 								`**Keywords:** ${parsedTag.body.keywords.map((key) => `\`${key}\``).join(', ')}`,
@@ -124,7 +124,7 @@ export async function testTagModalSubmit(res: Response, message: APIModalSubmitI
 									type: ComponentType.ActionRow,
 									components: buttons,
 								},
-						  ]
+							]
 						: [],
 				},
 			},

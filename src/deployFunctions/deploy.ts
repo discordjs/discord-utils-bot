@@ -35,7 +35,7 @@ export async function deploy(data: any, dev = false) {
 								PrerepeaseApplicationCommandContextType.PrivateChannel,
 								PrerepeaseApplicationCommandContextType.BotDm,
 							],
-					  })),
+						})),
 			),
 		}).then(async (response) => response.json());
 		logger.info(res as string);
