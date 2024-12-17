@@ -45,6 +45,15 @@ type CacheEntry = {
 
 const docsCache = new Map<string, CacheEntry>();
 
+/**
+ * Fetch a documentation page for a specific query
+ *
+ * @param _package - The package name
+ * @param version - The package version
+ * @param itemName - The item name
+ * @param itemKind - The type of the item as per the docs API
+ * @returns The documentation item
+ */
 export async function fetchDocItem(
 	_package: string,
 	version: string,
@@ -74,6 +83,13 @@ export async function fetchDocItem(
 	}
 }
 
+/**
+ * Resolve item kind to the respective Discord app emoji
+ *
+ * @param itemKind - The type of item as per the docs API
+ * @param dev - Whether the item is from the dev branch (main)
+ * @returns
+ */
 function itemKindEmoji(itemKind: string, dev = false): [string, string] {
 	const lowerItemKind = itemKind.toLowerCase();
 	switch (itemKind) {
@@ -107,13 +123,30 @@ function itemKindEmoji(itemKind: string, dev = false): [string, string] {
 	}
 }
 
+/**
+ * Build a discord.js documentation link
+ *
+ * @param item - The item to generate the link for
+ * @param _package - The package name
+ * @param version - The package version
+ * @param attribute - The attribute to link to, if any
+ * @returns The formatted link
+ */
 function docsLink(item: any, _package: string, version: string, attribute?: string) {
 	return `${DJS_DOCS_BASE}/packages/${_package}/${version}/${item.displayName}:${item.kind}${
 		attribute ? `#${attribute}` : ''
 	}`;
 }
 
-function preparePotential(potential: any, member: any, topLevelDisplayName: string): any | null {
+/**
+ * Enriches item members of type "method" with a dynamically generated displayName property
+ *
+ * @param potential - The item to check and enrich
+ * @param member - The member to access
+ * @param topLevelDisplayName - The display name of the top level parent
+ * @returns The enriched item
+ */
+function enrichItem(potential: any, member: any, topLevelDisplayName: string): any | null {
 	const isMethod = potential.kind === 'Method';
 	if (potential.displayName?.toLowerCase() === member.toLowerCase()) {
 		return {
@@ -125,6 +158,13 @@ function preparePotential(potential: any, member: any, topLevelDisplayName: stri
 	return null;
 }
 
+/**
+ * Resolve an items specific member, if required.
+ *
+ * @param item - The base item to check
+ * @param member - The name of the member to access
+ * @returns The relevant item
+ */
 function effectiveItem(item: any, member?: string) {
 	if (!member) {
 		return item;
@@ -133,7 +173,7 @@ function effectiveItem(item: any, member?: string) {
 	const iterable = Array.isArray(item.members);
 	if (Array.isArray(item.members)) {
 		for (const potential of item.members) {
-			const hit = preparePotential(potential, member, item.displayName);
+			const hit = enrichItem(potential, member, item.displayName);
 			if (hit) {
 				return hit;
 			}
@@ -141,7 +181,7 @@ function effectiveItem(item: any, member?: string) {
 	} else {
 		for (const category of Object.values(item.members)) {
 			for (const potential of category as any) {
-				const hit = preparePotential(potential, member, item.displayName);
+				const hit = enrichItem(potential, member, item.displayName);
 				if (hit) {
 					return hit;
 				}
@@ -152,6 +192,14 @@ function effectiveItem(item: any, member?: string) {
 	return item;
 }
 
+/**
+ * Format documentation blocks to a summary string
+ *
+ * @param blocks - The documentation blocks to format
+ * @param _package - The package name of the package the blocks belong to
+ * @param version - The version of the package the blocks belong to
+ * @returns The formatted summary string
+ */
 function formatSummary(blocks: any[], _package: string, version: string) {
 	return blocks
 		.map((block) => {
@@ -166,6 +214,12 @@ function formatSummary(blocks: any[], _package: string, version: string) {
 		.join('');
 }
 
+/**
+ * Format documentation blocks to a code example string
+ *
+ * @param blocks - The documentation blocks to format
+ * @returns The formatted code example string
+ */
 function formatExample(blocks?: any[]) {
 	const comments: string[] = [];
 
@@ -185,6 +239,15 @@ function formatExample(blocks?: any[]) {
 	}
 }
 
+/**
+ * Format a documentation item to a string
+ *
+ * @param _item - The docs item to format
+ * @param _package - The package name of the packge the item belongs to
+ * @param version - The version of the package the item belongs to
+ * @param member - The specific item member to access, if any
+ * @returns The formatted documentation string for the provided item
+ */
 function formatItem(_item: any, _package: string, version: string, member?: string) {
 	const itemLink = docsLink(_item, _package, version, member);
 	const item = effectiveItem(_item, member);
