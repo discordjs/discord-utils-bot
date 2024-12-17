@@ -1,10 +1,10 @@
-export enum PrerepeaseApplicationCommandContextType {
+export enum PreReleaseApplicationCommandContextType {
 	Guild,
 	BotDm,
 	PrivateChannel,
 }
 
-export enum PrerepeaseApplicationIntegrationType {
+export enum PreReleaseApplicationIntegrationType {
 	GuildInstall,
 	UserInstall,
 }
