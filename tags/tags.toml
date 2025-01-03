@@ -1214,7 +1214,7 @@ While there might be a way for these features to work, it can change at any time
 [ephemeral] 
 keywords = ["ephemeral-deprecated"]
 content = """ 
-The `ephemeral` option will be removed
+The `ephemeral` option when replying to an interaction will be removed in v15
 ```diff
 - {..., ephemeral: true}
 + {..., flags: MessageFlags.Ephemeral}
