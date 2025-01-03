@@ -1211,7 +1211,6 @@ discord.js does not support features until they are officially documented.
 While there might be a way for these features to work, it can change at any time without any notice 
 """
 
-
 [ephemeral] 
 keywords = ["ephemeral-deprecated"]
 content = """ 
