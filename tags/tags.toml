@@ -1224,6 +1224,6 @@ The `ephemeral` option will be removed
 [entry-point] 
 keywords = ["50240", "remove-entry-point"]
 content = """ 
-You have enabled activities in the Activity Settings on the dev portal.
-Either do not emable it if you dont need it or include the command that was created in the request body
+You have enabled activities in the Activity Settings on the Developer Portal.
+Either do not enable them if you do not need them, or include the command that was created in the request body.
 """
