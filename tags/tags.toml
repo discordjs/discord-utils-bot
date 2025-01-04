@@ -1211,10 +1211,19 @@ discord.js does not support features until they are officially documented.
 While there might be a way for these features to work, it can change at any time without any notice 
 """
 
-[partial-group-dm]
-keywords = ["group-dm", "send-does-not-exist"]
+[ephemeral] 
+keywords = ["ephemeral-deprecated"]
 content = """ 
-Bots cannot send messages in partial group dm channels.
-Use `if ('send' in channel)` or compare `channel.type` to mitigate this.
-A fix will be implemented in 14.16.2, where you can use `channel.isSendable()`
+The `ephemeral` option when replying to an interaction will be removed in v15
+```diff
+- {..., ephemeral: true}
++ {..., flags: MessageFlags.Ephemeral}
+``` Read [here](<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR>) on how to specify multiple flags
+"""
+
+[entry-point] 
+keywords = ["50240", "remove-entry-point"]
+content = """ 
+You have enabled activities in the Activity Settings on the Developer Portal.
+Either do not enable them if you do not need them, or include the command that was created in the request body.
 """
