@@ -46,7 +46,7 @@
 		"readdirp": "^3.6.0",
 		"reflect-metadata": "^0.2.2",
 		"turndown": "^7.1.2",
-		"undici": "^6.19.3"
+		"undici": "^6.21.1"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.7.1",
