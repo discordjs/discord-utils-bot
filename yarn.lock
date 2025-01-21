@@ -7405,7 +7405,7 @@ __metadata:
     tsyringe: ^4.8.0
     turndown: ^7.1.2
     typescript: ^5.2.2
-    undici: ^6.19.3
+    undici: ^6.21.1
   languageName: unknown
   linkType: soft
 
@@ -8133,10 +8133,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^6.19.3":
-  version: 6.19.3
-  resolution: "undici@npm:6.19.3"
-  checksum: 9fa76d751ab4012b9a1cbcb7ddab85eab67bd05b2f67a44676032a042619a096a91d41747467556b6e81bbf51b470231e2d1958d7d5fbecfc4dc3dc6248c8370
+"undici@npm:^6.21.1":
+  version: 6.21.1
+  resolution: "undici@npm:6.21.1"
+  checksum: 2efc52f77224754a2efa7cb6459829f3c93c8321d17e76f574a904b353783d95073b6116f5b15637c4845d98c9dc5a019b809cb9d63b3529267e7727c49f6996
   languageName: node
   linkType: hard
 
