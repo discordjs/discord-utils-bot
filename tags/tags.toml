@@ -1227,3 +1227,15 @@ content = """
 You have enabled activities in the Activity Settings on the Developer Portal.
 Either do not enable them if you do not need them, or include the command that was created in the request body.
 """
+
+[fetchReply] 
+keywords = ["fetchReply-deprecated"]
+content = """ 
+The `fetchReply` option when replying to an interaction will be removed in v15.
+```diff
+- {..., fetchReply: true}
++ {..., withResponse: true}
+
+```This returns an [InteractionCallbackResponse](https://discord.js.org/docs/packages/discord.js/14.17.3/InteractionCallbackResponse:Class)
+Use `<InteractionCallbackResponse>.resource.message` to get the message
+"""
