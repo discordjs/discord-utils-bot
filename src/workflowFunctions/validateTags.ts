@@ -15,7 +15,7 @@ enum ConflictType {
 	NoWhiteSpace,
 	NameNotInKeywords,
 	Status404Link,
-	NameLowercase
+	NameLowercase,
 }
 
 type Conflict = {
@@ -128,7 +128,7 @@ export async function validateTags(
 				secondName: '',
 				conflictKeyWords: [],
 				type: ConflictType.NameLowercase,
-			})
+			});
 		}
 
 		if (tag.keywords.some((keyword) => !keyword.replaceAll(/\s+/g, '').length)) {
@@ -213,6 +213,7 @@ export async function validateTags(
 						break;
 					case ConflictType.Status404Link:
 						a.status404LinkConflicts.push(conflict);
+						break;
 					case ConflictType.NameLowercase:
 						a.nameLowercaseConflicts.push(conflict);
 				}
@@ -265,7 +266,7 @@ export async function validateTags(
 				`Tag validation error: Tag name has to be lowercase:\n${nameLowercaseConflicts
 					.map((conflict, index) => kleur.red(`${index}. [${conflict.firstName}]`))
 					.join('\n')}`,
-			)
+			);
 		}
 
 		if (emptyKeywordConflicts.length) {
