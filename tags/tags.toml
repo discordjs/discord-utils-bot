@@ -1228,7 +1228,7 @@ You have enabled activities in the Activity Settings on the Developer Portal.
 Either do not enable them if you do not need them, or include the command that was created in the request body.
 """
 
-[fetchReply] 
+[fetchreply] 
 keywords = ["fetchReply-deprecated"]
 content = """ 
 The `fetchReply` option when replying to an interaction will be removed in v15.
