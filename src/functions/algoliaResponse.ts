@@ -40,7 +40,7 @@ export async function algoliaResponse(
 		const docsBody = hit.url.includes('discord.com') ? await fetchDocsBody(hit.url) : null;
 		const headlineSuffix =
 			docsBody?.heading?.verb && docsBody?.heading.route
-				? inlineCode(`${docsBody.heading.verb} ${docsBody.heading.route}`)
+				? inlineCode(`${docsBody.heading.verb} ${docsBody.heading.route}`.replaceAll('\\', ''))
 				: null;
 
 		const contentParts = [
