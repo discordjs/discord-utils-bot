@@ -169,7 +169,39 @@ export async function djsMeiliSearch(query: string, version: string) {
 	});
 
 	const docsResult = (await searchResult.json()) as any;
-	const hits = docsResult.results.flatMap((res: any) => res.hits);
+
+	const groupedHits = new Map<string, [string, any][]>();
+
+	for (const result of docsResult.results) {
+		const index = result.indexUid;
+		for (const hit of result.hits) {
+			const current = groupedHits.get(hit.name);
+			if (!current) {
+				groupedHits.set(hit.name, [[index, hit]]);
+				continue;
+			}
+
+			current.push([index, hit]);
+		}
+	}
+
+	const hits = [];
+
+	for (const group of groupedHits.values()) {
+		const sorted = group.sort(([fstIndex], [sndIndex]) => {
+			if (fstIndex.startsWith('discord-js')) {
+				return 1;
+			}
+
+			if (sndIndex.startsWith('discord.js')) {
+				return -1;
+			}
+
+			return 0;
+		});
+
+		hits.push(sorted[0][1]);
+	}
 
 	return {
 		...docsResult,
