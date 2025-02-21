@@ -4,6 +4,8 @@ import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
+import { deploy } from '../deployFunctions/deploy.js';
+import { staticGlobalCommands } from '../deployFunctions/deployGlobal.js';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
@@ -14,6 +16,7 @@ import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
 import type { DiscordDocsCommand } from '../interactions/discorddocs.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
+import { buildDocsCommand, DocsCommand } from '../interactions/docs.js';
 import type { GuideCommand } from '../interactions/guide.js';
 import type { MdnCommand } from '../interactions/mdn.js';
 import type { NodeCommand } from '../interactions/node.js';
@@ -143,8 +146,13 @@ export async function handleApplicationCommand(
 			}
 
 			case 'reloadversions': {
-				await reloadDjsVersions();
-				prepareResponse(res, `Reloaded versions for all ${inlineCode('@discordjs')} packages.`, { ephemeral: true });
+				const versions = await reloadDjsVersions();
+				const updatedDocsCommand = await buildDocsCommand(versions);
+				await deploy([...staticGlobalCommands, updatedDocsCommand]);
+
+				prepareResponse(res, `Reloaded versions for all supported packages (dependency of discord.js).`, {
+					ephemeral: true,
+				});
 				break;
 			}
 		}

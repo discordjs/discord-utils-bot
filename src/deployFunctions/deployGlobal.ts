@@ -9,13 +9,14 @@ import { TagCommand } from '../interactions/tag.js';
 import { TestTagCommand } from '../interactions/testtag.js';
 import { deploy } from './deploy.js';
 
-void deploy([
+export const staticGlobalCommands = [
 	DiscordDocsCommand,
-	DocsCommand,
 	GuideCommand,
 	MdnCommand,
 	NodeCommand,
 	TagCommand,
 	TestTagCommand,
 	DTypesCommand,
-]);
+];
+
+void deploy([...staticGlobalCommands, DocsCommand]);
