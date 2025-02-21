@@ -207,7 +207,9 @@ export async function djsMeiliSearch(query: string, version: string) {
 		...docsResult,
 		hits: hits.map((hit: any) => {
 			const parsed = parseDocsPath(hit.path);
-			const isMember = ['Property', 'Method', 'Event', 'PropertySignature', 'EnumMember'].includes(hit.kind);
+			const isMember = ['Property', 'Method', 'Event', 'PropertySignature', 'EnumMember', 'MethodSignature'].includes(
+				hit.kind,
+			);
 			const parts = [parsed.package, parsed.item.toLocaleLowerCase(), parsed.kind];
 
 			if (isMember && parsed.method) {
