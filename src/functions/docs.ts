@@ -240,6 +240,26 @@ function formatExample(blocks?: any[]) {
 }
 
 /**
+ * Format the provided docs source item to a source link, if available
+ *
+ * @param item - The docs source item to format
+ * @param _package - The package to use
+ * @param version - The version to use
+ * @returns The formatted link, if available, otherwise the provided versionstring
+ */
+function formatSourceURL(item: any, _package: string, version: string) {
+	const sourceUrl = item.sourceURL;
+	const versionString = inlineCode(`${_package}@${version}`);
+
+	if (!item.sourceURL?.startsWith('http')) {
+		return versionString;
+	}
+
+	const link = `${sourceUrl}${item.sourceLine ? `#L${item.sourceLine}` : ''}`;
+	return hyperlink(versionString, link, 'source code');
+}
+
+/**
  * Format a documentation item to a string
  *
  * @param _item - The docs item to format
@@ -251,7 +271,6 @@ function formatExample(blocks?: any[]) {
 function formatItem(_item: any, _package: string, version: string, member?: string) {
 	const itemLink = docsLink(_item, _package, version, member);
 	const item = effectiveItem(_item, member);
-	const sourceUrl = item.sourceURL ? `${item.sourceURL}${item.sourceLine ? `#L${item.sourceLine}` : ''}` : null;
 
 	const [emojiId, emojiName] = itemKindEmoji(item.kind, version === 'main');
 
@@ -268,8 +287,7 @@ function formatItem(_item: any, _package: string, version: string, member?: stri
 	parts.push(underline(bold(hyperlink(item.displayName, itemLink))));
 
 	const head = `<:${emojiName}:${emojiId}>`;
-	const versionString = inlineCode(`${_package}@${version}`);
-	const tail = sourceUrl ? `  ${hyperlink(versionString, sourceUrl, 'source code')}` : versionString;
+	const tail = formatSourceURL(item, _package, version);
 	const middlePart = item.isDeprecated ? strikethrough(parts.join(' ')) : parts.join(' ');
 
 	const lines: string[] = [[head, middlePart, tail].join(' ')];
