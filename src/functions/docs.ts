@@ -21,14 +21,10 @@ import {
 	EMOJI_ID_ENUM,
 	EMOJI_ID_VARIABLE,
 	EMOJI_ID_VARIABLE_DEV,
-	DJS_QUERY_SEPARATOR,
 } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
-import { djsDocsDependencies, djsMeiliSearch, meiliVersion, parseDocsPath } from './autocomplete/docsAutoComplete.js';
-
-const BASE_SEARCH = 'https://search.discordjs.dev/';
 
 /**
  * Vercel blob store format
