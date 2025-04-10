@@ -136,6 +136,11 @@ export async function buildMeiliQueries(query: string, mainPackageVersion: strin
 		});
 	}
 
+	queries.push({
+		indexUid: 'voice-main',
+		...baseQuery,
+	});
+
 	return queries;
 }
 
@@ -336,6 +341,8 @@ export async function resolveOptionsToDocsAutoComplete(
 		const dependencyVersion = await fetchDependencyVersion(version, source);
 		if (dependencyVersion) {
 			version = dependencyVersion;
+		} else {
+			version = 'main';
 		}
 	}
 
