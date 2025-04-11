@@ -1,11 +1,9 @@
 import process from 'node:process';
-import { inlineCode } from '@discordjs/builders';
 import type { Collection } from '@discordjs/collection';
 import type { APIApplicationCommandInteraction } from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import type { Response } from 'polka';
 import { deploy } from '../deployFunctions/deploy.js';
-import { staticGlobalCommands } from '../deployFunctions/deployGlobal.js';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
@@ -14,20 +12,30 @@ import { nodeAutoCompleteResolve } from '../functions/node.js';
 import type { Tag } from '../functions/tag.js';
 import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
-import type { DiscordDocsCommand } from '../interactions/discorddocs.js';
-import type { DTypesCommand } from '../interactions/discordtypes.js';
+import { DiscordDocsCommand } from '../interactions/discorddocs.js';
+import { DTypesCommand } from '../interactions/discordtypes.js';
 import { buildDocsCommand, DocsCommand } from '../interactions/docs.js';
-import type { GuideCommand } from '../interactions/guide.js';
-import type { MdnCommand } from '../interactions/mdn.js';
-import type { NodeCommand } from '../interactions/node.js';
-import type { TagCommand } from '../interactions/tag.js';
+import { GuideCommand } from '../interactions/guide.js';
+import { MdnCommand } from '../interactions/mdn.js';
+import { NodeCommand } from '../interactions/node.js';
+import { TagCommand } from '../interactions/tag.js';
 import type { TagReloadCommand } from '../interactions/tagreload.js';
-import type { TestTagCommand } from '../interactions/testtag.js';
+import { TestTagCommand } from '../interactions/testtag.js';
 import type { ArgumentsOf } from '../util/argumentsOf.js';
 import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
 import { reloadDjsVersions } from '../util/djsdocs.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
+
+const staticGlobalCommands = [
+	DiscordDocsCommand,
+	GuideCommand,
+	MdnCommand,
+	NodeCommand,
+	TagCommand,
+	TestTagCommand,
+	DTypesCommand,
+];
 
 type CommandName =
 	| 'discorddocs'
