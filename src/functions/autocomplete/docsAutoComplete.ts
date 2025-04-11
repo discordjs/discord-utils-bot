@@ -7,6 +7,7 @@ import { ApplicationCommandOptionType, InteractionResponseType } from 'discord-a
 import type { Response } from 'polka';
 import { AUTOCOMPLETE_MAX_ITEMS, AUTOCOMPLETE_MAX_NAME_LENGTH, DJS_QUERY_SEPARATOR } from '../../util/constants.js';
 import { getCurrentMainPackageVersion, getDjsVersions } from '../../util/djsdocs.js';
+import { logger } from '../../util/logger.js';
 import { truncate } from '../../util/truncate.js';
 
 /**
@@ -65,11 +66,9 @@ export const djsDocsDependencies = new Map<string, any>();
  */
 export async function fetchDjsDependencies(version: string) {
 	const hit = djsDocsDependencies.get(version);
-	const dependencies =
-		hit ??
-		(await fetch(`${process.env.DJS_BLOB_STORAGE_BASE}/rewrite/discord.js/${version}.dependencies.api.json`).then(
-			async (res) => res.json(),
-		));
+	const url = `${process.env.CF_STORAGE_BASE}/discord.js/${version}.dependencies.api.json`;
+	logger.debug(`Requesting dependencies from CF: ${url}`);
+	const dependencies = hit ?? (await fetch(url).then(async (res) => res.json()));
 
 	if (!hit) {
 		djsDocsDependencies.set(version, dependencies);

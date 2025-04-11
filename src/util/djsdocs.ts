@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { sql } from '@vercel/postgres';
+import Cloudflare from 'cloudflare';
 import { container } from 'tsyringe';
 import { logger } from './logger.js';
 
@@ -35,11 +35,30 @@ export async function fetchDjsVersions(): Promise<DjsVersions> {
 	}
 
 	try {
-		const { rows } = await sql<DjsVersionEntry>`select version, name from documentation order by version desc`;
+		const client = new Cloudflare({
+			apiToken: process.env.CF_D1_DOCS_API_KEY,
+		});
+
+		const page = await client.d1.database.query(process.env.CF_D1_DOCS_ID!, {
+			account_id: process.env.CF_ACCOUNT_ID!,
+			sql: `select version, name from documentation order by version desc;`,
+		});
 
 		const packages = new Set<string>();
 		const versions = new Map<string, string[]>();
+		const res = page.result[0];
 
+		if (!res?.results) {
+			logger.error('No results for version lookup');
+
+			return {
+				rows: [],
+				versions: new Map<string, string[]>(),
+				packages: [],
+			};
+		}
+
+		const rows = res.results as DjsVersionEntry[];
 		for (const row of rows) {
 			packages.add(row.name);
 			const currentVersions = versions.get(row.name);

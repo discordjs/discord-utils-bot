@@ -27,11 +27,11 @@ import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 
 /**
- * Vercel blob store format
+ * Bucket format
  *
  * Format: path/pkg/item
  * Item: branch.itemName.itemKind.api.json
- * Example: https://bpwrdvqzqnllsihg.public.blob.vercel-storage.com/rewrite/discord.js/main.actionrow.class.api.json
+ * Key Example: discord.js/main.actionrow.class.api.json
  */
 
 type CacheEntry = {
@@ -57,15 +57,15 @@ export async function fetchDocItem(
 	itemKind: string,
 ): Promise<any | null> {
 	try {
-		const key = `rewrite/${_package}/${version}.${itemName}.${itemKind}`;
+		const key = `${_package}/${version}.${itemName}.${itemKind}`;
 		const hit = docsCache.get(key);
 
 		if (hit) {
 			return hit.value;
 		}
 
-		const resourceLink = `${process.env.DJS_BLOB_STORAGE_BASE!}/${key}.api.json`;
-		logger.debug(`Requesting documentation from vercel: ${resourceLink}`);
+		const resourceLink = `${process.env.CF_STORAGE_BASE!}/${key}.api.json`;
+		logger.debug(`Requesting documentation from CF: ${resourceLink}`);
 		const value = await fetch(resourceLink).then(async (result) => result.json());
 
 		docsCache.set(key, {
