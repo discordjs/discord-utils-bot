@@ -11,6 +11,7 @@ import { fetch } from 'undici';
 import type { NodeDocs } from '../types/NodeDocs.js';
 import { API_BASE_NODE, AUTOCOMPLETE_MAX_NAME_LENGTH, EMOJI_ID_NODE } from '../util/constants.js';
 import { logger } from '../util/logger.js';
+import { toTitlecase } from '../util/misc.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 import { urlOption } from '../util/url.js';
@@ -122,6 +123,24 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, user
 	return res;
 }
 
+function parsePathToPhrase(path: string) {
+	const [head, tail] = path.split('#');
+	const _headPart = head?.length ? head.replaceAll('-', ' ') : undefined;
+	const headPart = _headPart?.split('/').at(-1);
+	const tailPart = tail?.length ? tail.replaceAll('-', ' ') : undefined;
+
+	const parts: string[] = [];
+	if (headPart) {
+		parts.push(toTitlecase(headPart));
+	}
+
+	if (tailPart) {
+		parts.push(toTitlecase(tailPart));
+	}
+
+	return parts.join(' > ');
+}
+
 export async function nodeSearch(
 	res: Response,
 	query: string,
@@ -133,6 +152,18 @@ export async function nodeSearch(
 	try {
 		const url = `${API_BASE_NODE}/dist/${version}/docs/api/all.json`;
 		let allNodeData = jsonCache.get(url);
+
+		if (!query.startsWith('docs')) {
+			prepareResponse(
+				res,
+				`<:node:${EMOJI_ID_NODE}> ${bold('Learn more about Node.js:')}\n${hyperlink(parsePathToPhrase(trimmedQuery), `${API_BASE_NODE}/en/${trimmedQuery}`)}`,
+				{
+					ephemeral,
+					suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+				},
+			);
+			return res;
+		}
 
 		if (!allNodeData) {
 			const data = (await fetch(url).then(async (response) => response.json())) as NodeDocs;
