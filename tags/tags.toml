@@ -259,8 +259,7 @@ content = """
 [buildtools]
 keywords = ["windows-build-tools", "build-tools", "node-gyp", "gyp", "wbt"]
 content = """
-- Run `npm i windows-build-tools --production --vs2015 --add-python-to-PATH --global` as admin.
-- Restart your terminal or machine (if terminal is not sufficient).
+To resolve troubles with using node gyp, re-install node and tick the box "Automatically install the necessary tools."
 """
 
 [get-undefined]
