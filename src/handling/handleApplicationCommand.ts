@@ -158,9 +158,13 @@ export async function handleApplicationCommand(
 				const updatedDocsCommand = await buildDocsCommand(versions);
 				await deploy([...staticGlobalCommands, updatedDocsCommand]);
 
-				prepareResponse(res, `Reloaded versions for all supported packages (dependency of discord.js).`, {
-					ephemeral: true,
-				});
+				prepareResponse(
+					res,
+					"Reloaded versions for all supported packages (dependency of discord.js).\n-# Don't forget to refresh your client, so all changes take effect!",
+					{
+						ephemeral: true,
+					},
+				);
 				break;
 			}
 		}
