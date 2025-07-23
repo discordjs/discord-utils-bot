@@ -46,7 +46,7 @@ content = """
 [selectmenu-limits]
 keywords = ["sm-limits", "select-menu-limits"]
 content = """
-Learn more about select menu limits at the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menus)
+Learn more about select menu limits at the [Discord Developer Documentation](https://discord.com/developers/docs/components/reference#string-select)
 """
 
 [slash-limits]
