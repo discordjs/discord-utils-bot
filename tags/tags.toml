@@ -461,7 +461,7 @@ keywords = [
 ]
 content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
-- PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](http://www.postgresqltutorial.com)
+- PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](https://neon.com/postgresql/tutorial)
 - MariaDB: [learn more](https://mariadb.org/)
 - MongoDB: [learn more](https://www.mongodb.com) | [tutorials ](https://www.mongodb.com/docs/manual/tutorial/)
 - SQLite: [learn more](https://www.sqlite.org/index.html) | [tutorial](https://www.sqlitetutorial.net/)
@@ -518,7 +518,7 @@ keywords = ["massdm", "dmall", "dmal-all"]
 content = """
 Mass DMing users is not allowed as per developer ToS, considered spam and can get you and your bot banned.
 - Mention `@everyone` to inform all your users at once instead
-- Discord Developer Terms of Service: [learn more](https://discord.com/developers/docs/legal) | [FAQ summary](https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e)
+- Discord Developer Terms of Service: [learn more](https://support-dev.discord.com/hc/en-us/articles/8562894815383)
 """
 
 [codeblock]
@@ -644,7 +644,7 @@ keywords = [
 ]
 content = """
 Controlling the flow of time in Node.js:
-- Guide on base Node.js timers: [learn more](https://nodejs.org/en/docs/guides/timers-in-node/)
+- Guide on base Node.js timers: [learn more](https://nodejs.org/en/learn/asynchronous-work/discover-javascript-timers)
 """
 
 [paste-code]
@@ -715,9 +715,9 @@ keywords = [
 content = """
 **We do not provide any help with third party libraries**
 discord.js supports message components natively.
-- Select Menus: [learn more](https://discordjs.guide/message-components/select-menus.html)
-- Buttons: [learn more](https://discordjs.guide/message-components/buttons.html)
-- Modals: [learn more](https://discordjs.guide/interactions/modals.html)
+- Select Menus: [learn more](https://discordjs.guide/interactive-components/select-menus)
+- Buttons: [learn more](https://discordjs.guide/interactive-components/buttons)
+- Modals: [learn more](https://discordjs.guide/interactions/modals)
 """
 
 [find-id]
@@ -749,7 +749,7 @@ client
     .on("warn", console.log)
 ```
 - Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
-- If the output is too long to post consider using a bin instead: [gist](https://gist.github.com) | [paste.gg](https://paste.gg/) | [sourceb.in](https://sourceb.in) | [hastebin](https://hastebin.com)
+- If the output is too long to post consider using a bin instead: [gist](https://gist.github.com) | [sourceb.in](https://sourceb.in) | [hastebin](https://www.toptal.com/developers/hastebin)
 """
 hoisted = true
 
@@ -914,7 +914,7 @@ content = """
 You have already replied to the interaction.
 - Use `<Interaction>.followUp()` to send a new message
 - If you deferred reply it's better to use `<Interaction>.editReply()`
-- Responding to [slash commands](https://discordjs.guide/slash-commands/response-methods.html) / [message components](https://discordjs.guide/message-components/interactions.html#responding-to-component-interactions)
+- Responding to [slash commands](https://discordjs.guide/slash-commands/response-methods.html) / [message components](https://discordjs.guide/interactive-components/interactions.html#responding-to-component-interactions)
 """
 
 [djs-sponsor]
