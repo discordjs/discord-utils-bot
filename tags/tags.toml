@@ -471,7 +471,7 @@ Persisting data through restarts requires a database. Check out the resources be
 keywords = ["delay", "sleep", "setTimeout"]
 content = """
 ```js
-const { setTimeout } = require('timers/promises');
+import { setTimeout } from 'node:timers/promises';
 // using async/await
 await setTimeout(5000);
 ...
@@ -526,12 +526,12 @@ keywords = ["code-block", "code-blocks", "cb", "code-box", "codebox"]
 content = """
 **Codeblocks:**
 \\`\\`\\`js
-const Discord = require("discord.js"); 
+import { Client } from "discord.js";
 // further code
 \\`\\`\\`
 becomes
 ```js
-const Discord = require("discord.js"); 
+import { Client } from "discord.js";
 // further code
 ```
 **Inline Code:**
@@ -698,7 +698,7 @@ content = """
 `Error [VoiceConnectionTimeout]: Connection not established within 15 seconds.`
 Make sure you have provided the `GuildVoiceStates` intent to the client:
 ```js
-const { Client, GatewayIntentBits } = require('discord.js');
+import { Client, GatewayIntentBits } = from 'discord.js';
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates]
 });
@@ -945,7 +945,7 @@ content = """
 If you aren't getting content, embeds or attachments of a message, make sure you have the `MessageContent` intent [enabled in the Developer Portal](https://discord.com/developers/applications) and provide it to your client:
 
 ```js
-const { Client, GatewayIntentBits } = require('discord.js');
+import { Client, GatewayIntentBits } from 'discord.js';
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
@@ -1088,9 +1088,9 @@ keywords = ["functions", "utils"]
 content = """
 The `Util` class has been removed. Associated functions are now available as top-level imports:
 ```diff
-- const { Util } = require('discord.js');
+- import { Util } = from 'discord.js';
 - Util.escapeMarkdown('`string`');
-+ const { escapeMarkdown } = require('discord.js');
++ import { escapeMarkdown } = from 'discord.js';
 + escapeMarkdown('`string`');
 ```
 """
