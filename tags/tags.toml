@@ -1235,6 +1235,6 @@ The `fetchReply` option when replying to an interaction will be removed in v15.
 - {..., fetchReply: true}
 + {..., withResponse: true}
 
-```This returns an [InteractionCallbackResponse](https://discord.js.org/docs/packages/discord.js/14.17.3/InteractionCallbackResponse:Class)
+```This returns an [InteractionCallbackResponse](https://discord.js.org/docs/packages/discord.js/stable/InteractionCallbackResponse:Class)
 Use `<InteractionCallbackResponse>.resource.message` to get the message
 """
