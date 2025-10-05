@@ -107,19 +107,27 @@ export async function handleApplicationCommand(
 			}
 
 			case 'guide': {
-				const castArgs = args as ArgumentsOf<typeof GuideCommand>;
-				await algoliaResponse(
+				// const castArgs = args as ArgumentsOf<typeof GuideCommand>;
+				prepareResponse(
 					res,
-					process.env.DJS_GUIDE_ALGOLIA_APP!,
-					process.env.DJS_GUIDE_ALGOLIA_KEY!,
-					'discordjs',
-					castArgs.query,
-					EMOJI_ID_GUIDE,
-					'guide',
-					castArgs.mention,
-					castArgs.hide,
-					'guide',
+					'The guide command is currently unavailable while we rework it to use the new guide page.',
+					{
+						ephemeral: true,
+					},
 				);
+
+				// await algoliaResponse(
+				// 	res,
+				// 	process.env.DJS_GUIDE_ALGOLIA_APP!,
+				// 	process.env.DJS_GUIDE_ALGOLIA_KEY!,
+				// 	'discordjs',
+				// 	castArgs.query,
+				// 	EMOJI_ID_GUIDE,
+				// 	'guide',
+				// 	castArgs.mention,
+				// 	castArgs.hide,
+				// 	'guide',
+				// );
 				break;
 			}
 
