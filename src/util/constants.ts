@@ -35,6 +35,7 @@ export const MAX_MESSAGE_LENGTH = 4_000;
 export const REMOTE_TAG_URL = 'https://raw.githubusercontent.com/discordjs/discord-utils-bot/main/tags' as const;
 export const WEBSITE_URL_ROOT = 'https://discordjs.dev';
 export const DJS_DOCS_BASE = 'https://discord.js.org/docs';
+export const DJS_GUIDE_BASE = 'https://discordjs.guide' as const;
 export const DEFAULT_DOCS_BRANCH = 'stable' as const;
 export const VALIDATION_FAIL_COLOR = 0xed4245 as const;
 export const VALIDATION_SUCCESS_COLOR = 0x3ba55d as const;

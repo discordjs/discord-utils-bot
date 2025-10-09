@@ -26,6 +26,7 @@ import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util
 import { reloadDjsVersions } from '../util/djsdocs.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
+import { oramaResponse } from '../functions/oramaResponse.js';
 
 const staticGlobalCommands = [
 	DiscordDocsCommand,
@@ -107,27 +108,8 @@ export async function handleApplicationCommand(
 			}
 
 			case 'guide': {
-				// const castArgs = args as ArgumentsOf<typeof GuideCommand>;
-				prepareResponse(
-					res,
-					'The guide command is currently unavailable while we rework it to use the new guide page.',
-					{
-						ephemeral: true,
-					},
-				);
-
-				// await algoliaResponse(
-				// 	res,
-				// 	process.env.DJS_GUIDE_ALGOLIA_APP!,
-				// 	process.env.DJS_GUIDE_ALGOLIA_KEY!,
-				// 	'discordjs',
-				// 	castArgs.query,
-				// 	EMOJI_ID_GUIDE,
-				// 	'guide',
-				// 	castArgs.mention,
-				// 	castArgs.hide,
-				// 	'guide',
-				// );
+				const castArgs = args as ArgumentsOf<typeof GuideCommand>;
+				await oramaResponse(res, castArgs.query, castArgs.mention, castArgs.hide);
 				break;
 			}
 

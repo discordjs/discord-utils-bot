@@ -13,6 +13,7 @@ import type { GuideCommand } from '../interactions/guide.js';
 import type { NodeCommand } from '../interactions/node.js';
 import type { MDNIndexEntry } from '../types/mdn.js';
 import { transformInteraction } from '../util/interactionOptions.js';
+import { oramaAutocomplete } from '../functions/autocomplete/oramaAutoComplete.js';
 
 type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'node' | 'tag';
 
@@ -43,13 +44,7 @@ export async function handleApplicationCommandAutocomplete(
 
 		case 'guide': {
 			const args = transformInteraction<typeof GuideCommand>(data.options);
-			await algoliaAutoComplete(
-				res,
-				args.query,
-				process.env.DJS_GUIDE_ALGOLIA_APP!,
-				process.env.DJS_GUIDE_ALGOLIA_KEY!,
-				'discordjs',
-			);
+			await oramaAutocomplete(res, args.query);
 			break;
 		}
 
