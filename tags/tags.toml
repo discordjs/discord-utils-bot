@@ -442,7 +442,7 @@ keywords = [
     "filepath",
 ]
 content = """
-- File paths explained in detail: [learn more](https://redhat.com/sysadmin/linux-path-absolute-relative)
+- File paths explained in detail: [learn more](https://redhat.com/en/blog/linux-path-absolute-relative)
 - `.` refers to the current directory
 - `..` refers to the parent directory
 - Node path module: [learn more](https://nodejs.org/api/path.html#path_path_join_paths)
