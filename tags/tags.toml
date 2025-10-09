@@ -672,7 +672,7 @@ Checking for things to not be equal in JavaScript:
 - if (!yourVariable === yourOtherVariable) // !yourVariable is coerced to a boolean value
 + if (yourVariable !== yourOtherVariable) // checks that one is not equal to the other
 ```
-- Comparison operators in JavaScript: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators#comparison_operators)
+- Comparison operators in JavaScript: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Expressions_and_operators#comparison_operators)
 """
 
 [member-user]
