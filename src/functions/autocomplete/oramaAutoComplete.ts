@@ -1,8 +1,8 @@
-import type { Response } from 'polka';
-import { OramaSearchResult, OramaSearchResults } from '../../types/orama';
-import { prepareHeader } from '../../util/respond.js';
 import { InteractionResponseType } from 'discord-api-types/v10';
+import type { Response } from 'polka';
+import type { OramaSearchResult, OramaSearchResults } from '../../types/orama';
 import { AUTOCOMPLETE_MAX_ITEMS, AUTOCOMPLETE_MAX_NAME_LENGTH, DJS_GUIDE_BASE } from '../../util/constants.js';
+import { prepareHeader } from '../../util/respond.js';
 import { truncate } from '../../util/truncate.js';
 
 function resolveAutocompleteName(element: OramaSearchResult) {
@@ -34,7 +34,7 @@ export async function oramaAutocomplete(res: Response, query: string) {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-	}).then((res) => res.json())) as OramaSearchResults;
+	}).then(async (res) => res.json())) as OramaSearchResults;
 
 	prepareHeader(res);
 

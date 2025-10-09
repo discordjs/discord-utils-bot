@@ -1,7 +1,7 @@
 export type OramaSearchResult = {
-	id: string;
 	content: string;
-	type: 'text' | 'heading' | 'page';
+	id: string;
+	type: 'heading' | 'page' | 'text';
 	url: string;
 };
 

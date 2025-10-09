@@ -1,10 +1,10 @@
-import type { Response } from 'polka';
-import { prepareResponse } from '../util/respond.js';
-import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
-import { findRelevantDocsSection } from '../util/discordDocs.js';
-import { truncate } from '../util/truncate.js';
 import { bold, hyperlink } from '@discordjs/builders';
+import type { Response } from 'polka';
 import { EMOJI_ID_GUIDE } from '../util/constants.js';
+import { findRelevantDocsSection } from '../util/discordDocs.js';
+import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
+import { prepareResponse } from '../util/respond.js';
+import { truncate } from '../util/truncate.js';
 
 type GuideCacheEntry = {
 	page: string;
@@ -16,14 +16,11 @@ const cache = new Map<string, GuideCacheEntry>();
 async function getPage(url: string) {
 	const cacheEntry = cache.get(url);
 
-	if (cacheEntry) {
-		if (cacheEntry.timestamp < Date.now() - 1_000 * 60 * 60) {
-			console.log(`Cache hit: ${url}`);
-			return cacheEntry.page;
-		}
+	if (cacheEntry && cacheEntry.timestamp < Date.now() - 1_000 * 60 * 60) {
+		return cacheEntry.page;
 	}
 
-	const page = await fetch(url).then((res) => res.text());
+	const page = await fetch(url).then(async (res) => res.text());
 	cache.set(url, { page, timestamp: Date.now() });
 
 	return page;

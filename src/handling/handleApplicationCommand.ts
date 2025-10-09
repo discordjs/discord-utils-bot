@@ -9,6 +9,7 @@ import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docs
 import { djsDocs } from '../functions/docs.js';
 import { mdnSearch } from '../functions/mdn.js';
 import { nodeAutoCompleteResolve } from '../functions/node.js';
+import { oramaResponse } from '../functions/oramaResponse.js';
 import type { Tag } from '../functions/tag.js';
 import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
@@ -26,7 +27,6 @@ import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util
 import { reloadDjsVersions } from '../util/djsdocs.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
-import { oramaResponse } from '../functions/oramaResponse.js';
 
 const staticGlobalCommands = [
 	DiscordDocsCommand,

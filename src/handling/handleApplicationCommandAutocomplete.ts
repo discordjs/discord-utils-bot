@@ -6,6 +6,7 @@ import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComple
 import { djsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
 import { nodeAutoComplete } from '../functions/autocomplete/nodeAutoComplete.js';
+import { oramaAutocomplete } from '../functions/autocomplete/oramaAutoComplete.js';
 import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
 import type { Tag } from '../functions/tag.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
@@ -13,7 +14,6 @@ import type { GuideCommand } from '../interactions/guide.js';
 import type { NodeCommand } from '../interactions/node.js';
 import type { MDNIndexEntry } from '../types/mdn.js';
 import { transformInteraction } from '../util/interactionOptions.js';
-import { oramaAutocomplete } from '../functions/autocomplete/oramaAutoComplete.js';
 
 type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'node' | 'tag';
 
