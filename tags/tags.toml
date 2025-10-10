@@ -108,7 +108,7 @@ Message formatting (mentions, timestamps, emoji, etc.): [learn more](https://dis
 [pm2]
 keywords = ["restart"]
 content = """
-Manage your application state with pm2 so you can restart, stop and delete processes dynamically: [learn more](https://discordjs.guide/improving-dev-environment/pm2.html)
+Manage your application state with pm2 so you can restart, stop and delete processes dynamically: [learn more](https://discordjs.guide/legacy/improving-dev-environment/pm2)
 """
 
 [node-opus]
@@ -140,7 +140,7 @@ If your channel changes are not going through, this might be why.
 [faq]
 keywords = ["frequently-asked-questions", "guide-faq", "guidefaq"]
 content = """
-**F**requently **A**sked **Q**uestions: [learn more](https://discordjs.guide/popular-topics/faq)
+**F**requently **A**sked **Q**uestions: [learn more](https://discordjs.guide/legacy/popular-topics/faq)
 """
 hoisted = true
 
@@ -198,8 +198,8 @@ content = """
 const channel = client.channels.cache.get("222086648706498562");
 const channel = guild.channels.cache.find(channel => channel.name === "general");
 ```
-- Caches in discord.js are [Collections](https://discord.js.org/docs/packages/collection/stable) which extend the native [Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
-- [learn more](https://discordjs.guide/additional-info/collections.html)
+- Caches in discord.js are [Collections](https://discord.js.org/docs/packages/collection/stable) which extend the native [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
+- [learn more](https://discordjs.guide/legacy/additional-info/collections)
 """
 
 [node-version]
@@ -301,7 +301,7 @@ content = """
 keywords = ["ts", "type-script", "typings"]
 content = """
 TypeScript (TS) is a typed superset of JavaScript that compiles to plain JavaScript
-- [website](https://www.typescriptlang.org/index.html) | [GitHub](https://github.com/microsoft/TypeScript) | [book](https://basarat.gitbook.io/typescript)
+- [website](https://typescriptlang.org/index.html) | [GitHub](https://github.com/microsoft/TypeScript) | [book](https://basarat.gitbook.io/typescript)
 """
 
 [devmode]
@@ -358,14 +358,14 @@ content = """
 [notation]
 keywords = ["<>", "understanding-notation", "notation-guide"]
 content = """
-Explaining `<Class>` and `Class#method` notation: [learn more](https://discordjs.guide/additional-info/notation.html)
+Explaining `<Class>` and `Class#method` notation: [learn more](https://discordjs.guide/legacy/additional-info/notation)
 """
 
 [collection]
 keywords = ["collections", "collection-methods"]
 content = """
-discord.js uses [Collection](https://discord.js.org/docs/packages/collection/stable), an extension of the JS native [Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
-- Guide: [learn more](https://discordjs.guide/additional-info/collections.html) [🍪](https://gist.github.com/almostSouji/71a33e5f8e84a0960b4ed3a1609915f5)
+discord.js uses [Collection](https://discord.js.org/docs/packages/collection/stable), an extension of the JS native [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
+- Guide: [learn more](https://discordjs.guide/legacy/additional-info/collections) [🍪](https://gist.github.com/almostSouji/71a33e5f8e84a0960b4ed3a1609915f5)
 """
 hoisted = true
 
@@ -373,17 +373,17 @@ hoisted = true
 keywords = ["ffmpeg-static"]
 content = """
 - npm: `npm install ffmpeg-static`
-- Install: [Download](https://www.ffmpeg.org) | [chocolatey](https://chocolatey.org) | [homebrew](https://brew.sh) | your distributions package manager
-- Tutorial: [YouTube](https://www.youtube.com/watch?v=SW-iKrT_nJs)
-- ffmpeg-binaries is [deprecated](https://www.npmjs.com/package/ffmpeg-binaries), uninstall it with `npm rm ffmpeg-binaries`
+- Install: [Download](https://ffmpeg.org) | [chocolatey](https://chocolatey.org) | [homebrew](https://brew.sh) | your distributions package manager
+- Tutorial: [YouTube](https://youtube.com/watch?v=SW-iKrT_nJs)
+- ffmpeg-binaries is [deprecated](https://npmjs.com/package/ffmpeg-binaries), uninstall it with `npm rm ffmpeg-binaries`
 """
 
 [fetch]
 keywords = ["undici", "node-fetch", "http-requests", "call-rest-apis"]
 content = """
 Making HTTP requests (for example to call rest APIs)
-- Node: [learn more](https://www.npmjs.com/package/undici)
-- MDN: [learn more](https://developer.mozilla.org/docs/Web/API/Fetch_API) 
+- Node: [learn more](https://nodejs.org/en/learn/getting-started/fetch)
+- MDN: [learn more](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 """
 
 [opus]
@@ -397,8 +397,8 @@ content = """
 [undefined]
 keywords = ["not-defined", "of-null", "of-undefined", "ofnull", "ofundefined"]
 content = """
-- `ReferenceError: "x" is not defined`: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Not_defined)
-- `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Cant_access_property)
+- `ReferenceError: "x" is not defined`: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined)
+- `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Unexpected_type)
 """
 hoisted = true
 
@@ -406,7 +406,7 @@ hoisted = true
 keywords = ["oauth2", "oa", "oa2"]
 content = """
 Oauth is about giving access to your stuff without sharing your identity
-- [oauth.net](https://oauth.net/code/nodejs) | [Discord API](https://discord.com/developers/docs/topics/oauth2) | [guide example](https://discordjs.guide/oauth2)
+- [oauth.net](https://oauth.net/code/nodejs) | [Discord API](https://discord.com/developers/docs/topics/oauth2) | [guide example](https://discordjs.guide/legacy/oauth2/oauth2)
 """
 
 [masked-links]
@@ -429,7 +429,7 @@ Your bot is trying to send a DM to a user, but failed to do so:
 - The user has DMs disabled or the bot blocked
 - The user no longer shares a guild with the bot (make sure to send informational DMs before banning/kicking)
 - The bot is trying to DM itself or another bot
-Note: You cannot check if you can send a DM beforehand but have to handle the [rejection case](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/try...catch)
+Note: You cannot check if you can send a DM beforehand but have to handle the [rejection case](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
 """
 
 [path]
@@ -442,7 +442,7 @@ keywords = [
     "filepath",
 ]
 content = """
-- File paths explained in detail: [learn more](https://www.redhat.com/sysadmin/linux-path-absolute-relative)
+- File paths explained in detail: [learn more](https://redhat.com/en/blog/linux-path-absolute-relative)
 - `.` refers to the current directory
 - `..` refers to the parent directory
 - Node path module: [learn more](https://nodejs.org/api/path.html#path_path_join_paths)
@@ -461,10 +461,10 @@ keywords = [
 ]
 content = """
 Persisting data through restarts requires a database. Check out the resources below to figure out which database fits your use case
-- PostgreSQL: [learn more](https://www.postgresql.org) | [tutorial](https://neon.com/postgresql/tutorial)
+- PostgreSQL: [learn more](https://postgresql.org) | [tutorial](https://neon.com/postgresql/tutorial)
 - MariaDB: [learn more](https://mariadb.org/)
-- MongoDB: [learn more](https://www.mongodb.com) | [tutorials ](https://www.mongodb.com/docs/manual/tutorial/)
-- SQLite: [learn more](https://www.sqlite.org/index.html) | [tutorial](https://www.sqlitetutorial.net/)
+- MongoDB: [learn more](https://mongodb.com) | [tutorials ](https://mongodb.com/docs/manual/tutorial/)
+- SQLite: [learn more](https://sqlite.org/index.html) | [tutorial](https://sqlitetutorial.net/)
 """
 
 [wait]
@@ -497,7 +497,7 @@ keywords = ["2-factor-auth", "two-factor-auth", "2-factor-authentication"]
 content = """
 `DiscordAPIError: Two factor is required for this operation`
 Elevated permissions are required to execute this action. You need to activate 2FA on your developer account in order to do this with the bot.
-- Elevated permissions: [learn more](https://discordjs.guide/popular-topics/permissions-extended.html#elevated-permissions)
+- Elevated permissions: [learn more](https://discordjs.guide/legacy/popular-topics/permissions-extended#elevated-permissions)
 - Setting up 2FA: [learn more](https://support.discord.com/hc/articles/219576828)
 """
 
@@ -593,8 +593,8 @@ keywords = [
 ]
 content = """
 Resources to understand Promise:
-- MDN: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Using_promises)
-- Guide: [learn more](https://discordjs.guide/additional-info/async-await.html)
+- MDN: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+- Guide: [learn more](https://discordjs.guide/legacy/additional-info/async-await)
 - JavaScript info: [learn more](https://javascript.info/async-await)
 """
 hoisted = true
@@ -629,7 +629,7 @@ x = 1; // assigning a value to x
 '1' == 1 // true
 '1' === 1 // false
 ```
-- Equality and sameness in JavaScript: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+- Equality and sameness in JavaScript: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness)
 """
 
 [timers]
@@ -672,7 +672,7 @@ Checking for things to not be equal in JavaScript:
 - if (!yourVariable === yourOtherVariable) // !yourVariable is coerced to a boolean value
 + if (yourVariable !== yourOtherVariable) // checks that one is not equal to the other
 ```
-- Comparison operators in JavaScript: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Expressions_and_Operators#Comparison)
+- Comparison operators in JavaScript: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators#comparison_operators)
 """
 
 [member-user]
@@ -689,7 +689,7 @@ Despite sounding similar there is a distinct difference between users and member
 keywords = ["lint", "eslint", "jslint"]
 content = """
 "Lint, or a linter, is a tool that analyzes source code to flag programming errors, bugs, stylistic errors, and suspicious constructs." 
-- Set up a linter in your development environment: [learn more](https://discordjs.guide/preparations/setting-up-a-linter.html)
+- Set up a linter in your development environment: [learn more](https://discordjs.guide/legacy/preparations/linter)
 """
 
 [voice-timeout]
@@ -715,9 +715,9 @@ keywords = [
 content = """
 **We do not provide any help with third party libraries**
 discord.js supports message components natively.
-- Select Menus: [learn more](https://discordjs.guide/interactive-components/select-menus)
-- Buttons: [learn more](https://discordjs.guide/interactive-components/buttons)
-- Modals: [learn more](https://discordjs.guide/interactions/modals)
+- Select Menus: [learn more](https://discordjs.guide/legacy/interactive-components/select-menus)
+- Buttons: [learn more](https://discordjs.guide/legacy/interactive-components/buttons)
+- Modals: [learn more](https://discordjs.guide/legacy/interactions/modals)
 """
 
 [find-id]
@@ -735,8 +735,8 @@ keywords = ["regexp", "regular-expressions", "regularexpressions"]
 content = """
 Regular expressions can make parsing and validating strings effortless:
 - Interactive Guide: [regexone](https://regexone.com) | [regexlearn](https://regexlearn.com/learn/regex101)
-- Advanced Guide: [learn more](https://www.regular-expressions.info/tutorial.html)
-- Online Tester/Debugger: [regex101](https://regex101.com) | [regexr](http://regexr.com) | [debuggex](https://www.debuggex.com)
+- Advanced Guide: [learn more](https://regular-expressions.info/tutorial.html)
+- Online Tester/Debugger: [regex101](https://regex101.com) | [regexr](http://regexr.com) | [debuggex](https://debuggex.com)
 """
 
 [debug]
@@ -749,7 +749,7 @@ client
     .on("warn", console.log)
 ```
 - Note: if you initialize your Client as `bot` or other identifiers you need to use these instead of `client`
-- If the output is too long to post consider using a bin instead: [gist](https://gist.github.com) | [sourceb.in](https://sourceb.in) | [hastebin](https://www.toptal.com/developers/hastebin)
+- If the output is too long to post consider using a bin instead: [gist](https://gist.github.com) | [sourceb.in](https://sourceb.in) | [hastebin](https://toptal.com/developers/hastebin)
 """
 hoisted = true
 
@@ -847,7 +847,7 @@ keywords = ["changes", "v14", "14"]
 content = """
 Version 14 has released! Please update at your earliest convenience.
 - Update: `npm rm discord.js` `npm i discord.js`
-- [Update guide](https://discordjs.guide/additional-info/changes-in-v14.html) (use `CTRL` + `F` to search for the old method or property)
+- [Update guide](https://discordjs.guide/legacy/additional-info/changes-in-v14) (use `CTRL` + `F` to search for the old method or property)
 """
 hoisted = true
 
@@ -870,9 +870,9 @@ keywords = ["cta", "collection-to-array"]
 content = """
 **Converting a Collection to an array**
 You only need to convert it to an array if you need the index of an entry:
-- Iteration (looping) is possible with [`for...of`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map) over [`Collection#values`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map/values) or [`forEach`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach)
+- Iteration (looping) is possible with [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map) over [`Collection#values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values) or [`forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach)
 - You can transform a Collection to an array with [`Collection#map`](https://discord.js.org/docs/packages/collection/stable/Collection:Class#map)
-- If you need indices, you can get the array using [`[...collection.values()]`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map/values)
+- If you need indices, you can get the array using [`[...collection.values()]`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values)
 """
 
 [member-count]
@@ -914,7 +914,7 @@ content = """
 You have already replied to the interaction.
 - Use `<Interaction>.followUp()` to send a new message
 - If you deferred reply it's better to use `<Interaction>.editReply()`
-- Responding to [slash commands](https://discordjs.guide/slash-commands/response-methods.html) / [message components](https://discordjs.guide/interactive-components/interactions.html#responding-to-component-interactions)
+- Responding to [slash commands](https://discordjs.guide/legacy/slash-commands/response-methods) / [message components](https://discordjs.guide/legacy/interactive-components/interactions#responding-to-component-interactions)
 """
 
 [djs-sponsor]
@@ -965,14 +965,14 @@ content = """
 keywords = ["receive-dms", "not-getting-dms", "not-getting-dms"]
 content = """
 To receive direct message events on `"messageCreate"` with your bot, you will need:
-- The `DirectMessages` [gateway intent](https://discordjs.guide/popular-topics/intents)
-- The `Channel` [partial setting](https://discordjs.guide/popular-topics/partials)
+- The `DirectMessages` [gateway intent](https://discordjs.guide/legacy/popular-topics/intents#privileged-intents)
+- The `Channel` [partial setting](https://discordjs.guide/legacy/popular-topics/partials)
 """
 
 [all-intents]
 keywords = ["98303", "32767", "magic-intents", "magic-all-intent"]
 content = """
-We highly recommend only specifying the [intents](https://discordjs.guide/popular-topics/intents) you actually need.
+We highly recommend only specifying the [intents](https://discordjs.guide/legacy/popular-topics/intents) you actually need.
 - Note, that `98303`, `32767` or whatever other magic number you read that represents "all intents", gets outdated as soon as new intents are introduced.
 - The number will always represent the same set of intents, and will not include new ones. There is no magic "all intents" bit.
 """
@@ -1000,14 +1000,14 @@ keywords = ["member-timeout"]
 content = """
 Fetching members can time out on large guilds, as they arrive in chunks through the WebSocket connections.
 - You can specify the `time` option in `FetchMembersOptions` to specify how long you want to wait.
-- Make sure you have the required `GuildMembers` [gateway intent](https://discordjs.guide/popular-topics/intents) enabled
+- Make sure you have the required `GuildMembers` [gateway intent](https://discordjs.guide/legacy/popular-topics/intents) enabled
 """
 
 [custom-client-properties]
 keywords = ["custom-properties-on-client"]
 content = """
 We highly recommend you extend the `Client` structure properly instead of just attaching custom properties like `.commands` to the regular discord.js `Client` instance.
-- Using typescript, you might want to consider [casting](https://www.typescripttutorial.net/typescript-tutorial/type-casting/) or [augmenting the module type](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation)
+- Using typescript, you might want to consider [casting](https://typescripttutorial.net/typescript-tutorial/type-casting/) or [augmenting the module type](https://typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation)
 """
 
 [components-per-message]
@@ -1064,14 +1064,14 @@ To debug your voice connection and player:
 [http-interactions-bot]
 keywords = ["no-status"]
 content = """
-HTTP-only applications receive interactions through HTTP webhooks instead of the Discord Gateway. Bots that are not connected to the Gateway, but use HTTP interactions appear as online without a status. Discord.js does not support HTTP interactions. Use [discord-interactions](https://www.npmjs.com/package/discord-interactions) instead.
+HTTP-only applications receive interactions through HTTP webhooks instead of the Discord Gateway. Bots that are not connected to the Gateway, but use HTTP interactions appear as online without a status. Discord.js does not support HTTP interactions. Use [discord-interactions](https://npmjs.com/package/discord-interactions) instead.
 """
 
 [interaction-buttons-in-webhooks]
 keywords = ["no-button"]
 content = """
 Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
-- Creating webhooks with discord.js: [learn more](https://discordjs.guide/popular-topics/webhooks.html#creating-webhooks-with-discord-js)
+- Creating webhooks with discord.js: [learn more](https://discordjs.guide/legacy/popular-topics/webhooks#creating-webhooks-with-discordjs)
 """
 
 [force-fetch]
@@ -1168,7 +1168,7 @@ Rate limits are determined based on the IP address of the sender.
 [application-command-permissions]
 keywords = ["command-permissions", "slash-permissions"]
 content = """
-- You can only set default permissions (member and DM) in your code. [learn more](https://discordjs.guide/slash-commands/permissions.html#member-permissions)
+- You can only set default permissions (member and DM) in your code. [learn more](https://discordjs.guide/legacy/popular-topics/permissions#checking-member-permissions)
 - Be aware that server staff can overwrite all of the suggested permissions to their liking in Server Settings > Integrations.
 """
 
@@ -1217,7 +1217,7 @@ The `ephemeral` option when replying to an interaction will be removed in v15
 ```diff
 - {..., ephemeral: true}
 + {..., flags: MessageFlags.Ephemeral}
-``` Read [here](<https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Bitwise_OR>) on how to specify multiple flags
+``` Read [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR) on how to specify multiple flags
 """
 
 [entry-point] 
