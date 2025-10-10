@@ -9,10 +9,12 @@ if (<message>.author.bot) return;
 """
 
 [bot-about-me]
-keywords = ["bam"]
+keywords = ["bam", "bio", "about-me"]
 content = """
-To give your application an "About Me", head [here](https://discord.com/developers/applications), "Your Application" > "General Information" > "Description". The description supports full markdown as well (bold, underline, etc.).
-https://imgur.com/zqsWi2d.jpg
+To set the bio/"about me" section for your app:
+- Global (portal): [Developer Portal](https://discord.com/developers/applications), "Your Application" > "General Information" > "Description"
+- Global: [`ClientApplication#edit`](https://discord.js.org/docs/packages/discord.js/stable/ClientApplication:Class#edit) `description`
+- Per Guild: [`GuildMemberManager#editMe`](https://discord.js.org/docs/packages/discord.js/stable/GuildMemberManager:Class#editMe) `bio`
 """
 
 [api-docs]
@@ -151,6 +153,7 @@ content = """
 - `User#defaultAvatarURL` default avatar (clyde with colored background)
 - `User#displayAvatarURL()` global custom avatar or default avatar, if none
 - `GuildMember#avatarURL()` guild specific avatar, if set
+- `GuildMember#displayAvatarURL()` guild specific avatar, global custom avatar, or default avatar
 """
 
 [node-events]
@@ -349,10 +352,10 @@ content = """
 """
 
 [dev-tos]
-keywords = ["devtos", "developer-terms-of-service"]
+keywords = ["devtos", "developer-terms-of-service", "devpolicy"]
 content = """
-- Discord developer ToS: [learn more](https://discord.com/developers/docs/legal)
-- ToS Q&A summary: [learn more](https://gist.github.com/meew0/a3168b8fbb02d5a5456a06461b9e829e)
+- Discord developer ToS: [learn more](https://support-dev.discord.com/hc/en-us/articles/8562894815383)
+- Discord developer policy: [learn more](https://support-dev.discord.com/hc/en-us/articles/8563934450327)
 """
 
 [notation]
@@ -556,7 +559,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=0
 - `CLIENT_ID` needs to be replaced with your bot id
 - Permission calculator: [learn more](https://finitereality.github.io/permissions-calculator)
 - `bot` scope includes `applications.commands`. If you don't need the bot, use `applications.commands` instead
-- You can use #generateInvite instead: [learn more](https://discord.js.org/docs/packages/discord.js/stable/Client:Class#generateInvite)
+- You can use [`Client#generateInvite`](https://discord.js.org/docs/packages/discord.js/stable/Client:Class#generateInvite) instead
 """
 
 [version]
@@ -842,15 +845,6 @@ A request took longer than the specified [timeout](https://discord.js.org/docs/p
 - In case of a slow connection, the `timeout` option in [RESTOptions](https://discord.js.org/docs/packages/rest/stable/RESTOptions:Interface#timeout) can be increased to prevent future AbortErrors.
 """
 
-[v14-changes]
-keywords = ["changes", "v14", "14"]
-content = """
-Version 14 has released! Please update at your earliest convenience.
-- Update: `npm rm discord.js` `npm i discord.js`
-- [Update guide](https://discordjs.guide/legacy/additional-info/changes-in-v14) (use `CTRL` + `F` to search for the old method or property)
-"""
-hoisted = true
-
 [intents]
 keywords = ["no-members"]
 content = """
@@ -1068,9 +1062,9 @@ HTTP-only applications receive interactions through HTTP webhooks instead of the
 """
 
 [interaction-buttons-in-webhooks]
-keywords = ["no-button"]
+keywords = ["no-button", "interactive-webhook"]
 content = """
-Only webhooks created by an application can send messages with components, so Discord knows which application to send the corresponding interactions to.
+Only webhooks created by an application can send messages with interactive components, so Discord knows which application to send the corresponding interactions to.
 - Creating webhooks with discord.js: [learn more](https://discordjs.guide/legacy/popular-topics/webhooks#creating-webhooks-with-discordjs)
 """
 
@@ -1228,7 +1222,7 @@ Either do not enable them if you do not need them, or include the command that w
 """
 
 [fetchreply] 
-keywords = ["fetchReply-deprecated"]
+keywords = ["fetchreply-deprecated"]
 content = """ 
 The `fetchReply` option when replying to an interaction will be removed in v15.
 ```diff
