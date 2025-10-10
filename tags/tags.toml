@@ -198,7 +198,7 @@ content = """
 const channel = client.channels.cache.get("222086648706498562");
 const channel = guild.channels.cache.find(channel => channel.name === "general");
 ```
-- Caches in discord.js are [Collections](https://discord.js.org/docs/packages/collection/stable) which extend the native [Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
+- Caches in discord.js are [Collections](https://discord.js.org/docs/packages/collection/stable) which extend the native [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
 - [learn more](https://discordjs.guide/legacy/additional-info/collections)
 """
 
@@ -364,7 +364,7 @@ Explaining `<Class>` and `Class#method` notation: [learn more](https://discordjs
 [collection]
 keywords = ["collections", "collection-methods"]
 content = """
-discord.js uses [Collection](https://discord.js.org/docs/packages/collection/stable), an extension of the JS native [Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
+discord.js uses [Collection](https://discord.js.org/docs/packages/collection/stable), an extension of the JS native [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) structure.
 - Guide: [learn more](https://discordjs.guide/legacy/additional-info/collections) [🍪](https://gist.github.com/almostSouji/71a33e5f8e84a0960b4ed3a1609915f5)
 """
 hoisted = true
@@ -383,7 +383,7 @@ keywords = ["undici", "node-fetch", "http-requests", "call-rest-apis"]
 content = """
 Making HTTP requests (for example to call rest APIs)
 - Node: [learn more](https://nodejs.org/en/learn/getting-started/fetch)
-- MDN: [learn more](https://developer.mozilla.org/docs/Web/API/Fetch_API) 
+- MDN: [learn more](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 """
 
 [opus]
@@ -397,8 +397,8 @@ content = """
 [undefined]
 keywords = ["not-defined", "of-null", "of-undefined", "ofnull", "ofundefined"]
 content = """
-- `ReferenceError: "x" is not defined`: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Not_defined)
-- `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Cant_access_property)
+- `ReferenceError: "x" is not defined`: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined)
+- `TypeError: Cannot read properties of undefined/null (reading "x")`: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Unexpected_type)
 """
 hoisted = true
 
@@ -429,7 +429,7 @@ Your bot is trying to send a DM to a user, but failed to do so:
 - The user has DMs disabled or the bot blocked
 - The user no longer shares a guild with the bot (make sure to send informational DMs before banning/kicking)
 - The bot is trying to DM itself or another bot
-Note: You cannot check if you can send a DM beforehand but have to handle the [rejection case](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/try...catch)
+Note: You cannot check if you can send a DM beforehand but have to handle the [rejection case](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
 """
 
 [path]
@@ -593,7 +593,7 @@ keywords = [
 ]
 content = """
 Resources to understand Promise:
-- MDN: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Using_promises)
+- MDN: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 - Guide: [learn more](https://discordjs.guide/legacy/additional-info/async-await)
 - JavaScript info: [learn more](https://javascript.info/async-await)
 """
@@ -629,7 +629,7 @@ x = 1; // assigning a value to x
 '1' == 1 // true
 '1' === 1 // false
 ```
-- Equality and sameness in JavaScript: [learn more](https://developer.mozilla.org/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+- Equality and sameness in JavaScript: [learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness)
 """
 
 [timers]
@@ -870,9 +870,9 @@ keywords = ["cta", "collection-to-array"]
 content = """
 **Converting a Collection to an array**
 You only need to convert it to an array if you need the index of an entry:
-- Iteration (looping) is possible with [`for...of`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map) over [`Collection#values`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map/values) or [`forEach`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach)
+- Iteration (looping) is possible with [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of#iterating_over_a_map) over [`Collection#values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values) or [`forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach)
 - You can transform a Collection to an array with [`Collection#map`](https://discord.js.org/docs/packages/collection/stable/Collection:Class#map)
-- If you need indices, you can get the array using [`[...collection.values()]`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map/values)
+- If you need indices, you can get the array using [`[...collection.values()]`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values)
 """
 
 [member-count]
@@ -1217,7 +1217,7 @@ The `ephemeral` option when replying to an interaction will be removed in v15
 ```diff
 - {..., ephemeral: true}
 + {..., flags: MessageFlags.Ephemeral}
-``` Read [here](<https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Bitwise_OR>) on how to specify multiple flags
+``` Read [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR) on how to specify multiple flags
 """
 
 [entry-point] 
