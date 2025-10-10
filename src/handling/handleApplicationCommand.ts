@@ -9,6 +9,7 @@ import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docs
 import { djsDocs } from '../functions/docs.js';
 import { mdnSearch } from '../functions/mdn.js';
 import { nodeAutoCompleteResolve } from '../functions/node.js';
+import { oramaResponse } from '../functions/oramaResponse.js';
 import type { Tag } from '../functions/tag.js';
 import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
@@ -107,27 +108,8 @@ export async function handleApplicationCommand(
 			}
 
 			case 'guide': {
-				// const castArgs = args as ArgumentsOf<typeof GuideCommand>;
-				prepareResponse(
-					res,
-					'The guide command is currently unavailable while we rework it to use the new guide page.',
-					{
-						ephemeral: true,
-					},
-				);
-
-				// await algoliaResponse(
-				// 	res,
-				// 	process.env.DJS_GUIDE_ALGOLIA_APP!,
-				// 	process.env.DJS_GUIDE_ALGOLIA_KEY!,
-				// 	'discordjs',
-				// 	castArgs.query,
-				// 	EMOJI_ID_GUIDE,
-				// 	'guide',
-				// 	castArgs.mention,
-				// 	castArgs.hide,
-				// 	'guide',
-				// );
+				const castArgs = args as ArgumentsOf<typeof GuideCommand>;
+				await oramaResponse(res, castArgs.query, castArgs.mention, castArgs.hide);
 				break;
 			}
 

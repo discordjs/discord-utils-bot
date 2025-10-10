@@ -6,6 +6,7 @@ import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComple
 import { djsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
 import { nodeAutoComplete } from '../functions/autocomplete/nodeAutoComplete.js';
+import { oramaAutocomplete } from '../functions/autocomplete/oramaAutoComplete.js';
 import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
 import type { Tag } from '../functions/tag.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
@@ -43,13 +44,7 @@ export async function handleApplicationCommandAutocomplete(
 
 		case 'guide': {
 			const args = transformInteraction<typeof GuideCommand>(data.options);
-			await algoliaAutoComplete(
-				res,
-				args.query,
-				process.env.DJS_GUIDE_ALGOLIA_APP!,
-				process.env.DJS_GUIDE_ALGOLIA_KEY!,
-				'discordjs',
-			);
+			await oramaAutocomplete(res, args.query);
 			break;
 		}
 

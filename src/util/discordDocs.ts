@@ -28,10 +28,10 @@ export function resolveResourceFromDocsURL(link: string) {
 }
 
 type Heading = {
-	docs_anchor: string;
+	docs_anchor?: string;
 	label: string;
-	route: string;
-	verb: string;
+	route?: string;
+	verb?: string;
 };
 
 function parseHeadline(text: string): Heading | null {
@@ -66,7 +66,7 @@ function cleanLine(line: string) {
 		.trim();
 }
 
-const IGNORE_LINE_PREFIXES = ['>', '---', '|'];
+const IGNORE_LINE_PREFIXES = ['>', '---', '|', '!'];
 
 export function parseSections(content: string): ParsedSection[] {
 	const res = [];
@@ -87,6 +87,12 @@ export function parseSections(content: string): ParsedSection[] {
 			} else if (withinPreamble) {
 				withinPreamble = false;
 			}
+		}
+
+		if (withinPreamble && line.startsWith('title:')) {
+			const titleName = line.replace('title: ', '');
+			section.headline = titleName;
+			section.heading = { label: titleName };
 		}
 
 		index++;
@@ -119,6 +125,10 @@ export function parseSections(content: string): ParsedSection[] {
 		}
 	}
 
+	if (section.heading) {
+		res.push({ ...section });
+	}
+
 	return res;
 }
 
@@ -140,8 +150,8 @@ function anchorsCompressedEqual(one?: string, other?: string) {
 export function findRelevantDocsSection(query: string, docsMd: string) {
 	const sections = parseSections(docsMd);
 	for (const section of sections) {
-		const anchor = section.heading?.docs_anchor;
-		if (anchor?.startsWith(query) || anchorsCompressedEqual(anchor, query)) {
+		const anchor = section.heading?.docs_anchor ?? section.headline.toLowerCase();
+		if (anchor.startsWith(query) || anchorsCompressedEqual(anchor, query)) {
 			return section;
 		}
 	}
