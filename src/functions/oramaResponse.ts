@@ -1,9 +1,9 @@
-import { bold, hyperlink } from '@discordjs/builders';
+import { bold, hyperlink, inlineCode, subtext } from '@discordjs/builders';
 import type { Response } from 'polka';
 import { EMOJI_ID_GUIDE } from '../util/constants.js';
 import { findRelevantDocsSection } from '../util/discordDocs.js';
 import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
-import { prepareResponse } from '../util/respond.js';
+import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 
 type GuideCacheEntry = {
@@ -12,15 +12,27 @@ type GuideCacheEntry = {
 };
 
 const cache = new Map<string, GuideCacheEntry>();
+const invalid = new Set();
 
 async function getPage(url: string) {
+	if (invalid.has(url)) {
+		return null;
+	}
+
 	const cacheEntry = cache.get(url);
 
 	if (cacheEntry && cacheEntry.timestamp < Date.now() - 1_000 * 60 * 60) {
 		return cacheEntry.page;
 	}
 
-	const page = await fetch(url).then(async (res) => res.text());
+	const res = await fetch(url);
+
+	if (res.status === 404) {
+		invalid.add(url);
+		return null;
+	}
+
+	const page = await res.text();
 	cache.set(url, { page, timestamp: Date.now() });
 
 	return page;
@@ -31,6 +43,18 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 	const contentParts: string[] = [];
 
 	const docsContents = await getPage(parsed.githubUrl);
+
+	if (!docsContents) {
+		prepareErrorResponse(
+			res,
+			[
+				`Could not find a valid page based on your query ${inlineCode(resultUrl)}`,
+				subtext('Make sure to select an autocomplete result to ensure an existing article.'),
+			].join('\n'),
+		);
+		return res;
+	}
+
 	const section = findRelevantDocsSection(parsed.anchor ? `#${parsed.anchor}` : parsed.endpoint ?? '', docsContents);
 
 	if (section) {

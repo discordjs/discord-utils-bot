@@ -629,18 +629,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discordjs/builders@npm:^1.8.0":
-  version: 1.8.1
-  resolution: "@discordjs/builders@npm:1.8.1"
+"@discordjs/builders@npm:^1.12.2":
+  version: 1.12.2
+  resolution: "@discordjs/builders@npm:1.12.2"
   dependencies:
-    "@discordjs/formatters": ^0.4.0
-    "@discordjs/util": ^1.1.0
-    "@sapphire/shapeshift": ^3.9.7
-    discord-api-types: 0.37.83
+    "@discordjs/formatters": ^0.6.1
+    "@discordjs/util": ^1.1.1
+    "@sapphire/shapeshift": ^4.0.0
+    discord-api-types: ^0.38.26
     fast-deep-equal: ^3.1.3
     ts-mixer: ^6.0.4
-    tslib: ^2.6.2
-  checksum: 21e826004ddddf6f9717cbdacafe4ff748d03103634d82883c66f605b068a5ae12a952aaa2558a2c21f3ec717427a12bb9b57f0f8670f8a4ab6a0757bb3b229d
+    tslib: ^2.6.3
+  checksum: 45ed668d701eab025847be3215d084e59e222bbfcf529185d04a956b791d4bf3e53d48cf6990071aab3216e9d7cd2bfc5526d2b27eed740aeec7250bab0ffbb9
   languageName: node
   linkType: hard
 
@@ -651,12 +651,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discordjs/formatters@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@discordjs/formatters@npm:0.4.0"
+"@discordjs/formatters@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@discordjs/formatters@npm:0.6.1"
   dependencies:
-    discord-api-types: 0.37.83
-  checksum: 130ab7ba104635d7d0f92f4c3de67dbc60cdab004e9db605e0f2c7f410a9808df8776e4d5d45632597dc7257713dc77bb616ee25bb0827117247b6bebfe35921
+    discord-api-types: ^0.38.1
+  checksum: 556b53898f8c6ab8940970e1e2202d25b653649190567cdca14b99cb48f757afa8e0a7022c0f67619f3dc3bc969905cdd6411a7d572ecb005ca9a2d09aac7c62
   languageName: node
   linkType: hard
 
@@ -681,6 +681,13 @@ __metadata:
   version: 1.1.0
   resolution: "@discordjs/util@npm:1.1.0"
   checksum: b4db3fc6017986cd0e7fd6aa50e890e1259e79c6e0ff9c07685a86b2c22409a42f146f282d907885444f37ca596220c166d8be11851fab7f9e2c1ee932fd524e
+  languageName: node
+  linkType: hard
+
+"@discordjs/util@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@discordjs/util@npm:1.1.1"
+  checksum: 13f25aa2917de732bdd90e9cee9322b69c8c0a173206e2ce308f1bb177d4ce20a138efdb5b0ec5029a10ebbbde71d4c12ba51354b09db4b488e8de429c393fd4
   languageName: node
   linkType: hard
 
@@ -976,13 +983,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/shapeshift@npm:^3.9.7":
-  version: 3.9.7
-  resolution: "@sapphire/shapeshift@npm:3.9.7"
+"@sapphire/shapeshift@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@sapphire/shapeshift@npm:4.0.0"
   dependencies:
     fast-deep-equal: ^3.1.3
     lodash: ^4.17.21
-  checksum: a36032ff8fc54056ea21e0cdbbea84c3d80c0c0fb19b2685e14e29111ab9c1172c9273e1e54d49e2a62ba5a393f18b3dab9330d34b97d3519d572e32dd64913d
+  checksum: d312dd529c3b3d221a8fcd58428d03de2a744a1568ad810f9f75e1f4d5a0387952285b436b37f29141a810f6bbbe310ed3c31882c57d260a744f39beb35649f0
   languageName: node
   linkType: hard
 
@@ -2628,6 +2635,13 @@ __metadata:
   version: 0.37.83
   resolution: "discord-api-types@npm:0.37.83"
   checksum: ab2a31188352d9c742f09a114a95322e7f7de90199cb9f5571f7f5ac25765e7abc9b83c15c14d513ffc5e1d63d9e3ea5ff088fa8a1c5d9c1e1f395b27027cef0
+  languageName: node
+  linkType: hard
+
+"discord-api-types@npm:^0.38.1, discord-api-types@npm:^0.38.26":
+  version: 0.38.30
+  resolution: "discord-api-types@npm:0.38.30"
+  checksum: ccfe26a82046b82324b92b8a1a5fb753afe787c20d941c64adb1bf7f79cfb07f8e6d2d06b1e3757b801a19b183e9e261f4cab654026cc9320f0397595a5e20ad
   languageName: node
   linkType: hard
 
@@ -7113,7 +7127,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^17.7.1
     "@commitlint/config-angular": ^17.7.0
-    "@discordjs/builders": ^1.8.0
+    "@discordjs/builders": ^1.12.2
     "@discordjs/collection": ^2.1.0
     "@discordjs/rest": ^2.3.0
     "@hapi/boom": ^10.0.1
@@ -7636,6 +7650,13 @@ __metadata:
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.6.3":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
   languageName: node
   linkType: hard
 

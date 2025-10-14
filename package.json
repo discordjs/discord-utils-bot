@@ -28,7 +28,7 @@
 		"utilities"
 	],
 	"dependencies": {
-		"@discordjs/builders": "^1.8.0",
+		"@discordjs/builders": "^1.12.2",
 		"@discordjs/collection": "^2.1.0",
 		"@discordjs/rest": "^2.3.0",
 		"@hapi/boom": "^10.0.1",
