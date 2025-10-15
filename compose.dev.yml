@@ -1,0 +1,4 @@
+services:
+  application:
+    ports:
+      - '49202:49666'
