@@ -2717,13 +2717,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.3.1":
-  version: 16.4.5
-  resolution: "dotenv@npm:16.4.5"
-  checksum: 301a12c3d44fd49888b74eb9ccf9f07a1f5df43f489e7fcb89647a2edcd84c42d6bc349dc8df099cd18f07c35c7b04685c1a4f3e6a6a9e6b30f8d48c15b7f49c
-  languageName: node
-  linkType: hard
-
 "dunder-proto@npm:^1.0.1":
   version: 1.0.1
   resolution: "dunder-proto@npm:1.0.1"
@@ -7142,7 +7135,6 @@ __metadata:
     cheerio: ^1.0.0-rc.12
     cloudflare: ^4.2.0
     discord-api-types: ^0.37.83
-    dotenv: ^16.3.1
     env-cmd: ^10.1.0
     eslint: ^8.48.0
     eslint-config-neon: 0.1.54

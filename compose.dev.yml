@@ -1,4 +1,17 @@
+version: '3'
+
 services:
   application:
+    build:
+      context: ./
+      dockerfile: dev.Dockerfile
+    restart: always
+    env_file:
+      - ./.env
+      - ./.dev.env
     ports:
       - '49202:49666'
+    volumes:
+      - type: bind
+        source: ./tags
+        target: /usr/slash-utils/tags
