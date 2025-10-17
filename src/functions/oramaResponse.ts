@@ -55,7 +55,7 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 		return res;
 	}
 
-	const section = findRelevantDocsSection(parsed.anchor ? `#${parsed.anchor}` : parsed.endpoint ?? '', docsContents);
+	const section = findRelevantDocsSection(`#${parsed.anchor ?? parsed.endpoint}`, docsContents);
 
 	if (section) {
 		const title = section.headline ?? parsed.endpoint ?? 'No Title';
