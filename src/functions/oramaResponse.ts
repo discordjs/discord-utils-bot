@@ -58,7 +58,7 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 	const section = findRelevantDocsSection(parsed.anchor ? `#${parsed.anchor}` : parsed.endpoint ?? '', docsContents);
 
 	if (section) {
-		const title = section.heading?.label ?? parsed.endpoint ?? 'No Title';
+		const title = section.headline ?? parsed.endpoint ?? 'No Title';
 		contentParts.push(`<:guide:${EMOJI_ID_GUIDE}> ${bold(title)}`);
 	}
 

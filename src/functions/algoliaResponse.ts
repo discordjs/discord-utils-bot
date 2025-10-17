@@ -37,15 +37,15 @@ export async function algoliaResponse(
 			},
 		}).then(async (res) => res.json())) as AlgoliaHit;
 
-		const docsBody = hit.url.includes('discord.com') ? await fetchDocsBody(hit.url) : null;
-		const headlineSuffix =
-			docsBody?.heading?.verb && docsBody?.heading.route
-				? inlineCode(`${docsBody.heading.verb} ${docsBody.heading.route}`.replaceAll('\\', ''))
-				: null;
+		const docsSection = hit.url.includes('discord.com') ? await fetchDocsBody(hit.url) : null;
+
+		const headlineSuffix = docsSection?.route
+			? inlineCode(`${docsSection.route.verb} ${docsSection.route.path}`.replaceAll('\\', ''))
+			: null;
 
 		const contentParts = [
 			`<:${emojiName}:${emojiId}>  ${bold(resolveHitToNamestring(hit))}${headlineSuffix ? ` ${headlineSuffix}` : ''}`,
-			hit.content?.length ? `${truncate(decode(hit.content), 300)}` : docsBody?.lines.at(0),
+			hit.content?.length ? `${truncate(decode(hit.content), 300)}` : docsSection?.lines.at(0),
 			`${hyperlink('read more', hideLinkEmbed(hit.url))}`,
 		].filter(Boolean) as string[];
 
