@@ -25,8 +25,8 @@ export function resolveResourceFromDocsURL(link: string) {
 // https://raw.githubusercontent.com/discord/discord-api-docs/main/docs/resources/user.mdx
 
 type Route = {
-	verb: string;
 	path: string;
+	verb: string;
 };
 
 type ParsedSection = {
@@ -43,7 +43,7 @@ function cleanLine(line: string) {
 }
 
 function formatRoutePath(path: string) {
-	return path.replaceAll(/\[(.*?)\]\(.*?\)/g, '$1');
+	return path.replaceAll(/\[(.*?)]\(.*?\)/g, '$1');
 }
 
 const IGNORE_LINE_PREFIXES = ['>', '---', '|', '!'];
@@ -105,10 +105,10 @@ export function parseSections(content: string): ParsedSection[] {
 		if (line.startsWith('<Route')) {
 			const match = /<Route method="(?<verb>\w{3,6})">\/(?<path>.*)<\/Route>/.exec(line);
 
-			if (match) {
+			if (match?.groups) {
 				section.route = {
-					verb: match.groups?.['verb']!,
-					path: formatRoutePath(match.groups?.['path']!),
+					verb: match.groups.verb!,
+					path: formatRoutePath(match.groups.path!),
 				};
 			}
 
@@ -133,7 +133,7 @@ export function findRelevantDocsSection(query: string, docsMd: string) {
 	for (const section of sections) {
 		const anchor = `#${section.headline.toLowerCase().replaceAll(' ', '-').replaceAll(':', '')}`;
 
-		if (anchor == query) {
+		if (anchor === query) {
 			return section;
 		}
 	}
