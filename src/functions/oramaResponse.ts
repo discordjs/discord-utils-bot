@@ -4,7 +4,6 @@ import { EMOJI_ID_GUIDE } from '../util/constants.js';
 import { findRelevantDocsSection } from '../util/discordDocs.js';
 import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
-import { truncate } from '../util/truncate.js';
 
 type GuideCacheEntry = {
 	page: string;
@@ -55,7 +54,7 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 		return res;
 	}
 
-	const section = findRelevantDocsSection(`#${parsed.anchor ?? parsed.endpoint}`, docsContents);
+	const section = findRelevantDocsSection(`#${parsed.anchor ?? parsed.endpoint}`, docsContents, !parsed.anchor);
 
 	if (section) {
 		const title = section.headline ?? parsed.endpoint ?? 'No Title';
@@ -74,7 +73,13 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 			}
 		}
 
-		contentParts.push(descriptionParts.join(' '));
+		const description = descriptionParts.join(' ');
+		const isTerminated = ['.', '?', '!'].some((terminator) => description.endsWith(terminator));
+		if (isTerminated) {
+			contentParts.push(description);
+		} else {
+			contentParts.push(`${description}...`);
+		}
 	}
 
 	contentParts.push(hyperlink('read more', parsed.guideUrl));

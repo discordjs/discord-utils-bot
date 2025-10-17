@@ -127,7 +127,7 @@ export function parseSections(content: string): ParsedSection[] {
 	return res;
 }
 
-export function findRelevantDocsSection(query: string, docsMd: string) {
+export function findRelevantDocsSection(query: string, docsMd: string, defaultFirst = false) {
 	const sections = parseSections(docsMd);
 
 	for (const section of sections) {
@@ -136,6 +136,10 @@ export function findRelevantDocsSection(query: string, docsMd: string) {
 		if (anchor === query) {
 			return section;
 		}
+	}
+
+	if (defaultFirst && sections.length > 0) {
+		return sections.at(0)!;
 	}
 }
 
