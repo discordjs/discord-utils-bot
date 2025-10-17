@@ -64,7 +64,17 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 
 	const relevantLines = noCodeLines(section?.lines ?? []);
 	if (relevantLines.length) {
-		contentParts.push(truncate(relevantLines.join(' '), 300));
+		const descriptionParts = [];
+		let descriptionLength = 0;
+
+		for (const line of relevantLines) {
+			if (descriptionLength + line.length < 500) {
+				descriptionParts.push(line);
+				descriptionLength += line.length;
+			}
+		}
+
+		contentParts.push(descriptionParts.join(' '));
 	}
 
 	contentParts.push(hyperlink('read more', parsed.guideUrl));

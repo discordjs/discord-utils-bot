@@ -6,6 +6,7 @@ import type { AlgoliaHit } from '../types/algolia.js';
 import { expandAlgoliaObjectId } from '../util/compactAlgoliaId.js';
 import { API_BASE_ALGOLIA } from '../util/constants.js';
 import { fetchDocsBody } from '../util/discordDocs.js';
+import { noCodeLines } from '../util/djsguide.js';
 import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete.js';
@@ -45,9 +46,28 @@ export async function algoliaResponse(
 
 		const contentParts = [
 			`<:${emojiName}:${emojiId}>  ${bold(resolveHitToNamestring(hit))}${headlineSuffix ? ` ${headlineSuffix}` : ''}`,
-			hit.content?.length ? `${truncate(decode(hit.content), 300)}` : docsSection?.lines.at(0),
-			`${hyperlink('read more', hideLinkEmbed(hit.url))}`,
-		].filter(Boolean) as string[];
+		];
+
+		if (hit.content?.length) {
+			contentParts.push(`${truncate(decode(hit.content), 300)}`);
+		} else {
+			const descriptionParts = [];
+			let descriptionLength = 0;
+			const relevantLines = noCodeLines(docsSection?.lines ?? []);
+
+			if (relevantLines.length) {
+				for (const line of relevantLines) {
+					if (descriptionLength + line.length < 500) {
+						descriptionParts.push(line);
+						descriptionLength += line.length;
+					}
+				}
+
+				contentParts.push(descriptionParts.join(' '));
+			}
+		}
+
+		contentParts.push(`${hyperlink('read more', hideLinkEmbed(hit.url))}`);
 
 		prepareResponse(res, contentParts.join('\n'), {
 			ephemeral,
