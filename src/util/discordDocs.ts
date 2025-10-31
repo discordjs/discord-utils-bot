@@ -46,7 +46,7 @@ function formatRoutePath(path: string) {
 	return path.replaceAll(/\[(.*?)]\(.*?\)/g, '$1');
 }
 
-const IGNORE_LINE_PREFIXES = ['>', '---', '|', '!', 'import', 'require'];
+const IGNORE_LINE_PREFIXES = ['>', '---', '|', '!', 'import', 'require', '{', '/'];
 
 export function parseSections(content: string): ParsedSection[] {
 	const res = [];
