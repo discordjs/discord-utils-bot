@@ -28,30 +28,48 @@ type OramaResult = {
 	hits: OramaHit[];
 };
 
-function autoCompleteMap(elements: OramaDocument[]) {
-	return elements.map((element) => {
-		const cleanSectionTitle = element.pageSectionTitle.replaceAll('`', '');
-		const name = truncate(`${element.pageTitle} > ${cleanSectionTitle}`, 90, '');
-		if (element.path.length > AUTOCOMPLETE_MAX_NAME_LENGTH) {
-			return {
-				name: truncate(`[path too long] ${element.pageTitle} > ${cleanSectionTitle}`, AUTOCOMPLETE_MAX_NAME_LENGTH, ''),
-				value: element.pageTitle,
-			};
-		}
+type OramaResultGroup = {
+	result: (OramaHit & { index_id: string })[];
+	values: string[];
+};
 
-		return {
-			name,
-			// we cannot use the full url with the node api base appended here, since discord only allows string values of length 100
-			// some of `crypto` results are longer, if prefixed
-			value: element.path,
-		};
-	});
+type OramaCollectionResult = Omit<OramaResult, 'elapsed'> & {
+	groups: OramaResultGroup[];
+};
+
+function autoCompleteMap(elements: OramaHit[]) {
+	const groups = new Map<string, OramaHit[]>();
+	const hits = [];
+
+	for (const element of elements) {
+		const section = element.document.siteSection;
+		hits.push(element);
+		const siblings = groups.get(section) ?? [];
+
+		siblings.push(element);
+		siblings.sort((one, other) => other.score - one.score);
+		groups.set(section, siblings);
+	}
+
+	const picks = [];
+
+	for (const result of hits) {
+		picks.push({
+			name: truncate(
+				`${result.document.pageSectionTitle} - ${result.document.pageTitle}`,
+				AUTOCOMPLETE_MAX_NAME_LENGTH,
+			),
+			value: result.document.path,
+		});
+	}
+
+	return picks;
 }
 
 export async function nodeAutoComplete(res: Response, query: string): Promise<Response> {
-	const full = `${API_BASE_ORAMA}/indexes/${process.env.ORAMA_CONTAINER}/search?api-key=${process.env.ORAMA_KEY}`;
+	const full = `${API_BASE_ORAMA}/v1/collections/${process.env.ORAMA_COLLECTION}/search?api-key=${process.env.ORAMA_KEY}`;
 
-	const result = (await fetch(full, {
+	const postResponse = await fetch(full, {
 		method: 'post',
 		body: stringify({
 			version: '1.3.2',
@@ -59,24 +77,28 @@ export async function nodeAutoComplete(res: Response, query: string): Promise<Re
 			// eslint-disable-next-line id-length
 			q: JSON.stringify({
 				term: query,
-				mode: 'fulltext',
-				limit: 25,
+				limit: 10,
 				threshold: 0,
-				boost: { pageSectionTitle: 4, pageSectionContent: 2.5, pageTitle: 1.5 },
 				facets: { siteSection: {} },
-				returning: ['path', 'pageSectionTitle', 'pageTitle', 'path', 'siteSection'],
+				groupBy: { properties: ['siteSection'] },
 			}),
 		}),
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
-	}).then(async (res) => res.json())) as OramaResult;
+	});
 
+	if (postResponse.status !== 200) {
+		throw new Error(`Failed retrieving orama data for ${full} query: ${query}`);
+	}
+
+	const result = (await postResponse.json()) as OramaCollectionResult;
 	prepareHeader(res);
+
 	res.write(
 		JSON.stringify({
 			data: {
-				choices: autoCompleteMap(result.hits?.slice(0, AUTOCOMPLETE_MAX_ITEMS - 1).map((hit) => hit.document) ?? []),
+				choices: autoCompleteMap(result.hits ?? []),
 			},
 			type: InteractionResponseType.ApplicationCommandAutocompleteResult,
 		}),

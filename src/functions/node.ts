@@ -95,11 +95,11 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, user
 	const possible = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 	const headingBaseSelectorParts = possible.map((prefix) => `${prefix}:has(${url.hash})`);
-	const heaidngSelector = headingBaseSelectorParts.join(', ');
+	const headingSelector = headingBaseSelectorParts.join(', ');
 	const headingCodeSelector = headingBaseSelectorParts.map((part) => `${part} > code`).join(', ');
 	const paragraphSelector = headingBaseSelectorParts.join(', ');
 
-	const heading = $(heaidngSelector).text().replaceAll('#', '');
+	const heading = $(headingSelector).text().replaceAll('#', '');
 	const headingCode = $(headingCodeSelector).text();
 	const paragraph = $(paragraphSelector).nextUntil('h4', 'p');
 
@@ -154,12 +154,28 @@ export async function nodeSearch(
 		let allNodeData = jsonCache.get(url);
 
 		if (!query.startsWith('docs')) {
+			const link = `${API_BASE_NODE}/en/${trimmedQuery}`;
+
+			const linkCheck = await fetch(link, {
+				method: 'HEAD',
+			});
+
+			if (linkCheck.status !== 200) {
+				prepareErrorResponse(res, 'Make sure to pick something from autocomplete!');
+				return res;
+			}
+
 			prepareResponse(
 				res,
-				`<:node:${EMOJI_ID_NODE}> ${bold('Learn more about Node.js:')}\n${hyperlink(parsePathToPhrase(trimmedQuery), `${API_BASE_NODE}/en/${trimmedQuery}`)}`,
+				`<:node:${EMOJI_ID_NODE}> ${bold('Learn more about Node.js:')}\n${hyperlink(parsePathToPhrase(trimmedQuery), link)}`,
 				{
 					ephemeral,
-					suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+					suggestion: user
+						? {
+								userId: user,
+								kind: 'documentation',
+							}
+						: undefined,
 				},
 			);
 			return res;
