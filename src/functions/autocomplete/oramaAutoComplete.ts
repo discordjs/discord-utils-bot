@@ -6,7 +6,7 @@ import { prepareHeader } from '../../util/respond.js';
 import { truncate } from '../../util/truncate.js';
 
 function resolveAutocompleteName(element: OramaSearchResult) {
-	const strippedContent = element.content.trim().replace(/<\/?mark>/gi, '');
+	const strippedContent = element.content.trim().replaceAll(/<\/?mark>/gi, '');
 	if (element.type === 'page') {
 		return `# ${strippedContent}`;
 	}
