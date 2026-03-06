@@ -6,15 +6,16 @@ import { prepareHeader } from '../../util/respond.js';
 import { truncate } from '../../util/truncate.js';
 
 function resolveAutocompleteName(element: OramaSearchResult) {
+	const strippedContent = element.content.trim().replace(/<\/?mark>/gi, '');
 	if (element.type === 'page') {
-		return `# ${element.content}`;
+		return `# ${strippedContent}`;
 	}
 
 	if (element.type === 'heading') {
-		return `## ${element.content}`;
+		return `## ${strippedContent}`;
 	}
 
-	return element.content;
+	return strippedContent;
 }
 
 function autocompleteMap(elements: OramaSearchResults) {
