@@ -4,6 +4,7 @@ import { EMOJI_ID_GUIDE } from '../util/constants.js';
 import { findRelevantDocsSection } from '../util/discordDocs.js';
 import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
+import { logger } from '../util/logger.js';
 
 type GuideCacheEntry = {
 	page: string;
@@ -41,8 +42,9 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 	const parsed = resolveResourceFromGuideUrl(resultUrl);
 	const contentParts: string[] = [];
 
-	const docsContents = await getPage(parsed.githubUrl);
+	const docsContents = (await getPage(parsed.githubUrl)) ?? (await getPage(parsed.githubFolderEntrypointUrl));
 
+	logger.debug({ resultUrl, parsed }, 'Guide page debug');
 	if (!docsContents) {
 		prepareErrorResponse(
 			res,

@@ -5,12 +5,15 @@ export function resolveResourceFromGuideUrl(url: string) {
 	const withoutAnchor = anchorSplit[0];
 	const pathParts = withoutAnchor.split('/').slice(1);
 	const path = pathParts.join('/');
-	const githubUrl = `https://raw.githubusercontent.com/discordjs/discord.js/main/apps/guide/content/docs/${withoutAnchor}.mdx`;
+	const githubUrlBase = `https://raw.githubusercontent.com/discordjs/discord.js/main/apps/guide/content/docs${withoutAnchor}`;
+	const githubFolderEntrypointUrl = `${githubUrlBase}/index.mdx`;
+	const githubUrl = `${githubUrlBase}.mdx`;
 	const guideUrl = `${DJS_GUIDE_BASE}${url}`;
 	const anchor = anchorSplit.length > 1 ? anchorSplit.slice(1).join('#') : undefined;
 
 	return {
 		githubUrl,
+		githubFolderEntrypointUrl,
 		path,
 		guideUrl,
 		anchor,
