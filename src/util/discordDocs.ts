@@ -128,7 +128,10 @@ export function parseSections(content: string): ParsedSection[] {
 }
 
 function formatAnchor(text: string) {
-	return `#${text.toLowerCase().replaceAll(' ', '-').replaceAll(/['.:]/gi, '')}`;
+	return `#${text
+		.toLowerCase()
+		.replaceAll(' ', '-')
+		.replaceAll(/['.:?!]/gi, '')}`;
 }
 
 export function findRelevantDocsSection(query: string, docsMd: string, defaultFirst = false) {
