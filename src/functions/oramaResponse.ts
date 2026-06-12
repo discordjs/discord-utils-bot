@@ -3,8 +3,8 @@ import type { Response } from 'polka';
 import { EMOJI_ID_GUIDE } from '../util/constants.js';
 import { findRelevantDocsSection } from '../util/discordDocs.js';
 import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
-import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { logger } from '../util/logger.js';
+import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
 type GuideCacheEntry = {
 	page: string;

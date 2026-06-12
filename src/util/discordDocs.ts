@@ -131,7 +131,7 @@ function formatAnchor(text: string) {
 	return `#${text
 		.toLowerCase()
 		.replaceAll(' ', '-')
-		.replaceAll(/['.:?!]/gi, '')}`;
+		.replaceAll(/[!'.:?]/gi, '')}`;
 }
 
 export function findRelevantDocsSection(query: string, docsMd: string, defaultFirst = false) {
