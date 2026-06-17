@@ -5,10 +5,12 @@ import type { Response } from 'polka';
 import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';
 import { djsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
+import { mintlifyAutocomplete } from '../functions/autocomplete/mintlifyAutoComplete.js';
 import { nodeAutoComplete } from '../functions/autocomplete/nodeAutoComplete.js';
 import { oramaAutocomplete } from '../functions/autocomplete/oramaAutoComplete.js';
 import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
 import type { Tag } from '../functions/tag.js';
+import type { DiscordDocsCommand } from '../interactions/discorddocs.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
 import type { GuideCommand } from '../interactions/guide.js';
 import type { NodeCommand } from '../interactions/node.js';
@@ -49,14 +51,8 @@ export async function handleApplicationCommandAutocomplete(
 		}
 
 		case 'discorddocs': {
-			const args = transformInteraction<typeof GuideCommand>(data.options);
-			await algoliaAutoComplete(
-				res,
-				args.query,
-				process.env.DDOCS_ALGOLIA_APP!,
-				process.env.DDOCS_ALGOLIA_KEY!,
-				'discord',
-			);
+			const args = transformInteraction<typeof DiscordDocsCommand>(data.options);
+			await mintlifyAutocomplete(res, args.query);
 			break;
 		}
 

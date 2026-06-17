@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { URL } from 'node:url';
-import { bold, hideLinkEmbed, hyperlink, inlineCode, italic, underscore, userMention } from '@discordjs/builders';
+import { bold, hideLinkEmbed, hyperlink, inlineCode } from '@discordjs/builders';
 import * as cheerio from 'cheerio';
 import type { Response } from 'polka';
 import TurndownService from 'turndown';
@@ -85,6 +84,7 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, user
 	let html = docsCache.get(key);
 
 	if (!html) {
+		// eslint-disable-next-line @typescript-eslint/no-base-to-string
 		const data = await fetch(url.toString()).then(async (response) => response.text());
 		docsCache.set(key, data);
 		html = data;
@@ -108,6 +108,7 @@ export async function nodeAutoCompleteResolve(res: Response, query: string, user
 	const effectiveSentence = (sentence ?? truncate(text, AUTOCOMPLETE_MAX_NAME_LENGTH, '')).trim();
 
 	const contentParts = [
+		// eslint-disable-next-line @typescript-eslint/no-base-to-string
 		`<:node:${EMOJI_ID_NODE}> ${hyperlink(inlineCode(headingCode.length ? headingCode : heading), url.toString())}`,
 	];
 

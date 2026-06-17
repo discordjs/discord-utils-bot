@@ -1,12 +1,10 @@
-import { hideLinkEmbed, hyperlink, userMention, italic, bold, inlineCode } from '@discordjs/builders';
+import { hyperlink, bold } from '@discordjs/builders';
 import pkg from 'he';
 import type { Response } from 'polka';
 import { fetch } from 'undici';
 import type { AlgoliaHit } from '../types/algolia.js';
 import { expandAlgoliaObjectId } from '../util/compactAlgoliaId.js';
 import { API_BASE_ALGOLIA } from '../util/constants.js';
-import { fetchDocsBody } from '../util/discordDocs.js';
-import { noCodeLines } from '../util/djsguide.js';
 import { prepareResponse, prepareErrorResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 import { resolveHitToNamestring } from './autocomplete/algoliaAutoComplete.js';
@@ -38,36 +36,10 @@ export async function algoliaResponse(
 			},
 		}).then(async (res) => res.json())) as AlgoliaHit;
 
-		const docsSection = hit.url.includes('discord.com') ? await fetchDocsBody(hit.url) : null;
-
-		const headlineSuffix = docsSection?.route
-			? inlineCode(`${docsSection.route.verb} ${docsSection.route.path}`.replaceAll('\\', ''))
-			: null;
-
-		const contentParts = [
-			`<:${emojiName}:${emojiId}>  ${hyperlink(
-				bold(resolveHitToNamestring(hit)),
-				hit.url,
-			)}${headlineSuffix ? ` ${headlineSuffix}` : ''}`,
-		];
+		const contentParts = [`<:${emojiName}:${emojiId}>  ${hyperlink(bold(resolveHitToNamestring(hit)), hit.url)}`];
 
 		if (hit.content?.length) {
 			contentParts.push(`${truncate(decode(hit.content), 300)}`);
-		} else {
-			const descriptionParts = [];
-			let descriptionLength = 0;
-			const relevantLines = noCodeLines(docsSection?.lines ?? []);
-
-			if (relevantLines.length) {
-				for (const line of relevantLines) {
-					if (descriptionLength + line.length < 500) {
-						descriptionParts.push(line);
-						descriptionLength += line.length;
-					}
-				}
-
-				contentParts.push(descriptionParts.join(' '));
-			}
 		}
 
 		prepareResponse(res, contentParts.join('\n'), {

@@ -8,6 +8,7 @@ import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
 import { mdnSearch } from '../functions/mdn.js';
+import { mintlifyResponse } from '../functions/mintlifyResponse.js';
 import { nodeAutoCompleteResolve } from '../functions/node.js';
 import { oramaResponse } from '../functions/oramaResponse.js';
 import type { Tag } from '../functions/tag.js';
@@ -15,7 +16,7 @@ import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
 import { DiscordDocsCommand } from '../interactions/discorddocs.js';
 import { DTypesCommand } from '../interactions/discordtypes.js';
-import { buildDocsCommand, DocsCommand } from '../interactions/docs.js';
+import { buildDocsCommand } from '../interactions/docs.js';
 import { GuideCommand } from '../interactions/guide.js';
 import { MdnCommand } from '../interactions/mdn.js';
 import { NodeCommand } from '../interactions/node.js';
@@ -23,7 +24,7 @@ import { TagCommand } from '../interactions/tag.js';
 import type { TagReloadCommand } from '../interactions/tagreload.js';
 import { TestTagCommand } from '../interactions/testtag.js';
 import type { ArgumentsOf } from '../util/argumentsOf.js';
-import { EMOJI_ID_CLYDE_BLURPLE, EMOJI_ID_DTYPES, EMOJI_ID_GUIDE } from '../util/constants.js';
+import { EMOJI_ID_DTYPES } from '../util/constants.js';
 import { reloadDjsVersions } from '../util/djsdocs.js';
 import { transformInteraction } from '../util/interactionOptions.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
@@ -76,17 +77,7 @@ export async function handleApplicationCommand(
 
 			case 'discorddocs': {
 				const castArgs = args as ArgumentsOf<typeof DiscordDocsCommand>;
-				await algoliaResponse(
-					res,
-					process.env.DDOCS_ALGOLIA_APP!,
-					process.env.DDOCS_ALGOLIA_KEY!,
-					'discord',
-					castArgs.query,
-					EMOJI_ID_CLYDE_BLURPLE,
-					'discord',
-					castArgs.mention,
-					castArgs.hide,
-				);
+				await mintlifyResponse(res, castArgs.query, castArgs.mention, castArgs.hide);
 				break;
 			}
 

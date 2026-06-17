@@ -1,8 +1,13 @@
 import { bold, hyperlink, inlineCode, subtext } from '@discordjs/builders';
 import type { Response } from 'polka';
 import { EMOJI_ID_GUIDE } from '../util/constants.js';
-import { findRelevantDocsSection } from '../util/discordDocs.js';
-import { noCodeLines, resolveResourceFromGuideUrl } from '../util/djsguide.js';
+import {
+	SectionPartType,
+	findRelevantDocsSection,
+	parseGithubDocsSections,
+	sectionPartToText,
+} from '../util/discordDocs.js';
+import { resolveResourceFromGuideUrl } from '../util/djsguide.js';
 import { logger } from '../util/logger.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 
@@ -56,12 +61,16 @@ export async function oramaResponse(res: Response, resultUrl: string, user?: str
 		return res;
 	}
 
-	const section = findRelevantDocsSection(`#${parsed.anchor ?? parsed.endpoint}`, docsContents, !parsed.anchor);
+	const sections = parseGithubDocsSections(docsContents.split(/\n+/));
+	const anchor = `#${parsed.anchor ?? parsed.endpoint}`;
+	const section = findRelevantDocsSection(sections, anchor, !parsed.anchor);
 
 	const title = section?.headline ?? parsed.endpoint ?? 'discord.js guide';
 	contentParts.push(`<:guide:${EMOJI_ID_GUIDE}> ${hyperlink(bold(title), parsed.guideUrl)}`);
 
-	const relevantLines = noCodeLines(section?.lines ?? []);
+	const relevantLines =
+		section?.parts.filter((part) => part.type === SectionPartType.Text).map((part) => sectionPartToText(part)) ?? [];
+
 	if (relevantLines.length) {
 		const descriptionParts = [];
 		let descriptionLength = 0;
