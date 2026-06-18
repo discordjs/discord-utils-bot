@@ -43,7 +43,17 @@ function parseTagShape(data: string) {
 }
 
 export async function testTagModalSubmit(res: Response, message: APIModalSubmitInteraction) {
-	const tagData = message.data.components?.[0].components[0];
+	const firstRow = message.data.components[0];
+
+	if (firstRow.type !== ComponentType.ActionRow) {
+		prepareErrorResponse(
+			res,
+			'Tag format looks different than expected. Make sure to include the tag name and keywords and review our [guidelines and examples](https://github.com/discordjs/discord-utils-bot).',
+		);
+		return res;
+	}
+
+	const tagData = firstRow.components[0];
 	if (!tagData) {
 		prepareErrorResponse(
 			res,
