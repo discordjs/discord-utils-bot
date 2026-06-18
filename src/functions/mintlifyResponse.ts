@@ -44,7 +44,7 @@ export async function mintlifyResponse(
 
 	const headlineSuffix = routeElement ? sectionPartToText(routeElement) : null;
 
-	const headline = `### <:discorddocs:${EMOJI_ID_CLYDE_BLURPLE}> ${bold(hyperlink(`${relevantSection.headline} ${EXTERNAL_LINK}`, `${DISCORD_DOCS_BASE}/${hit}`))}${headlineSuffix ? ` ${headlineSuffix}` : ''}`;
+	const headline = `### <:discorddocs:${EMOJI_ID_CLYDE_BLURPLE}> ${bold(hyperlink(`${relevantSection.headline} ${EXTERNAL_LINK}`, `${DISCORD_DOCS_BASE}/${hit}`))}${headlineSuffix ? `   ${headlineSuffix}` : ''}`;
 	const contentParts = [headline];
 
 	let totalLength = headline.length + SUGGESTION_PREFIX_ALLOWANCE;
