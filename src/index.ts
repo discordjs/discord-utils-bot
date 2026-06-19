@@ -17,12 +17,17 @@ import type { MDNIndexEntry } from './types/mdn.js';
 import { API_BASE_MDN, PREFIX_TEAPOT, PREFIX_BUG } from './util/constants.js';
 import { reloadDjsVersions } from './util/djsdocs.js';
 import { jsonParser } from './util/jsonParser.js';
-import { logger } from './util/logger.js';
+import { isValidLogLevel, logger } from './util/logger.js';
 import { prepareAck, prepareResponse } from './util/respond.js';
 
-if (process.env.ENVIRONMENT === 'debug') {
-	logger.level = 'debug';
-	logger.debug('=== DEBUG LOGGING ENABLED ===');
+const logLevel = process.env.LOGLEVEL;
+if (logLevel) {
+	if (!isValidLogLevel(logLevel)) {
+		throw new Error(`Invalid log level ${logLevel}.`);
+	}
+
+	logger.debug(`===== LOG LEVEL OVERRIDE: ${logLevel} =====`);
+	logger.level = logLevel;
 }
 
 const { subtle } = webcrypto;
@@ -104,7 +109,9 @@ export async function start() {
 						break;
 
 					default:
-						prepareResponse(res, `${PREFIX_TEAPOT} This shouldn't be here...`, { ephemeral: true });
+						prepareResponse(res, `${PREFIX_TEAPOT} This shouldn't be here...`, {
+							ephemeral: true,
+						});
 				}
 			} catch (error) {
 				logger.error(error as Error);
