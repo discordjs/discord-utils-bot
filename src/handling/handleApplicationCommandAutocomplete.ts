@@ -4,6 +4,7 @@ import type { APIApplicationCommandAutocompleteInteraction } from 'discord-api-t
 import type { Response } from 'polka';
 import { algoliaAutoComplete } from '../functions/autocomplete/algoliaAutoComplete.js';
 import { djsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
+import { zendeskAutocomplete } from '../functions/autocomplete/helpdeskAutoComplete.js';
 import { mdnAutoComplete } from '../functions/autocomplete/mdnAutoComplete.js';
 import { mintlifyAutocomplete } from '../functions/autocomplete/mintlifyAutoComplete.js';
 import { nodeAutoComplete } from '../functions/autocomplete/nodeAutoComplete.js';
@@ -11,13 +12,15 @@ import { oramaAutocomplete } from '../functions/autocomplete/oramaAutoComplete.j
 import { tagAutoComplete } from '../functions/autocomplete/tagAutoComplete.js';
 import type { Tag } from '../functions/tag.js';
 import type { DiscordDocsCommand } from '../interactions/discorddocs.js';
+import type { DiscordHelpdeskCommand } from '../interactions/discordhelpdesk.js';
 import type { DTypesCommand } from '../interactions/discordtypes.js';
 import type { GuideCommand } from '../interactions/guide.js';
 import type { NodeCommand } from '../interactions/node.js';
 import type { MDNIndexEntry } from '../types/mdn.js';
 import { transformInteraction } from '../util/interactionOptions.js';
+import { logger } from '../util/logger.js';
 
-type CommandAutoCompleteName = 'discorddocs' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'node' | 'tag';
+type CommandAutoCompleteName = 'discorddocs' | 'discordhelpdesk' | 'docs' | 'dtypes' | 'guide' | 'mdn' | 'node' | 'tag';
 
 export async function handleApplicationCommandAutocomplete(
 	res: Response,
@@ -27,6 +30,9 @@ export async function handleApplicationCommandAutocomplete(
 ) {
 	const data = message.data;
 	const name = data.name as CommandAutoCompleteName;
+
+	logger.debug(`Received autocomplete interaction ${name}`);
+
 	switch (name) {
 		case 'node': {
 			const args = transformInteraction<typeof NodeCommand>(data.options);
@@ -53,6 +59,14 @@ export async function handleApplicationCommandAutocomplete(
 		case 'discorddocs': {
 			const args = transformInteraction<typeof DiscordDocsCommand>(data.options);
 			await mintlifyAutocomplete(res, args.query);
+			break;
+		}
+
+		case 'discordhelpdesk': {
+			const args = transformInteraction<typeof DiscordHelpdeskCommand>(data.options);
+			const query = args.developer?.query ?? args.general?.query;
+
+			await zendeskAutocomplete(res, query, Boolean(args.developer));
 			break;
 		}
 

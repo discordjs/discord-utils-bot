@@ -7,6 +7,7 @@ import { deploy } from '../deployFunctions/deploy.js';
 import { algoliaResponse } from '../functions/algoliaResponse.js';
 import { resolveOptionsToDocsAutoComplete } from '../functions/autocomplete/docsAutoComplete.js';
 import { djsDocs } from '../functions/docs.js';
+import { helpdeskResponse } from '../functions/helpdeskResponse.js';
 import { mdnSearch } from '../functions/mdn.js';
 import { mintlifyResponse } from '../functions/mintlifyResponse.js';
 import { nodeAutoCompleteResolve } from '../functions/node.js';
@@ -15,6 +16,7 @@ import type { Tag } from '../functions/tag.js';
 import { showTag, reloadTags } from '../functions/tag.js';
 import { testTag } from '../functions/testtag.js';
 import { DiscordDocsCommand } from '../interactions/discorddocs.js';
+import type { DiscordHelpdeskCommand } from '../interactions/discordhelpdesk.js';
 import { DTypesCommand } from '../interactions/discordtypes.js';
 import { buildDocsCommand } from '../interactions/docs.js';
 import { GuideCommand } from '../interactions/guide.js';
@@ -41,6 +43,7 @@ const staticGlobalCommands = [
 
 type CommandName =
 	| 'discorddocs'
+	| 'discordhelpdesk'
 	| 'docs'
 	| 'dtypes'
 	| 'guide'
@@ -78,6 +81,13 @@ export async function handleApplicationCommand(
 			case 'discorddocs': {
 				const castArgs = args as ArgumentsOf<typeof DiscordDocsCommand>;
 				await mintlifyResponse(res, castArgs.query, castArgs.mention, castArgs.hide);
+				break;
+			}
+
+			case 'discordhelpdesk': {
+				const castArgs = args as ArgumentsOf<typeof DiscordHelpdeskCommand>;
+				const sub = castArgs.general ?? castArgs.developer;
+				await helpdeskResponse(res, sub.query, Boolean(castArgs.developer), sub.mention, sub.hide);
 				break;
 			}
 

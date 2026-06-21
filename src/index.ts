@@ -21,12 +21,15 @@ import { isValidLogLevel, logger } from './util/logger.js';
 import { prepareAck, prepareResponse } from './util/respond.js';
 
 const logLevel = process.env.LOGLEVEL;
+
 if (logLevel) {
 	if (!isValidLogLevel(logLevel)) {
 		throw new Error(`Invalid log level ${logLevel}.`);
 	}
 
-	logger.debug(`===== LOG LEVEL OVERRIDE: ${logLevel} =====`);
+	// make sure this info gets emitted
+	logger.level = 'info';
+	logger.info(`===== LOG LEVEL OVERRIDE: ${logLevel} =====`);
 	logger.level = logLevel;
 }
 

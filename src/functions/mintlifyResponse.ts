@@ -1,12 +1,16 @@
 import { bold, hyperlink, inlineCode } from '@discordjs/builders';
 import type { Response } from 'polka';
-import { DISCORD_DOCS_BASE, EMOJI_ID_CLYDE_BLURPLE, EXTERNAL_LINK, MAX_MESSAGE_LENGTH } from '../util/constants.js';
+import {
+	DISCORD_DOCS_BASE,
+	EMOJI_ID_CLYDE_BLURPLE,
+	EXTERNAL_LINK,
+	MAX_MESSAGE_LENGTH,
+	SUGGESTION_PREFIX_ALLOWANCE,
+} from '../util/constants.js';
 import { SectionPartType, fetchDocsBody, sectionPartToText } from '../util/discordDocs.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 import { discordDocsResultCache, mintlifyDocsPath, mintlifyQuery } from './autocomplete/mintlifyAutoComplete.js';
-
-const SUGGESTION_PREFIX_ALLOWANCE = 55;
 
 export async function fallbackResult(query: string) {
 	const res = await mintlifyQuery(query);

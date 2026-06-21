@@ -1,4 +1,4 @@
-import { hyperlink, inlineCode } from '@discordjs/builders';
+import { hyperlink, inlineCode, quote } from '@discordjs/builders';
 import { DISCORD_DOCS_BASE, EMOJI_ID_ROUTE } from './constants.js';
 import { logger } from './logger.js';
 
@@ -22,7 +22,6 @@ function cleanLine(line: string) {
 }
 
 const IGNORE_LINE_PREFIXES = [
-	'>', // quotes
 	'---', // page meta delimiter + horizontal rule
 	'|', // tables
 	'!', // imports
@@ -33,7 +32,7 @@ const IGNORE_LINE_PREFIXES = [
 ];
 
 export enum SectionPartType {
-	Text = 0,
+	Text = 1,
 	Admonition,
 	Table,
 	Code,
@@ -42,7 +41,20 @@ export enum SectionPartType {
 	Route,
 }
 
+export enum AdmonitionType {
+	Note = 1,
+	Tip,
+	Important,
+	Warning,
+	Caution,
+}
+
 type SectionPart =
+	| {
+			admonitionType: AdmonitionType;
+			lines: string[];
+			type: SectionPartType.Admonition;
+	  }
 	| {
 			language?: string;
 			lines: string[];
@@ -50,12 +62,7 @@ type SectionPart =
 	  }
 	| {
 			lines: string[];
-			type:
-				| SectionPartType.Admonition
-				| SectionPartType.Preamble
-				| SectionPartType.Quote
-				| SectionPartType.Table
-				| SectionPartType.Text;
+			type: SectionPartType.Preamble | SectionPartType.Quote | SectionPartType.Table | SectionPartType.Text;
 	  }
 	| {
 			path: string;
@@ -65,24 +72,54 @@ type SectionPart =
 
 type Section = {
 	headline: string;
+	linkAnchor?: string;
 	parts: SectionPart[];
 };
 
+function resolveAdmonitionType(text: string) {
+	switch (text.toLowerCase()) {
+		case 'note':
+		case 'info':
+			return AdmonitionType.Note;
+		case 'tip':
+			return AdmonitionType.Tip;
+		case 'important':
+			return AdmonitionType.Important;
+		case 'warning':
+		case 'warn':
+			return AdmonitionType.Warning;
+		case 'caution':
+		case 'danger':
+			return AdmonitionType.Caution;
+	}
+
+	return AdmonitionType.Note;
+}
+
 const ADMONITION_TYPES = ['Danger', 'Warning', 'Info'];
+
+export function parseGithubStyleAdmonitionPrefix(text: string) {
+	const label = /^> \[!(?<label>.*?)]/.exec(text)?.groups?.label;
+	if (label) {
+		return resolveAdmonitionType(label);
+	}
+}
 
 export function parseGithubDocsSections(inLines: string[]) {
 	const sections: Section[] = [];
 	let parts: SectionPart[] = [];
 
 	let headline = '';
+	let headlineAnchor: string | undefined;
 
 	let withinPreamble = false;
-	let withinAdmonition = false;
 	let withinComponent = false;
 	let withinTable = false;
 	let withinQuote = false;
 	let withinCodeBlock = false;
 	let codeLang = '';
+	let docsAdmonitionType: AdmonitionType | undefined;
+	let githubAdmonitionType: AdmonitionType | undefined;
 
 	let lines: string[] = [];
 	const flushToText = () => {
@@ -122,7 +159,7 @@ export function parseGithubDocsSections(inLines: string[]) {
 
 		if (withinPreamble && line.startsWith('title:')) {
 			// manually assign title based on page meta
-			const titleName = line.replace('title: ', '');
+			const titleName = line.replace('title: ', '').replaceAll('*', '');
 			headline = titleName;
 		}
 
@@ -132,15 +169,38 @@ export function parseGithubDocsSections(inLines: string[]) {
 		});
 
 		if (isAdmonitionDelimiter) {
-			if (withinAdmonition) {
-				parts.push({ lines, type: SectionPartType.Admonition });
+			if (docsAdmonitionType) {
+				parts.push({
+					lines,
+					type: SectionPartType.Admonition,
+					admonitionType: docsAdmonitionType,
+				});
+				docsAdmonitionType = undefined;
 				lines = [];
 			} else {
+				const parsedType = /<\/(?<label>.*?)>/.exec(line)?.groups?.label;
 				flushToText();
+				docsAdmonitionType = parsedType ? resolveAdmonitionType(parsedType.toLowerCase()) : AdmonitionType.Note;
 			}
 
-			withinAdmonition = !withinAdmonition;
 			continue;
+		}
+
+		// GitHub-style quote-admonitions
+		if (line.startsWith('> [!')) {
+			flushToText();
+			githubAdmonitionType = parseGithubStyleAdmonitionPrefix(line);
+			continue;
+		}
+
+		if (!line.startsWith('>') && githubAdmonitionType) {
+			parts.push({
+				lines,
+				type: SectionPartType.Admonition,
+				admonitionType: githubAdmonitionType,
+			});
+			lines = [];
+			githubAdmonitionType = undefined;
 		}
 
 		// Code
@@ -159,8 +219,13 @@ export function parseGithubDocsSections(inLines: string[]) {
 
 		// Quotes
 		if (line.startsWith('>')) {
-			withinQuote = true;
-			flushToText();
+			if (!withinCodeBlock && !githubAdmonitionType) {
+				if (!withinQuote) {
+					flushToText();
+				}
+
+				withinQuote = true;
+			}
 		} else if (withinQuote) {
 			parts.push({ lines, type: SectionPartType.Quote });
 			lines = [];
@@ -175,9 +240,10 @@ export function parseGithubDocsSections(inLines: string[]) {
 		} else if (withinTable) {
 			parts.push({ lines, type: SectionPartType.Table });
 			lines = [];
-
 			withinTable = false;
 		}
+
+		// TODO: consider image section
 
 		// Route
 		if (line.startsWith('<Route')) {
@@ -212,6 +278,7 @@ export function parseGithubDocsSections(inLines: string[]) {
 		}
 
 		if (withinComponent) {
+			// ignore TSX components
 			continue;
 		}
 
@@ -225,6 +292,7 @@ export function parseGithubDocsSections(inLines: string[]) {
 
 				// already have title, new section
 				sections.push({
+					linkAnchor: headlineAnchor,
 					headline,
 					parts,
 				});
@@ -232,8 +300,13 @@ export function parseGithubDocsSections(inLines: string[]) {
 				parts = [];
 			}
 
+			const anchorMatch = /\[(?<label>.*)]\((?<link>.*)\)/.exec(line.trim());
+			if (anchorMatch?.groups?.link) {
+				headlineAnchor = anchorMatch.groups.link;
+			}
+
 			// set headline
-			headline = cleanedLine.replace(/^#+ ?/, '').replaceAll(/[()]/g, '');
+			headline = cleanedLine.replace(/^#+ ?/, '').replaceAll(/[()]/g, '').replace(/^\*+/, '').replace(/\*+$/, '');
 
 			continue;
 		}
@@ -249,38 +322,55 @@ export function parseGithubDocsSections(inLines: string[]) {
 			if (withinCodeBlock) {
 				lines.push(line);
 			} else {
-				lines.push(cleanedLine);
+				const trimmed = cleanedLine.trim();
+				const quoteTrimmed = trimmed.startsWith('>') ? trimmed.slice(1).trim() : trimmed;
+
+				if (quoteTrimmed.length > 0) {
+					lines.push(quoteTrimmed);
+				}
 			}
 		}
 	}
 
 	if (lines.length) {
 		const firstLine = lines.at(0);
-		if (firstLine?.startsWith('>')) {
-			parts.push({ lines, type: SectionPartType.Quote });
+		if (firstLine) {
+			if (firstLine?.startsWith('> [!')) {
+				const admonitionType = parseGithubStyleAdmonitionPrefix(firstLine);
+				if (admonitionType)
+					parts.push({
+						lines,
+						type: SectionPartType.Admonition,
+						admonitionType,
+					});
+			} else if (firstLine?.startsWith('>')) {
+				parts.push({ lines, type: SectionPartType.Quote });
+			} else if (firstLine?.startsWith('|')) {
+				parts.push({ lines, type: SectionPartType.Table });
+			} else {
+				flushToText();
+			}
 		}
-
-		if (firstLine?.startsWith('|')) {
-			parts.push({ lines, type: SectionPartType.Table });
-		}
-
-		flushToText();
 	}
 
 	if (parts.length) {
-		sections.push({ headline, parts });
+		sections.push({ headline, parts, linkAnchor: headlineAnchor });
 	}
 
 	return sections;
 }
 
 export function sectionPartToText(part: SectionPart) {
+	if (part.type === SectionPartType.Quote) {
+		return part.lines.map((line) => quote(line)).join('\n');
+	}
+
 	if (part.type === SectionPartType.Route) {
 		return `<:route:${EMOJI_ID_ROUTE}> ${inlineCode(part.verb)} ${part.path}`;
 	}
 
 	if (part.type === SectionPartType.Admonition) {
-		const prefixed = part.lines.map((line) => `> ${line}`);
+		const prefixed = part.lines.map((line) => quote(line));
 		return prefixed.join('\n');
 	}
 
@@ -309,6 +399,51 @@ export function findRelevantDocsSection(sections: Section[], query: string, defa
 
 	if (defaultFirst && sections.length > 0) {
 		return sections[0];
+	}
+}
+
+export function findRelevantDocsSectionFuzzy(sections: Section[], query: string, defaultFirst = false) {
+	const lowerQuery = query.trim().toLowerCase();
+	const headingMatches = [];
+	const contentMatches = [];
+	const sectionsWithContent = [];
+
+	if (lowerQuery.length > 0) {
+		for (const section of sections) {
+			const headline = section.headline.trim().toLowerCase().replace(/^#+/, '');
+			const sectionHasContent = section.parts.some(
+				(part) => part.type !== SectionPartType.Preamble && part.type !== SectionPartType.Table,
+			);
+
+			if (!sectionHasContent) {
+				continue;
+			}
+
+			sectionsWithContent.push(section);
+
+			if (lowerQuery === headline) return section;
+
+			if (headline.includes(lowerQuery)) {
+				headingMatches.push(section);
+			}
+
+			for (const part of section.parts) {
+				const content = sectionPartToText(part);
+				if (content.includes(lowerQuery)) {
+					contentMatches.push(section);
+				}
+			}
+		}
+	}
+
+	const otherMatches = [...headingMatches, ...contentMatches];
+
+	if (otherMatches.length > 0) {
+		return otherMatches[0];
+	}
+
+	if (defaultFirst && sections.length > 0) {
+		return sectionsWithContent[0] ?? sections[0];
 	}
 }
 

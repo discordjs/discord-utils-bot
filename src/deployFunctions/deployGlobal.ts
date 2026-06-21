@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { DiscordDocsCommand } from '../interactions/discorddocs.js';
+import { DiscordHelpdeskCommand } from '../interactions/discordhelpdesk.js';
 import { DTypesCommand } from '../interactions/discordtypes.js';
 import { DocsCommand } from '../interactions/docs.js';
 import { GuideCommand } from '../interactions/guide.js';
@@ -17,6 +18,7 @@ const staticGlobalCommands = [
 	TagCommand,
 	TestTagCommand,
 	DTypesCommand,
+	DiscordHelpdeskCommand,
 ];
 
 void deploy([...staticGlobalCommands, DocsCommand]);

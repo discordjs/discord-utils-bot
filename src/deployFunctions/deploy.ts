@@ -4,12 +4,14 @@ import { API_BASE_DISCORD } from '../util/constants.js';
 import { logger } from '../util/logger.js';
 import { PreReleaseApplicationCommandContextType, PreReleaseApplicationIntegrationType } from './auxtypes.js';
 
+const clientId = process.env.DISCORD_CLIENT_ID;
+
 export async function deploy(data: any, dev = false) {
 	const midRoute = dev ? `/guilds/${process.env.DISCORD_DEVGUILD_ID!}` : '';
 	const route = `${API_BASE_DISCORD}/applications/${process.env.DISCORD_CLIENT_ID!}${midRoute}/commands`;
 
 	try {
-		logger.info(`Starting update on route ${route}`);
+		logger.info(`Starting update on route ${route} for app ${clientId}`);
 		const res = await fetch(route, {
 			headers: {
 				'Content-Type': 'application/json',
