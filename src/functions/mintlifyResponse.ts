@@ -2,7 +2,7 @@ import { bold, hyperlink, inlineCode } from '@discordjs/builders';
 import type { Response } from 'polka';
 import {
 	DISCORD_DOCS_BASE,
-	EMOJI_ID_CLYDE_BLURPLE,
+	EMOJI_ID_GEAR_BLURPLE,
 	EXTERNAL_LINK,
 	MAX_MESSAGE_LENGTH,
 	SUGGESTION_PREFIX_ALLOWANCE,
@@ -17,7 +17,6 @@ export async function fallbackResult(query: string) {
 
 	if (res?.results.length > 0) {
 		const first = res.results[0];
-
 		return mintlifyDocsPath(first);
 	}
 
@@ -48,7 +47,7 @@ export async function mintlifyResponse(
 
 	const headlineSuffix = routeElement ? sectionPartToText(routeElement) : null;
 
-	const headline = `### <:discorddocs:${EMOJI_ID_CLYDE_BLURPLE}> ${bold(hyperlink(`${relevantSection.headline} ${EXTERNAL_LINK}`, `${DISCORD_DOCS_BASE}/${hit}`))}${headlineSuffix ? `   ${headlineSuffix}` : ''}`;
+	const headline = `### <:discorddocs:${EMOJI_ID_GEAR_BLURPLE}> ${bold(hyperlink(`${relevantSection.headline} ${EXTERNAL_LINK}`, `${DISCORD_DOCS_BASE}/${hit}`))}${headlineSuffix ? `   ${headlineSuffix}` : ''}`;
 	const contentParts = [headline];
 
 	let totalLength = headline.length + SUGGESTION_PREFIX_ALLOWANCE;

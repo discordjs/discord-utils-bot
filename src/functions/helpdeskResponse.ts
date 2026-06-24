@@ -7,6 +7,7 @@ import {
 	DJS_QUERY_SEPARATOR,
 	DOT,
 	EMOJI_ID_CLYDE_BLURPLE,
+	EMOJI_ID_GEAR_BLURPLE,
 	EXTERNAL_LINK,
 	MAX_MESSAGE_LENGTH,
 	SUGGESTION_PREFIX_ALLOWANCE,
@@ -93,7 +94,8 @@ export async function helpdeskResponse(
 		return res;
 	}
 
-	const headlinePrefix = `### <:discorddocs:${EMOJI_ID_CLYDE_BLURPLE}>`;
+	const emoji = isDev ? `<:developers:${EMOJI_ID_GEAR_BLURPLE}>` : `<:discord:${EMOJI_ID_CLYDE_BLURPLE}>`;
+	const headlinePrefix = heading(emoji, HeadingLevel.Three);
 	const hasSameSiteLinkAnchor = relevantSection.linkAnchor?.startsWith('#');
 	const healineLinkUrl = hasSameSiteLinkAnchor ? `${article.html_url}${relevantSection.linkAnchor}` : article.html_url;
 	const headlineLinkLabel = hasSameSiteLinkAnchor ? `${article.name} ${DOT} ${relevantSection.headline}` : article.name;
