@@ -53,7 +53,11 @@ export async function mintlifyResponse(
 
 	let totalLength = headline.length + SUGGESTION_PREFIX_ALLOWANCE;
 	for (const part of relevantSection.parts) {
-		if (part.type === SectionPartType.Route || part.type === SectionPartType.Preamble) {
+		if (
+			part.type === SectionPartType.Route ||
+			part.type === SectionPartType.Preamble ||
+			part.type === SectionPartType.Image
+		) {
 			continue;
 		}
 

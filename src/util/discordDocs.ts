@@ -39,6 +39,7 @@ export enum SectionPartType {
 	Preamble,
 	Quote,
 	Route,
+	Image,
 }
 
 export enum AdmonitionType {
@@ -54,6 +55,11 @@ type SectionPart =
 			admonitionType: AdmonitionType;
 			lines: string[];
 			type: SectionPartType.Admonition;
+	  }
+	| {
+			alt?: string;
+			type: SectionPartType.Image;
+			url: string;
 	  }
 	| {
 			language?: string;
@@ -243,7 +249,16 @@ export function parseGithubDocsSections(inLines: string[]) {
 			withinTable = false;
 		}
 
-		// TODO: consider image section
+		// Images
+		const imageMatch = /!\[(?<label>.*)]\((?<url>.*)\)/.exec(line);
+		if (imageMatch?.groups?.url) {
+			parts.push({
+				type: SectionPartType.Image,
+				url: imageMatch.groups.url,
+				alt: imageMatch.groups.label,
+			});
+			continue;
+		}
 
 		// Route
 		if (line.startsWith('<Route')) {
@@ -378,7 +393,11 @@ export function sectionPartToText(part: SectionPart) {
 		return `\`\`\`${part.language ?? ''}\n${part.lines.join('\n')}\`\`\``;
 	}
 
-	return part.lines.join('\n');
+	if ('lines' in part) {
+		return part.lines.join('\n');
+	}
+
+	return '';
 }
 
 function formatAnchor(text: string) {

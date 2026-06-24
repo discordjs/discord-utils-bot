@@ -4,10 +4,6 @@ export const helpdeskTurndownService = new TurndownService({
 	codeBlockStyle: 'fenced',
 	headingStyle: 'atx',
 })
-	.addRule('undesirable', {
-		filter: ['img'],
-		replacement: () => '',
-	})
 	.addRule('remove toc', {
 		filter: (node) => {
 			return node.nodeName === 'DIV' && node.classList.contains('toc-box');
