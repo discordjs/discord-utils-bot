@@ -398,8 +398,20 @@ export function sectionPartToText(part: SectionPart) {
 	}
 
 	if (part.type === SectionPartType.Admonition) {
-		const prefixed = part.lines.map((line) => quote(line));
-		return prefixed.join('\n');
+		const prefixedLines = [];
+		let first = true;
+		for (const line of part.lines) {
+			if (first) {
+				prefixedLines.push(quote(`${inlineCode(admonitionEmoji(part.admonitionType))} ${line}`));
+
+				first = false;
+				continue;
+			}
+
+			prefixedLines.push(quote(line));
+		}
+
+		return prefixedLines.join('\n');
 	}
 
 	if (part.type === SectionPartType.Code) {
@@ -431,6 +443,14 @@ export function findRelevantDocsSection(sections: Section[], query: string, defa
 
 	if (defaultFirst && sections.length > 0) {
 		return sections[0];
+	}
+}
+
+export function findSectionFromAnchor(sections: Section[], anchor: string) {
+	for (const section of sections) {
+		if (anchor === section.linkAnchor) {
+			return section;
+		}
 	}
 }
 

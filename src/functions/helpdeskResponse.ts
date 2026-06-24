@@ -1,4 +1,4 @@
-import { hyperlink, inlineCode } from '@discordjs/builders';
+import { HeadingLevel, heading, hyperlink, inlineCode } from '@discordjs/builders';
 import type { Response } from 'polka';
 import type { ZendeskArticle, ZendeskEntity } from '../types/zendesk';
 import {
@@ -15,6 +15,7 @@ import {
 import {
 	SectionPartType,
 	findRelevantDocsSectionFuzzy,
+	findSectionFromAnchor,
 	parseGithubDocsSections,
 	sectionPartToText,
 } from '../util/discordDocs.js';
@@ -42,6 +43,15 @@ async function fetchHelpdeskArticle(id: number, autocompleteTimestamp: number, d
 			);
 			return hit;
 		}
+
+		logger.debug(
+			{
+				id,
+				autocompleteTimestamp,
+				dev,
+			},
+			`cache hit but outdated for support article ${id}. refreshing...`,
+		);
 	}
 
 	const base = dev ? DISCORD_HELPDESK_DEV_ARTICLES_BASE : DISCORD_HELPDESK_ARTICLES_BASE;
@@ -61,12 +71,13 @@ export async function helpdeskResponse(
 	ephemeral?: boolean,
 	secondAttempt = false,
 ) {
-	const [articleId, timestampString, ...originalQuery] = query.split(DJS_QUERY_SEPARATOR);
+	const [articleId, timestampString, ...originalQueryParts] = query.split(DJS_QUERY_SEPARATOR);
+	const originalQuery = originalQueryParts.join(DJS_QUERY_SEPARATOR);
 
 	const numberId = Number.parseInt(articleId, 10);
 	if (Number.isNaN(numberId)) {
 		if (secondAttempt) {
-			prepareErrorResponse(res, `No documentation found for ${inlineCode(originalQuery.join(DJS_QUERY_SEPARATOR))}.`);
+			prepareErrorResponse(res, `No documentation found for ${inlineCode(originalQuery)}.`);
 			return res;
 		}
 
@@ -87,10 +98,13 @@ export async function helpdeskResponse(
 	const bodyParts = ['---', `title: ${article.title}`, '---', ...turnedDown.split(/\n+/)];
 
 	const parsedSections = parseGithubDocsSections(bodyParts);
-	const relevantSection = findRelevantDocsSectionFuzzy(parsedSections, originalQuery.join(DJS_QUERY_SEPARATOR), true);
+
+	const relevantSection = originalQuery.startsWith('#h')
+		? findSectionFromAnchor(parsedSections, originalQuery)
+		: findRelevantDocsSectionFuzzy(parsedSections, originalQuery, true);
 
 	if (!relevantSection) {
-		prepareErrorResponse(res, `No documentation found for ${inlineCode(query)}.`);
+		prepareErrorResponse(res, `No documentation found for ${inlineCode(originalQuery)}.`);
 		return res;
 	}
 

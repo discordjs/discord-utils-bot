@@ -9,6 +9,8 @@ import {
 	DISCORD_HELPDESK_DEV_BASE,
 	DJS_QUERY_SEPARATOR,
 } from '../../util/constants.js';
+import { findRelevantDocsSectionFuzzy, parseGithubDocsSections } from '../../util/discordDocs.js';
+import { helpdeskTurndownService } from '../../util/helpdeskturndown.js';
 import { prepareHeader } from '../../util/respond.js';
 import { truncate } from '../../util/truncate.js';
 
@@ -19,13 +21,28 @@ export function zendeskAutocompleteValue(article: ZendeskSearchResult, query: st
 	return `${prefix}${query.slice(0, AUTOCOMPLETE_MAX_NAME_LENGTH - prefix.length)}`;
 }
 
-function autocompleteMap(elements: ZendeskSearchResult[], query: string) {
-	return elements.map((entry) => {
-		return {
+function autocompleteMap(searchResults: ZendeskSearchResult[], query: string) {
+	const res = [];
+
+	for (const entry of searchResults) {
+		const mdParsed = helpdeskTurndownService.turndown(entry.body);
+		const parsedSections = parseGithubDocsSections(mdParsed.split(/\n+/));
+		const relevant = findRelevantDocsSectionFuzzy(parsedSections, query, false);
+
+		if (relevant?.linkAnchor) {
+			res.push({
+				name: truncate(`${entry.title} | ${relevant.headline}`, AUTOCOMPLETE_MAX_NAME_LENGTH),
+				value: zendeskAutocompleteValue(entry, relevant.linkAnchor),
+			});
+		}
+
+		res.push({
 			name: truncate(entry.title, AUTOCOMPLETE_MAX_NAME_LENGTH),
 			value: zendeskAutocompleteValue(entry, query),
-		};
-	});
+		});
+	}
+
+	return res.slice(0, AUTOCOMPLETE_MAX_ITEMS);
 }
 
 export async function zendeskQuery(query: string, developer = false) {
