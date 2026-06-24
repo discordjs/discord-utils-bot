@@ -184,9 +184,8 @@ export function parseGithubDocsSections(inLines: string[]) {
 				docsAdmonitionType = undefined;
 				lines = [];
 			} else {
-				const parsedType = /<\/(?<label>.*?)>/.exec(line)?.groups?.label;
 				flushToText();
-				docsAdmonitionType = parsedType ? resolveAdmonitionType(parsedType.toLowerCase()) : AdmonitionType.Note;
+				docsAdmonitionType = resolveAdmonitionType(line.slice(1, -1));
 			}
 
 			continue;
@@ -373,6 +372,20 @@ export function parseGithubDocsSections(inLines: string[]) {
 	}
 
 	return sections;
+}
+
+function admonitionEmoji(admonitionType: AdmonitionType) {
+	switch (admonitionType) {
+		case AdmonitionType.Note:
+			return 'ℹ️';
+		case AdmonitionType.Caution:
+		case AdmonitionType.Warning:
+			return '⚠️';
+		case AdmonitionType.Tip:
+			return '✏️';
+		case AdmonitionType.Important:
+			return '‼️';
+	}
 }
 
 export function sectionPartToText(part: SectionPart) {
