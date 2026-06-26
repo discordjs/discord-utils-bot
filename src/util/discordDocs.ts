@@ -1,5 +1,5 @@
-import { hyperlink, inlineCode, quote } from '@discordjs/builders';
-import { DISCORD_DOCS_BASE, EMOJI_ID_ROUTE } from './constants.js';
+import { bold, hyperlink, inlineCode, quote, subtext } from '@discordjs/builders';
+import { DISCORD_DOCS_BASE, EMOJI_ID_ROUTE, MAX_MESSAGE_LENGTH } from './constants.js';
 import { logger } from './logger.js';
 
 export function resolveResourceFromDocsURL(path: string) {
@@ -50,7 +50,7 @@ export enum AdmonitionType {
 	Caution,
 }
 
-type SectionPart =
+export type SectionPart =
 	| {
 			admonitionType: AdmonitionType;
 			lines: string[];
@@ -192,7 +192,7 @@ export function parseGithubDocsSections(inLines: string[]) {
 		}
 
 		// GitHub-style quote-admonitions
-		if (line.startsWith('> [!')) {
+		if (line.startsWith('> [!') && !githubAdmonitionType && !docsAdmonitionType) {
 			flushToText();
 			githubAdmonitionType = parseGithubStyleAdmonitionPrefix(line);
 			continue;
@@ -209,7 +209,7 @@ export function parseGithubDocsSections(inLines: string[]) {
 		}
 
 		// Code
-		if (line.startsWith('```')) {
+		if (line.startsWith('```') && !githubAdmonitionType && !docsAdmonitionType) {
 			if (withinCodeBlock) {
 				parts.push({ lines, type: SectionPartType.Code, language: codeLang });
 				lines = [];
@@ -402,13 +402,13 @@ export function sectionPartToText(part: SectionPart) {
 		let first = true;
 		for (const line of part.lines) {
 			if (first) {
-				prefixedLines.push(quote(`${inlineCode(admonitionEmoji(part.admonitionType))} ${line}`));
+				prefixedLines.push(subtext(`${inlineCode(admonitionEmoji(part.admonitionType))} ${line}`));
 
 				first = false;
 				continue;
 			}
 
-			prefixedLines.push(quote(line));
+			prefixedLines.push(subtext(line));
 		}
 
 		return prefixedLines.join('\n');
@@ -423,6 +423,32 @@ export function sectionPartToText(part: SectionPart) {
 	}
 
 	return '';
+}
+
+export function sectionToText(
+	section: Section,
+	occupiedLength: number,
+	settings?: {
+		maxLength?: number;
+		partPredicate?(p1: SectionPart): boolean;
+	},
+) {
+	const contentParts = [];
+	let currentLength = occupiedLength;
+	for (const part of section.parts) {
+		if (settings?.partPredicate?.(part) ?? true) {
+			const text = sectionPartToText(part);
+			currentLength += text.length + 1;
+
+			if (currentLength > (settings?.maxLength ?? MAX_MESSAGE_LENGTH)) {
+				break;
+			}
+
+			contentParts.push(text);
+		}
+	}
+
+	return contentParts.join('\n');
 }
 
 function formatAnchor(text: string) {

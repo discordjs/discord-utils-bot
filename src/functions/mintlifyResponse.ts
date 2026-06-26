@@ -7,7 +7,7 @@ import {
 	MAX_MESSAGE_LENGTH,
 	SUGGESTION_PREFIX_ALLOWANCE,
 } from '../util/constants.js';
-import { SectionPartType, fetchDocsBody, sectionPartToText } from '../util/discordDocs.js';
+import { SectionPartType, fetchDocsBody, sectionPartToText, sectionToText } from '../util/discordDocs.js';
 import { prepareErrorResponse, prepareResponse } from '../util/respond.js';
 import { truncate } from '../util/truncate.js';
 import { discordDocsResultCache, mintlifyDocsPath, mintlifyQuery } from './autocomplete/mintlifyAutoComplete.js';
@@ -43,35 +43,24 @@ export async function mintlifyResponse(
 		return res;
 	}
 
+	const textParts = relevantSection.parts.filter((part) => part.type === SectionPartType.Text);
+
 	const routeElement = relevantSection.parts.find((part) => part.type === SectionPartType.Route);
 
 	const headlineSuffix = routeElement ? sectionPartToText(routeElement) : null;
 
-	const headline = `### <:discorddocs:${EMOJI_ID_GEAR_BLURPLE}> ${bold(hyperlink(`${relevantSection.headline} ${EXTERNAL_LINK}`, `${DISCORD_DOCS_BASE}/${hit}`))}${headlineSuffix ? `   ${headlineSuffix}` : ''}`;
-	const contentParts = [headline];
+	const articleLink = `${DISCORD_DOCS_BASE}/${hit}`;
+	const headline = `### <:discorddocs:${EMOJI_ID_GEAR_BLURPLE}> ${bold(hyperlink(`${relevantSection.headline} ${EXTERNAL_LINK}`, articleLink))}${headlineSuffix ? `   ${headlineSuffix}` : ''}`;
+	const tail = hyperlink(bold('[...]'), articleLink);
 
-	let totalLength = headline.length + SUGGESTION_PREFIX_ALLOWANCE;
-	for (const part of relevantSection.parts) {
-		if (
-			part.type === SectionPartType.Route ||
-			part.type === SectionPartType.Preamble ||
-			part.type === SectionPartType.Image
-		) {
-			continue;
-		}
+	const shouldTail = textParts.length < relevantSection.parts.length;
+	const occupiedCharacters = headline.length + SUGGESTION_PREFIX_ALLOWANCE + (shouldTail ? tail.length : 0);
 
-		const partText = sectionPartToText(part);
-		totalLength += partText.length + 1;
+	const result = sectionToText(relevantSection, occupiedCharacters, {
+		partPredicate: (part) => part.type === SectionPartType.Text,
+	});
 
-		if (totalLength > MAX_MESSAGE_LENGTH) {
-			break;
-		}
-
-		contentParts.push(partText);
-	}
-
-	const result = contentParts.join('\n');
-	prepareResponse(res, truncate(result, MAX_MESSAGE_LENGTH), {
+	prepareResponse(res, truncate(`${headline}\n${result}${shouldTail ? ` ${tail}` : ''}`, MAX_MESSAGE_LENGTH), {
 		ephemeral,
 		suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
 	});

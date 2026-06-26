@@ -1,4 +1,4 @@
-import { HeadingLevel, heading, hyperlink, inlineCode } from '@discordjs/builders';
+import { HeadingLevel, bold, heading, hyperlink, inlineCode } from '@discordjs/builders';
 import type { Response } from 'polka';
 import type { ZendeskArticle, ZendeskEntity } from '../types/zendesk';
 import {
@@ -9,15 +9,15 @@ import {
 	EMOJI_ID_CLYDE_BLURPLE,
 	EMOJI_ID_GEAR_BLURPLE,
 	EXTERNAL_LINK,
-	MAX_MESSAGE_LENGTH,
 	SUGGESTION_PREFIX_ALLOWANCE,
 } from '../util/constants.js';
+import type { SectionPart } from '../util/discordDocs.js';
 import {
 	SectionPartType,
 	findRelevantDocsSectionFuzzy,
 	findSectionFromAnchor,
 	parseGithubDocsSections,
-	sectionPartToText,
+	sectionToText,
 } from '../util/discordDocs.js';
 import { helpdeskTurndownService } from '../util/helpdeskturndown.js';
 import { logger } from '../util/logger.js';
@@ -62,6 +62,8 @@ async function fetchHelpdeskArticle(id: number, autocompleteTimestamp: number, d
 	articleCache.set(res.article.id, res.article);
 	return res.article;
 }
+
+const partPredicate = (part: SectionPart) => ![SectionPartType.Preamble, SectionPartType.Image].includes(part.type);
 
 export async function helpdeskResponse(
 	res: Response,
@@ -108,33 +110,25 @@ export async function helpdeskResponse(
 		return res;
 	}
 
+	const renderableParts = relevantSection.parts.filter(partPredicate);
+
 	const emoji = isDev ? `<:developers:${EMOJI_ID_GEAR_BLURPLE}>` : `<:discord:${EMOJI_ID_CLYDE_BLURPLE}>`;
 	const headlinePrefix = heading(emoji, HeadingLevel.Three);
 	const hasSameSiteLinkAnchor = relevantSection.linkAnchor?.startsWith('#');
-	const healineLinkUrl = hasSameSiteLinkAnchor ? `${article.html_url}${relevantSection.linkAnchor}` : article.html_url;
+	const headlineLinkUrl = hasSameSiteLinkAnchor ? `${article.html_url}${relevantSection.linkAnchor}` : article.html_url;
 	const headlineLinkLabel = hasSameSiteLinkAnchor ? `${article.name} ${DOT} ${relevantSection.headline}` : article.name;
+	const tail = hyperlink(bold('[...]'), headlineLinkUrl);
 
-	const headline = [headlinePrefix, hyperlink(`${headlineLinkLabel} ${EXTERNAL_LINK}`, healineLinkUrl)].join(' ');
-	const contentParts = [headline];
+	const shouldTail = renderableParts.length < relevantSection.parts.length;
 
-	let totalLength = headline.length + SUGGESTION_PREFIX_ALLOWANCE;
-	for (const part of relevantSection.parts) {
-		if (part.type === SectionPartType.Preamble || part.type === SectionPartType.Image) {
-			continue;
-		}
+	const headline = [headlinePrefix, hyperlink(`${headlineLinkLabel} ${EXTERNAL_LINK}`, headlineLinkUrl)].join(' ');
 
-		const partText = sectionPartToText(part);
-		totalLength += partText.length + 1;
+	const occupiedCharacters = headline.length + SUGGESTION_PREFIX_ALLOWANCE + (shouldTail ? tail.length : 0);
+	const result = sectionToText(relevantSection, occupiedCharacters, {
+		partPredicate,
+	});
 
-		if (totalLength > MAX_MESSAGE_LENGTH) {
-			break;
-		}
-
-		contentParts.push(partText);
-	}
-
-	const result = contentParts.join('\n');
-	prepareResponse(res, result, {
+	prepareResponse(res, `${headline}\n${result}${shouldTail ? ` ${tail}` : ''}`, {
 		ephemeral,
 		suggestion: user ? { userId: user, kind: 'article' } : undefined,
 	});
