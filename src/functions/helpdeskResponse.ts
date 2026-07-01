@@ -119,7 +119,7 @@ export async function helpdeskResponse(
 	const headlineLinkLabel = hasSameSiteLinkAnchor ? `${article.name} ${DOT} ${relevantSection.headline}` : article.name;
 	const tail = hyperlink(bold('[...]'), headlineLinkUrl);
 
-	const shouldTail = renderableParts.length < relevantSection.parts.length;
+	const shouldTail = renderableParts.length > 0 && renderableParts.length < relevantSection.parts.length;
 
 	const headline = [headlinePrefix, hyperlink(`${headlineLinkLabel} ${EXTERNAL_LINK}`, headlineLinkUrl)].join(' ');
 
