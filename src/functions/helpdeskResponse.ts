@@ -63,7 +63,8 @@ async function fetchHelpdeskArticle(id: number, autocompleteTimestamp: number, d
 	return res.article;
 }
 
-const partPredicate = (part: SectionPart) => ![SectionPartType.Preamble, SectionPartType.Image].includes(part.type);
+const partPredicate = (part: SectionPart) =>
+	![SectionPartType.Preamble, SectionPartType.Image, SectionPartType.TableOfContents].includes(part.type);
 
 export async function helpdeskResponse(
 	res: Response,

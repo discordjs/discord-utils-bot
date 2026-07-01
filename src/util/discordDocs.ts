@@ -1,4 +1,4 @@
-import { bold, hyperlink, inlineCode, quote, subtext } from '@discordjs/builders';
+import { hyperlink, inlineCode, quote, subtext } from '@discordjs/builders';
 import { DISCORD_DOCS_BASE, EMOJI_ID_ROUTE, MAX_MESSAGE_LENGTH } from './constants.js';
 import { logger } from './logger.js';
 
@@ -40,6 +40,7 @@ export enum SectionPartType {
 	Quote,
 	Route,
 	Image,
+	TableOfContents,
 }
 
 export enum AdmonitionType {
@@ -68,7 +69,12 @@ export type SectionPart =
 	  }
 	| {
 			lines: string[];
-			type: SectionPartType.Preamble | SectionPartType.Quote | SectionPartType.Table | SectionPartType.Text;
+			type:
+				| SectionPartType.Preamble
+				| SectionPartType.Quote
+				| SectionPartType.Table
+				| SectionPartType.TableOfContents
+				| SectionPartType.Text;
 	  }
 	| {
 			path: string;
@@ -123,6 +129,7 @@ export function parseGithubDocsSections(inLines: string[]) {
 	let withinTable = false;
 	let withinQuote = false;
 	let withinCodeBlock = false;
+	let withinToc = false;
 	let codeLang = '';
 	let docsAdmonitionType: AdmonitionType | undefined;
 	let githubAdmonitionType: AdmonitionType | undefined;
@@ -161,6 +168,22 @@ export function parseGithubDocsSections(inLines: string[]) {
 				withinPreamble = false;
 				continue;
 			}
+		}
+
+		// Table of Content
+		if (line.trim().startsWith('*')) {
+			if (['cover', 'article'].every((phrase) => line.includes(phrase))) {
+				flushToText();
+				withinToc = true;
+			}
+		} else if (withinToc) {
+			parts.push({
+				lines,
+				type: SectionPartType.TableOfContents,
+			});
+
+			withinToc = false;
+			lines = [];
 		}
 
 		if (withinPreamble && line.startsWith('title:')) {
