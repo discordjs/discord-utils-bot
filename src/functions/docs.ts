@@ -321,6 +321,20 @@ export async function djsDocs(res: Response, version: string, query: string, use
 		}
 
 		const [_package, itemName, itemKind, member] = query.split('|');
+
+		if (!itemKind?.length) {
+			logger.info(`Expected to find item kind, but did not in ${query}.`, {
+				_package,
+				itemName,
+				itemKind,
+				member,
+				query,
+			});
+
+			prepareErrorResponse(res, `Unexpected query shape for ${query}. Consider using auto complete.`);
+			return res.end();
+		}
+
 		const item = await fetchDocItem(_package, version, itemName, itemKind.toLowerCase());
 		if (!item) {
 			prepareErrorResponse(res, `Could not fetch doc entry for query ${inlineCode(query)}.`);
