@@ -166,7 +166,6 @@ function effectiveItem(item: any, member?: string) {
 		return item;
 	}
 
-	const iterable = Array.isArray(item.members);
 	if (Array.isArray(item.members)) {
 		for (const potential of item.members) {
 			const hit = enrichItem(potential, member, item.displayName);

@@ -60,10 +60,14 @@ export async function mintlifyResponse(
 		partPredicate: (part) => part.type === SectionPartType.Text,
 	});
 
-	prepareResponse(res, truncate(`${headline}\n${result}${shouldTail ? ` ${tail}` : ''}`, MAX_MESSAGE_LENGTH), {
-		ephemeral,
-		suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
-	});
+	prepareResponse(
+		res,
+		truncate(`${headline}\n${result}${shouldTail && result.length ? ` ${tail}` : ''}`, MAX_MESSAGE_LENGTH),
+		{
+			ephemeral,
+			suggestion: user ? { userId: user, kind: 'documentation' } : undefined,
+		},
+	);
 
 	return res;
 }
