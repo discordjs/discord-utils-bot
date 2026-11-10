@@ -10,7 +10,7 @@ services:
       - ./.env
       - ./.dev.env
     ports:
-      - '49202:49666'
+      - '127.0.0.1:49202:49666'
     volumes:
       - type: bind
         source: ./tags
