@@ -6,5 +6,6 @@ ENV FORCE_COLOR=1
 WORKDIR /usr/slash-utils
 COPY package.json ./
 COPY . .
+RUN apk add --no-cache nodejs npm && npm install -g corepack && corepack enable
 RUN yarn build
 CMD ["yarn", "start"]
